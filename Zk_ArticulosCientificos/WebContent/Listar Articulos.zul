@@ -1,0 +1,60 @@
+<?page title="Articulos" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Articulos" border="normal" position="center,top">
+
+<listbox id="listaTareas" mold="paging" pageSize="4"
+			multiple="false" width="500"
+			emptyMessage="No personasfound in the result">
+
+			<auxhead sclass="category-center">
+				<auxheader label="Busqueda: " colspan="5" rowspan="1" />
+			</auxhead>
+
+			<auxhead sclass="category-center">
+				<auxheader colspan="1" rowspan="1">
+					<label>Titulo:</label>
+					<textbox id="txtProyecto"></textbox>
+					<button id="idfiltroTitulo"
+						image="iconos/searchs.png">
+					</button>
+				</auxheader>
+				<auxheader colspan="1" rowspan="1">
+					<label>Autor:</label>
+					<textbox id="txtautor"></textbox>
+					<button id="idfiltroautor"
+						image="iconos/searchs.png">
+					</button>
+				</auxheader>
+				<auxheader colspan="1" rowspan="1">
+					<label>Resumen:</label>
+					<textbox id="txtresumen"></textbox>
+					<button id="idfiltroresumen"
+						image="iconos/searchs.png">
+					</button>
+				</auxheader>
+				
+				<auxheader colspan="3" rowspan="1">
+					<label>Fecha</label>
+					<datebox id="txtfechafin" />
+					<button id="idfiltroFecha"
+						image="iconos/searchs.png">
+					</button>
+				</auxheader>
+
+
+			</auxhead>
+			<auxhead sclass="category-center">
+				<auxheader label="Listado de Articulos " colspan="5"
+					rowspan="1" />
+			</auxhead>
+
+			<listhead sizable="true" menupopup="auto">
+				<listheader label=" " sort="auto" />
+				<listheader label="Titulo"/>
+				<listheader label="Autor"/>
+				<listheader label="Volumen"/>
+				<listheader label="Responsables" />
+			</listhead>
+</listbox>
+</window>
+</zk>
