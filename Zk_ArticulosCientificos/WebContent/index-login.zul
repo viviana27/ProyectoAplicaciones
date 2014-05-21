@@ -1,0 +1,25 @@
+<?page title="Revista Científica y Tecnológica UPSE"?>
+<zk>
+	<window title="" border="none" width="100%" height="200%"
+		apply="com.controladores.indexloginController">
+		<borderlayout width="100%" height="209%">
+			<north height="6%" style="background:#0066FF">
+				<div align="center">
+					<image src="./Imagenes/REVISTA.jpg" />
+					<menubar id="menubar_opciones1"
+						sclass="right-arrow">
+					</menubar>
+				</div>
+			</north>
+			<center id="centro" style="background:#0066FF"
+				autoscroll="true">
+				<label></label>
+			</center>
+			<south
+			
+				style="background:#0066FF; color: white; float:right">
+				<div></div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

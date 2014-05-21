@@ -1,0 +1,107 @@
+package com.controladores;
+
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Center;
+import org.zkoss.zul.Menu;
+import org.zkoss.zul.Menubar;
+import org.zkoss.zul.Menuitem;
+import org.zkoss.zul.Menupopup;
+import org.zkoss.zul.Window;
+
+
+public class indexController extends GenericForwardComposer<Component> {
+	private static final long serialVersionUID = 1L;
+	// enlazamos los componentes de la vista con variables de referencia
+	@Wire
+	Menubar menubar_opciones;
+	Center centro;
+	Window winindex;
+	@Override
+	public void doAfterCompose(Component comp) throws Exception {
+		// TODO Auto-generated method stub
+		super.doAfterCompose(comp);
+		crearMenu();
+	}
+	public void crearMenu() {
+		Menu menuR = new Menu("Registros");
+		Menupopup menupopup = new Menupopup();
+		Menuitem menuitemR1 = new Menuitem("Registrar Nuevo Usuario");
+		Menuitem menuitemR2 = new Menuitem("Listar Usuarios");
+		menuitemR1.setValue("");
+		menuitemR2.setValue("");
+		menuitemR1.addEventListener("onClick", new MenuListener());
+		menuitemR2.addEventListener("onClick", new MenuListener());
+		menupopup.appendChild(menuitemR1);
+		menupopup.appendChild(menuitemR2);
+		menuR.appendChild(menupopup);
+		menubar_opciones.appendChild(menuR);	
+		
+		Menu menuP = new Menu("Perfil de usuario");
+		Menupopup menupopupP = new Menupopup();
+		Menuitem menuitemP1 = new Menuitem("Visualizar Perfil");
+		Menuitem menuitemP2 = new Menuitem("Cambiar Contraseña");
+		menuitemP1.setValue("");
+		menuitemP2.setValue("");
+		menuitemP1.addEventListener("onClick", new MenuListener());
+		menuitemP2.addEventListener("onClick", new MenuListener());
+		menupopupP.appendChild(menuitemP1);
+		menupopupP.appendChild(menuitemP2);
+		menuP.appendChild(menupopupP);
+		menubar_opciones.appendChild(menuP);	
+		
+		Menu menuA = new Menu("Articulos");
+		Menupopup menupopupA = new Menupopup();
+		Menuitem menuitemA1 = new Menuitem("Listar Articulos");
+		Menuitem menuitemA2 = new Menuitem("Evaluar Articulo");
+		Menuitem menuitemA3 = new Menuitem("Subir Nuevo Articulo");
+		menuitemA1.setImage("");
+		menuitemA2.setValue("");
+		menuitemA3.setValue("");
+		menuitemA1.addEventListener("onClick", new MenuListener());
+		menuitemA2.addEventListener("onClick", new MenuListener());
+		menuitemA3.addEventListener("onClick", new MenuListener());
+		menupopupA.appendChild(menuitemA1);
+		menupopupA.appendChild(menuitemA2);
+		menupopupA.appendChild(menuitemA3);
+		menuA.appendChild(menupopupA);
+		menubar_opciones.appendChild(menuA);
+		
+		Menu menuM = new Menu("Mensajes");
+		Menupopup menupopupM = new Menupopup();
+		Menuitem menuitemM1 = new Menuitem("Ver Mensajes");
+		Menuitem menuitemM2 = new Menuitem("Nuevo Mensaje");
+		menuitemM1.setImage("");
+		menuitemM2.setValue("");
+		menuitemM1.addEventListener("onClick", new MenuListener());
+		menuitemM2.addEventListener("onClick", new MenuListener());
+		menupopupM.appendChild(menuitemM1);
+		menupopupM.appendChild(menuitemM2);
+		menuM.appendChild(menupopupM);
+		menubar_opciones.appendChild(menuM);
+	}
+	class MenuListener implements EventListener {
+		// metodo que se ejecute cuando se produce el evento
+		@Override
+		public void onEvent(Event arg0) throws Exception {
+			// eliminar lo anterior del centro
+			if (centro.getFirstChild() != null) {
+				// detach quita todo lo que esta dentro
+				centro.getFirstChild().detach();
+				// colocamos lo nuevo
+				// leer valor almacenado en menuitem
+				String pagina = ((Menuitem) arg0.getTarget()).getValue();
+				Window win = (Window) Executions.createComponents(pagina,
+						centro, null);
+			}
+
+		}
+
+	}
+	
+}

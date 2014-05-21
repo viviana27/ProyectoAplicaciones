@@ -1,0 +1,27 @@
+<?page title="Login" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Ingreso al sistema" border="normal" width="300px"
+		height="150px" position="center,center" mode="modal"
+		apply="com.controladores.indexloginController">
+		<grid>
+			<columns>
+				<column label="" />
+				<column label="" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Usuario: " />
+					<textbox id="textbox_User" constraint="no empty" />
+				</row>
+				<row>
+					<label value="Clave: " />
+					<textbox id="textbox_Password" type="password" />
+				</row>
+				<row>
+					<button id="button_Ingresar" label="Ingresar" />
+					<button id="button_Cancelar" label="Cancelar" />
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>
