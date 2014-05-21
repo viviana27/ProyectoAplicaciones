@@ -1,0 +1,43 @@
+<?page title="Categorias" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Áreas" border="normal"
+		id="WinListarAreas"
+		apply="com.controladores.listaAreaController">
+		<div height="50px">
+			<fisheyebar id="fsb"
+				style="position:relative;Margin-left:30px" itemWidth="40"
+				itemHeight="40" itemMaxHeight="80" itemMaxWidth="80">
+				<fisheye image="Imagenes/nuevoO.png"
+					id="toolbarbutton_Nuevo" label="Nueva Área" />
+				<fisheye image="Imagenes/editar.png"
+					id="toolbarbutton_Editar" label="Editar Área" />
+				<fisheye image="Imagenes/eliminar.png"
+					id="toolbarbutton_Eliminar" label="Eliminar Área" />
+			</fisheyebar>
+		</div>
+		<groupbox closable="true">
+			<caption label="buscar" />
+			<label
+				value="Ingrese area para proceder con la búsqueda" />
+			<textbox id="textbox_buscar" />
+			<space />
+			<!-- <separator/> -->
+			<button image="Imagenes/buscar.png" id="button_buscar" />
+		</groupbox>
+		<listbox mold="paging" pageSize="3" width="100%"
+			emptyMessage="No existen datos que cumplan el criterio de busqueda"
+			id="listbox_areas" disabled="true">
+			<listhead menupopup="auto" sizable="false">
+				<listheader label="Area" sort="auto"
+					sortDirection="ascending" />
+				<listheader label="Estado" sort="auto" />
+			</listhead>
+			<template name="model">
+				<listitem value="${each}">
+					<listcell label="${each.descripcion}" />
+					<listcell label="${each.estado}" />
+				</listitem>
+			</template>
+		</listbox>
+	</window>
+</zk>

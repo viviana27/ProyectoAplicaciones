@@ -1,0 +1,28 @@
+<?page title="Tipo de Artículo" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Tipo de Artículo" border="normal" id="WinRegistrarCategorias"
+		apply="">
+		<grid>
+			<columns>
+				<column label="Etiqueta" />
+				<column label="Dato" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Tipo de Artículo:" />
+					<textbox id="textbox_categoria"
+						constraint="no empty" />
+				</row>
+				<row>
+					<label value="Estado:" />
+					<checkbox id="check_estado" />
+				</row>
+				<row>
+					<button label="Registrar" id="button_Registrar" />
+					<button label="Cancelar" id="button_Cancelar"
+						onClick="" />
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

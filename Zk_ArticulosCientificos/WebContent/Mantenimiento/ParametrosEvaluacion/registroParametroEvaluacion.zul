@@ -1,0 +1,33 @@
+<?page title="Parámetros de Evaluación" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Parámetros de Evaluación" border="normal" id="WinRegistrarParametros"
+		apply="">
+		<grid>
+			<columns>
+				<column label="Etiqueta" />
+				<column label="Dato" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Parámetro de Evaluación:" />
+					<textbox id="textbox_area"
+						constraint="no empty" />
+				</row>
+				<row>
+					<label value="Porcentaje de Evaluación:" />
+					<textbox id="textbox_valor"
+						constraint="no empty" />
+				</row>
+				<row>
+					<label value="Estado:" />
+					<checkbox id="check_estado" />
+				</row>
+				<row>
+					<button label="Registrar" id="button_Registrar" />
+					<button label="Cancelar" id="button_Cancelar"
+						onClick="" />
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

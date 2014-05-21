@@ -1,0 +1,54 @@
+<?page title="Registros" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Registros" border="normal"
+		id="WinListarUsuarios" apply="com.controladores.listaUsuarioController">
+		<div height="50px">
+			<fisheyebar id="fsb"
+				style="position:relative;Margin-left:30px" itemWidth="40"
+				itemHeight="40" itemMaxHeight="80" itemMaxWidth="80">
+				<fisheye image="Imagenes/nuevoO.png"
+					id="toolbarbutton_Nuevo" label="Nuevo Registro" />
+				<fisheye image="Imagenes/editar.png"
+					id="toolbarbutton_Editar" label="Editar Registro" />
+				<fisheye image="Imagenes/eliminar.png"
+					id="toolbarbutton_Eliminar" label="Eliminar Registro" />
+			</fisheyebar>
+		</div>
+		<groupbox closable="true">
+			<caption label="buscar" />
+			<label
+				value="Ingrese NOMBRE o APELLIDO para proceder con la búsqueda" />
+			<textbox id="textbox_buscar" />
+			<space />
+			<!-- <separator/> -->
+			<button image="imagenes/buscar.png" id="button_buscar" />
+		</groupbox>
+		<listbox mold="paging" pageSize="3" width="100%"
+			emptyMessage="No existen datos que cumplan el criterio de búsqueda"
+			id="listbox_Miembros" disabled="true">
+			<listhead menupopup="auto" sizable="false">
+				<listheader label="Nombres" sort="auto"
+					sortDirection="ascending" />
+				<listheader label="Apellidos" sort="auto" />
+				<listheader label="Cedula/RUC" sort="auto" />
+				<listheader label="E-mail" sort="auto" />
+				<listheader label="Direccion" sort="auto" />
+				<listheader label="Telefono convencional" sort="auto" />
+				<listheader label="Celular" sort="auto" />
+				<listheader label="Rol de usuario" sort="auto" />				
+			</listhead>
+			<template name="model">
+				<listitem value="${each}">
+					<listcell label="${each.nombres}" />
+					<listcell label="${each.apellidos}" />
+					<listcell label="${each.cedula}"></listcell>
+					<listcell label="${each.email}"></listcell>
+					<listcell label="${each.direccion}"></listcell>
+					<listcell label="${each.telefono}"></listcell>
+					<listcell label="${each.celular}"></listcell>
+					<listcell label="${each.rol}"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+	</window>
+</zk>

@@ -1,0 +1,52 @@
+<?page title="Asignación de Personas por Áreas " contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Asignación de áreas" border="normal" width="600px" height="a00px">
+
+
+<grid>
+			<columns>
+				<column label="Etiqueta" />
+				<column label="Dato" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Nombre Usuario/a :"></label>
+					<textbox id="textbox_Usuario" disabled="true"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Primer Nombre:"></label>
+					<textbox id="textbox_Pnombre" disabled="true"
+						constraint="no empty">
+					</textbox>
+				</row>
+
+				<row>
+					<label value=" Apellidos : "></label>
+					<textbox id="textbox_Apellidos" disabled="true"
+					constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Área: "></label>
+					<combobox id="combo_area" autodrop="true">
+						<template name="model">
+							<comboitem label="${}"
+								value="${}" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<button label="Guardar" id="button_Guardar"
+						image="Imagenes/save.png">
+					</button>
+					<button label="Cancelar" id="button_Cancelar"
+						image="Imagenes/delete.png" onClick="">
+					</button>
+				</row>
+			</rows>
+		</grid>
+
+</window>
+</zk>
