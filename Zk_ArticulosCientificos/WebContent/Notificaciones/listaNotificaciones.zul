@@ -1,0 +1,39 @@
+<?page title="Notificaciones Recibidas" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Notificaciones Recibidas" border="normal"
+		id="WinListarNotificaciones" apply="">
+
+		<listbox mold="paging" pageSize="10" width="100%"
+			emptyMessage="No existen datos que cumplan el criterio de busqueda"
+			id="listbox_Notificaciones" disabled="true">
+			<listhead menupopup="auto" sizable="false">
+				<listheader label="Fecha" sort="auto"
+					sortDirection="ascending" />
+				<listheader label="Asunto" sort="auto"
+					sortDirection="ascending" />
+				<listheader label="De:" sort="auto"
+					sortDirection="ascending" />
+			</listhead>
+			<template name="model">
+				<listitem value="${each}">
+					<listcell label="${}" />
+					<listcell label="${}" />
+					<listcell label="${}" />
+				</listitem>
+			</template>
+		</listbox>
+		<grid>
+			<columns>
+				<column label="" />
+				<column label="" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Detalle:" />
+					<textbox id="textbox_mensaje" constraint="no empty"
+						height="400px" width="85%" rows="5" cols="40" />
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

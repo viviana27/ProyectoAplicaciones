@@ -1,39 +1,73 @@
 <?page title="Subir" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Subir" border="normal" width="80%" >
-<label value="1.En esta pagina seleccione examinar para escoger el archivo."></label>
+<window title="Nuevo Envio" border="normal" width="80%" >
+<label value="1.En esta pagina registre sus datos como autor/es."></label>
 
 		<grid width="100%">
 			<rows>	
+			
+			<row>
+				<label>--EDITAR METADATOS--</label>
+				
+			</row>
+			<row>
+				<label>*AUTOR/ES</label>
+				
+			</row>
+			<row>
+				<label>Primer Nombre</label>
+				<textbox></textbox>
+			</row>	
 				<row>
-					<label value="Seleccionar archivo " />
-					<button label="Examinar" upload="true,maxsize=8192"
-			onUpload="@command('uploadFile',upload=event)" autodisable="self" />
-					</row>
-			<row>
-				<label>Titulo</label>
-				<textbox></textbox>
-			</row>	
-			<row>
-				<label>Resumen</label>
-				<textbox></textbox>
-			</row>	
-			<row>
-				<label>Indexacion para Claves</label>
-			</row>
-			<row>
-				<label>Disciplina academica</label>
-				<textbox></textbox>
-			</row>
-			<row>
-				<label>Palabra Clave</label>
-				<textbox></textbox>
-			</row>	
-			<row>
-				<label>Metodos o enfoque</label>
+				<label>Segundo Nombre</label>
 				<textbox></textbox>
 			</row>
 				<row>
+				<label>Apellidos</label>
+				<textbox></textbox>
+			</row>
+			<row>
+				<label>Cedula</label>
+				<textbox></textbox>
+			</row>
+			
+				<row>
+				<label>Correo Electronico</label>
+				<textbox></textbox>
+			</row>
+			<row>
+				<label>Direccion</label>
+				<textbox></textbox>
+			</row>
+			<row>
+				<label>Telefono</label>
+				<textbox></textbox>
+			</row>
+			<row>
+				<label>Celular</label>
+				<textbox></textbox>
+			</row>
+			
+			
+				<row>
+				<label>Institucion a la que pertenece</label>
+				<textbox></textbox>
+			</row>
+			<row>
+				<label>Direccion de Institucion</label>
+				<textbox></textbox>
+			</row>
+			
+				<row>
+				<label>Pais</label>
+				<textbox></textbox>
+			</row>
+			<row>
+				<button label="Añadir autor" id=""
+						image="">
+					</button>
+			</row>	
+			<row>
 				<button label="Cancelar" id="button_cancelar"
 						image="iconos/delete.png">
 					</button>
@@ -42,6 +76,8 @@
 						image="iconos/save.png">
 					</button>
 								</row>
+			
+			<!--  el boton guardar y continuar lanza a indexacion.zul -->
 			</rows>
 		</grid>
 

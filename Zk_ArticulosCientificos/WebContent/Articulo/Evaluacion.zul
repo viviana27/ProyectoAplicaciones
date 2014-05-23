@@ -1,0 +1,77 @@
+<?page title="Evaluar" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Evaluar" border="normal">
+<!-- Esta ventana sera visualizada por el evaluador asi como el administrador
+ o q cargue un archivo nuevament que el pueda ver los promedios y en el campo observacion que me parece q no
+esta en la base seeria las correcciones del evaluador -->
+<grid width="100%">
+		
+			<columns>
+				<column label="Codigo" />
+				<column label="Tipo de Articulo"/>
+				<column label="Titulo "/>
+				<column label="Estado"/>
+				<column label="Promedio/100"/>
+				<column label="Fecha"/>
+				
+			</columns>
+			<rows>
+				<row>
+					<label value="001 " />
+					<label value="Tipodearticulo " />
+					<label value="Titulodearticulo " />
+					<!-- el estado aqui es el nuevo estado que toma el articulo porque esta ya en la
+					 sesion del evaluador
+					 -->
+					<checkbox label="Pendiente" value="1" />
+							
+					<label>16</label>
+					<label>12-Dec-14</label>
+				</row>
+		
+				
+				
+			</rows>
+		</grid>
+		
+		<grid>
+		<auxhead>
+		<auxheader>
+		<label>Matriz de la Evalacion</label>
+		</auxheader>
+		</auxhead>
+				<columns>
+				<column label="Parametros" />
+				<column label="Nota Estandar"/>
+				<!-- la calificacion va a ser ingresada por el usuario evaluador -->
+				<column label="Caliicacion "/>
+				<column label="Estado"/>
+				
+				</columns>
+		<rows>
+			<row>
+			<label>Parametro1</label>
+			<label>10</label>
+			<label>8</label>
+			</row>
+			<row>
+			<label>Parametro2</label>
+			<label>25</label>
+			<label>24</label>
+			</row>
+			<row>
+			<label>Observaciones</label>
+			<textbox width="100%"></textbox>
+			</row>
+			<row>
+			<label visible="false"></label>
+				<label visible="false"></label>
+					<label visible="false"></label>
+					<button label="Guardrar" id="" />
+			
+			</row>
+		</rows>
+		</grid>
+
+</window>
+</zk>

@@ -1,0 +1,53 @@
+<?page title="Indexacion" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Indexacion" border="normal">
+<label value="Proporcione palabras claves para indexar el envio, separe los términos en punto y coma."></label>
+<grid>
+
+<rows>
+	<row>
+					<label value="Seleccionar archivo " />
+					<button label="Examinar" upload="true,maxsize=8192"
+			onUpload="@command('uploadFile',upload=event)" autodisable="self" />
+					</row>
+			<row>
+				<label>Tipo de artículo</label>
+				<combobox id="cbbtipo" autodrop="true" mold="rounded" 
+					buttonVisible="true">
+					<comboitem label="Tipo Articulo"
+								value="" />
+								</combobox>
+			</row>	
+				<row>
+				<label>Titulo</label>
+				<textbox></textbox>
+			</row>
+			<row>
+				<label>Resumen</label>
+					<textbox></textbox>
+			</row>
+			<row>
+				<label>Palabras claves</label>
+				
+			</row>
+			<row>
+				<label>Fecha</label>
+				<datebox id="txtfecha" />
+			</row>	
+			
+				<row>
+				<button label="Cancelar" id="button_cancelar"
+						image="iconos/delete.png">
+					</button>
+					
+					<button label="Guardar y Enviar" id="button_Registrar"
+						image="iconos/save.png">
+					</button>
+								</row>
+			</rows>
+			
+		</grid>
+		
+
+</window>
+</zk>

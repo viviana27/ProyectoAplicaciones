@@ -1,0 +1,42 @@
+<?page title="Revision" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Revision" border="normal">
+<!-- iniciar sesion como administrador y se cargan todos los articulos enviados -->
+		<grid width="100%">
+		
+			<columns>
+				<column label="Codigo" />
+				<column label="Tipo de Articulo"/>
+				<column label="Titulo "/>
+				<column label="Estado"/>
+				<column label="Asignacion Par"/>
+			</columns>
+			<rows>
+				<row>
+					<label value="001 " />
+					<label value="Tipodearticulo " />
+					<label value="Titulodearticulo " />
+					
+					<checkbox label="Activo" value="1" />
+							
+					<combobox id="cbbTema"  autodrop="true" buttonVisible="true">
+					
+							<comboitem label="NombrePares"
+								value="" />
+
+					
+					</combobox >
+				</row>
+				<row>
+				<button label="Enviar" id="button_Guardar" />
+					<button label="Añadir evaluador" id="" />
+				</row>
+				
+		
+				
+				
+			</rows>
+		</grid>
+
+</window>
+</zk>

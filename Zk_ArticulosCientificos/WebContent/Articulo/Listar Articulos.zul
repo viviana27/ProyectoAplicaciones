@@ -15,29 +15,29 @@
 					<label>Titulo:</label>
 					<textbox id="txtProyecto"></textbox>
 					<button id="idfiltroTitulo"
-						image="iconos/searchs.png">
+						image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
 				<auxheader colspan="1" rowspan="1">
 					<label>Autor:</label>
 					<textbox id="txtautor"></textbox>
 					<button id="idfiltroautor"
-						image="iconos/searchs.png">
+						image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
 				<auxheader colspan="1" rowspan="1">
-					<label>Resumen:</label>
-					<textbox id="txtresumen"></textbox>
-					<button id="idfiltroresumen"
-						image="iconos/searchs.png">
+					<label>Tipo de Artículo:</label>
+					<textbox id="txttipo"></textbox>
+					<button id="idtipo"
+						image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
 				
 				<auxheader colspan="3" rowspan="1">
-					<label>Fecha</label>
-					<datebox id="txtfechafin" />
-					<button id="idfiltroFecha"
-						image="iconos/searchs.png">
+					<label>Área</label>
+					<datebox id="txtarea" />
+					<button id="idarea"
+						image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
 

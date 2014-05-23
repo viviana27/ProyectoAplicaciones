@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Editar Perfil" border="normal" width="600px" height="a00px">
+<window title="Perfil" border="normal" width="600px" height="a00px">
 
 
 <grid>

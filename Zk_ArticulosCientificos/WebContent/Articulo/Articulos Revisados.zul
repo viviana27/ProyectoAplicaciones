@@ -1,0 +1,42 @@
+<?page title="Revisados" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Revisados" border="normal">
+
+
+			
+		<grid width="100%">
+			<rows>
+				<row>
+				<!-- codio es el id del articulo y con el va a entrar a detalles y poder ver sus
+				correcciones o subir nuevamente el archivo, en programacion se
+				contaria la cantidad de 2 o en su defecto seria la existencia de un padre -->
+					<label value="Codigo del articulo" />
+					<textbox id="textbox_id" constraint="no empty"
+						readonly="True" />
+				</row>
+				<row>
+					<label value="Titulo: " />
+					<textbox id="textbox_usuario" constraint="no empty" />
+				</row>
+				<row>
+					<label value="Autor:" />
+					<textbox id="textbox_clave" constraint="no empty" />
+				</row>
+				<row>
+					<label value="Archivo " />
+					<button label="Descargar"/>
+
+				</row>
+				<row>
+					<button label="Cancelar" id="button_Guardar"
+						image="" />
+					<button label="Continuar" onClick=""
+						image="" />
+						<!-- al boton continuar sera redirigido a la pagina de indexacion que es donde
+						da la opion de subir el documento o en subir.zul para q vaya de nuevo -->
+				</row>
+			</rows>
+		</grid>
+	
+</window>
+</zk>

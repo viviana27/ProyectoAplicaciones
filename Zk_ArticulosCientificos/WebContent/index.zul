@@ -1,8 +1,8 @@
 <?page title="Auto Generated index.zul"?>
-<window title="Sistema Revista!!" border="normal" width="100%"
+<window border="normal" width="100%"
 	height="200%" apply="com.controladores.indexController">
 	<borderlayout width="100%" height="209%">
-		<north height="7%" style="background:#0066FF">
+		<north height="8%" style="background:#0066FF">
 			<div align="center">
 				<label
 					style="font-weight: bold; font-size: medium; color: #FFFFFF;">
@@ -19,10 +19,6 @@
 
 			</div>
 		</north>
-		<west autoscroll="true" minsize="300" maxsize="600"
-			width="200px" splittable="true" collapsible="true"
-			title="Opciones">
-		</west>
 		<center id="centro" style="background:#0066FF"
 			autoscroll="true">
 			<label></label>

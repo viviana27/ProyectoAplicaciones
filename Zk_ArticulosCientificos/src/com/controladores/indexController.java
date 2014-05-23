@@ -54,20 +54,24 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuP.appendChild(menupopupP);
 		menubar_opciones.appendChild(menuP);	
 		
-		Menu menuA = new Menu("Articulos");
+		Menu menuA = new Menu("Articulos ....");
 		Menupopup menupopupA = new Menupopup();
 		Menuitem menuitemA1 = new Menuitem("Listar Articulos");
 		Menuitem menuitemA2 = new Menuitem("Evaluar Articulo");
 		Menuitem menuitemA3 = new Menuitem("Subir Nuevo Articulo");
+		Menuitem menuitemA4 = new Menuitem("Asignar Evaluadores a un Articulo");
 		menuitemA1.setValue("Articulo/Listar Articulos.zul");
-		menuitemA2.setValue("Articulo/Subir Articulo.zul");
-		menuitemA3.setValue("Articulo/Subir.zul");
+		menuitemA2.setValue("Articulo/Evaluacion.zul");
+		menuitemA3.setValue("Articulo/Indexacion.zul");
+		menuitemA4.setValue("Articulo/Revision.zul");
 		menuitemA1.addEventListener("onClick", new MenuListener());
 		menuitemA2.addEventListener("onClick", new MenuListener());
 		menuitemA3.addEventListener("onClick", new MenuListener());
+		menuitemA4.addEventListener("onClick", new MenuListener());
 		menupopupA.appendChild(menuitemA1);
 		menupopupA.appendChild(menuitemA2);
 		menupopupA.appendChild(menuitemA3);
+		menupopupA.appendChild(menuitemA4);
 		menuA.appendChild(menupopupA);
 		menubar_opciones.appendChild(menuA);
 		
@@ -103,6 +107,19 @@ public class indexController extends GenericForwardComposer<Component> {
 		menupopupM.appendChild(menuitemM6);
 		menuM.appendChild(menupopupM);
 		menubar_opciones.appendChild(menuM);
+		
+		Menu menuN = new Menu("Notificaciones");
+		Menupopup menupopupN = new Menupopup();
+		Menuitem menuitemN1 = new Menuitem("Enviar Notificaciones");
+		Menuitem menuitemN2 = new Menuitem("Revisar Notificaciones");
+		menuitemN1.setValue("Notificaciones/enviarNotificaciones.zul");
+		menuitemN2.setValue("Notificaciones/listaNotificaciones.zul");
+		menuitemN1.addEventListener("onClick", new MenuListener());
+		menuitemN2.addEventListener("onClick", new MenuListener());
+		menupopupN.appendChild(menuitemN1);
+		menupopupN.appendChild(menuitemN2);
+		menuN.appendChild(menupopupN);
+		menubar_opciones.appendChild(menuN);
 	}
 	class MenuListener implements EventListener {
 		// metodo que se ejecute cuando se produce el evento

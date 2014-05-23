@@ -1,0 +1,43 @@
+<?page title="Enviar notificación" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Enviar notificación" border="normal" id="WinEnviarNotificaciones" apply="">
+<grid>
+			<columns>
+				<column label="Etiqueta" />
+				<column label="Dato" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Para:" />
+					<combobox id="combo_usuario" autodrop="true">
+						<template name="model">
+							<comboitem label="${n}"
+								value="${}" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label value="De:"  />
+					<textbox id="textbox_remitente"
+						constraint="no empty" width="45%"/>
+				</row>
+				<row>
+					<label value="Asunto:" />
+					<textbox id="textbox_asunto"
+						constraint="no empty" width="60%"/>
+				</row>
+				<row>
+					<label value="Mensaje:" />
+					<textbox id="textbox_mensaje"
+						constraint="no empty" height="400px" width="85%" rows="5" cols="40"/>
+				</row>
+				
+				<row>
+					<button label="Enviar" id="button_enviar" />
+					<button label="Cancelar" id="button_Cancelar"
+						onClick="" />
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>
