@@ -1,6 +1,6 @@
 <?page title="Login" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Ingreso al sistema " border="normal" width="350px"
+	<window title="Ingreso al sistema" border="normal" width="350px"
 		height="200px" position="center,center" mode="modal"
 		apply="com.controladores.indexloginController">
 		<grid>
