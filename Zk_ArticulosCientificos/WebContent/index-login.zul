@@ -6,6 +6,7 @@
 			<north height="7%" style="background:#0066FF">
 				<div align="center">
 					<image src="./Imagenes/REVISTA.jpg" />
+					<image src="./Imagenes/REVISTA1.jpg" />
 					<menubar id="menubar_opciones1"
 						sclass="right-arrow">
 					</menubar>
