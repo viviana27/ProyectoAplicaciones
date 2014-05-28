@@ -25,6 +25,7 @@ public class indexloginController extends GenericForwardComposer<Component> {
 	@Wire
 	Menubar menubar_opciones1;
 	Center centro;
+	//mensaje para boton
 	Button button_ingresar;
 
 	// se ejecuta cuando se produce el evento oncreate de la ventana winindex
