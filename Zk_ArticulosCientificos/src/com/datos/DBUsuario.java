@@ -16,11 +16,11 @@ public class DBUsuario {
 		//1. conectarme a la bd
 		DBManager dbm=new DBManager();
 		Connection con=dbm.getConection();
-		if(con==null)return usuario;
+		
 		Statement sentencia;
 		ResultSet resultados;
-		String query="SELECT *FROM tb_usuario as u,"
-		+ "u.usu_nombre='"+user+"' and "
+		String query="SELECT * FROM tb_usuario as u WHERE"
+		+ " u.usu_nombre='"+user+"' and "
 		+ "u.usu_clave= '"+password + "'";
 	
 		System.out.println(query);
@@ -50,6 +50,4 @@ public class DBUsuario {
 		return usuario;
 		
 		}
-	
-
-}
+	}

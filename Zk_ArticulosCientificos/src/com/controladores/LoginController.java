@@ -17,6 +17,7 @@ public class LoginController {
 	private Textbox textbox_Password;
 	private Label label_Mensaje;
 	private Label label_Mensajee;
+	
 	public void onClick$button_Ingresar(){
 		//comprobar que el usuario existe.
 		//1. Comprobar que usuario ingreso datos
@@ -36,7 +37,7 @@ public class LoginController {
 				session.setAttribute("User", usuario);
 				//Redirreccionar a la pagina principal
 				
-				Executions.sendRedirect("index.zul");
+			//	Executions.sendRedirect("index.zul");
 						
 		
 			}else
