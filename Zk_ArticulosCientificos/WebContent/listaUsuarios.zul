@@ -35,6 +35,8 @@
 				<listheader label="Direccion" sort="auto" />
 				<listheader label="Telefono convencional" sort="auto" />
 				<listheader label="Celular" sort="auto" />
+				<listheader label="Institucion_pertenece" sort="auto" />
+				<listheader label="Direccion_pertenece" sort="auto" />
 				<listheader label="Rol de usuario" sort="auto" />				
 			</listhead>
 			<template name="model">
@@ -46,6 +48,8 @@
 					<listcell label="${each.direccion}"></listcell>
 					<listcell label="${each.telefono}"></listcell>
 					<listcell label="${each.celular}"></listcell>
+					<listcell label="${each.institucion_pertenece"></listcell>
+					<listcell label="${each.direccion_pertenece}"></listcell>
 					<listcell label="${each.rol}"></listcell>
 				</listitem>
 			</template>

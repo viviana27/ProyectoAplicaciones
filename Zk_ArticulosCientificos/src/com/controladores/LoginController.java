@@ -1,17 +1,22 @@
 package com.controladores;
 
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.select.SelectorComposer;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.GenericComposer;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
-
 import com.datos.DBUsuario;
 import com.entidades.Usuarios;
 
-public class LoginController {
-	
+public class LoginController extends GenericForwardComposer<Component> {
+	private static final long serialVersionUID = 1L;
 	@Wire
 	private Textbox textbox_User;
 	private Textbox textbox_Password;

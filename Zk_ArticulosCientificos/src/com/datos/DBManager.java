@@ -11,7 +11,7 @@ public class DBManager {
 	Connection conection;
 	
 	//Parametros de conexion
-	final String cadenaConexion="jdbc:mysql://localhost/revistacientifica";
+	final String cadenaConexion="jdbc:mysql://localhost/articulos";
 	final String User="root";
 	final String password="";
 
