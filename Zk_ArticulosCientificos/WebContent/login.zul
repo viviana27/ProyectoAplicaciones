@@ -28,7 +28,7 @@
 				</row>
 				<row>
 					<button id="button_Ingresar" label="Ingresar" />
-					<button id="button_Cancelar" label="Cancelar" onClick="windlogin.detach()" />
+					<button id="button_Cancelar" label="Cancelar" />
 				</row>
 			</rows>
 		</grid>

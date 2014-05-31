@@ -122,6 +122,7 @@ public class indexloginController extends GenericForwardComposer<Component> {
 				session = Sessions.getCurrent();
 				// guardar objeto usuario en la session
 				session.setAttribute("User", usuario);
+				
 				// Redirreccionar a la pagina principal
 
 				Executions.sendRedirect("index.zul");
@@ -137,6 +138,6 @@ public class indexloginController extends GenericForwardComposer<Component> {
 	}
 
 	public void onClick$button_Cancelar(){
-	
+		Executions.sendRedirect("index-login.zul");
 	}
 }
