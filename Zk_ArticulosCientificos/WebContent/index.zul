@@ -2,7 +2,7 @@
 <window border="normal" width="100%" onCreate="isLogin()"
 	height="200%" apply="com.controladores.indexController" >
 	
-	<!--  obtener datos de la sesion -->
+	<!--  obtener datos de la sesion con usuarios -->
 	<zscript><![CDATA[
 	import com.entidades.*;
 	public void isLogin() {
