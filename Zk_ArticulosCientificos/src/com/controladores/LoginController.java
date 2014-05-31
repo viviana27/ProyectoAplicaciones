@@ -4,6 +4,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -22,7 +23,7 @@ public class LoginController extends GenericForwardComposer<Component> {
 	private Textbox textbox_Password;
 	private Label label_Mensaje;
 	private Label label_Mensajee;
-	public void onClick$button_Ingresar(){
+	public void onClick$button_Ingresar() throws WrongValueException, Exception{
 		//comprobar que el usuario existe.
 		//1. Comprobar que usuario ingreso datos
 		if(textbox_User.getValue().isEmpty() || textbox_Password.getValue().isEmpty()){
@@ -48,11 +49,13 @@ public class LoginController extends GenericForwardComposer<Component> {
 		
 			{
 			//datos no son correctos
-			label_Mensaje.setValue("Usuario y/o clave incorrectos");
+	     	alert("Usuario y/o clave incorrectos");
 		
 			}
 			}
 		}
-
+	public void onClick$button_Cancelar(){
+		Executions.sendRedirect("index-login.zul");
+	}
 
 }

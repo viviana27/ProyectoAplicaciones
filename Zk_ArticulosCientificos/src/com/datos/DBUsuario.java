@@ -1,5 +1,5 @@
 package com.datos;
-
+import com.seguridad.Encriptar;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +11,13 @@ import java.sql.Statement;
 import com.entidades.Persona;
 import com.entidades.Usuarios;
 
-
-
-
 public class DBUsuario {
-
+private String clave;
+Encriptar encrypt= new Encriptar();
 	//buscar usuario
-	public Usuarios buscarUsuario(String user, String password){
+
+
+	public Usuarios buscarUsuario(String user, String password) throws Exception{
 		Usuarios usuario=null;
 		//busqueda del usuario en la bd
 		//1. conectarme a la bd
@@ -26,38 +26,8 @@ public class DBUsuario {
 		if(con==null)return usuario;
 		Statement sentencia;
 		ResultSet resultados;
-		/*String query="SELECT *FROM tb_usuario as u,"
-		+ "u.usu_nombre='"+user+"' and "
-		+ "u.usu_clave= '"+password + "'";
-	
-		System.out.println(query);
-		try {
-		sentencia=con.createStatement();
-		resultados=sentencia.executeQuery(query);
-		
-		//RECORRER EL RESULTSET
-		while (resultados.next()){
-			usuario=new Usuarios();
-			usuario.setId(resultados.getInt("usu_id"));
-			usuario.setUsuario(resultados.getString("usu_nombre"));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally {
-			try {
-				//cerrar la conexion
-				con.close();
-			}catch(SQLException e){
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			}
-		return usuario;
-		
-		}*/
-		String query="Select * from tb_usuario as u, tb_persona as p where u.persona_id=p.per_id and u.usu_nombre='"+user+"'and u.usu_clave='"+password+"'";
+		clave=encrypt.hash(password);
+		String query="Select * from tb_usuario as u, tb_persona as p where u.persona_id=p.per_id and u.usu_nombre='"+user+"'and u.usu_clave='"+clave+"'";
 		System.out.println(query);
 		try {
 			sentencia=con.createStatement();
@@ -101,7 +71,7 @@ public class DBUsuario {
 		}
 	
 
-	public boolean crearUsuario(Usuarios usuario){
+	public boolean crearUsuario(Usuarios usuario) throws Exception{
 
 		boolean resultado=false;
 		//crear un objeto para la conexion
@@ -112,7 +82,7 @@ public class DBUsuario {
 			//por defecto es true asi q lo cambiamos
 			con.setAutoCommit(false);
 			String sql="INSERT INTO tb_persona (per_nombre, per_apellido, per_cedula, per_email, per_direccion, " +
-					"per_telefono, per_celular, per_institucion_pertenece, per_direccion_institucion, per_estado, usuar_id ) VAlUES (?,?,?,?,?,?,?,?,?,?,?)";
+					"per_telefono, per_celular, per_institucion_pertenece, per_direccion_institucion, per_estado) VAlUES (?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement pstm=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			Persona per=usuario.getPersona();
 			pstm.setString(1,per.getPer_nombre());
@@ -126,7 +96,6 @@ public class DBUsuario {
 			pstm.setString(9,per.getPer_direccion_institucion());
 			
 			pstm.setInt(10,1);
-			pstm.setInt(11,1);
 			//ejecutar el prepaaredStatement
 			//retorna el numero de filas afectadas o retorna 0 si no se pudo realizar
 			int num=pstm.executeUpdate();
@@ -135,13 +104,15 @@ public class DBUsuario {
 			if(rs.next()){
 				//obtener el IdPersona
 				int idPersona=rs.getInt(1);
-				sql ="INSERT INTO tb_usuario (usu_nombre, usu_clave, usu_estado, rol_id, persona_id ) VALUES (?,?,?,?,?)";
+				sql ="INSERT INTO tb_usuario (usu_nombre, usu_clave, usu_estado, persona_id,rol_id) VALUES (?,?,?,?,?)";
 				pstm=con.prepareStatement(sql);
 				pstm.setString(1, usuario.getUsuario());
-				pstm.setString(2, usuario.getClave());
+				clave=encrypt.hash(usuario.getClave()); 
+				pstm.setString(2, clave);
 				pstm.setInt(3, 1);
-				pstm.setInt(4, 1);
-				pstm.setInt(5, idPersona);
+				pstm.setInt(4, idPersona);
+				pstm.setInt(5, 1);
+				
 				
 				//ejecutar el Preparedsatatement
 				int num_filas_afectadas=pstm.executeUpdate();
@@ -210,8 +181,7 @@ public class DBUsuario {
 			while(resultados.next()){
 				usuario=new Usuarios();
 				usuario.setId(resultados.getInt("usu_id"));
-				usuario.setUsuario(resultados.getString("usu_nombre"));
-				
+				usuario.setUsuario(resultados.getString("usu_nombre"));	
 				Persona persona=new Persona();
 				persona.setPer_id(resultados.getInt("per_id"));
 				persona.setPer_nombre(resultados.getString("per_nombre"));

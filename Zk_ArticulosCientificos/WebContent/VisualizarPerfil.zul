@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Perfil" border="normal" width="600px" height="a00px">
+<window title="Perfil de la persona" border="normal" width="600px" height="a00px" id="winNuevoUsuario" apply="com.controladores.UsuarioController">
 
 
 <grid>
@@ -9,6 +9,16 @@
 				<column label="Dato" />
 			</columns>
 			<rows>
+			
+			<row>
+					<label value="Rol: "></label>
+					<combobox id="combo_rol" autodrop="true">
+						<template name="model">
+							<comboitem label="${each.rol_descripcion}"
+								value="${each.rol_id}" />
+						</template>
+					</combobox>
+				</row>
 				<row>
 					<label value="Nombre Usuario/a :"></label>
 					<textbox id="textbox_Usuario"
@@ -16,23 +26,20 @@
 					</textbox>
 				</row>
 				<row>
-					<label value=" Contraseña : "></label>
-					<textbox id="textbox_pass" 
-					constraint="no empty">
-					</textbox>
-				</row>
-				
-				<row>
-					<label value="Primer Nombre:"></label>
-					<textbox id="textbox_Pnombre"
+					<label value="Contraseña:"></label>
+					<textbox id="textbox_Password" type="password"
 						constraint="no empty">
 					</textbox>
 				</row>
-
 				<row>
-					<label value=" Apellidos : "></label>
-					<textbox id="textbox_Apellidos" 
-					constraint="no empty">
+					<label value="Primer Nombre:"></label>
+					<textbox id="textbox_Nombres"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Apellidos:"></label>
+					<textbox id="textbox_Apellidos" constraint="no empty">
 					</textbox>
 				</row>
 				<row>
@@ -46,29 +53,40 @@
 					<textbox id="textbox_Email" constraint="no empty"></textbox>
 				</row>
 				<row>
-					<label value="Direccion:"></label>
-					<textbox id="textbox_Direccion" constraint="no empty"></textbox>
-				</row>
-				<row>
-					<label value="Teléfono Convencional:"></label>
-					<textbox id="textbox_Telefono_Convencional" constraint="no empty"></textbox>
-				</row>
-				<row>
-					<label value="Celular: "></label>
-					<textbox id="textbox_Celular" 
-					constraint="no empty">
+					<label value="Dirección:"></label>
+					<textbox id="textbox_Direccion"
+						constraint="no empty">
 					</textbox>
 				</row>
 				<row>
-					<button label="Guardar" id="button_Guardar"
-						image="iconos/save.png">
-					</button>
-					<button label="Cancelar" id="button_Cancelar"
-						image="iconos/delete.png" onClick="winNuevoUsuario.detach()">
-					</button>
+					<label value="Teléfono Convencional:"></label>
+					<textbox id="textbox_Telefono" constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Celular:"></label>
+					<textbox id="textbox_celular" constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Institución a la que pertenece:"></label>
+					<textbox id="textbox_institucion">
+					</textbox>
+				</row>
+				<row>
+					<label value="Dirección de la Institución:"></label>
+					<textbox id="textbox_dirinstitucion">
+					</textbox>
+				</row>
+				<row>
+				<button label="Registrar" id="button_Registrar" image="Imagenes/save.png"></button>
+				<button label="Cancelar" id="button_Cancelar" image="Imagenes/delete.png" 
+				onClick="winNuevoUsuario.detach()"></button>
 				</row>
 			</rows>
 		</grid>
 
-</window>
+
+
+	</window>
 </zk>

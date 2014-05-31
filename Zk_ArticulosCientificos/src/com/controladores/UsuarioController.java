@@ -1,4 +1,7 @@
 package com.controladores;
+import java.awt.event.WindowAdapter;
+import java.util.List;
+
 import com.entidades.*;
 import com.datos.*;
 
@@ -6,10 +9,16 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+;
+
+
 public class UsuarioController extends GenericForwardComposer<Component> {
+	
 
 	private static final long serialVersionUID = 1L;
 	@Wire
@@ -24,14 +33,26 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 	private Textbox textbox_celular;
 	private Textbox textbox_institucion;
 	private Textbox textbox_dirinstitucion;
-
+	private Combobox combo_rol;
 	private Button button_Registrar;
 	private Window winNuevoUsuario;
 	private Usuarios u=null;
+/*	@Override
+	public void doAfterCompose(Component comp) throws Exception {
+		// TODO Auto-generated method stub
+		super.doAfterCompose(comp);
+		DBRoles dba=new DBRoles();
+		System.out.print("holaaaa soy yo");
+		List<Roles> lista=dba.buscarRoles();
+		if(lista!=null){
+			ListModelList<Roles> listModel=new ListModelList<Roles>(lista);
+			combo_rol.setModel(listModel);
+			System.out.print("holaaaa");
+		}
+		
+	}*/
 	
-	
-	
-	public void onClick$button_Registrar(){
+	public void onClick$button_Registrar() throws Exception{
 		boolean result=false;
 		DBUsuario dbusuarios=new DBUsuario();
 		//verificar si es nuevo usuario o usuario a editar
@@ -72,11 +93,12 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			if(opcion!=null && opcion.equals("listaUsuarios")){
 			//entonces la ventana ufe llamada desde lista usuarios
 				//cerrar ventana
-				winNuevoUsuario.detach();
+				
 				//actualizar la lista de usuarios
 				listaUsuarioController luc=(listaUsuarioController) winNuevoUsuario.getAttribute("controladorOrigen");
 				if(luc!=null) luc.actualizarLista();
 				//luc.actualizarLista();
+				winNuevoUsuario.detach();
 				
 			}
 			}
@@ -86,7 +108,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 		
 		
 	}
-	
+
 	public void onCreate$winNuevoUsuario(){
 		u=(Usuarios) winNuevoUsuario.getAttribute("usuario");
 		if(u!=null){
@@ -103,8 +125,6 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			
 		}					
 	}
-	
-	
-	
+		
 	
 }

@@ -79,7 +79,8 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 		}
 		
 		//crear ventana de nuevo usuario
-		Window win=(Window)Executions.createComponents("Usuarios/nuevoUsuario.zul", null, null);
+		//Window win=(Window)Executions.createComponents("Usuarios/nuevoUsuario.zul", null, null);
+		Window win=(Window)Executions.createComponents("VisualizarPerfil.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
 	//guardar atributos en ventana
