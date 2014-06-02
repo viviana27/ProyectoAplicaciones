@@ -1,5 +1,6 @@
 <?page title="Auto Generated index.zul"?>
 <window border="normal" width="100%" onCreate="isLogin()"
+<<<<<<< HEAD
 	height="200%" apply="com.controladores.indexController">
 	
 		<!--  obtener datos de sesion con usuarios dentro del index.zul-->
@@ -29,6 +30,38 @@
 		Executions.sendRedirect("index-login.zul");
 	}
 ]]></zscript>
+=======
+	height="200%" apply="com.controladores.indexController" >
+	
+	<!--  obtener datos de sesion con usuarios -->
+	<zscript><![CDATA[
+	import com.entidades.*;
+	public void isLogin() {
+		// Obtener la session actual
+		Session session = Sessions.getCurrent();
+		//Obtenemos el dato almacenado en la sesion
+		//String user= (String)session.getAttribute("User");
+		Usuarios user = (Usuarios) session.getAttribute("User");
+		if (user != null) {
+			label_User.setValue(user.getUsuario());
+		} else {
+
+			//si  no existe sesion la redirijimos a login
+			Executions.sendRedirect("login.zul");
+
+		}
+	}
+	public void cerrarSesion() {
+		//obtener la sesion 
+		Session session = Sessions.getCurrent();
+		//se destruye la sesion y borra la referencias a los objetos almacenado en sesio
+		session.invalidate();
+		//redirigira pagina de login
+		Executions.sendRedirect("index-login.zul");
+	}
+]]></zscript>
+	
+>>>>>>> refs/remotes/origin/master
 	
 	
 	<borderlayout width="100%" height="209%">
@@ -38,11 +71,21 @@
 					style="font-weight: bold; font-size: medium; color: #FFFFFF;">
 					BIENVENIDO/A:
 				</label>
+<<<<<<< HEAD
 				<label style="color:yellow;" id="label_User"></label>
+=======
+				
+				<label style="color:yellow;" id="label_User"></label>
+				<separator />
+>>>>>>> refs/remotes/origin/master
 				<label id="label_idUser" visible="false" />
 				<button style="float:right" id="button_cerrarSesion"
 					onClick="cerrarSesion()" label="Cerrar Sesion">
+<<<<<<< HEAD
 				</button><image src="./Imagenes/REVISTA.jpg" />
+=======
+				</button><image src="./Imagenes/REVISTA.jpg" /> 
+>>>>>>> refs/remotes/origin/master
 				<menubar id="menubar_opciones" sclass="right-arrow">
 				</menubar>
 				
@@ -57,4 +100,5 @@
 			<div></div>
 		</south>
 	</borderlayout>
-</window>
+	
+	</window>

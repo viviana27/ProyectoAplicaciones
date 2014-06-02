@@ -24,7 +24,7 @@ Encriptar encrypt= new Encriptar();
 		//1. conectarme a la bd
 		DBManager dbm=new DBManager();
 		Connection con=dbm.getConection();
-		if(con==null)return usuario;
+		
 		Statement sentencia;
 		ResultSet resultados;
 		clave=encrypt.hash(password);

@@ -10,23 +10,35 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Center;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Menu;
 import org.zkoss.zul.Menubar;
 import org.zkoss.zul.Menuitem;
 import org.zkoss.zul.Menupopup;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import com.datos.DBUsuario;
+import com.entidades.Usuarios;
 
 public class indexloginController extends GenericForwardComposer<Component> {
 	private static final long serialVersionUID = 1L;
 	// enlazamos los componentes de la vista con variables de referencia
 	@Wire
+	private Textbox textbox_User;
+	private Textbox textbox_Password;
+	private Label label_Mensaje;
 	Menubar menubar_opciones1;
 	Center centro;
 	//mensaje para boton
-	Button button_ingresar;
+	Button button_Ingresar;
+	Button button_Cancelar;
+	Window windlogin;
 
 	// se ejecuta cuando se produce el evento oncreate de la ventana winindex
 	public void onCreate$winindex() {
@@ -97,9 +109,50 @@ public class indexloginController extends GenericForwardComposer<Component> {
 		}
 
 	}
-	
+
 	public void onClick$button_Ingresar() {
-		Executions.sendRedirect("index.zul");
+		// comprobar que el usuario existe.
+		// 1. Comprobar que usuario ingreso datos
+		if (textbox_User.getValue().isEmpty()
+				|| textbox_Password.getValue().isEmpty()) {
+			alert("campos requeridos");
+			// evaluar si datos son correctos
+		} else {
+			DBUsuario dbusuario = new DBUsuario();
+			Usuarios usuario=null;
+			try {
+				usuario = dbusuario.buscarUsuario(textbox_User.getValue(),
+						textbox_Password.getValue());
+			} catch (WrongValueException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (usuario != null) {
+
+				// almacenar datos del usuario en la sesion
+				Session session;
+				session = Sessions.getCurrent();
+				// guardar objeto usuario en la session
+				session.setAttribute("User", usuario);
+				
+				// Redirreccionar a la pagina principal
+
+				Executions.sendRedirect("index.zul");
+
+			} else
+
+			{
+				// datos no son correctos
+				alert("datos incorrectos");
+
+			}
+		}
 	}
 
+	public void onClick$button_Cancelar(){
+		Executions.sendRedirect("index-login.zul");
+	}
 }
