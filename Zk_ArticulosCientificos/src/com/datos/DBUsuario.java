@@ -18,7 +18,7 @@ Encriptar encrypt= new Encriptar();
 	//buscar usuario
 
 
-	public Usuarios buscarUsuario(String user, String password) throws Exception{
+	public Usuarios buscarUsuario(String user, String password) {
 		Usuarios usuario=null;
 		//busqueda del usuario en la bd
 		//1. conectarme a la bd
@@ -27,7 +27,13 @@ Encriptar encrypt= new Encriptar();
 		
 		Statement sentencia;
 		ResultSet resultados;
-		clave=encrypt.hash(password);
+		try {
+			clave=encrypt.hash(password);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			
+		}
 		String query="Select * from tb_usuario as u, tb_persona as p, tb_rol as r where " +
 				"u.persona_id=p.per_id and u.rol_id_usuario=r.rol_id and" +
 				" u.usu_nombre='"+user+"'and u.usu_clave='"+clave+"' order by r.rol_descripcion";

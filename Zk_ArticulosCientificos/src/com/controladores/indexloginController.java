@@ -120,16 +120,9 @@ public class indexloginController extends GenericForwardComposer<Component> {
 		} else {
 			DBUsuario dbusuario = new DBUsuario();
 			Usuarios usuario=null;
-			try {
 				usuario = dbusuario.buscarUsuario(textbox_User.getValue(),
 						textbox_Password.getValue());
-			} catch (WrongValueException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			if (usuario != null) {
 
 				// almacenar datos del usuario en la sesion

@@ -2,7 +2,7 @@
 <zk>
 	<window title="Ingreso al sistema" border="normal" width="350px" id= "windlogin"
 		height="200px" position="center,center" mode="modal"
-		apply="com.controladores.LoginController">
+		apply="com.controladores.indexloginController">
 		<grid>
 			<columns>
 				<column label="" />
