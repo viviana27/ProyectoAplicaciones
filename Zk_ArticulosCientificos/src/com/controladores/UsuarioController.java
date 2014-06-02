@@ -1,5 +1,7 @@
 package com.controladores;
 
+import java.util.List;
+
 import com.entidades.*;
 import com.datos.*;
 
@@ -10,11 +12,13 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Label;
+import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 public class UsuarioController extends GenericForwardComposer<Component> {
-
 	private static final long serialVersionUID = 1L;
 	@Wire
 	private Textbox textbox_Usuario;
@@ -35,7 +39,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 
 	public void onCreate$winVerUsuario() {
 		Session session = Sessions.getCurrent();
-		Usuarios u = (Usuarios) session.getAttribute("user");
+		Usuarios u = (Usuarios) session.getAttribute("User");
 		if (u != null) {
 			textbox_Usuario.setText(u.getUsuario());
 			textbox_Nombres.setText(u.getPersona().getPer_nombre());
@@ -53,12 +57,12 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			alert("Error al obtener información");
 	}
 
-	public void onClick$button_Registrar() {
-		boolean result = false;
-		DBUsuario dbusuarios = new DBUsuario();
-		// verificar si es nuevo usuario o usuario a editar
-		if (u != null) {
-			// existe estoy editando
+	public void onClick$button_Registrar() throws Exception{
+		boolean result=false;
+		DBUsuario dbusuarios=new DBUsuario();
+		//verificar si es nuevo usuario o usuario a editar
+		if(u!=null){
+			//existe estoy editando
 			u.setUsuario(textbox_Usuario.getValue());
 			u.setClave(textbox_Password.getValue());
 			u.getPersona().setPer_nombre(textbox_Nombres.getValue());
@@ -68,52 +72,48 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			u.getPersona().setPer_direccion(textbox_Direccion.getValue());
 			u.getPersona().setPer_telefono(textbox_Telefono.getValue());
 			u.getPersona().setPer_celular(textbox_celular.getValue());
-			u.getPersona().setPer_institucion_pertenece(
-					textbox_institucion.getValue());
-			u.getPersona().setPer_direccion_institucion(
-					textbox_dirinstitucion.getValue());
-			// llamo al metodo para actualizar los datos
-			result = dbusuarios.actualizarUsuario(u);
-
-		} else {
-			// no existe, es nuevo
-			// llamar a la capa logica de datos
-			// DBUsuarios dbusuarios=new DBUsuarios();
-			Persona persona = new Persona(0, textbox_Nombres.getValue(),
-					textbox_Apellidos.getValue(), textbox_Cedula.getValue(),
-					textbox_Email.getValue(), textbox_Direccion.getValue(),
-					textbox_Telefono.getValue(), textbox_celular.getValue(),
-					textbox_institucion.getValue(),
-					textbox_dirinstitucion.getValue());
-			Usuarios usuario = new Usuarios(0, textbox_Usuario.getValue(),
-					persona);
-			usuario.setClave(textbox_Password.getValue());
-
-			result = dbusuarios.crearUsuario(usuario);
+			u.getPersona().setPer_institucion_pertenece(textbox_institucion.getValue());
+			u.getPersona().setPer_direccion_institucion(textbox_dirinstitucion.getValue());
+			//llamo al metodo para actualizar los datos
+			result=dbusuarios.actualizarUsuario(u);
+			
+		}else{
+			//no existe, es nuevo
+			//llamar a la capa logica de datos
+			//DBUsuarios dbusuarios=new DBUsuarios();
+			Persona persona= new Persona(0,textbox_Nombres.getValue(),textbox_Apellidos.getValue(),textbox_Cedula.getValue(),
+					textbox_Email.getValue(),textbox_Direccion.getValue(),textbox_Telefono.getValue(),textbox_celular.getValue(),
+					textbox_institucion.getValue(),textbox_dirinstitucion.getValue());
+			Usuarios usuario=new Usuarios(0,textbox_Usuario.getValue(),textbox_Password.getValue(), 1, persona,2);
+			//usuario.setClave(textbox_Password.getValue());
+			
+		result=dbusuarios.crearUsuario(usuario);
 		}
-
-		if (result) {
+			
+		if(result)
+		{
 			alert("Usuario registrado con exito");
-			// evaluar desde donde fue llamada esta ventana
-			String opcion = (String) winNuevoUsuario.getAttribute("opcion");
-			if (opcion != null && opcion.equals("listaUsuarios")) {
-				// entonces la ventana ufe llamada desde lista usuarios
-				// cerrar ventana
+			//evaluar desde donde fue llamada esta ventana
+			String opcion=(String)winNuevoUsuario.getAttribute("opcion");
+			if(opcion!=null && opcion.equals("listaUsuarios")){
+			//entonces la ventana ufe llamada desde lista usuarios
+				//cerrar ventana
+				
+				//actualizar la lista de usuarios
+				listaUsuarioController luc=(listaUsuarioController) winNuevoUsuario.getAttribute("controladorOrigen");
+				if(luc!=null) luc.actualizarLista();
+				//luc.actualizarLista();
 				winNuevoUsuario.detach();
-				// actualizar la lista de usuarios
-				listaUsuarioController luc = (listaUsuarioController) winNuevoUsuario
-						.getAttribute("controladorOrigen");
-				if (luc != null)
-					luc.actualizarLista();
-				// luc.actualizarLista();
-
+				
 			}
-		} else {
+			}
+		else {
 			alert("No se pudo realizar el registro");
-		}
-
+			}
+		
+		
 	}
-
+	
 	public void onCreate$winNuevoUsuario() {
 		u = (Usuarios) winNuevoUsuario.getAttribute("usuario");
 		if (u != null) {

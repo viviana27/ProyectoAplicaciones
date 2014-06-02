@@ -13,7 +13,7 @@
 					<textbox id="textbox_rol"
 						constraint="no empty" />
 				</row>
-				<row>
+			    <row>
 					<label value="Estado:" />
 					<checkbox id="check_estado" />
 				</row>

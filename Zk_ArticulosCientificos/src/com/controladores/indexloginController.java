@@ -1,5 +1,9 @@
 package com.controladores;
 
+import java.util.ArrayList;
+
+import javax.persistence.EntityManager;
+
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -8,8 +12,10 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Center;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Menu;
 import org.zkoss.zul.Menubar;
 import org.zkoss.zul.Menuitem;
@@ -24,12 +30,15 @@ public class indexloginController extends GenericForwardComposer<Component> {
 	private static final long serialVersionUID = 1L;
 	// enlazamos los componentes de la vista con variables de referencia
 	@Wire
+	private Textbox textbox_User;
+	private Textbox textbox_Password;
+	private Label label_Mensaje;
 	Menubar menubar_opciones1;
 	Center centro;
 	// mensaje para boton
-	Button button_ingresar;
-	private Textbox textbox_User;
-	private Textbox textbox_Password;
+	Button button_Ingresar;
+	Button button_Cancelar;
+	Window windlogin;
 
 	// se ejecuta cuando se produce el evento oncreate de la ventana winindex
 	public void onCreate$winindex() {
@@ -102,30 +111,41 @@ public class indexloginController extends GenericForwardComposer<Component> {
 	}
 
 	public void onClick$button_Ingresar() {
-		// comprobar que el usuario existe. 
+		
+		// comprobar que el usuario existe.
+		// 1. Comprobar que usuario ingreso datos
 		if (textbox_User.getValue().isEmpty()
 				|| textbox_Password.getValue().isEmpty()) {
-			//Comprobar que usuario ingreso datos
-			alert("Usuario y Clave son requeridos");
-		} else {
+			alert("campos requeridos");
 			// evaluar si datos son correctos
+		} else {
 			DBUsuario dbusuario = new DBUsuario();
-			Usuarios usuario = dbusuario.buscarUsuario(textbox_User.getValue(),
+			Usuarios usuario = null;
+			usuario = dbusuario.buscarUsuario(textbox_User.getValue(),
 					textbox_Password.getValue());
+
 			if (usuario != null) {
+
+				// almacenar datos del usuario en la sesion
 				Session session;
-				// obtener session
 				session = Sessions.getCurrent();
-				// guardar datos en session
-				session.setAttribute("user", usuario);
-				//enlazar a la pantalla principal
+				// guardar objeto usuario en la session
+				session.setAttribute("User", usuario);
+				// Redirreccionar a la pagina principal
+				
 				Executions.sendRedirect("index.zul");
+
 			} else
+
 			{
 				// datos no son correctos
-				alert("Usuario y/o clave incorrectos");
+				alert("datos incorrectos");
+
 			}
 		}
 	}
 
+	public void onClick$button_Cancelar() {
+		Executions.sendRedirect("index-login.zul");
+	}
 }

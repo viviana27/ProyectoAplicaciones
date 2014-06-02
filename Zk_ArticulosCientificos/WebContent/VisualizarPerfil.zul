@@ -1,0 +1,108 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Perfil de la persona" border="normal" width="600px"
+		height="a00px" id="winNuevoUsuario"
+		apply="com.controladores.PersonaController">
+
+
+		<grid>
+			<columns>
+				<column label="Etiqueta" />
+				<column label="Datos" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Rol:"></label>
+					<combobox id="combo_rol" width="110px">
+						<template name="model">
+							<comboitem label="${each.rol_descripcion}"
+								value="${each}" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label id="lblidrol" visible="false"
+						width="300px">
+					</label>
+
+				</row>
+				<row>
+					<label value="Nombre Usuario/a :"></label>
+					<textbox id="textbox_Usuario"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Contraseña:"></label>
+					<textbox id="textbox_Password" type="password"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Primer Nombre:"></label>
+					<textbox id="textbox_Nombres"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Apellidos:"></label>
+					<textbox id="textbox_Apellidos"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Cédula:"></label>
+					<textbox id="textbox_Cedula"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="E-mail:"></label>
+					<textbox id="textbox_Email" width="200px"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Dirección:"></label>
+					<textbox id="textbox_Direccion"
+						constraint="no empty" width="200px">
+					</textbox>
+				</row>
+				<row>
+					<label value="Teléfono Convencional:"></label>
+					<textbox id="textbox_Telefono"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Celular:"></label>
+					<textbox id="textbox_celular"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Institución a la que pertenece:"></label>
+					<textbox id="textbox_institucion" width="200px">
+					</textbox>
+				</row>
+				<row>
+					<label value="Dirección de la Institución:"></label>
+					<textbox id="textbox_dirinstitucion"
+						width="200px">
+					</textbox>
+				</row>
+				<row>
+					<button label="Registrar" id="button_Registrar"
+						image="Imagenes/save.png">
+					</button>
+					<button label="Cancelar" id="button_Cancelar"
+						image="Imagenes/delete.png" onClick="winNuevoUsuario.detach()">
+					</button>
+				</row>
+			</rows>
+		</grid>
+
+
+
+	</window>
+</zk>

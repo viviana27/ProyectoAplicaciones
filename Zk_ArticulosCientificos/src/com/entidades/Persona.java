@@ -17,7 +17,7 @@ public class Persona {
 	//constructor por defecto
 		public Persona(){}
 		//constructor con parametros
-		public Persona(int per_id, String per_nombre, String per_apellido, String per_cedula,String email,
+		public Persona(int per_id, String per_nombre, String per_apellido, String per_cedula,String per_email,
 				String per_direccion , String per_telefono, String per_celular, String per_institucion_pertenece, 
 				String per_direccion_institucion) {
 			super();

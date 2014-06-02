@@ -1,17 +1,25 @@
 package com.controladores;
 
+import org.jfree.text.TextBox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Center;
 import org.zkoss.zul.Menu;
 import org.zkoss.zul.Menubar;
 import org.zkoss.zul.Menuitem;
 import org.zkoss.zul.Menupopup;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
+
+import com.datos.DBUsuario;
+import com.entidades.Usuarios;
 
 
 public class indexController extends GenericForwardComposer<Component> {
@@ -32,8 +40,7 @@ public class indexController extends GenericForwardComposer<Component> {
 		Menupopup menupopup = new Menupopup();
 		Menuitem menuitemR1 = new Menuitem("Registrar Nuevo Usuario");
 		Menuitem menuitemR2 = new Menuitem("Listar Usuarios");
-		//menuitemR1.setValue("VisualizarPerfil.zul");
-		menuitemR1.setValue("Usuarios/nuevoUsuario.zul");
+		menuitemR1.setValue("Usuarios/verUsuario.zul");
 		//menuitemR2.setValue("listaUsuarios.zul");
 		menuitemR2.setValue("Usuarios/listaUsuarios.zul");
 		menuitemR1.addEventListener("onClick", new MenuListener());
@@ -124,6 +131,15 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuN.appendChild(menupopupN);
 		menubar_opciones.appendChild(menuN);
 	}
+	
+
+	@Wire
+	private Textbox textbox_User;
+	private Textbox textbox_Password;
+	Button button_Ingresar;
+	Button button_Cancelar;
+	
+	
 	class MenuListener implements EventListener {
 		// metodo que se ejecute cuando se produce el evento
 		@Override

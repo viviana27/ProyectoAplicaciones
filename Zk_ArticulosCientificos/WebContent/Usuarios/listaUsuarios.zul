@@ -36,6 +36,7 @@ apply="com.controladores.listaUsuarioController">
 				<listheader label="Celular" sort="auto(persona.per_celular)" />
 				<listheader label="Institucion_pertenece" sort="auto(persona.per_institucion_pertenece)" />
 				<listheader label="Direccion_pertenece" sort="auto(persona.per_direccion_institucion)" />
+				<listheader label="Rol" sort="auto(rol_descripcion)" />
 			</listhead>
 			<template name="model">
 				<listitem value="${each}">
@@ -49,6 +50,7 @@ apply="com.controladores.listaUsuarioController">
 					<listcell label="${each.persona.per_celular}"></listcell>
 					<listcell label="${each.persona.per_institucion_pertenece}"></listcell>
 					<listcell label="${each.persona.per_direccion_institucion}"></listcell>
+					<listcell label="${each.rol_descripcion}" />
 					
 					</listitem>
 			</template>
