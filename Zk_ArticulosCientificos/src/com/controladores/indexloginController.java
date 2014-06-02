@@ -1,23 +1,24 @@
 package com.controladores;
 
-import java.util.ArrayList;
-
-import javax.persistence.EntityManager;
-
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Center;
 import org.zkoss.zul.Menu;
 import org.zkoss.zul.Menubar;
 import org.zkoss.zul.Menuitem;
 import org.zkoss.zul.Menupopup;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import com.datos.DBUsuario;
+import com.entidades.Usuarios;
 
 public class indexloginController extends GenericForwardComposer<Component> {
 	private static final long serialVersionUID = 1L;
@@ -25,8 +26,10 @@ public class indexloginController extends GenericForwardComposer<Component> {
 	@Wire
 	Menubar menubar_opciones1;
 	Center centro;
-	//mensaje para boton
+	// mensaje para boton
 	Button button_ingresar;
+	private Textbox textbox_User;
+	private Textbox textbox_Password;
 
 	// se ejecuta cuando se produce el evento oncreate de la ventana winindex
 	public void onCreate$winindex() {
@@ -64,7 +67,7 @@ public class indexloginController extends GenericForwardComposer<Component> {
 		Menupopup menupopupR1 = new Menupopup();
 		Menuitem menuitemR1 = new Menuitem("Registrarse");
 		Menuitem menuitemR2 = new Menuitem("Iniciar Sesión");
-		//menuitemR1.setValue("VisualizarPerfil.zul");
+		// menuitemR1.setValue("VisualizarPerfil.zul");
 		menuitemR1.setValue("Usuarios/nuevoUsuario.zul");
 		menuitemR2.setValue("login.zul");
 		menuitemR1.setImage("imagenes/listarReser.png");
@@ -97,9 +100,32 @@ public class indexloginController extends GenericForwardComposer<Component> {
 		}
 
 	}
-	
+
 	public void onClick$button_Ingresar() {
-		Executions.sendRedirect("index.zul");
+		// comprobar que el usuario existe. 
+		if (textbox_User.getValue().isEmpty()
+				|| textbox_Password.getValue().isEmpty()) {
+			//Comprobar que usuario ingreso datos
+			alert("Usuario y Clave son requeridos");
+		} else {
+			// evaluar si datos son correctos
+			DBUsuario dbusuario = new DBUsuario();
+			Usuarios usuario = dbusuario.buscarUsuario(textbox_User.getValue(),
+					textbox_Password.getValue());
+			if (usuario != null) {
+				Session session;
+				// obtener session
+				session = Sessions.getCurrent();
+				// guardar datos en session
+				session.setAttribute("user", usuario);
+				//enlazar a la pantalla principal
+				Executions.sendRedirect("index.zul");
+			} else
+			{
+				// datos no son correctos
+				alert("Usuario y/o clave incorrectos");
+			}
+		}
 	}
 
 }

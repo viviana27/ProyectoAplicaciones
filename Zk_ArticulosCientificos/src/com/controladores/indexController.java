@@ -48,7 +48,7 @@ public class indexController extends GenericForwardComposer<Component> {
 		Menuitem menuitemP1 = new Menuitem("Visualizar Perfil");
 		Menuitem menuitemP2 = new Menuitem("Cambiar Contraseña");
 		//menuitemP1.setValue("VisualizarPerfil.zul");
-		menuitemR1.setValue("Usuarios/nuevoUsuario.zul");
+		menuitemP1.setValue("Usuarios/verUsuario.zul");
 		menuitemP2.setValue("");
 		menuitemP1.addEventListener("onClick", new MenuListener());
 		menuitemP2.addEventListener("onClick", new MenuListener());
