@@ -5,6 +5,8 @@ import com.entidades.*;
 import com.datos.*;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
@@ -31,6 +33,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 	private Textbox textbox_dirinstitucion;
 	private Button button_Registrar;
 	private Window winNuevoUsuario;
+	private Window winVerUsuario;
 	private Usuarios u=null;
 
 	
@@ -89,6 +92,26 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			}
 		
 		
+	}
+	
+	public void onCreate$winVerUsuario() {
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		if (u != null) {
+			textbox_Usuario.setText(u.getUsuario());
+			textbox_Nombres.setText(u.getPersona().getPer_nombre());
+			textbox_Apellidos.setText(u.getPersona().getPer_apellido());
+			textbox_Cedula.setText(u.getPersona().getPer_cedula());
+			textbox_Email.setText(u.getPersona().getPer_email());
+			textbox_Direccion.setText(u.getPersona().getPer_direccion());
+			textbox_Telefono.setText(u.getPersona().getPer_telefono());
+			textbox_celular.setText(u.getPersona().getPer_celular());
+			textbox_institucion.setText(u.getPersona()
+					.getPer_institucion_pertenece());
+			textbox_dirinstitucion.setText(u.getPersona()
+					.getPer_direccion_institucion());
+		} else
+			alert("Error al obtener información");
 	}
 	
 	public void onCreate$winNuevoUsuario(){

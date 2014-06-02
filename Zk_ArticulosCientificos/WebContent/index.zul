@@ -16,7 +16,7 @@
 		} else {
 
 			//si  no existe sesion la redirijimos a login
-			Executions.sendRedirect("login.zul");
+			Executions.sendRedirect("index-login.zul");
 
 		}
 	}
