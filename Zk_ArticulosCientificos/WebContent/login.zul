@@ -10,16 +10,6 @@
 			</columns>
 			<rows>
 				<row>
-					<label value="Rol: "></label>
-					<combobox id="combo_rol" autodrop="true">
-						<template name="model">
-							<comboitem label="${each.rol_descripcion}"
-								value="${each.rol_id}" />
-						</template>
-					</combobox>
-					<label id="lblDescripcion"> </label>
-				</row>
-				<row>
 					<label value="Usuario: " />
 					<textbox id="textbox_User" constraint="no empty" />
 				</row>

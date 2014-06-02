@@ -1,11 +1,10 @@
 package com.controladores;
-import java.util.List;
 
-import com.entidades.*;
-import com.datos.*;
+import java.util.List;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.select.impl.ParseException;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
@@ -14,8 +13,12 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import com.datos.DBUsuario;
+import com.entidades.Persona;
+import com.entidades.Roles;
+import com.entidades.Usuarios;
 
-public class UsuarioController extends GenericForwardComposer<Component> {
+public class PersonaController extends GenericForwardComposer<Component> {
 	private static final long serialVersionUID = 1L;
 	@Wire
 	private Textbox textbox_Usuario;
@@ -29,11 +32,22 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 	private Textbox textbox_celular;
 	private Textbox textbox_institucion;
 	private Textbox textbox_dirinstitucion;
+	private Combobox combo_rol;
+	private Label lblidrol;
 	private Button button_Registrar;
 	private Window winNuevoUsuario;
 	private Usuarios u=null;
-
-	
+	public void doAfterCompose(Component comp) throws Exception {
+		// TODO Auto-generated method stub
+		super.doAfterCompose(comp);
+		DBUsuario dbr=new DBUsuario();
+		List<Usuarios> lista=dbr.buscarRoles();
+    	if(lista!=null){
+			ListModelList<Usuarios> listModel=new ListModelList<Usuarios>(lista);
+			combo_rol.setModel(listModel);
+			
+	}		
+	}	
 	public void onClick$button_Registrar() throws Exception{
 		boolean result=false;
 		DBUsuario dbusuarios=new DBUsuario();
@@ -51,6 +65,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			u.getPersona().setPer_celular(textbox_celular.getValue());
 			u.getPersona().setPer_institucion_pertenece(textbox_institucion.getValue());
 			u.getPersona().setPer_direccion_institucion(textbox_dirinstitucion.getValue());
+			u.setId_rol(Integer.parseInt(lblidrol.getValue()));
 			//llamo al metodo para actualizar los datos
 			result=dbusuarios.actualizarUsuario(u);
 			
@@ -61,7 +76,8 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			Persona persona= new Persona(0,textbox_Nombres.getValue(),textbox_Apellidos.getValue(),textbox_Cedula.getValue(),
 					textbox_Email.getValue(),textbox_Direccion.getValue(),textbox_Telefono.getValue(),textbox_celular.getValue(),
 					textbox_institucion.getValue(),textbox_dirinstitucion.getValue());
-			Usuarios usuario=new Usuarios(0,textbox_Usuario.getValue(),textbox_Password.getValue(), 1, persona,2);
+			Usuarios usuario=new Usuarios(0,textbox_Usuario.getValue(),textbox_Password.getValue(), 1, persona,
+					Integer.parseInt(lblidrol.getValue()));
 			//usuario.setClave(textbox_Password.getValue());
 			
 		result=dbusuarios.crearUsuario(usuario);
@@ -90,7 +106,18 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 		
 		
 	}
-	
+	public void onSelect$combo_rol(){
+		Usuarios usu=(Usuarios)combo_rol.getSelectedItem().getValue();
+		System.out.println("hola"+combo_rol.getSelectedItem().getValue());
+		if(usu!=null){
+			String id=null;
+			id=Integer.toString(usu.getId_rol());
+			System.out.print("hola"+id);
+			lblidrol.setValue(id);
+			
+			
+		}
+	}
 	public void onCreate$winNuevoUsuario(){
 		u=(Usuarios) winNuevoUsuario.getAttribute("usuario");
 		if(u!=null){
@@ -104,7 +131,10 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			textbox_celular.setText(u.getPersona().getPer_celular());
 			textbox_institucion.setText(u.getPersona().getPer_institucion_pertenece());
 			textbox_dirinstitucion.setText(u.getPersona().getPer_direccion_institucion());
-			
+			combo_rol.setValue(u.getRol_descripcion());
+			String id= null;
+			id=Integer.toString(u.getId_rol());
+			lblidrol.setValue(id);
 		}					
 	}
 		

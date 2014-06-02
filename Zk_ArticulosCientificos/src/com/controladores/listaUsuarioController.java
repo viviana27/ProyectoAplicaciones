@@ -42,6 +42,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 	public void onClick$toolbarbutton_Nuevo(){
 		//crear ventana de nuevo usuario
 		Window win=(Window)Executions.createComponents("Usuarios/nuevoUsuario.zul", null, null);
+		//Window win=(Window)Executions.createComponents("VisualizarPerfil.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
 	//guardar atributos en ventana
@@ -117,7 +118,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 		});
 		
 		//if(confirmacion){
-		Usuarios u=(Usuarios)listbox_Miembros.getSelectedItem().getValue();
+	Usuarios u=(Usuarios)listbox_Miembros.getSelectedItem().getValue();
 	DBUsuario user=new DBUsuario();
 	result=user.eliminarUsuario(u);
 	if (result!=false){

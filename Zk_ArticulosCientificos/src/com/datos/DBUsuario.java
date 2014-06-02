@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.entidades.Persona;
+import com.entidades.Roles;
 import com.entidades.Usuarios;
 
 public class DBUsuario {
@@ -27,7 +28,9 @@ Encriptar encrypt= new Encriptar();
 		Statement sentencia;
 		ResultSet resultados;
 		clave=encrypt.hash(password);
-		String query="Select * from tb_usuario as u, tb_persona as p where u.persona_id=p.per_id and u.usu_nombre='"+user+"'and u.usu_clave='"+clave+"'";
+		String query="Select * from tb_usuario as u, tb_persona as p, tb_rol as r where " +
+				"u.persona_id=p.per_id and u.rol_id_usuario=r.rol_id and" +
+				" u.usu_nombre='"+user+"'and u.usu_clave='"+clave+"' order by r.rol_descripcion";
 		System.out.println(query);
 		try {
 			sentencia=con.createStatement();
@@ -48,7 +51,7 @@ Encriptar encrypt= new Encriptar();
 				persona.setPer_institucion_pertenece(resultados.getString("per_institucion_pertenece"));
 				persona.setPer_direccion_institucion(resultados.getString("per_direccion_institucion"));
 				persona.setPer_id(resultados.getInt("per_id"));
-				
+				usuario.setId_rol(resultados.getInt("rol_id"));
 				usuario.setPersona(persona);
 			}
 			
@@ -82,7 +85,8 @@ Encriptar encrypt= new Encriptar();
 			//por defecto es true asi q lo cambiamos
 			con.setAutoCommit(false);
 			String sql="INSERT INTO tb_persona (per_nombre, per_apellido, per_cedula, per_email, per_direccion, " +
-					"per_telefono, per_celular, per_institucion_pertenece, per_direccion_institucion, per_estado) VAlUES (?,?,?,?,?,?,?,?,?,?)";
+					"per_telefono, per_celular, per_institucion_pertenece, per_direccion_institucion, per_estado)" +
+					" VAlUES (?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement pstm=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			Persona per=usuario.getPersona();
 			pstm.setString(1,per.getPer_nombre());
@@ -104,14 +108,14 @@ Encriptar encrypt= new Encriptar();
 			if(rs.next()){
 				//obtener el IdPersona
 				int idPersona=rs.getInt(1);
-				sql ="INSERT INTO tb_usuario (usu_nombre, usu_clave, usu_estado, persona_id,rol_id) VALUES (?,?,?,?,?)";
+				sql ="INSERT INTO tb_usuario (usu_nombre, usu_clave, usu_estado, persona_id,rol_id_usuario) VALUES (?,?,?,?,?)";
 				pstm=con.prepareStatement(sql);
 				pstm.setString(1, usuario.getUsuario());
 				clave=encrypt.hash(usuario.getClave()); 
 				pstm.setString(2, clave);
 				pstm.setInt(3, 1);
 				pstm.setInt(4, idPersona);
-				pstm.setInt(5, 1);
+				pstm.setInt(5, 2);
 				
 				
 				//ejecutar el Preparedsatatement
@@ -159,9 +163,14 @@ Encriptar encrypt= new Encriptar();
 		
 		String sql="";
 		if (criterio.equals("")) {
-			sql = "SELECT * FROM tb_usuario as u, tb_persona as p WHERE u.usu_estado=1 and p.per_estado=1 and u.persona_id=p.per_id group by p.per_id order by p.per_apellido";
+			sql = "SELECT * FROM tb_usuario as u, tb_persona as p, tb_rol as r" +
+					" WHERE u.usu_estado=1 and p.per_estado=1 and r.rol_estado=1 and u.persona_id=p.per_id" +
+					" and u.rol_id_usuario=r.rol_id group by p.per_id order by p.per_apellido";
+			System.out.println("ddff"+sql);
 		} else {
-			sql = "SELECT * FROM tb_usuario as u, tb_persona as p WHERE u.usu_estado=1 and p.per_estado=1 and u.persona_id=p.per_id and (u.usu_nombre like '%"
+			sql = "SELECT * FROM tb_usuario as u, tb_persona as p, tb_rol as r " +
+					"WHERE u.usu_estado=1 and p.per_estado=1 and r.rol_estado=1 and u.persona_id=p.per_id" +
+					" and u.rol_id_usuario=r.rol_id and (u.usu_nombre like '%"
 					+ criterio
 					+ "%' or p.per_apellido like '%"
 					+ criterio
@@ -193,6 +202,7 @@ Encriptar encrypt= new Encriptar();
 				persona.setPer_celular(resultados.getString("per_celular"));
 				persona.setPer_institucion_pertenece(resultados.getString("per_institucion_pertenece"));
 				persona.setPer_direccion_institucion(resultados.getString("per_direccion_institucion"));
+				usuario.setRol_descripcion(resultados.getString("rol_descripcion"));
 				usuario.setPersona(persona);
 				//agrego usuario con datos cargados desde la base a mi lista de usuarios
 				lista.add(usuario);
@@ -216,7 +226,7 @@ Encriptar encrypt= new Encriptar();
 	}
 	
 	
-	public boolean actualizarUsuario(Usuarios usuario){
+	public boolean actualizarUsuario(Usuarios usuario) throws Exception{
 
 		boolean resultado=false;
 		//crear un objeto para la conexion
@@ -250,7 +260,9 @@ Encriptar encrypt= new Encriptar();
 						+"WHERE usu_id=?";
 				pstm=con.prepareStatement(sql);
 				pstm.setString(1, usuario.getUsuario());
-				pstm.setString(2, usuario.getClave());
+				clave=encrypt.hash(usuario.getClave());
+				pstm.setString(2, clave);
+				System.out.print("clave"+clave);
 				pstm.setInt(3, usuario.getId());
 				//ejecutar el Preparedsatatement
 				int num_filas_afectadas=pstm.executeUpdate();
@@ -317,5 +329,49 @@ Encriptar encrypt= new Encriptar();
 		return result;
 		
 	}
+	
+	
+	public List<Usuarios> buscarRoles(){
+		//objeto a retornar es una lista
+		List<Usuarios> lista =new ArrayList<Usuarios>();
+		Usuarios rol=null;
+			//objeto conexion
+			Connection con=null;
+			Statement sentencia=null;
+			ResultSet resultados=null;
+			DBManager dbm=new DBManager();
+			con=dbm.getConection();
+			try {
+				sentencia = con.createStatement();
+				//String sql="Select * from tb_rol where rol_estado=1";
+				String sql="Select * from tb_rol";
+				resultados=sentencia.executeQuery(sql);		
+				while(resultados.next()){
+				
+					rol=new Usuarios();
+					rol.setId_rol(resultados.getInt("rol_id"));
+					rol.setRol_descripcion(resultados.getString("rol_descripcion"));
+					//agregar actividades a mi lista
+					String id=null;
+					id=Integer.toString(rol.getId_rol());
+					System.out.print("si"  +id);
+					lista.add(rol);
+				
+					
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return lista;
+		}
+	
+	
+	
+	
+	
+	
 
 }

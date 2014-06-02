@@ -38,7 +38,7 @@
 				</row>
 				<row>
 					<label value="Email:"></label>
-					<textbox id="textbox_Email" constraint="no empty"></textbox>
+					<textbox id="textbox_Email" constraint="no empty" width="200px" ></textbox>
 				</row>
 				<row>
 					<label value="Dirección:"></label>
@@ -58,12 +58,12 @@
 				</row>
 				<row>
 					<label value="Institución a la que pertenece:"></label>
-					<textbox id="textbox_institucion">
+					<textbox id="textbox_institucion" width="200px" >
 					</textbox>
 				</row>
 				<row>
 					<label value="Dirección de la Institución:"></label>
-					<textbox id="textbox_dirinstitucion">
+					<textbox id="textbox_dirinstitucion" width="200px" >
 					</textbox>
 				</row>
 				<row>

@@ -1,23 +1,25 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Perfil de la persona" border="normal" width="600px" height="a00px" id="winNuevoUsuario" apply="com.controladores.UsuarioController">
+<window title="Perfil de la persona" border="normal" width="600px" height="a00px" id="winNuevoUsuario" apply="com.controladores.PersonaController">
 
 
 <grid>
 			<columns>
 				<column label="Etiqueta" />
-				<column label="Dato" />
+				<column label="Datos" />
 			</columns>
 			<rows>
-			
 			<row>
-					<label value="Rol: "></label>
-					<combobox id="combo_rol" autodrop="true">
+					<label value="Rol:"></label>
+					<combobox id="combo_rol" width="110px">
 						<template name="model">
-							<comboitem label="${each.rol_descripcion}"
-								value="${each.rol_id}" />
+							<comboitem label="${each.rol_descripcion}" value="${each}" />
 						</template>
 					</combobox>
+					</row>
+					<row>
+					<label id="lblidrol" visible="false" width="300px"></label>
+						
 				</row>
 				<row>
 					<label value="Nombre Usuario/a :"></label>
@@ -49,13 +51,13 @@
 					</textbox>
 				</row>
 				<row>
-					<label value="Email:"></label>
-					<textbox id="textbox_Email" constraint="no empty"></textbox>
+					<label value="E-mail:"></label>
+					<textbox id="textbox_Email"  width="200px" constraint="no empty"></textbox>
 				</row>
 				<row>
 					<label value="Dirección:"></label>
 					<textbox id="textbox_Direccion"
-						constraint="no empty">
+						constraint="no empty" width="200px" >
 					</textbox>
 				</row>
 				<row>
@@ -70,12 +72,12 @@
 				</row>
 				<row>
 					<label value="Institución a la que pertenece:"></label>
-					<textbox id="textbox_institucion">
+					<textbox id="textbox_institucion" width="200px" >
 					</textbox>
 				</row>
 				<row>
 					<label value="Dirección de la Institución:"></label>
-					<textbox id="textbox_dirinstitucion">
+					<textbox id="textbox_dirinstitucion" width="200px" >
 					</textbox>
 				</row>
 				<row>

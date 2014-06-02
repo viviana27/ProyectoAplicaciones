@@ -12,7 +12,7 @@
 		//String user= (String)session.getAttribute("User");
 		Usuarios user = (Usuarios) session.getAttribute("User");
 		if (user != null) {
-			label_User.setValue(user.getPersona().getPer_nombre()+""+ user.getPersona().getPer_apellido());
+			label_User.setValue(user.getPersona().getPer_nombre()+""+user.getPersona().getPer_apellido());
 		} else {
 
 			//si  no existe sesion la redirijimos a login
