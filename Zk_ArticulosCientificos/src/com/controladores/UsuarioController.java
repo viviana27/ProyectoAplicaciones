@@ -115,6 +115,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 	}
 	
 	public void onCreate$winNuevoUsuario() {
+		
 		u = (Usuarios) winNuevoUsuario.getAttribute("usuario");
 		if (u != null) {
 			textbox_Usuario.setText(u.getUsuario());
@@ -129,7 +130,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 					.getPer_institucion_pertenece());
 			textbox_dirinstitucion.setText(u.getPersona()
 					.getPer_direccion_institucion());
-
+			
 		}
 	}
 

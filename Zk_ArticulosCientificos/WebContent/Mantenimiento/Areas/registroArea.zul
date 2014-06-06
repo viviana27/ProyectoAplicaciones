@@ -1,7 +1,7 @@
 <?page title="Áreas" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window title="Área" border="normal" id="WinRegistrarAreas"
-		apply="">
+		apply="com.controladores.RegistroAreaController">
 		<grid>
 			<columns>
 				<column label="Etiqueta" />
@@ -10,8 +10,14 @@
 			<rows>
 				<row>
 					<label value="Área:" />
-					<textbox id="textbox_area"
+					<textbox id="textbox_area" width="60%"
 						constraint="no empty" />
+				</row>
+				<row>
+					<label value="Descripcion de área:" />
+					<textbox id="textbox_descArea" constraint="no empty"
+						height="50px" width="60%" rows="5" cols="40" />
+			
 				</row>
 				<row>
 					<label value="Estado:" />

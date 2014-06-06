@@ -28,14 +28,14 @@
 			emptyMessage="No existen datos que cumplan el criterio de busqueda"
 			id="listbox_areas" disabled="true">
 			<listhead menupopup="auto" sizable="false">
-				<listheader label="Area" sort="auto"
+				<listheader label="Area" sort="auto(area_nombre)"
 					sortDirection="ascending" />
-				<listheader label="Estado" sort="auto" />
+				<listheader label="Estado" sort="auto(area_estado)" />
 			</listhead>
 			<template name="model">
 				<listitem value="${each}">
-					<listcell label="${each.descripcion}" />
-					<listcell label="${each.estado}" />
+					<listcell label="${each.area_descripcion}" />
+					<listcell label="${each.estadostring}" />
 				</listitem>
 			</template>
 		</listbox>
