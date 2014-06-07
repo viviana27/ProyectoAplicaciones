@@ -1,4 +1,5 @@
 package com.controladores;
+
 import java.util.List;
 
 import com.entidades.*;
@@ -10,12 +11,12 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
-
 
 public class UsuarioController extends GenericForwardComposer<Component> {
 	private static final long serialVersionUID = 1L;
@@ -32,11 +33,30 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 	private Textbox textbox_institucion;
 	private Textbox textbox_dirinstitucion;
 	private Button button_Registrar;
-	private Window winNuevoUsuario;
 	private Window winVerUsuario;
-	private Usuarios u=null;
+	private Window winNuevoUsuario;
+	private Usuarios u = null;
 
-	
+	public void onCreate$winVerUsuario() {
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		if (u != null) {
+			textbox_Usuario.setText(u.getUsuario());
+			textbox_Nombres.setText(u.getPersona().getPer_nombre());
+			textbox_Apellidos.setText(u.getPersona().getPer_apellido());
+			textbox_Cedula.setText(u.getPersona().getPer_cedula());
+			textbox_Email.setText(u.getPersona().getPer_email());
+			textbox_Direccion.setText(u.getPersona().getPer_direccion());
+			textbox_Telefono.setText(u.getPersona().getPer_telefono());
+			textbox_celular.setText(u.getPersona().getPer_celular());
+			textbox_institucion.setText(u.getPersona()
+					.getPer_institucion_pertenece());
+			textbox_dirinstitucion.setText(u.getPersona()
+					.getPer_direccion_institucion());
+		} else
+			alert("Error al obtener información");
+	}
+
 	public void onClick$button_Registrar() throws Exception{
 		boolean result=false;
 		DBUsuario dbusuarios=new DBUsuario();
@@ -94,9 +114,10 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 		
 	}
 	
-	public void onCreate$winVerUsuario() {
-		Session session = Sessions.getCurrent();
-		Usuarios u = (Usuarios) session.getAttribute("User");
+	
+	public void onCreate$winNuevoUsuario() {
+		
+		u = (Usuarios) winNuevoUsuario.getAttribute("usuario");
 		if (u != null) {
 			textbox_Usuario.setText(u.getUsuario());
 			textbox_Nombres.setText(u.getPersona().getPer_nombre());
@@ -110,26 +131,8 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 					.getPer_institucion_pertenece());
 			textbox_dirinstitucion.setText(u.getPersona()
 					.getPer_direccion_institucion());
-		} else
-			alert("Error al obtener información");
-	}
-	
-	public void onCreate$winNuevoUsuario(){
-		u=(Usuarios) winNuevoUsuario.getAttribute("usuario");
-		if(u!=null){
-			textbox_Usuario.setText(u.getUsuario());
-			textbox_Nombres.setText(u.getPersona().getPer_nombre());
-			textbox_Apellidos.setText(u.getPersona().getPer_apellido());
-			textbox_Cedula.setText(u.getPersona().getPer_cedula());
-			textbox_Email.setText(u.getPersona().getPer_email());
-			textbox_Direccion.setText(u.getPersona().getPer_direccion());
-			textbox_Telefono.setText(u.getPersona().getPer_telefono());
-			textbox_celular.setText(u.getPersona().getPer_celular());
-			textbox_institucion.setText(u.getPersona().getPer_institucion_pertenece());
-			textbox_dirinstitucion.setText(u.getPersona().getPer_direccion_institucion());
 			
-		}					
+		}
 	}
-		
 
 }

@@ -4,7 +4,7 @@ public class Roles {
 	private int rol_id;
 	private String rol_descripcion;
 	private int rol_estado;
-	
+	private String rolestado;
 	
 	
 	public Roles(){}
@@ -33,6 +33,16 @@ public class Roles {
 	public void setRol_estado(int rol_estado) {
 		this.rol_estado = rol_estado;
 	}
+
+	public String getRolestado() {
+		return rolestado;
+	}
+
+	public void setRolestado(String rolestado) {
+		this.rolestado = rolestado;
+	}
+	
+	
 	
 	
 }

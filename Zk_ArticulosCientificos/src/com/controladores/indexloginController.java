@@ -35,7 +35,7 @@ public class indexloginController extends GenericForwardComposer<Component> {
 	private Label label_Mensaje;
 	Menubar menubar_opciones1;
 	Center centro;
-	//mensaje para boton
+	// mensaje para boton
 	Button button_Ingresar;
 	Button button_Cancelar;
 	Window windlogin;
@@ -76,7 +76,7 @@ public class indexloginController extends GenericForwardComposer<Component> {
 		Menupopup menupopupR1 = new Menupopup();
 		Menuitem menuitemR1 = new Menuitem("Registrarse");
 		Menuitem menuitemR2 = new Menuitem("Iniciar Sesión");
-		//menuitemR1.setValue("VisualizarPerfil.zul");
+		// menuitemR1.setValue("VisualizarPerfil.zul");
 		menuitemR1.setValue("Usuarios/nuevoUsuario.zul");
 		menuitemR2.setValue("login.zul");
 		menuitemR1.setImage("imagenes/listarReser.png");
@@ -111,6 +111,7 @@ public class indexloginController extends GenericForwardComposer<Component> {
 	}
 
 	public void onClick$button_Ingresar() {
+		
 		// comprobar que el usuario existe.
 		// 1. Comprobar que usuario ingreso datos
 		if (textbox_User.getValue().isEmpty()
@@ -119,10 +120,10 @@ public class indexloginController extends GenericForwardComposer<Component> {
 			// evaluar si datos son correctos
 		} else {
 			DBUsuario dbusuario = new DBUsuario();
-			Usuarios usuario=null;
-				usuario = dbusuario.buscarUsuario(textbox_User.getValue(),
-						textbox_Password.getValue());
-			
+			Usuarios usuario = null;
+			usuario = dbusuario.buscarUsuario(textbox_User.getValue(),
+					textbox_Password.getValue());
+
 			if (usuario != null) {
 
 				// almacenar datos del usuario en la sesion
@@ -130,9 +131,8 @@ public class indexloginController extends GenericForwardComposer<Component> {
 				session = Sessions.getCurrent();
 				// guardar objeto usuario en la session
 				session.setAttribute("User", usuario);
-				
 				// Redirreccionar a la pagina principal
-
+				
 				Executions.sendRedirect("index.zul");
 
 			} else
@@ -145,7 +145,7 @@ public class indexloginController extends GenericForwardComposer<Component> {
 		}
 	}
 
-	public void onClick$button_Cancelar(){
+	public void onClick$button_Cancelar() {
 		Executions.sendRedirect("index-login.zul");
 	}
 }

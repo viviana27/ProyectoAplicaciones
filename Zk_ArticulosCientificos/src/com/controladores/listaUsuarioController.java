@@ -1,4 +1,5 @@
 package com.controladores;
+
 import com.entidades.*;
 import com.datos.*;
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Window;
 
-
 public class listaUsuarioController extends GenericForwardComposer<Component> {
 	@Wire
 	Toolbarbutton toolbarbutton_Eliminar;
@@ -31,121 +31,118 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 	Textbox textbox_buscar;
 	Button button_buscarr;
 	Listbox listbox_Miembros;
-	boolean confirmacion=false;
+	boolean confirmacion = false;
+
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
-		super.doAfterCompose(comp);	
+		super.doAfterCompose(comp);
 	}
 
-	
-	public void onClick$toolbarbutton_Nuevo(){
-		//crear ventana de nuevo usuario
-		Window win=(Window)Executions.createComponents("Usuarios/nuevoUsuario.zul", null, null);
-		//Window win=(Window)Executions.createComponents("VisualizarPerfil.zul", null, null);
-		win.setClosable(true);
-		win.doModal();
-	//guardar atributos en ventana
-		win.setAttribute("opcion","listaUsuarios");
-		win.setAttribute("controladorOrigen", this);
-		
-	} 
-	
-	public void onClick$button_buscar(){
-		//actualiz<ar la lista segun el criterio de busqueda
-		
-			actualizarLista();	
-		}	
-		
-	public void actualizarLista(){
-		//obtener datos de la base
-			//lista de usuarios
-				DBUsuario dbu=new DBUsuario();
-		//lista con usuarios encontrados
-				List<Usuarios> lista=dbu.buscarUsuarios(textbox_buscar.getValue());
-			//establecer esta lista como modelo de dalos pasra el listbox
-				ListModelList<Usuarios> listModel=new ListModelList<Usuarios>(lista);
-				//establecer el modelo de datos
-				listbox_Miembros.setModel(listModel);
-				
-			
-		}
-	
-	
-	public void onClick$toolbarbutton_Editar(){
-		//verificar q usuario haya seleccionado un elemento de la lista
-		if(listbox_Miembros.getSelectedItem()==null){
-			alert("Seleccione por favor un usuario");
-			return;
-		}
-		
-		//crear ventana de nuevo usuario
-		//Window win=(Window)Executions.createComponents("Usuarios/nuevoUsuario.zul", null, null);
-		Window win=(Window)Executions.createComponents("VisualizarPerfil.zul", null, null);
-		win.setClosable(true);
-		win.doModal();
-	//guardar atributos en ventana
-		win.setAttribute("opcion","listaUsuarios");
-		win.setAttribute("controladorOrigen", this);
-		//dos opciones 
-		//pasar todo el objeto usuario
-		//pasar un identificador id de Usuario
-		Usuarios u=(Usuarios)listbox_Miembros.getSelectedItem().getValue();
-		win.setAttribute("usuario", u);
-		
-	} 
-	
-	
-	public void onClick$toolbarbutton_Eliminar(){
-		//alert("Click en boton");
-		
-		boolean result=false;
-		if(listbox_Miembros.getSelectedItem()==null){
-			alert("Seleccione el usuario que desea eliminar");
-			return;
-		}
-		//mesaagebox
-		Messagebox.show("Esta seguro de eliminar el usluario?",
-				"confirmacion",Messagebox.OK | Messagebox.CANCEL,Messagebox.QUESTION,new EventListener<Event>() {
-			
-			@Override
-			public void onEvent(Event evento) throws Exception {
-				// TODO Auto-generated method stub
-				if(evento.getName().equals("onOK")){
-					confirmacion=true;
-				}
-			}
-		});
-		
-		//if(confirmacion){
-	Usuarios u=(Usuarios)listbox_Miembros.getSelectedItem().getValue();
-	DBUsuario user=new DBUsuario();
-	result=user.eliminarUsuario(u);
-	if (result!=false){
-		alert("usuario eliminado correctamente");
-	}
-		
-	}
-	
-	public void onSelect$listbox_Categorias() {
-		
-	}
-
-	/*public void onClick$toolbarbutton_Nuevo() {
+	public void onClick$toolbarbutton_Nuevo() {
+		// crear ventana de nuevo usuario
 		Window win = (Window) Executions.createComponents(
-				"VisualizarPerfil.zul", null, null);
+				"Usuarios/nuevoUsuario.zul", null, null);
+		// Window
+		// win=(Window)Executions.createComponents("VisualizarPerfil.zul", null,
+		// null);
 		win.setClosable(true);
 		win.doModal();
+		// guardar atributos en ventana
+		win.setAttribute("opcion", "listaUsuarios");
+		win.setAttribute("controladorOrigen", this);
+
+	}
+
+	public void onClick$button_buscar() {
+		// actualiz<ar la lista segun el criterio de busqueda
+
+		actualizarLista();
+	}
+
+	public void actualizarLista() {
+		// obtener datos de la base
+		// lista de usuarios
+		DBUsuario dbu = new DBUsuario();
+		// lista con usuarios encontrados
+		List<Usuarios> lista = dbu.buscarUsuarios(textbox_buscar.getValue());
+		// establecer esta lista como modelo de dalos pasra el listbox
+		ListModelList<Usuarios> listModel = new ListModelList<Usuarios>(lista);
+		// establecer el modelo de datos
+		listbox_Miembros.setModel(listModel);
+
 	}
 
 	public void onClick$toolbarbutton_Editar() {
+		// verificar q usuario haya seleccionado un elemento de la lista
+		if (listbox_Miembros.getSelectedItem() == null) {
+			alert("Seleccione por favor un usuario");
+			return;
+		}
+
+		// crear ventana de nuevo usuario
+		// Window
+		// win=(Window)Executions.createComponents("Usuarios/nuevoUsuario.zul",
+		// null, null);
 		Window win = (Window) Executions.createComponents(
 				"VisualizarPerfil.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
-	}*/
+		// guardar atributos en ventana
+		win.setAttribute("opcion", "listaUsuarios");
+		win.setAttribute("controladorOrigen", this);
+		// dos opciones
+		// pasar todo el objeto usuario
+		// pasar un identificador id de Usuario
+		Usuarios u = (Usuarios) listbox_Miembros.getSelectedItem().getValue();
+		win.setAttribute("usuario", u);
 
-	
+	}
 
-	
+	public void onClick$toolbarbutton_Eliminar() {
+		// alert("Click en boton");
+
+		boolean result = false;
+		if (listbox_Miembros.getSelectedItem() == null) {
+			alert("Seleccione el usuario que desea eliminar");
+			return;
+		}
+		// mesaagebox
+		Messagebox.show("Esta seguro de eliminar el usluario?", "confirmacion",
+				Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
+				new EventListener<Event>() {
+
+					@Override
+					public void onEvent(Event evento) throws Exception {
+						// TODO Auto-generated method stub
+						if (evento.getName().equals("onOK")) {
+							confirmacion = true;
+						}
+					}
+				});
+
+		// if(confirmacion){
+		Usuarios u = (Usuarios) listbox_Miembros.getSelectedItem().getValue();
+		DBUsuario user = new DBUsuario();
+		result = user.eliminarUsuario(u);
+		if (result != false) {
+			alert("usuario eliminado correctamente");
+		}
+
+	}
+
+	public void onSelect$listbox_Categorias() {
+
+	}
+
+	/*
+	 * public void onClick$toolbarbutton_Nuevo() { Window win = (Window)
+	 * Executions.createComponents( "VisualizarPerfil.zul", null, null);
+	 * win.setClosable(true); win.doModal(); }
+	 * 
+	 * public void onClick$toolbarbutton_Editar() { Window win = (Window)
+	 * Executions.createComponents( "VisualizarPerfil.zul", null, null);
+	 * win.setClosable(true); win.doModal(); }
+	 */
+
 }

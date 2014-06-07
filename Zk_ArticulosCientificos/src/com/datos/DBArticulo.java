@@ -1,69 +1,40 @@
 package com.datos;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.entidades.*;
-public class DBRoles {
+import com.entidades.Areas;
+import com.entidades.Persona;
+import com.entidades.Usuarios;
+import com.datos.DBManager;
 
-	
-	
-	public List<Roles> buscarRoles(){
-		//objeto a retornar es una lista
-		List<Roles> lista =new ArrayList<Roles>();
-		Roles rol=null;
-			//objeto conexion
-			Connection con=null;
-			Statement sentencia=null;
-			ResultSet resultados=null;
-			DBManager dbm=new DBManager();
-			con=dbm.getConection();
-			try {
-				sentencia = con.createStatement();
-				//String sql="Select * from tb_rol where rol_estado=1";
-				String sql="Select * from tb_rol";
-				resultados=sentencia.executeQuery(sql);		
-				while(resultados.next()){
-					
-					rol=new Roles();
-					rol.setRol_id((resultados.getInt("rol_id")));
-					rol.setRol_descripcion(resultados.getString("rol_descripcion"));
-					//agregar actividades a mi lista
-					lista.add(rol);		
-				}
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return lista;
-		}
-	
-	
-	public boolean CrearRoles(Roles rol ){
-		boolean resultado = false;
+public class DBArticulo {
+	public boolean CrearAreas(Areas a ){
+		boolean registro = false;
 		//añadir el codigo
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
 		try {
 			con.setAutoCommit(false);
-			String sql="INSERT INTO tb_rol (rol_descripcion, rol_estado ) VAlUES (?,?)";
+			String sql="INSERT INTO tb_area (area_nombre, area_descripcion, area_estado ) VAlUES (?,?,?)";
 			PreparedStatement pstm=con.prepareStatement(sql);
 			pstm=con.prepareStatement(sql);
 			
 			//pasar los parametros
 			
-			pstm.setString(1, rol.getRol_descripcion());
-			pstm.setInt(2, rol.getRol_estado());
+			pstm.setString(1, a.getArea_nombre());
+			pstm.setString(2, a.getArea_descripcion());
+			pstm.setInt(3, a.getArea_estado());
 			
 			//ejecutar el Preparedsatatement
-			int num=pstm.executeUpdate();
+			int filas_afectadas=pstm.executeUpdate();
 			con.commit();
-		     resultado=true;
+		registro=true;
 		
 		
 		} catch (SQLException e) {
@@ -85,12 +56,14 @@ public class DBRoles {
 		}
 		
 	
-		return resultado;
+		return registro;
 	}
+// fin de codigo insertar nueva area
 
-	public boolean Actualizar_Roles(Roles rol){
+	//actualizar tabla_areas, cuando se editen los datos
+	public boolean Actualizr_Areas(Areas area){
 
-		boolean resultado=false;
+		boolean registro=false;
 		//crear un objeto para la conexion
 		DBManager dbm =new DBManager();
 		Connection con= dbm.getConection();
@@ -98,20 +71,23 @@ public class DBRoles {
 		try {
 			//por defecto es true asi q lo cambiamos
 			con.setAutoCommit(false);
-			String sql="UPDATE tb_rol SET"
-					+" rol_descripcion=?,  rol_estado=?"
-					+" where rol_id=?";
+			String sql="UPDATE tb_area SET"
+					+" area_nombre=?, area_descripcion=?,  area_estado=?"
+					+" where area_id=?";
 			PreparedStatement pstm=con.prepareStatement(sql);
-			pstm.setString(1,rol.getRol_descripcion());
-			pstm.setInt(2,rol.getRol_estado());
-			pstm.setInt(3, rol.getRol_id());
+			Areas a = area;	
+			pstm.setString(1,a.getArea_nombre());
+			pstm.setString(2,a.getArea_descripcion());
+			pstm.setInt(3,a.getArea_estado());
+			
+			pstm.setInt(4, a.getArea_id());
 			
 			//ejecutar el prepaaredStatement
 			//retorna el numero de filas afectadas o retorna 0 si no se pudo realizar
 			int num=pstm.executeUpdate();
 				//si no hay error 
 				con.commit();
-				resultado=true;
+				registro=true;
 				
 					
 		} catch (SQLException e) {
@@ -132,28 +108,28 @@ public class DBRoles {
 			}
 		}
 		
-		return resultado;
+		return registro;
 		
 	}
 
-	public List<Roles> buscarRoles(String criterio){
-		List<Roles> lista=new ArrayList<Roles>();
+	public List<Areas> buscarAreas(String area){
+		List<Areas> lista=new ArrayList<Areas>();
 		Statement sentencia = null;
-		ResultSet resultado=null;
+		ResultSet registros=null;
 		
 		//busqueda a la base de datos
 		DBManager dbm = new DBManager();
 		Connection con= dbm.getConection();
 		String sql="";
-		if (criterio.equals("")) {
-		sql = "SELECT * FROM tb_rol as r" +
-					" WHERE r.rol_estado=1" +
-					" order by r.rol_descripcion";
+		if (area.equals("")) {
+		sql = "SELECT * FROM tb_area as a" +
+					" WHERE a.area_estado=1" +
+					" order by a.area_nombre";
 			System.out.println("busqueda"+sql);
 		} else {
-			sql = "SELECT * FROM tb_rol as r" +
-					" WHERE r.rol_estado=1 and (r.rol_descripcion like '%"
-					+ criterio+"%')";
+			sql = "SELECT * FROM tb_area as a" +
+					" WHERE a.area_estado=1 and (a.area_nombre like '%"
+					+ area+"%')";
 					
 			System.out.println(""+sql);
 			
@@ -161,28 +137,29 @@ public class DBRoles {
 		
 		try {
 			sentencia=con.createStatement();
-			resultado=sentencia.executeQuery(sql);
+			registros=sentencia.executeQuery(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			 System.out.println("error al ejecutar la sentencia");
 		}
 		
-	
+		Areas a = null;
 		try {
-			Roles rol = null;
-			while(resultado.next()){
-				rol=new Roles();
-				rol.setRol_id(resultado.getInt("rol_id"));
-				rol.setRol_descripcion(resultado.getString("rol_descripcion"));
-				rol.setRol_estado(resultado.getInt("rol_estado"));
-				if((resultado.getInt("rol_estado"))==1){
-					rol.setRolestado("Activo");
+			while(registros.next()){
+				a=new Areas();
+				a.setArea_id(registros.getInt("area_id"));
+				a.setArea_nombre(registros.getString("area_nombre"));
+				a.setArea_descripcion(registros.getString("area_descripcion"));
+				a.setArea_estado(registros.getInt("area_estado"));
+				if((registros.getInt("area_estado"))==1){
+					a.setEstadostring("Activo");
 				}
 				else{
-					rol.setRolestado("Inactivo");
+					a.setEstadostring("Inactivo");
 				}
-				lista.add(rol);
+				//agrego usuario con datos cargados desde la base a mi lista de usuarios
+				lista.add(a);
 			}
 			con.close();
 		} catch (SQLException e) {
@@ -203,16 +180,17 @@ public class DBRoles {
 	}
 
 	//eliminar
-public boolean eliminarRoles(Roles rol){
+public boolean eliminarAreas(Areas a){
 	boolean result=false;
 	DBManager dbm =new DBManager();
 	Connection con= dbm.getConection();
 	try {
 		con.setAutoCommit(false);
-		String sql="UPDATE tb_rol SET rol_estado=? WHERE rol_id=?";
+		String sql="UPDATE tb_area SET area_estado=? WHERE area_id=?";
 		PreparedStatement pstm=con.prepareStatement(sql);
+		Areas ar=a;
 		pstm.setInt(1,0);
-		pstm.setInt(2,rol.getRol_id());
+		pstm.setInt(2,a.getArea_id());
 		int num=pstm.executeUpdate();
 		con.commit();
 		result=true;

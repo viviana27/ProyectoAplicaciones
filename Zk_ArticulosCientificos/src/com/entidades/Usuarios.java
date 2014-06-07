@@ -18,7 +18,7 @@ public class Usuarios {
 	//Constructor por parametros
 	
 
-	public Usuarios(int id, String usuario,String clave, int estado,Persona persona, int id_rol) {
+	public Usuarios(int id, String usuario,String clave, int estado, Persona persona, int id_rol) {
 		super();
 		this.id = id;
 		this.usuario = usuario;
