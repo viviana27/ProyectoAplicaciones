@@ -39,6 +39,7 @@ public class listaRolController extends GenericForwardComposer<Component> {
 	@Override	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		actualizarLista();
 	}
 
 	public void onClick$button_buscar() {

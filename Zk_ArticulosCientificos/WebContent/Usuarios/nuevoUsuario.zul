@@ -1,7 +1,9 @@
 <?page title="Agregar Usuarios" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Agregar Usuarios" border="normal" width="600px" height="a00px" id="winNuevoUsuario" apply="com.controladores.UsuarioController">
-<grid>
+	<window title="Agregar Usuarios" border="normal" width="600px"
+		height="a00px" id="winNuevoUsuario"
+		apply="com.controladores.UsuarioController">
+		<grid>
 			<columns>
 				<column label="Etiqueta" />
 				<column label="Dato" />
@@ -27,7 +29,8 @@
 				</row>
 				<row>
 					<label value="Apellidos:"></label>
-					<textbox id="textbox_Apellidos" constraint="no empty">
+					<textbox id="textbox_Apellidos"
+						constraint="no empty">
 					</textbox>
 				</row>
 				<row>
@@ -38,7 +41,9 @@
 				</row>
 				<row>
 					<label value="Email:"></label>
-					<textbox id="textbox_Email" constraint="no empty" width="200px" ></textbox>
+					<textbox id="textbox_Email" constraint="no empty"
+						width="200px">
+					</textbox>
 				</row>
 				<row>
 					<label value="Dirección:"></label>
@@ -48,28 +53,34 @@
 				</row>
 				<row>
 					<label value="Teléfono Convencional:"></label>
-					<textbox id="textbox_Telefono" constraint="no empty">
+					<textbox id="textbox_Telefono"
+						constraint="no empty">
 					</textbox>
 				</row>
 				<row>
 					<label value="Celular:"></label>
-					<textbox id="textbox_celular" constraint="no empty">
+					<textbox id="textbox_celular"
+						constraint="no empty">
 					</textbox>
 				</row>
 				<row>
 					<label value="Institución a la que pertenece:"></label>
-					<textbox id="textbox_institucion" width="200px" >
+					<textbox id="textbox_institucion" width="200px">
 					</textbox>
 				</row>
 				<row>
 					<label value="Dirección de la Institución:"></label>
-					<textbox id="textbox_dirinstitucion" width="200px" >
+					<textbox id="textbox_dirinstitucion"
+						width="200px">
 					</textbox>
 				</row>
 				<row>
-				<button label="Registrar" id="button_Registrar" image="Imagenes/save.png"></button>
-				<button label="Cancelar" id="button_Cancelar" image="Imagenes/delete.png" 
-				onClick="winNuevoUsuario.detach()"></button>
+					<button label="Registrar" id="button_Registrar"
+						image="Imagenes/save.png">
+					</button>
+					<button label="Cancelar" id="button_Cancelar"
+						image="Imagenes/delete.png" onClick="winNuevoUsuario.detach()">
+					</button>
 				</row>
 			</rows>
 		</grid>

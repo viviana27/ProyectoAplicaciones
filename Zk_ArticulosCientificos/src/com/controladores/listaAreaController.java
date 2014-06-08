@@ -39,6 +39,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		actualizarAreasLista();
 	}
 
 	public void onClick$toolbarbutton_Nuevo() {
@@ -73,7 +74,6 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 		win.setAttribute("controladorOrigen", this);
 		Areas a=(Areas)listbox_areas.getSelectedItem().getValue();
 		win.setAttribute("areas",a);
-		System.out.print(a.getArea_nombre());
 	}
 	
 	//eliminar un area

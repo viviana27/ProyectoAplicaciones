@@ -40,7 +40,7 @@ public class indexController extends GenericForwardComposer<Component> {
 		Menupopup menupopup = new Menupopup();
 		Menuitem menuitemR1 = new Menuitem("Registrar Nuevo Usuario");
 		Menuitem menuitemR2 = new Menuitem("Listar Usuarios");
-		menuitemR1.setValue("Usuarios/verUsuario.zul");
+		menuitemR1.setValue("Usuarios/nuevoUsuario.zul");
 		//menuitemR2.setValue("listaUsuarios.zul");
 		menuitemR2.setValue("Usuarios/listaUsuarios.zul");
 		menuitemR1.addEventListener("onClick", new MenuListener());
@@ -53,13 +53,13 @@ public class indexController extends GenericForwardComposer<Component> {
 		Menu menuP = new Menu("Perfil de usuario");
 		Menupopup menupopupP = new Menupopup();
 		Menuitem menuitemP1 = new Menuitem("Visualizar Perfil");
-		//Menuitem menuitemP2 = new Menuitem("Cambiar Contraseña");
-		//menuitemP1.setValue("VisualizarPerfil.zul");
+		Menuitem menuitemP2 = new Menuitem("Cambiar Contraseña");
 		menuitemP1.setValue("Usuarios/verUsuario.zul");
+		menuitemP2.setValue("Usuarios/modificarClave.zul");
 		menuitemP1.addEventListener("onClick", new MenuListener());
-		//menuitemP2.addEventListener("onClick", new MenuListener());
+		menuitemP2.addEventListener("onClick", new MenuListener());
 		menupopupP.appendChild(menuitemP1);
-		//menupopupP.appendChild(menuitemP2);
+		menupopupP.appendChild(menuitemP2);
 		menuP.appendChild(menupopupP);
 		menubar_opciones.appendChild(menuP);	
 		
