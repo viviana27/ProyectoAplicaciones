@@ -28,16 +28,18 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 	Toolbarbutton toolbarbutton_Eliminar;
 	Toolbarbutton toolbarbutton_Nuevo;
 	Toolbarbutton toolbarbutton_Editar;
+	Toolbarbutton toolbarbutton_EditarUR;
 	Textbox textbox_buscar;
 	Button button_buscarr;
+	Button button_buscarUR;
 	Listbox listbox_Miembros;
+	Listbox listbox_MiembrosRoles;
 	boolean confirmacion = false;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
-		actualizarLista();
 	}
 
 	public void onClick$toolbarbutton_Nuevo() {
@@ -60,7 +62,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 
 		actualizarLista();
 	}
-
+	
 	public void actualizarLista() {
 		// obtener datos de la base
 		// lista de usuarios
@@ -99,6 +101,23 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 		win.setAttribute("usuario", u);
 
 	}
+	
+	public void onClick$toolbarbutton_EditarUR() {
+		// verificar q usuario haya seleccionado un elemento de la lista
+		if (listbox_MiembrosRoles.getSelectedItem() == null) {
+			alert("Seleccione por favor un usuario");
+			return;
+		}
+		Window win = (Window) Executions.createComponents(
+				"Mantenimiento/RolesUsuario/ModificarRolUsuario.zul", null, null);
+		win.setClosable(true);
+		win.doModal();
+		win.setAttribute("opcion", "listaUsuarios");
+		win.setAttribute("controladorOrigen", this);
+		Usuarios u = (Usuarios) listbox_MiembrosRoles.getSelectedItem().getValue();
+		win.setAttribute("usuario", u);
+
+	}
 
 	public void onClick$toolbarbutton_Eliminar() {
 		// alert("Click en boton");
@@ -131,8 +150,21 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 		}
 
 	}
+	public void onClick$button_buscarUR() {
+		// actualiz<ar la lista segun el criterio de busqueda
 
-	public void onSelect$listbox_Categorias() {
+		actualizarListaRolesUsuarios();
+	}
+	public void actualizarListaRolesUsuarios() {
+		// obtener datos de la base
+		// lista de usuarios
+		DBUsuario dbu = new DBUsuario();
+		// lista con usuarios encontrados
+		List<Usuarios> lista = dbu.buscarRolesUsuarios(textbox_buscar.getValue());
+		// establecer esta lista como modelo de dalos pasra el listbox
+		ListModelList<Usuarios> listModel = new ListModelList<Usuarios>(lista);
+		// establecer el modelo de datos
+		listbox_MiembrosRoles.setModel(listModel);
 
 	}
 

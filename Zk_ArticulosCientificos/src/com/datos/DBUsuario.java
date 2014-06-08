@@ -239,6 +239,75 @@ public class DBUsuario {
 		return lista;
 	}
 
+	public List<Usuarios> buscarRolesUsuarios(String criterio) {
+		List<Usuarios> lista = new ArrayList<Usuarios>();
+		// objeto sentencia
+		Statement sentencia = null;
+		// objeto para resultados
+		ResultSet resultados = null;
+		// obtener la conexion a la base
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+
+		String sql = "";
+		if (criterio.equals("")) {
+			sql = "SELECT * FROM tb_usuario as u, tb_persona as p, tb_rol as r"
+					+ " WHERE u.usu_estado=1 and p.per_estado=1 and r.rol_estado=1 and u.persona_id=p.per_id"
+					+ " and u.rol_id_usuario=r.rol_id group by p.per_id order by p.per_apellido";
+			System.out.println("ddff" + sql);
+		} else {
+			sql = "SELECT * FROM tb_usuario as u, tb_persona as p, tb_rol as r "
+					+ "WHERE u.usu_estado=1 and p.per_estado=1 and r.rol_estado=1 and u.persona_id=p.per_id"
+					+ " and u.rol_id_usuario=r.rol_id and (u.usu_nombre like '%"
+					+ criterio
+					+ "%' or p.per_apellido like '%"
+					+ criterio
+					+ "%') group by p.per_id order by p.per_apellido";
+		}
+		try {
+			sentencia = con.createStatement();
+			resultados = sentencia.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		}
+		// recorrer el resultset
+		try {
+			Usuarios usuario = null;
+			while (resultados.next()) {
+				usuario = new Usuarios();
+				usuario.setId(resultados.getInt("usu_id"));
+				usuario.setUsuario(resultados.getString("usu_nombre"));
+				Persona persona = new Persona();
+				persona.setPer_id(resultados.getInt("per_id"));
+				persona.setPer_nombre(resultados.getString("per_nombre"));
+				persona.setPer_apellido(resultados.getString("per_apellido"));
+				usuario.setRol_descripcion(resultados
+						.getString("rol_descripcion"));
+				usuario.setPersona(persona);
+				// agrego usuario con datos cargados desde la base a mi lista de
+				// usuarios
+				lista.add(usuario);
+			}
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al recorrer resultset");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return lista;
+	}
+
+	
 	public boolean actualizarUsuario(Usuarios usuario) throws Exception {
 
 		boolean resultado = false;
