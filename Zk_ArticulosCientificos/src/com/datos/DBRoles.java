@@ -43,7 +43,6 @@ public class DBRoles {
 			return lista;
 		}
 	
-	
 	public boolean CrearRoles(Roles rol ){
 		boolean resultado = false;
 		//añadir el codigo
@@ -202,8 +201,7 @@ public class DBRoles {
 		return lista;	
 	}
 
-	//eliminar
-public boolean eliminarRoles(Roles rol){
+	public boolean eliminarRoles(Roles rol){
 	boolean result=false;
 	DBManager dbm =new DBManager();
 	Connection con= dbm.getConection();

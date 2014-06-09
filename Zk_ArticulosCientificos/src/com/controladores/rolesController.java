@@ -18,80 +18,74 @@ import com.entidades.Persona;
 import com.entidades.Roles;
 import com.entidades.Usuarios;
 
-public class rolesController extends GenericForwardComposer<Component>{
+public class rolesController extends GenericForwardComposer<Component> {
 	@Wire
 	private Textbox textbox_rol;
 	private Checkbox check_estado;
 	private Button button_Registrar;
 	private Window WinRegistrarRoles;
-	private Roles rol=null;
-	private int estado=0;
-		
-	public void onClick$button_Registrar() throws Exception{
-		boolean result=false;
-		DBRoles dbroles=new DBRoles();
-		//verificar si es nuevo usuario o usuario a editar
-		if(rol!=null){
-			//existe estoy editando
+	private Roles rol = null;
+	private int estado = 0;
+
+	public void onClick$button_Registrar() throws Exception {
+		boolean result = false;
+		DBRoles dbroles = new DBRoles();
+		// verificar si es nuevo usuario o usuario a editar
+		if (rol != null) {
+			// existe estoy editando
 			rol.setRol_descripcion(textbox_rol.getValue());
-			if(check_estado.isChecked()){
-				estado=1;
-			}else
-			{
-				estado=0;
+			if (check_estado.isChecked()) {
+				estado = 1;
+			} else {
+				estado = 0;
 			}
-		
-		rol.setRol_estado(estado);		
-			//llamo al metodo para actualizar los datos
-			result=dbroles.Actualizar_Roles(rol);
-			
-		}else{
-			if(check_estado.isChecked()){
-				estado=1;
-			}else
-			{
-				estado=0;
+
+			rol.setRol_estado(estado);
+			// llamo al metodo para actualizar los datos
+			result = dbroles.Actualizar_Roles(rol);
+
+		} else {
+			if (check_estado.isChecked()) {
+				estado = 1;
+			} else {
+				estado = 0;
 			}
-		Roles rol=new Roles(0,textbox_rol.getValue(), estado);
-			//usuario.setClave(textbox_Password.getValue());
-			
-		result=dbroles.CrearRoles(rol);
+			Roles rol = new Roles(0, textbox_rol.getValue(), estado);
+			// usuario.setClave(textbox_Password.getValue());
+
+			result = dbroles.CrearRoles(rol);
 		}
-			
-		if(result)
-		{
+
+		if (result) {
 			alert("Rol registrado con exito");
-			//evaluar desde donde fue llamada esta ventana
-			String opcion=(String)WinRegistrarRoles.getAttribute("opcion");
-			if(opcion!=null && opcion.equals("listaRoles")){
-				listaRolController luc=(listaRolController) WinRegistrarRoles.getAttribute("controladorOrigen");
-				if(luc!=null) luc.actualizarLista();
-				//luc.actualizarLista();
+			// evaluar desde donde fue llamada esta ventana
+			String opcion = (String) WinRegistrarRoles.getAttribute("opcion");
+			if (opcion != null && opcion.equals("listaRoles")) {
+				listaRolController luc = (listaRolController) WinRegistrarRoles
+						.getAttribute("controladorOrigen");
+				if (luc != null)
+					luc.actualizarLista();
+				// luc.actualizarLista();
 				WinRegistrarRoles.detach();
-				
+
 			}
-			}
-		else {
+		} else {
 			alert("No se pudo realizar el registro");
-			}
-		
-		
+		}
+
 	}
-	
-public void onCreate$WinRegistrarRoles() {
-		
+
+	public void onCreate$WinRegistrarRoles() {
+
 		rol = (Roles) WinRegistrarRoles.getAttribute("rol");
 		if (rol != null) {
 			textbox_rol.setText(rol.getRol_descripcion());
-			if (rol.getRol_estado()==1){
-				//chkvista.isChecked();
+			if (rol.getRol_estado() == 1) {
+				// chkvista.isChecked();
 				check_estado.setChecked(true);
 			}
-			
+
 		}
 	}
 
-	
-	
-		}
-
+}

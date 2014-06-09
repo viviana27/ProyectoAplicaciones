@@ -1,7 +1,7 @@
 <?page title="Tipo de Artículo" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Tipo de Artículo" border="normal" id="WinRegistrarCategorias"
-		apply="">
+	<window title="Tipo de Artículo" border="normal"
+		id="WinRegistrarTipoArticulos" apply="com.controladores.TipoArticulosController">
 		<grid>
 			<columns>
 				<column label="Etiqueta" />
@@ -10,7 +10,12 @@
 			<rows>
 				<row>
 					<label value="Tipo de Artículo:" />
-					<textbox id="textbox_categoria"
+					<textbox id="textbox_tipo"
+						constraint="no empty" />
+				</row>
+				<row>
+					<label value="Descripción de nuevo Tipo de Artículo:" />
+					<textbox id="textbox_descripcion"
 						constraint="no empty" />
 				</row>
 				<row>

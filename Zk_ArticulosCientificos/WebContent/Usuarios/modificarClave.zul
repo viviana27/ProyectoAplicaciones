@@ -1,0 +1,41 @@
+<?page title="Modificar Clave" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Modificar Clave" border="normal" id="winCambioClave"
+		apply="com.controladores.UsuarioController">
+		<grid>
+			<columns>
+				<column label="" />
+				<column label="" />
+			</columns>
+			<rows>
+
+				<row>
+					<label value="Clave Anterior:"></label>
+					<textbox id="textbox_clave_anterior" type="password"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Nueva Clave:"></label>
+					<textbox id="textbox_clave_nueva" type="password"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<label value="Repita la nueva clave:"></label>
+					<textbox id="textbox_rep_clave" type="password"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<button label="Cambiar Clave"
+						id="button_cambiar_clave" image="Imagenes/save.png">
+					</button>
+					<button label="Cancelar" id="button_Cancelar"
+						image="Imagenes/delete.png" onClick="winCambioClave.detach()">
+					</button>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>
