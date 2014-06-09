@@ -88,6 +88,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			//usuario.setClave(textbox_Password.getValue());
 			
 		result=dbusuarios.crearUsuario(usuario);
+		
 		}
 			
 		if(result)

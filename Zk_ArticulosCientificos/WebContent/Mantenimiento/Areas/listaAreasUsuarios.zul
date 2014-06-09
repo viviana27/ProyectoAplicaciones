@@ -17,22 +17,22 @@
 			<textbox id="textbox_buscar" />
 			<space />
 			<!-- <separator/> -->
-			<button image="imagenes/buscar.png" id="button_buscar" />
+			<button image="Imagenes/buscar.png" id="button_buscar" />
 		</groupbox>
 		<listbox mold="paging" pageSize="3" width="100%"
 			emptyMessage="No existen datos que cumplan el criterio de búsqueda"
 			id="listbox_Miembros" disabled="true">
 			<listhead menupopup="auto" sizable="false">
-				<listheader label="Nombres" sort="auto"
+			  <listheader label="Nombres" sort="auto(personaarea.per_nombre)"
 					sortDirection="ascending" />
-				<listheader label="Apellidos" sort="auto" />
-				<listheader label="Rol de usuario" sort="auto" />				
+				<listheader label="Apellidos" sort="auto(personaarea.per_apellido)" />
+			<listheader label="Area" sort="auto(area_nombre)" />				
 			</listhead>
 			<template name="model">
 				<listitem value="${each}">
-					<listcell label="${each.nombres}" />
-					<listcell label="${each.apellidos}" />
-					<listcell label="${each.rol}"></listcell>
+					<listcell label="${each.personaarea.per_nombre}" />
+					<listcell label="${each.personaarea.per_apellido}" />
+					<listcell label="${each.area_nombre}" />
 				</listitem>
 			</template>
 		</listbox>

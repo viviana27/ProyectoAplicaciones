@@ -1,6 +1,7 @@
 <?page title="Asignación de Personas por Áreas " contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Asignación de áreas" border="normal" width="600px" height="a00px">
+<window title="Asignación de áreas" border="normal" width="600px" height="a00px" id="winNuevoUsuarioArea"
+apply="com.controladores.UsuarioAreaController">
 
 
 <grid>
@@ -8,13 +9,8 @@
 				<column label="Etiqueta" />
 				<column label="Dato" />
 			</columns>
+			
 			<rows>
-				<row>
-					<label value="Nombre Usuario/a :"></label>
-					<textbox id="textbox_Usuario" disabled="true"
-						constraint="no empty">
-					</textbox>
-				</row>
 				<row>
 					<label value="Primer Nombre:"></label>
 					<textbox id="textbox_Pnombre" disabled="true"
@@ -32,10 +28,16 @@
 					<label value="Área: "></label>
 					<combobox id="combo_area" autodrop="true">
 						<template name="model">
-							<comboitem label="${}"
-								value="${}" />
+							<comboitem label="${each.area_nombre}"
+								value="${each}" />
 						</template>
 					</combobox>
+				</row>
+				<row>
+					<label id="lblidarea" visible="false"
+						width="300px">
+					</label>
+
 				</row>
 				<row>
 					<button label="Guardar" id="button_Guardar"

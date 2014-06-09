@@ -29,7 +29,7 @@ apply="com.controladores.listaUsuarioController">
 				<listheader label="Nombres" sort="auto(persona.per_nombre)"
 					sortDirection="ascending" />
 				<listheader label="Apellidos" sort="auto(persona.per_apellido)" />
-				<listheader label="Cedula/RUC" sort="auto(per_cedula)" />
+				<listheader label="Cedula/RUC" sort="auto(persona.per_cedula)" />
 				<listheader label="E-mail" sort="auto(persona.per_email)" />
 				<listheader label="Direccion" sort="auto(persona.per_direccion)" />
 				<listheader label="Telefono convencional" sort="auto(persona.per_telefono)" />
