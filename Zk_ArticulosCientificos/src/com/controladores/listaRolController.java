@@ -11,7 +11,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
-import org.zkoss.zkex.zul.Fisheye;
+
 import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -21,9 +21,8 @@ import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Window;
 
 import com.datos.DBRoles;
-import com.datos.DBUsuario;
+
 import com.entidades.Roles;
-import com.entidades.Usuarios;
 
 
 public class listaRolController extends GenericForwardComposer<Component> {
