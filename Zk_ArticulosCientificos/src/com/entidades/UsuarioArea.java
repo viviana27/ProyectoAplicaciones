@@ -9,6 +9,7 @@ public class UsuarioArea {
     private int usuario_id;
     private String usuario_nombre;
     
+    
     public UsuarioArea(){
     	
     }

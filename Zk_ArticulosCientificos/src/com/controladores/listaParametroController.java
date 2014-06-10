@@ -8,6 +8,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -25,6 +26,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 	Toolbarbutton toolbarbutton_Nuevo;
 	Toolbarbutton toolbarbutton_Editar;
 	Textbox textbox_buscar;
+	Button button_buscar;
 	Listbox listbox_Parametros;
 	boolean confirmacion = false;
 
@@ -83,7 +85,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 		boolean result = false;
 		confirmacion = false;
 		if (listbox_Parametros.getSelectedItem() == null) {
-			alert("Seleccione el rol que desea eliminar");
+			alert("Seleccione el parametro que desea eliminar");
 			return;
 		}
 		// mesaagebox

@@ -5,6 +5,7 @@ public class PersonaArea {
 	private String per_nombre;
 	private String per_apellido;
     private int estado;
+    private int perso_id;
 	
 	public PersonaArea(){
 		
@@ -41,6 +42,14 @@ public class PersonaArea {
 
 	public void setEstado(int estado) {
 		this.estado = estado;
+	}
+
+	public int getPerso_id() {
+		return perso_id;
+	}
+
+	public void setPerso_id(int perso_id) {
+		this.perso_id = perso_id;
 	}
 	
 	

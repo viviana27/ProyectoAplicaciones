@@ -40,6 +40,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		actualizarLista();
 	}
 
 	public void onClick$toolbarbutton_Nuevo() {
@@ -99,6 +100,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 		// pasar un identificador id de Usuario
 		Usuarios u = (Usuarios) listbox_Miembros.getSelectedItem().getValue();
 		win.setAttribute("usuario", u);
+		
 
 	}
 	

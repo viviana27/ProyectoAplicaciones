@@ -19,6 +19,7 @@ import com.entidades.Persona;
 import com.entidades.PersonaArea;
 import com.entidades.UsuarioArea;
 import com.entidades.Usuarios;
+import com.sun.istack.internal.Nullable;
 
 public class UsuarioAreaController extends GenericForwardComposer<Component> {
 	private static final long serialVersionUID = 1L;
@@ -30,6 +31,9 @@ public class UsuarioAreaController extends GenericForwardComposer<Component> {
 	private Button button_Guardar;
 	private Window winNuevoUsuarioArea;
 	private UsuarioArea u = null;
+	int idper=0;
+	int idpersona=0;
+	
 	
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
@@ -40,7 +44,7 @@ public class UsuarioAreaController extends GenericForwardComposer<Component> {
 			ListModelList<UsuarioArea> listModel = new ListModelList<UsuarioArea>(
 					lista);
 			combo_area.setModel(listModel);
-
+			//System.out.println("estamos aca darwin");
 		}
 	}
 	
@@ -49,25 +53,45 @@ public class UsuarioAreaController extends GenericForwardComposer<Component> {
 		boolean result = false;
 		DBUsuarioArea dbusuarios = new DBUsuarioArea();
 		// verificar si es nuevo usuario o usuario a editar
-		if (u != null) {
+		idper=u.getPer_area_id();
+		System.out.println("idpersona_area: "+idper);
+		idpersona=u.getPersonaarea().getPer_id();
+		System.out.println("idpersona: "+idpersona);
+		if ( idper > 0) {
 			// existe estoy editando
 			u.getPersonaarea().setPer_nombre(textbox_Pnombre.getValue());
 			u.getPersonaarea().setPer_apellido(textbox_Apellidos.getValue());
 			u.setArea_id(Integer.parseInt(lblidarea.getValue()));
 			// llamo al metodo para actualizar los datos
+			System.out.println();
+			System.out.println("idArea: "+ lblidarea.getValue()+"nombre: "+textbox_Pnombre.getValue()+" idPesona"+u.getPersonaarea().getPer_id());
 			result = dbusuarios.actualizarUsuarioArea(u);
+			
 
 		} else {
+		/*PersonaArea personaa= new PersonaArea();
+		personaa.setPer_id(u.getPersonaarea().getPer_id());
+		UsuarioArea usuarioarea = new UsuarioArea(0, Integer.parseInt(lblidarea.getValue()), personaa, 1);
+			System.out.println();
+			System.out.println("idArea: "+ lblidarea.getValue()+"nombre: "+textbox_Pnombre.getValue()+" idPesona"+u.getPersonaarea().getPer_id());
+			result = dbusuarios.crearUsuarioArea(u);
 			// no existe, es nuevo
 			// llamar a la capa logica de datos
 			// DBUsuarios dbusuarios=new DBUsuarios();
-			PersonaArea personaarea = new PersonaArea(0, textbox_Pnombre.getValue(),
-					textbox_Apellidos.getValue());
-			UsuarioArea usuarioarea = new UsuarioArea(0, Integer.parseInt(lblidarea.getValue()), personaarea, 1);
-	
+			//PersonaArea personaarea = new PersonaArea(0, textbox_Pnombre.getValue(),
+					//textbox_Apellidos.getValue());
+			
 		//	result = dbusuarios.crearUsuarioArea(usuarioarea);
+		*/
+			// existe estoy editando
+						u.getPersonaarea().setPer_nombre(textbox_Pnombre.getValue());
+						u.getPersonaarea().setPer_apellido(textbox_Apellidos.getValue());
+						u.setArea_id(Integer.parseInt(lblidarea.getValue()));
+						// llamo al metodo para actualizar los datos
+						System.out.println();
+						System.out.println("idArea: "+ lblidarea.getValue()+"nombre: "+textbox_Pnombre.getValue()+" idPesona"+u.getPersonaarea().getPer_id());
+						result = dbusuarios.crearUsuarioArea(u);
 		}
-
 		if (result) {
 			alert("Usuario con area registrado con exito");
 			// evaluar desde donde fue llamada esta ventana
@@ -91,15 +115,16 @@ public class UsuarioAreaController extends GenericForwardComposer<Component> {
 
 	}
 	
-	public void onSelect$combo_rol() {
+	public void onSelect$combo_area() {
 		UsuarioArea usu = (UsuarioArea) combo_area.getSelectedItem().getValue();
-		System.out.println("hola" + combo_area.getSelectedItem().getValue());
+		//System.out.println("hola" + combo_area.getSelectedItem().getValue());
 		if (usu != null) {
 			String id = null;
 			id = Integer.toString(usu.getArea_id());
-			System.out.print("hola" + id);
+	//		System.out.println();
+		//	System.out.println("id area" + id);
 			lblidarea.setValue(id);
-
+	
 		}
 	}
 	
