@@ -61,7 +61,7 @@ public class DBUsuarioArea {
 		//vamos a guardar utilizando transacciones 
 		try {
 			//por defecto es true asi q lo cambiamos
-			con.setAutoCommit(false);
+			/*con.setAutoCommit(false);
 			String sql="UPDATE tb_persona SET"
 					+" per_nombre=?, per_apellido=? where per_id=?";
 			PreparedStatement pstm=con.prepareStatement(sql);
@@ -71,11 +71,14 @@ public class DBUsuarioArea {
 			pstm.setInt(3,per.getPer_id());
 			//ejecutar el prepaaredStatement
 			//retorna el numero de filas afectadas o retorna 0 si no se pudo realizar
-			int num=pstm.executeUpdate();
-			sql ="UPDATE TB_PERSONA_AREA"
+			int num=pstm.executeUpdate();*/
+			String sql ="UPDATE TB_PERSONA_AREA SET"
+					+"per_area_estado=?"
 					+"WHERE per_are_id=?";
+			PreparedStatement pstm=con.prepareStatement(sql);
 			pstm=con.prepareStatement(sql);
-			pstm.setInt(1, usuarioarea.getPer_area_id());
+			pstm.setInt(1, usuarioarea.getPer_area_estado());
+			pstm.setInt(2, usuarioarea.getPer_area_id());
 				//ejecutar el Preparedsatatement
 				int num_filas_afectadas=pstm.executeUpdate();
 				
@@ -120,16 +123,16 @@ public class DBUsuarioArea {
 		if (criterio.equals("")) {
 			sql = "SELECT * FROM tb_usuario as u, tb_persona as p, tb_rol as r, tb_area as a, tb_persona_area as pa" +
 					" WHERE u.usu_estado=1 and u.rol_id_usuario=3 and p.per_estado=1 and r.rol_estado=1 " +
-					"and a.area_estado=1 and pa.per_area_estado=1 " +
-					" and pa.per_id=p.per_id and u.persona_id=p.per_id and u.rol_id_usuario=r.rol_id " +
-					" and pa.area_id= a.area_id group by p.per_id order by p.per_apellido";
+					"and a.area_estado=1" +
+					" and u.persona_id=p.per_id and u.rol_id_usuario=r.rol_id " +
+					" group by p.per_id order by p.per_apellido";
 			System.out.println("ddff"+sql);
 		} else {
 			sql = "SELECT * FROM tb_usuario as u, tb_persona as p, tb_rol as r, tb_area as a,  tb_persona_area as pa " +
 					"WHERE u.usu_estado=1 and u.rol_id_usuario=3 and p.per_estado=1 and r.rol_estado=1 " +
-					"and a.area_estado=1 and pa.per_area_estado=1 " +
-					" and pa.per_id=p.per_id and u.persona_id=p.per_id  and u.rol_id_usuario=r.rol_id " +
-					"and  pa.area_id= a.area_id and (p.per_nombre like '%"
+					"and a.area_estado=1  " +
+					"and u.persona_id=p.per_id  and u.rol_id_usuario=r.rol_id " +
+					" and (p.per_nombre like '%"
 					+ criterio
 					+ "%' or p.per_apellido like '%"
 					+ criterio
@@ -180,7 +183,7 @@ public class DBUsuarioArea {
 		return lista;  
 	}
 	
-	public boolean crearUsuarioArea(AreaUsuario usuario) throws Exception{
+	public boolean crearUsuarioArea(UsuarioArea usuario) throws Exception{
 
 		boolean resultado=false;
 		//crear un objeto para la conexion
@@ -189,39 +192,36 @@ public class DBUsuarioArea {
 		//vamos a guardar utilizando transacciones 
 		try {
 			//por defecto es true asi q lo cambiamos
-			con.setAutoCommit(false);
-			String sql="INSERT INTO tb_persona (per_nombre, per_apellido, per_estado)" +
-					" VAlUES (?,?,?)";
-			PreparedStatement pstm=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			PersonaArea per=usuario.getPersonaarea();
-			pstm.setString(1,per.getPer_nombre());
-			pstm.setString(2,per.getPer_apellido());	
-			pstm.setInt(3,1);
+			con.setAutoCommit(false);	
+		/*	String sql = "INSERT INTO tb_persona (per_nombre, per_apellido)"
+					+ " VAlUES (?,?)";
+			PreparedStatement pstm = con.prepareStatement(sql,
+					Statement.RETURN_GENERATED_KEYS);
+			PersonaArea per = usuario.getPersonaarea();
+			pstm.setString(1, per.getPer_nombre());
+			pstm.setString(2, per.getPer_apellido());
 			//ejecutar el prepaaredStatement
 			//retorna el numero de filas afectadas o retorna 0 si no se pudo realizar
 			int num=pstm.executeUpdate();
-			//obtener los datos de la fila insertados
-			ResultSet rs=pstm.getGeneratedKeys();
-			if(rs.next()){
-				//obtener el IdPersona
-				int idPersona=rs.getInt(1);
-				sql ="INSERT INTO tb_usuario (usu_nombre, usu_clave, usu_estado, persona_id,rol_id_usuario) VALUES (?,?,?,?,?)";
-				pstm=con.prepareStatement(sql);
-				pstm.setString(1, usuario.getUsuario());
-				pstm.setInt(3, 1);
-				pstm.setInt(4, idPersona);
-				pstm.setInt(5, 2);
-				
-				
-				//ejecutar el Preparedsatatement
-				int num_filas_afectadas=pstm.executeUpdate();
-				//si no hay error 
-				con.commit();
-				resultado=true;
-			}else{
-				con.rollback();
-			}
+			ResultSet rs = pstm.getGeneratedKeys();
+			if (rs.next()) {
+				// obtener el IdPersona
+				int idPersona = rs.getInt(1);*/
+			String sql="INSERT INTO tb_persona_area (area_id, per_id, per_area_estado)" +
+						" VAlUES (?,?,?)";
+			PreparedStatement pstm = con.prepareStatement(sql,
+					Statement.RETURN_GENERATED_KEYS);
+				PersonaArea pers=usuario.getPersonaarea();
+				pstm = con.prepareStatement(sql);
+				pstm.setInt(1,usuario.getArea_id());
+				pstm.setInt(2,pers.getPer_id());
+				System.out.println("hola"+pers.getPer_id());
+				pstm.setInt(3,1);
 			
+				int num_filas_afectadas = pstm.executeUpdate();
+				// si no hay error
+				con.commit();
+				resultado = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
