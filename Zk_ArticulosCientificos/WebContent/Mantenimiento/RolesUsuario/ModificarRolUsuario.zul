@@ -1,52 +1,46 @@
-<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?page title="Asignar Rol a Usuario" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Editar Perfil" border="normal" width="600px" height="a00px">
-
-
-<grid>
+	<window title="Asignar Rol a Usuario" border="normal" width="600px"
+		id="winModificarRol" height="a00px" apply="com.controladores.listaRolUsuarioController">
+		<grid>
 			<columns>
 				<column label="Etiqueta" />
 				<column label="Dato" />
 			</columns>
 			<rows>
 				<row>
-					<label value="Nombre Usuario/a :"></label>
+					<label value="Usuario/a :"></label>
 					<textbox id="textbox_Usuario" disabled="true"
-						constraint="no empty">
+						constraint="no empty" width="100%">
 					</textbox>
 				</row>
 				<row>
-					<label value="Primer Nombre:"></label>
-					<textbox id="textbox_Pnombre" disabled="true"
-						constraint="no empty">
-					</textbox>
-				</row>
-
-				<row>
-					<label value=" Apellidos : "></label>
-					<textbox id="textbox_Apellidos" disabled="true"
-					constraint="no empty">
-					</textbox>
-				</row>
-				<row>
-					<label value="Rol: "></label>
-					<combobox id="combo_rol" autodrop="true">
+					<label value="Rol de Usuario: "></label>
+					<listbox mold="paging" pageSize="5" width="100%"
+						id="listbox_roles_usuarios" multiple="self.checked"
+						checkmark="true">
+						<listhead menupopup="auto" sizable="false">
+							<listheader label="Rol"
+								sort="auto(rol_descripcion)" />
+						</listhead>
 						<template name="model">
-							<comboitem label="${each.descripcion}"
-								value="${each.idrol}" />
+							<listitem value="${each}">
+								<listcell
+									label="${each.rol_descripcion}" />
+							</listitem>
 						</template>
-					</combobox>
+					</listbox>
 				</row>
 				<row>
 					<button label="Guardar" id="button_Guardar"
-						image="iconos/save.png">
+						image="Imagenes/save.png">
 					</button>
 					<button label="Cancelar" id="button_Cancelar"
-						image="iconos/delete.png" onClick="">
+						image="Imagenes/delete.png" onClick="">
 					</button>
 				</row>
 			</rows>
 		</grid>
 
-</window>
+	</window>
 </zk>

@@ -31,6 +31,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 	Toolbarbutton toolbarbutton_Nuevo;
 	Toolbarbutton toolbarbutton_Editar;
 	private Textbox textbox_buscar;
+	private Button button_buscar;
 	Listbox listbox_areas;
 
 	boolean confirmacion=false;
@@ -52,7 +53,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 		// guardar atributos en ventana
 		
 		//win.setAttribute("opcion", "registroArea") -- nombre de variable;
-				win.setAttribute("opcion", "ListaArea");
+				win.setAttribute("opcion", "listaAreas");
 				win.setAttribute("controladOrigen", this);
 	}
 
@@ -69,11 +70,10 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 		win.setClosable(true);
 		win.doModal();
 		// guardar atributos en ventana
-		win.setAttribute("opcion","registroArea");
+		win.setAttribute("opcion","listaAreas");
 		win.setAttribute("controladorOrigen", this);
 		Areas a=(Areas)listbox_areas.getSelectedItem().getValue();
 		win.setAttribute("areas",a);
-		System.out.print(a.getArea_nombre());
 		actualizarAreasLista();
 	}
 	
@@ -86,7 +86,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 			alert("Seleccione un area");
 			return;
 		}
-		Messagebox.show("Esta seguro de eliminar la habitacion?",
+		Messagebox.show("Esta seguro de eliminar el area?",
 				"confirmacion",Messagebox.OK | Messagebox.CANCEL,Messagebox.QUESTION,new EventListener<Event>(){
 			@Override
 			public void onEvent(Event evento) throws Exception {
@@ -100,8 +100,12 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 		Areas a = listbox_areas.getSelectedItem().getValue();
 		DBArticulo dba = new DBArticulo ();
 		registros=dba.eliminarAreas(a);
+		if (registros != false) {
+			alert("area eliminada correctamente");
+		}
 		actualizarAreasLista();
 	}
+	
 	public void onClick$button_buscar(){
 	actualizarAreasLista();
 	}
@@ -117,7 +121,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 		ListModelList<Areas> listModel = new ListModelList<Areas>(lista);
 		// establecer el modelo de datos
 		listbox_areas.setModel(listModel);
-		listbox_areas.renderAll();
+
 	}
 	
 	

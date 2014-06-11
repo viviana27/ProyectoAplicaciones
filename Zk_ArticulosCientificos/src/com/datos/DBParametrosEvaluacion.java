@@ -8,28 +8,25 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.entidades.Areas;
-import com.entidades.Persona;
-import com.entidades.Usuarios;
-import com.datos.DBManager;
+import com.entidades.ParametrosEvaluacion;
 
-public class DBArticulo {
-	public boolean CrearAreas(Areas a ){
+public class DBParametrosEvaluacion {
+	public boolean CrearParametrosEvaluacion(ParametrosEvaluacion param ){
 		boolean registro = false;
 		//añadir el codigo
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
 		try {
 			con.setAutoCommit(false);
-			String sql="INSERT INTO tb_area (area_nombre, area_descripcion, area_estado ) VAlUES (?,?,?)";
+			String sql="INSERT INTO tb_parametros_evaluacion (param_descripcion, param_valor, param_estado ) VAlUES (?,?,?)";
 			PreparedStatement pstm=con.prepareStatement(sql);
 			pstm=con.prepareStatement(sql);
 			
 			//pasar los parametros
 			
-			pstm.setString(1, a.getArea_nombre());
-			pstm.setString(2, a.getArea_descripcion());
-			pstm.setInt(3, a.getArea_estado());
+			pstm.setString(1, param.getParam_descripcion());
+			pstm.setInt(2, param.getParam_valor());
+			pstm.setInt(3, 1);
 			
 			//ejecutar el Preparedsatatement
 			int filas_afectadas=pstm.executeUpdate();
@@ -58,10 +55,8 @@ public class DBArticulo {
 	
 		return registro;
 	}
-// fin de codigo insertar nueva area
-
-	//actualizar tabla_areas, cuando se editen los datos
-	public boolean Actualizr_Areas(Areas area){
+	
+	public boolean Actualizr_ParametrosEvaluacion(ParametrosEvaluacion param){
 
 		boolean registro=false;
 		//crear un objeto para la conexion
@@ -71,17 +66,16 @@ public class DBArticulo {
 		try {
 			//por defecto es true asi q lo cambiamos
 			con.setAutoCommit(false);
-			String sql="UPDATE tb_area SET"
-					+" area_nombre=?, area_descripcion=?,  area_estado=?"
-					+" where area_id=?";
+			String sql="UPDATE tb_parametros_evaluacion SET"
+					+" param_descripcion=?, param_valor=?,  param_estado=?"
+					+" where param_id=?";
 			PreparedStatement pstm=con.prepareStatement(sql);
-			Areas a = area;	
-			pstm.setString(1,a.getArea_nombre());
-			pstm.setString(2,a.getArea_descripcion());
-			pstm.setInt(3,a.getArea_estado());
-			
-			pstm.setInt(4, a.getArea_id());
-			
+			ParametrosEvaluacion a = param;	
+			pstm.setString(1,a.getParam_descripcion());
+			pstm.setInt(2,a.getParam_valor());
+			pstm.setInt(3,a.getParam_estado());
+			pstm.setInt(4,a.getParam_id());
+							
 			//ejecutar el prepaaredStatement
 			//retorna el numero de filas afectadas o retorna 0 si no se pudo realizar
 			int num=pstm.executeUpdate();
@@ -112,8 +106,8 @@ public class DBArticulo {
 		
 	}
 
-	public List<Areas> buscarAreas(String area){
-		List<Areas> lista=new ArrayList<Areas>();
+	public List<ParametrosEvaluacion> buscarParametrosEvaluacion(String parametro){
+		List<ParametrosEvaluacion> lista=new ArrayList<ParametrosEvaluacion>();
 		Statement sentencia = null;
 		ResultSet registros=null;
 		
@@ -121,15 +115,15 @@ public class DBArticulo {
 		DBManager dbm = new DBManager();
 		Connection con= dbm.getConection();
 		String sql="";
-		if (area.equals("")) {
-		sql = "SELECT * FROM tb_area as a" +
-					" WHERE a.area_estado=1" +
-					" order by a.area_nombre";
+		if (parametro.equals("")) {
+		sql = "SELECT * FROM tb_parametros_evaluacion as a" +
+					" WHERE a.param_estado=1" +
+					" order by a.param_descripcion";
 			System.out.println("busqueda"+sql);
 		} else {
-			sql = "SELECT * FROM tb_area as a" +
-					" WHERE a.area_estado=1 and (a.area_nombre like '%"
-					+ area+"%')";
+			sql = "SELECT * FROM tb_parametros_evaluacion as a" +
+					" WHERE a.param_estado=1 and (a.param_descripcion like '%"
+					+ parametro+"%')";
 					
 			System.out.println(""+sql);
 			
@@ -144,19 +138,19 @@ public class DBArticulo {
 			 System.out.println("error al ejecutar la sentencia");
 		}
 		
-		Areas a = null;
+		ParametrosEvaluacion a = null;
 		try {
 			while(registros.next()){
-				a=new Areas();
-				a.setArea_id(registros.getInt("area_id"));
-				a.setArea_nombre(registros.getString("area_nombre"));
-				a.setArea_descripcion(registros.getString("area_descripcion"));
-				a.setArea_estado(registros.getInt("area_estado"));
-				if((registros.getInt("area_estado"))==1){
-					a.setEstadostring("Activo");
+				a=new ParametrosEvaluacion();
+				a.setParam_id(registros.getInt("param_id"));
+				a.setParam_descripcion(registros.getString("param_descripcion"));
+				a.setParam_valor(registros.getInt("param_valor"));
+				a.setParam_estado(registros.getInt("param_estado"));
+				if((registros.getInt("param_estado"))==1){
+					a.setParam_estadoString("Activo");
 				}
 				else{
-					a.setEstadostring("Inactivo");
+					a.setParam_estadoString("Inactivo");
 				}
 				//agrego usuario con datos cargados desde la base a mi lista de usuarios
 				lista.add(a);
@@ -178,35 +172,33 @@ public class DBArticulo {
 
 		return lista;	
 	}
-
 	//eliminar
-public boolean eliminarAreas(Areas a){
-	boolean result=false;
-	DBManager dbm =new DBManager();
-	Connection con= dbm.getConection();
-	try {
-		con.setAutoCommit(false);
-		String sql="UPDATE tb_area SET area_estado=? WHERE area_id=?";
-		PreparedStatement pstm=con.prepareStatement(sql);
-		Areas ar=a;
-		pstm.setInt(1,0);
-		pstm.setInt(2,a.getArea_id());
-		int num=pstm.executeUpdate();
-		con.commit();
-		result=true;
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	finally{
+	public boolean eliminarParametrosEvaluacion(ParametrosEvaluacion a){
+		boolean result=false;
+		DBManager dbm =new DBManager();
+		Connection con= dbm.getConection();
 		try {
-			con.close();
+			con.setAutoCommit(false);
+			String sql="UPDATE tb_parametros_evaluacion SET param_estado=? WHERE param_id=?";
+			PreparedStatement pstm=con.prepareStatement(sql);
+			ParametrosEvaluacion ar=a;
+			pstm.setInt(1,0);
+			pstm.setInt(2,a.getParam_id());
+			int num=pstm.executeUpdate();
+			con.commit();
+			result=true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
-	return result;
-}
-	
 }

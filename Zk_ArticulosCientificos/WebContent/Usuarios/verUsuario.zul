@@ -11,43 +11,53 @@
 			<rows>
 				<row>
 					<label value="Nombre Usuario/a:"></label>
-					<textbox id="textbox_Usuario" disabled="true"></textbox >
+					<label id="label_Usuario"
+						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
 					<label value="Primer Nombre:"></label>
-					<textbox id="textbox_Nombres" disabled="true"></textbox>
+					<label id="label_Nombres"
+						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
 					<label value="Apellidos:"></label>
-					<textbox id="textbox_Apellidos" disabled="true"></textbox>
+					<label id="label_Apellidos"
+						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
 					<label value="Cédula:"></label>
-					<textbox id="textbox_Cedula" disabled="true"></textbox>
+					<label id="label_Cedula"
+						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
 					<label value="Email:"></label>
-					<textbox id="textbox_Email" disabled="true"></textbox>
+					<label id="label_Email"
+						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
 					<label value="Dirección:"></label>
-					<textbox id="textbox_Direccion" disabled="true"></textbox>
+					<label id="label_Direccion"
+						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
 					<label value="Teléfono Convencional:"></label>
-					<textbox id="textbox_Telefono" disabled="true"></textbox>
+					<label id="label_Telefono"
+						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
 					<label value="Celular:"></label>
-					<textbox id="textbox_celular" disabled="true"></textbox>
+					<label id="label_celular"
+						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
 					<label value="Institución a la que pertenece:"></label>
-					<textbox id="textbox_institucion" disabled="true"></textbox>
+					<label id="label_institucion"
+						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
 					<label value="Dirección de la Institución:"></label>
-					<textbox id="textbox_dirinstitucion" disabled="true"></textbox>
+					<label id="label_dirinstitucion"
+						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
 					<button label="Salir" id="button_Cancelar"

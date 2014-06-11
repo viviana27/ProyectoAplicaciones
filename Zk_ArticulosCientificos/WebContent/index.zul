@@ -14,7 +14,10 @@
 					+ user.getPersona().getPer_apellido());
 			session.setAttribute("usuario", user);
 		} else {
+
+			//si  no existe sesion la redirijimos a login
 			Executions.sendRedirect("index-login.zul");
+
 		}
 	}
 	public void cerrarSesion() {

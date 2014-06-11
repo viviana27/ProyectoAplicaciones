@@ -39,9 +39,7 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 				are.setArea_estado(i);		
 				//llamo al metodo para actualizar los datos
 				
-				dbar.Actualizr_Areas(are);
-				
-				registro=true;
+				registro=dbar.Actualizr_Areas(are);
 				
 			}else{
 				//no existe, es nuevo
@@ -63,21 +61,14 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 				alert("Areas registrada con exito");
 				//evaluar desde donde fue llamada esta venta				
 				String opcion=(String)WinRegistrarAreas.getAttribute("opcion");
-				System.out.println(opcion+"aquistamos");
-				//corregir
-				//
-		if(opcion!=null && opcion.equals("registroArea")){
-				//entonces la ventana fue llamada desde registroArea
-					//cerrar ventana
-			WinRegistrarAreas.detach();
+				System.out.println(opcion+"");
+				if(opcion!=null && opcion.equals("listaAreas")){
+			listaAreaController lac = (listaAreaController) WinRegistrarAreas.getAttribute("controladOrigen");
+			if(lac!=null) lac.actualizarAreasLista();
+				WinRegistrarAreas.detach();
 					//actualizar la lista de usuarios
 			
-			listaAreaController lac = (listaAreaController) WinRegistrarAreas.getAttribute("controladorOrigen");
-			if(lac!=null){
-				lac.actualizarAreasLista();
-				System.out.println("holaaaaaaaaaa");
 				
-			}
 
 			}
 		
@@ -91,8 +82,7 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 	//se ejecuta el crear ventana
 		public void onCreate$WinRegistrarAreas(){
 			are=(Areas) WinRegistrarAreas.getAttribute("areas");
-			if(are!=null){
-				
+			if(are!=null){		
 				textbox_area.setText(are.getArea_nombre());
 				textbox_descArea.setText(are.getArea_descripcion());
 				if (are.getArea_estado()==1){

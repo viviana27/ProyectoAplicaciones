@@ -1,13 +1,13 @@
 <?page title="Roles Usuarios" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window title="Roles Usuarios" border="normal"
-		id="WinListarRolUsuarios" apply="com.controladores.listaRolUsuarioController">
+		id="WinListarRolUsuarios" apply="com.controladores.listaUsuarioController">
 		<div height="50px">
 			<fisheyebar id="fsb"
 				style="position:relative;Margin-left:30px" itemWidth="40"
 				itemHeight="40" itemMaxHeight="80" itemMaxWidth="80">
 				<fisheye image="Imagenes/editar.png"
-					id="toolbarbutton_Editar" label="Editar Rol" />
+					id="toolbarbutton_EditarUR" label="Editar Rol" />
 			</fisheyebar>
 		</div>
 		<groupbox closable="true">
@@ -17,11 +17,11 @@
 			<textbox id="textbox_buscar" />
 			<space />
 			<!-- <separator/> -->
-			<button image="imagenes/buscar.png" id="button_buscar" />
+			<button image="Imagenes/buscar.png" id="button_buscarUR" />
 		</groupbox>
 		<listbox mold="paging" pageSize="3" width="100%"
 			emptyMessage="No existen datos que cumplan el criterio de búsqueda"
-			id="listbox_Miembros" disabled="true">
+			id="listbox_MiembrosRoles" disabled="true">
 			<listhead menupopup="auto" sizable="false">
 				<listheader label="Nombres" sort="auto"
 					sortDirection="ascending" />
@@ -30,9 +30,9 @@
 			</listhead>
 			<template name="model">
 				<listitem value="${each}">
-					<listcell label="${each.nombres}" />
-					<listcell label="${each.apellidos}" />
-					<listcell label="${each.rol}"></listcell>
+					<listcell label="${each.persona.per_nombre}" />
+					<listcell label="${each.persona.per_apellido}" /><listcell label="${each.rol_descripcion}" />
+					<listcell label="${each.rol_descripcion}" />
 				</listitem>
 			</template>
 		</listbox>
