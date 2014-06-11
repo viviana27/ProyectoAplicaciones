@@ -36,6 +36,9 @@ public class indexController extends GenericForwardComposer<Component> {
 		crearMenu();
 	}
 	public void crearMenu() {
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		int idtipousuario =u.getId_rol();
 		Menu menuR = new Menu("Registros");
 		Menupopup menupopup = new Menupopup();
 		Menuitem menuitemR1 = new Menuitem("Registrar Nuevo Usuario");
@@ -48,7 +51,7 @@ public class indexController extends GenericForwardComposer<Component> {
 		menupopup.appendChild(menuitemR1);
 		menupopup.appendChild(menuitemR2);
 		menuR.appendChild(menupopup);
-		menubar_opciones.appendChild(menuR);	
+		//menubar_opciones.appendChild(menuR);	
 		
 		Menu menuP = new Menu("Perfil de usuario");
 		Menupopup menupopupP = new Menupopup();
@@ -78,9 +81,9 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuitemA3.addEventListener("onClick", new MenuListener());
 		menuitemA4.addEventListener("onClick", new MenuListener());
 		menupopupA.appendChild(menuitemA1);
-		menupopupA.appendChild(menuitemA2);
+		//menupopupA.appendChild(menuitemA2);
 		menupopupA.appendChild(menuitemA3);
-		menupopupA.appendChild(menuitemA4);
+		//menupopupA.appendChild(menuitemA4);
 		menuA.appendChild(menupopupA);
 		menubar_opciones.appendChild(menuA);
 		
@@ -115,7 +118,7 @@ public class indexController extends GenericForwardComposer<Component> {
 		menupopupM.appendChild(menuitemM5);
 		menupopupM.appendChild(menuitemM6);
 		menuM.appendChild(menupopupM);
-		menubar_opciones.appendChild(menuM);
+		//menubar_opciones.appendChild(menuM);
 		
 		Menu menuN = new Menu("Notificaciones");
 		Menupopup menupopupN = new Menupopup();
@@ -125,10 +128,25 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuitemN2.setValue("Notificaciones/listaNotificaciones.zul");
 		menuitemN1.addEventListener("onClick", new MenuListener());
 		menuitemN2.addEventListener("onClick", new MenuListener());
-		menupopupN.appendChild(menuitemN1);
+		//menupopupN.appendChild(menuitemN1);
 		menupopupN.appendChild(menuitemN2);
 		menuN.appendChild(menupopupN);
 		menubar_opciones.appendChild(menuN);
+		
+		if (idtipousuario==1) {
+			menupopupA.appendChild(menuitemA4);
+			menupopupN.appendChild(menuitemN1);
+			menubar_opciones.appendChild(menuR);
+			menubar_opciones.appendChild(menuM);
+			
+		}else{
+			if(idtipousuario==2){
+				alert("Usuario con pocos Privilegios");
+			}else{
+				menupopupA.appendChild(menuitemA2);
+			}
+			
+		}
 	}
 	
 

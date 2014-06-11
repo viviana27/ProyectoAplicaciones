@@ -27,7 +27,6 @@ public class listaRolUsuarioController extends
 	private Textbox textbox_buscar;
 	private Button button_buscar;
 	Listbox listbox_roles_usuarios;
-
 	boolean confirmacion = false;
 
 	@Override
