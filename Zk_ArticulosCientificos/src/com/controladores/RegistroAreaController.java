@@ -19,11 +19,11 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 	private Window WinRegistrarAreas;
 	private Areas are=null;
 	private int i=0;
-	
-	public void onClick$button_Registrar(){
-		 boolean registro=false;
+	 	public void onClick$button_Registrar(){
+		
+		boolean registro=false;
 		 DBArticulo dbar = new DBArticulo();
-		 
+		
 			if(are!=null){
 
 				//existe estoy editando
@@ -40,7 +40,9 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 				//llamo al metodo para actualizar los datos
 				
 				dbar.Actualizr_Areas(are);
+				
 				registro=true;
+				
 			}else{
 				//no existe, es nuevo
 					
@@ -61,23 +63,25 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 				alert("Areas registrada con exito");
 				//evaluar desde donde fue llamada esta venta				
 				String opcion=(String)WinRegistrarAreas.getAttribute("opcion");
-				System.out.println(opcion+"");
+				System.out.println(opcion+"aquistamos");
 				//corregir
 				//
-		if(opcion!=null && opcion.equals("ListaArea")){
+		if(opcion!=null && opcion.equals("registroArea")){
 				//entonces la ventana fue llamada desde registroArea
 					//cerrar ventana
 			WinRegistrarAreas.detach();
 					//actualizar la lista de usuarios
 			
-			listaAreaController lac = (listaAreaController) WinRegistrarAreas.getAttribute("controladOrigen");
+			listaAreaController lac = (listaAreaController) WinRegistrarAreas.getAttribute("controladorOrigen");
 			if(lac!=null){
 				lac.actualizarAreasLista();
+				System.out.println("holaaaaaaaaaa");
 				
 			}
-					
+
 			}
-				}
+		
+		}
 			else {
 				alert("No se pudo realizar el registro");
 				}

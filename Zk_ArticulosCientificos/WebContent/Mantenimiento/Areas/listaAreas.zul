@@ -34,7 +34,7 @@
 			</listhead>
 			<template name="model">
 				<listitem value="${each}">
-					<listcell label="${each.area_descripcion}" />
+					<listcell label="${each.area_nombre}" />
 					<listcell label="${each.estadostring}" />
 				</listitem>
 			</template>
