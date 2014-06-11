@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -307,7 +308,6 @@ public class DBUsuario {
 		return lista;
 	}
 
-	
 	public boolean actualizarUsuario(Usuarios usuario) throws Exception {
 
 		boolean resultado = false;
@@ -452,9 +452,8 @@ public class DBUsuario {
 		clave = encrypt.hash(password);
 		try {
 			sentencia = con.createStatement();
-			sentencia.executeUpdate("UPDATE tb_usuario SET usu_clave='"
-					+ clave
-					+ "' where usu_id='"+id+"'");
+			sentencia.executeUpdate("UPDATE tb_usuario SET usu_clave='" + clave
+					+ "' where usu_id='" + id + "'");
 			result = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -469,8 +468,8 @@ public class DBUsuario {
 		}
 		return result;
 	}
-	
-	public boolean verificarClave(String user,String password) {
+
+	public boolean verificarClave(String user, String password) {
 		boolean result = false;
 		Usuarios usuario = null;
 		DBManager dbm = new DBManager();
@@ -486,12 +485,8 @@ public class DBUsuario {
 		}
 		String query = "Select * from tb_usuario as u, tb_persona as p, tb_rol as r where "
 				+ "u.persona_id=p.per_id and u.rol_id_usuario=r.rol_id and"
-				+ " u.usu_nombre='"
-				+ user
-				+ "'and u.usu_clave='"
-				+ clave
-				+ "'";
-		//202cb962ac59075b964b07152d234b70
+				+ " u.usu_nombre='" + user + "'and u.usu_clave='" + clave + "'";
+		// 202cb962ac59075b964b07152d234b70
 		try {
 			sentencia = con.createStatement();
 			resultados = sentencia.executeQuery(query);
@@ -499,12 +494,11 @@ public class DBUsuario {
 				usuario = new Usuarios();
 				usuario.setId(resultados.getInt("usu_id"));
 			}
-			//System.out.println(resultados);
-			if(usuario!=null){
-				result=true;
-			}else
-			{
-				result=false;
+			// System.out.println(resultados);
+			if (usuario != null) {
+				result = true;
+			} else {
+				result = false;
 			}
 
 		} catch (SQLException e) {
@@ -522,5 +516,30 @@ public class DBUsuario {
 		}
 		return result;
 
-	}	
+	}
+	
+	public boolean cambiarRol(int idUsu, int idRol){
+		boolean result = false;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		Statement sentencia;
+		try {
+			sentencia = con.createStatement();
+			sentencia.executeUpdate("UPDATE tb_usuario SET rol_id_usuario='" + idRol
+					+ "' where usu_id='" + idUsu + "'");
+			result = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 }
