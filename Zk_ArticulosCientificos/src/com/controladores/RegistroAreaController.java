@@ -62,9 +62,10 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 				String opcion=(String)WinRegistrarAreas.getAttribute("opcion");
 				System.out.println(opcion+"");
 				if(opcion!=null && opcion.equals("listaAreas")){
-			listaAreaController lac = (listaAreaController) WinRegistrarAreas.getAttribute("controladOrigen");
+			listaAreaController lac = (listaAreaController) WinRegistrarAreas.getAttribute("controladorOrigen");
 			if(lac!=null) lac.actualizarAreasLista();
 				WinRegistrarAreas.detach();
+				
 					
 			}
 				}
