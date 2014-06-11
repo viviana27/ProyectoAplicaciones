@@ -40,7 +40,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
-		actualizarLista();
+		//actualizarLista();
 	}
 
 	public void onClick$toolbarbutton_Nuevo() {

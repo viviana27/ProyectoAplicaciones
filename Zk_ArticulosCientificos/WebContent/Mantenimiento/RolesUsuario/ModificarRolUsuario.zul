@@ -2,7 +2,6 @@
 <zk>
 	<window title="Asignar Rol a Usuario" border="normal" width="600px"
 		height="a00px" apply="com.controladores.listaRolUsuarioController">
-		<label>Para seleccionar más de un rol, active la casilla  </label>
 		<grid>
 			<columns>
 				<column label="Etiqueta" />
