@@ -339,12 +339,13 @@ public class DBUsuario {
 			// retorna el numero de filas afectadas o retorna 0 si no se pudo
 			// realizar
 			int num = pstm.executeUpdate();
-			sql = "UPDATE TB_USUARIO SET usu_nombre=?, usu_clave=?"
+			sql = "UPDATE tb_usuario SET usu_nombre=?, usu_clave=?"
 					+ "WHERE usu_id=?";
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, usuario.getUsuario());
 			clave = encrypt.hash(usuario.getClave());
 			pstm.setString(2, clave);
+		//	pstm.setInt(3, usuario.getId_rol());
 			pstm.setInt(3, usuario.getId());
 			// ejecutar el Preparedsatatement
 			int num_filas_afectadas = pstm.executeUpdate();
