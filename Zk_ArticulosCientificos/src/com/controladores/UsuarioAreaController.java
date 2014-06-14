@@ -19,7 +19,7 @@ import com.entidades.Persona;
 import com.entidades.PersonaArea;
 import com.entidades.UsuarioArea;
 import com.entidades.Usuarios;
-import com.sun.istack.internal.Nullable;
+
 
 public class UsuarioAreaController extends GenericForwardComposer<Component> {
 	private static final long serialVersionUID = 1L;

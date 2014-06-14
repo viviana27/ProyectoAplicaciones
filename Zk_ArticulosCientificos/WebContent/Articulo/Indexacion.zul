@@ -1,14 +1,22 @@
 <?page title="Indexacion" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Indexacion" border="normal">
+<window title="Indexacion" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('SubirDescargarArchivos') @init('com.SubirDescargarArchivos.SubirDescargarArchivos')">
 <label value="Proporcione palabras claves para indexar el envio, separe los términos en punto y coma."></label>
 <grid>
 
 <rows>
 	<row>
 					<label value="Seleccionar archivo " />
-					<button label="Examinar" upload="true,maxsize=8192"
+					<button label="Examinar" upload="true,maxsize=8192" 
 			onUpload="@command('uploadFile',upload=event)" autodisable="self" />
+					
+								<button
+			label="Download"
+			mold="trendy"
+			onClick="@command('downloadFile')"
+			disabled="@bind(empty vm.media)"
+			 />
+					
 					</row>
 			<row>
 				<label>Tipo de artículo</label>
