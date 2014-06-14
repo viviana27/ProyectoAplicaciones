@@ -17,7 +17,7 @@
 			<textbox id="textbox_buscar" />
 			<space />
 			<!-- <separator/> -->
-			<button image="imagenes/buscar.png" id="button_buscarUR" />
+			<button image="Imagenes/buscar.png" id="button_buscarUR" />
 		</groupbox>
 		<listbox mold="paging" pageSize="3" width="100%"
 			emptyMessage="No existen datos que cumplan el criterio de búsqueda"

@@ -19,11 +19,11 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 	private Window WinRegistrarAreas;
 	private Areas are=null;
 	private int i=0;
-	
-	public void onClick$button_Registrar(){
-		 boolean registro=false;
+	 	public void onClick$button_Registrar(){
+		
+		boolean registro=false;
 		 DBArticulo dbar = new DBArticulo();
-		 
+		
 			if(are!=null){
 
 				//existe estoy editando
@@ -40,6 +40,7 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 				//llamo al metodo para actualizar los datos
 				
 				registro=dbar.Actualizr_Areas(are);
+				
 			}else{
 				//no existe, es nuevo
 					
@@ -65,10 +66,10 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 			listaAreaController lac = (listaAreaController) WinRegistrarAreas.getAttribute("controladorOrigen");
 			if(lac!=null) lac.actualizarAreasLista();
 				WinRegistrarAreas.detach();
-				
-					
+
 			}
-				}
+		
+		}
 			else {
 				alert("No se pudo realizar el registro");
 				}
