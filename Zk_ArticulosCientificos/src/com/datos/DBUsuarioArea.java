@@ -35,20 +35,12 @@ public class DBUsuarioArea {
 					area=new UsuarioArea();
 					area.setArea_id(resultados.getInt("area_id"));
 					area.setArea_nombre(resultados.getString("area_nombre"));
-					//agregar actividades a mi lista
-					String id=null;
-					id=Integer.toString(area.getArea_id());
-					System.out.print("si"  +id);
-					lista.add(area);
-				
-					
-				}
-				
+					lista.add(area);					
+				}				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
+			}			
 			return lista;
 		}
 	

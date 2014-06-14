@@ -19,7 +19,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Window;
 
-import com.datos.DBArticulo;
+import com.datos.DBAreas;
 import com.datos.DBUsuario;
 import com.entidades.Areas;
 import com.entidades.Usuarios;
@@ -97,7 +97,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 			
 		});
 		Areas a = listbox_areas.getSelectedItem().getValue();
-		DBArticulo dba = new DBArticulo ();
+		DBAreas dba = new DBAreas ();
 		registros=dba.eliminarAreas(a);
 		if (registros != false) {
 			alert("area eliminada correctamente");
@@ -112,7 +112,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 	public void actualizarAreasLista() {
 		// obtener datos de la base
 		// lista de areas
-		DBArticulo dbar = new DBArticulo();
+		DBAreas dbar = new DBAreas();
 		// lista con areas encontradas
 		List<Areas> lista = dbar.buscarAreas(textbox_buscar.getValue());
 		// establecer esta lista como modelo de dalos pasra el listbox
