@@ -54,9 +54,7 @@ public class UsuarioAreaController extends GenericForwardComposer<Component> {
 		DBUsuarioArea dbusuarios = new DBUsuarioArea();
 		// verificar si es nuevo usuario o usuario a editar
 		idper=u.getPer_area_id();
-		System.out.println("idpersona_area: "+idper);
 		idpersona=u.getPersonaarea().getPer_id();
-		System.out.println("idpersona: "+idpersona);
 		if ( idper > 0) {
 			// existe estoy editando
 			u.getPersonaarea().setPer_nombre(textbox_Pnombre.getValue());
@@ -66,30 +64,10 @@ public class UsuarioAreaController extends GenericForwardComposer<Component> {
 			System.out.println();
 			System.out.println("idArea: "+ lblidarea.getValue()+"nombre: "+textbox_Pnombre.getValue()+" idPesona"+u.getPersonaarea().getPer_id());
 			result = dbusuarios.actualizarUsuarioArea(u);
-			
-
 		} else {
-		/*PersonaArea personaa= new PersonaArea();
-		personaa.setPer_id(u.getPersonaarea().getPer_id());
-		UsuarioArea usuarioarea = new UsuarioArea(0, Integer.parseInt(lblidarea.getValue()), personaa, 1);
-			System.out.println();
-			System.out.println("idArea: "+ lblidarea.getValue()+"nombre: "+textbox_Pnombre.getValue()+" idPesona"+u.getPersonaarea().getPer_id());
-			result = dbusuarios.crearUsuarioArea(u);
-			// no existe, es nuevo
-			// llamar a la capa logica de datos
-			// DBUsuarios dbusuarios=new DBUsuarios();
-			//PersonaArea personaarea = new PersonaArea(0, textbox_Pnombre.getValue(),
-					//textbox_Apellidos.getValue());
-			
-		//	result = dbusuarios.crearUsuarioArea(usuarioarea);
-		*/
-			// existe estoy editando
 						u.getPersonaarea().setPer_nombre(textbox_Pnombre.getValue());
 						u.getPersonaarea().setPer_apellido(textbox_Apellidos.getValue());
 						u.setArea_id(Integer.parseInt(lblidarea.getValue()));
-						// llamo al metodo para actualizar los datos
-						System.out.println();
-						System.out.println("idArea: "+ lblidarea.getValue()+"nombre: "+textbox_Pnombre.getValue()+" idPesona"+u.getPersonaarea().getPer_id());
 						result = dbusuarios.crearUsuarioArea(u);
 		}
 		if (result) {

@@ -7,7 +7,7 @@ import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import com.datos.DBArticulo;
+import com.datos.DBAreas;
 import com.entidades.Areas;
 
 public class RegistroAreaController extends GenericForwardComposer<Component>
@@ -22,7 +22,7 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 	 	public void onClick$button_Registrar(){
 		
 		boolean registro=false;
-		 DBArticulo dbar = new DBArticulo();
+		 DBAreas dbar = new DBAreas();
 		
 			if(are!=null){
 
@@ -63,7 +63,7 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 				String opcion=(String)WinRegistrarAreas.getAttribute("opcion");
 				System.out.println(opcion+"");
 				if(opcion!=null && opcion.equals("listaAreas")){
-			listaAreaController lac = (listaAreaController) WinRegistrarAreas.getAttribute("controladOrigen");
+			listaAreaController lac = (listaAreaController) WinRegistrarAreas.getAttribute("controladorOrigen");
 			if(lac!=null) lac.actualizarAreasLista();
 				WinRegistrarAreas.detach();
 					//actualizar la lista de usuarios

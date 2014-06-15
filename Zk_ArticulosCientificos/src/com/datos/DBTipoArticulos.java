@@ -61,11 +61,12 @@ public class DBTipoArticulos {
 		con = dbm.getConection();
 		try {
 			sentencia = con.createStatement();
-			String sql = "Select * from tb_tipo_articulo";
+			String sql = "Select * from tb_tipo_articulo as ta order by ta.tipo_nombre ASC";
 			resultados = sentencia.executeQuery(sql);
 			while (resultados.next()) {
 				tipo = new TipoArticulos();
 				tipo.setTipo_id((resultados.getInt("tipo_id")));
+				System.out.println("id tipo "+tipo.getTipo_id());
 				tipo.setTipo_nombre(resultados.getString("tipo_nombre"));
 				lista.add(tipo);
 			}

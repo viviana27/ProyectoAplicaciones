@@ -8,8 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.ejb.NoMoreTimeoutsException;
+
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
+
+import com.entidades.Usuarios;
 
 /**
  * Util class to upload files
@@ -22,8 +28,9 @@ public class Util {
 
 	public static final String separator = System.getProperty("file.separator");// Get
 																				// de
-																				// system
-																				// separator
+	public static String ruta; // system
+	public String nombreArticulo; // separator
+	public static String complemento_nombre;
 
 	public static boolean uploadFile(Media media) {
 
@@ -34,14 +41,25 @@ public class Util {
 	public static String getPath() {
 		// return
 		// Executions.getCurrent().getDesktop().getWebApp().getRealPath(separator)+"uploads"+separator;
-		File directorio = new File("C:/Uploads" + separator);
+		
+		Session session = Sessions.getCurrent();
+		Usuarios usua = (Usuarios) session.getAttribute("User");
+		int idUsuario = usua.getId();
+		String nombre=usua.getPersona().getPer_apellido();
+		complemento_nombre=Integer.toString(idUsuario);
+		
+		ruta = "C:/Uploads/Articulo"+complemento_nombre+nombre;
+		 System.out.println(" ruta: "+ruta);
+		File directorio = new File(ruta+separator);
 		directorio.mkdir();
 		return Executions.getCurrent().getDesktop().getCurrentDirectory()
-				+ "C:/Uploads" + separator;
+				+ ruta + separator;
 	}
+
 	// save file
 	public static boolean saveFile(Media media, String path) {
 		boolean uploaded = false;
+
 		BufferedInputStream in = null;
 		BufferedOutputStream out = null;
 		try {
@@ -56,6 +74,7 @@ public class Util {
 			OutputStream aout = new FileOutputStream(arc);
 			out = new BufferedOutputStream(aout);
 			System.out.println("Nombre: " + media.getName() + " :StreamData: ");
+			// nombreArticulo=media.getName();
 			byte buffer[] = new byte[1024];
 			int ch = in.read(buffer);
 			while (ch != -1) {

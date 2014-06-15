@@ -1,61 +1,110 @@
-<?page title="Indexacion" contentType="text/html;charset=UTF-8"?>
+<?page title="Indexación" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Indexacion" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('SubirDescargarArchivos') @init('com.SubirDescargarArchivos.SubirDescargarArchivos')">
-<label value="Proporcione palabras claves para indexar el envio, separe los términos en punto y coma."></label>
-<grid>
+	<window title="Indexación" border="normal"
+	 apply="com.controladores.articuloController"  >
+		<label
+			value="Proporcione palabras claves para indexar el envio, separe los términos en punto y coma.">
+		</label>
+		<grid>
 
-<rows>
-	<row>
-					<label value="Seleccionar archivo " />
-					<button label="Examinar" upload="true,maxsize=8192" 
-			onUpload="@command('uploadFile',upload=event)" autodisable="self" />
-					
-								<button
-			label="Download"
-			mold="trendy"
-			onClick="@command('downloadFile')"
-			disabled="@bind(empty vm.media)"
-			 />
-					
-					</row>
-			<row>
-				<label>Tipo de artículo</label>
-				<combobox id="cbbtipo" autodrop="true" mold="rounded" 
-					buttonVisible="true">
-					<comboitem label="Tipo Articulo"
-								value="" />
-								</combobox>
-			</row>	
-				<row>
-				<label>Titulo</label>
-				<textbox></textbox>
-			</row>
-			<row>
-				<label>Resumen</label>
-					<textbox></textbox>
-			</row>
-			<row>
-				<label>Palabras claves</label>
+			<rows>
 				
-			</row>
-			<row>
-				<label>Fecha</label>
-				<datebox id="txtfecha" />
-			</row>	
-			
 				<row>
-				<button label="Cancelar" id="button_cancelar"
-						image="iconos/delete.png">
+					<label>Tipo de artículo</label>
+					<combobox id="cmb_tipo" autodrop="true"
+						width="100%">
+						<template name="model">
+							<comboitem label="${each.tipo_nombre}"
+								value="${each}" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label>Area de Artículo</label>
+					<combobox id="cmb_area" autodrop="true"
+						width="100%">
+						<template name="model">
+							<comboitem label="${each.area_nombre}"
+								value="${each}" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label>Titulo</label>
+					<textbox id="textbox_Titulo" constraint="no empty"
+						width="100%">
+					</textbox>
+				</row>
+				<row>
+					<label>Resumen</label>
+					<textbox id="textbox_Resumen" constraint="no empty"
+						width="100%">
+					</textbox>
+				</row>
+				<row>
+					<label>Palabras claves</label>
+					<textbox id="textbox_PClaves" constraint="no empty"
+						width="100%">
+					</textbox>
+				</row>
+				<row>
+					<label>Fecha</label>
+					<datebox id="txtfecha" />
+				</row>
+				<row>
+					<label>
+						Nota: Todos los autores deben estar registrados
+						en el sistema, SI un autor NO ha sido
+						registrado, regístrelo para que pueda tener un
+						vínculo con el artículo que va a enviar
+					</label>
+					<button label="Nuevo Autor" id="button_Nuevo"
+						image="Imagenes/add.png">
 					</button>
-					
-					<button label="Guardar y Enviar" id="button_Registrar"
-						image="iconos/save.png">
-					</button>
-								</row>
-			</rows>
-			
-		</grid>
-		
 
-</window>
+				</row>
+				<row>
+					<label>Otros Autores</label>
+					<vbox width="100%">
+						<combobox id="comboAutor2" width="100%"
+							buttonVisible="self.checked" autodrop="true">
+							<template name="model">
+								<comboitem label="${each.persona.per_nombre} ${each.persona.per_apellido}"
+									value="${each}" />
+							</template>
+						</combobox>
+						<combobox id="comboAutor3" width="100%"
+							buttonVisible="self.checked" autodrop="true">
+							<template name="model">
+								<comboitem label="${each.persona.per_nombre} ${each.persona.per_apellido}"
+									value="${each}" />
+							</template>
+						</combobox>
+					</vbox>
+				</row>
+				<row>
+					<label value="Seleccionar archivo " />
+				<vbox width="100%">
+						<button label="Examinar" id="btnExaminar"
+					
+							upload="true,maxsize=8192"
+							onUpload="@command('uploadFile',upload=event)" 
+							autodisable="self" />
+						<label id="ruta" value="Archivo.doc" />
+					</vbox>
+				</row>
+				<row>
+					<button label="Guardar y Enviar"
+						id="button_Registrar" image="Imagenes/save.png">
+					</button>
+					<button label="Cancelar" id="button_cancelar"
+						image="Imagenes/delete.png">
+					</button>
+				</row>
+			</rows>
+	<!-- -->
+		</grid>
+
+
+	</window>
 </zk>
