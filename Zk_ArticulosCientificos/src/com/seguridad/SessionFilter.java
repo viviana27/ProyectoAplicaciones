@@ -39,7 +39,6 @@ public class SessionFilter implements Filter {
 		int idrol =usuario.getId_rol();
 		System.out.println("idrol"+idrol);
 		String path=httpr.getServletPath();
-		System.out.println("hola");
 		if(idrol==2 || usuario!=null || path.equals("/Usuarios/nuevoUsuario.zul")||path.equals("/Usuarios/verUsuario.zul") 
 				||path.equals("/Usuarios/modificarClave.zul")||path.equals("/Articulo/Indexacion.zul")
 				||path.equals("/Notificaciones/enviarNotificaciones.zul")||path.equals("/Notificaciones/listaNotificaciones.zul")){
