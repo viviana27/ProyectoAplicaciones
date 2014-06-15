@@ -13,7 +13,7 @@ import com.entidades.Persona;
 import com.entidades.Usuarios;
 import com.datos.DBManager;
 
-public class DBArticulo {
+public class DBAreas {
 	public boolean CrearAreas(Areas a ){
 		boolean registro = false;
 		//añadir el codigo

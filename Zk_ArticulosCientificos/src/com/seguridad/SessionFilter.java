@@ -41,15 +41,15 @@ public class SessionFilter implements Filter {
 		String path=httpr.getServletPath();
 		System.out.println("hola");
 		if(idrol==2 || usuario!=null || path.equals("/Usuarios/nuevoUsuario.zul")||path.equals("/Usuarios/verUsuario.zul") 
-				||path.equals("/Usuarios/modificarClave.zul")||path.equals("/Articulo/Listar Articulo.zul")||path.equals("/Articulo/Subir Articulo.zul")
+				||path.equals("/Usuarios/modificarClave.zul")||path.equals("/Articulo/Indexacion.zul")
 				||path.equals("/Notificaciones/enviarNotificaciones.zul")||path.equals("/Notificaciones/listaNotificaciones.zul")){
 			//pass the request along the filter chain la ultima llamada a chain.dofilter se encarga
 			//de llamar al metodo service del servlet
 			chain.doFilter(request, response);
                   	}else{if(idrol==3 || usuario!=null || path.equals("/Usuarios/nuevoUsuario.zul")||path.equals("/Usuarios/verUsuario.zul") 
-            				||path.equals("/Usuarios/modificarClave.zul")||path.equals("/Articulo/Listar Articulo.zul")
-            				||path.equals("/Articulo/Subir Articulo.zul") ||path.equals("/Articulo/Evaluacion.zul")
-            				||path.equals("/Notificaciones/enviarNotificaciones.zul")||path.equals("/Notificaciones/listaNotificaciones.zul")){
+            				||path.equals("/Usuarios/modificarClave.zul")||path.equals("/Articulo/Listar Articulos.zul")||path.equals("/Articulo/Indexacion.zul")
+            				 ||path.equals("/Articulo/Evaluacion.zul")||path.equals("Notificaciones/enviarNotificaciones.zul")
+            				 ||path.equals("/Notificaciones/listaNotificaciones.zul")){
                   		chain.doFilter(request, response);
                   	}else{
 			                 //usuario no existe en sesion
