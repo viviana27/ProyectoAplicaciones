@@ -1,30 +1,31 @@
 <?page title="Indexación" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window title="Indexación" border="normal"
-		apply="com.controladores.articuloController">
+	 apply="com.controladores.articuloController"  >
 		<label
 			value="Proporcione palabras claves para indexar el envio, separe los términos en punto y coma.">
 		</label>
 		<grid>
 
 			<rows>
-				<row>
-					<label value="Seleccionar archivo " />
-					<vbox width="100%">
-						<button label="Examinar"
-							upload="true,maxsize=8192"
-							onUpload="@command('uploadFile',upload=event)"
-							autodisable="self" />
-						<label id="ruta" value="Archivo.doc" />
-					</vbox>
-				</row>
+				
 				<row>
 					<label>Tipo de artículo</label>
 					<combobox id="cmb_tipo" autodrop="true"
-						width="40%">
+						width="100%">
 						<template name="model">
 							<comboitem label="${each.tipo_nombre}"
-								value="${each.tipo_id}" />
+								value="${each}" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label>Area de Artículo</label>
+					<combobox id="cmb_area" autodrop="true"
+						width="100%">
+						<template name="model">
+							<comboitem label="${each.area_nombre}"
+								value="${each}" />
 						</template>
 					</combobox>
 				</row>
@@ -69,16 +70,27 @@
 							buttonVisible="self.checked" autodrop="true">
 							<template name="model">
 								<comboitem label="${each.persona.per_nombre} ${each.persona.per_apellido}"
-									value="${each.id}" />
+									value="${each}" />
 							</template>
 						</combobox>
 						<combobox id="comboAutor3" width="100%"
 							buttonVisible="self.checked" autodrop="true">
 							<template name="model">
 								<comboitem label="${each.persona.per_nombre} ${each.persona.per_apellido}"
-									value="${each.id}" />
+									value="${each}" />
 							</template>
 						</combobox>
+					</vbox>
+				</row>
+				<row>
+					<label value="Seleccionar archivo " />
+				<vbox width="100%">
+						<button label="Examinar" id="btnExaminar"
+					
+							upload="true,maxsize=8192"
+							onUpload="@command('uploadFile',upload=event)" 
+							autodisable="self" />
+						<label id="ruta" value="Archivo.doc" />
 					</vbox>
 				</row>
 				<row>
@@ -90,7 +102,7 @@
 					</button>
 				</row>
 			</rows>
-
+	<!-- -->
 		</grid>
 
 

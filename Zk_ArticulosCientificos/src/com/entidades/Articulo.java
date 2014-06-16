@@ -9,7 +9,8 @@ public class Articulo {
 	private String art_fecha_subida;
 	private int art_estado;
 	private int tipo_id;
-
+	private int id_area;
+	
 	public Articulo(int art_id, String art_titulo, String art_archivo,
 			String art_resumen, String art_palabras_clave,
 			String art_fecha_subida, int art_estado, int tipo_id,
@@ -25,6 +26,14 @@ public class Articulo {
 		this.tipo_id = tipo_id;
 		this.area_id_padre = area_id_padre;
 		this.id_estado = id_estado;
+	}
+
+	public int getId_area() {
+		return id_area;
+	}
+
+	public void setId_area(int id_area) {
+		this.id_area = id_area;
 	}
 
 	public Articulo() {
