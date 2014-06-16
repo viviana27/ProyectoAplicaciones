@@ -8,6 +8,7 @@ public class Areas {
 	
 	private String estadostring;
 	
+	
 	public Areas(int area_id, String area_nombre, String area_descripcion,
 			int area_estado) {
 		super();

@@ -208,5 +208,31 @@ public boolean eliminarAreas(Areas a){
 	}
 	return result;
 }
+public List<Areas> buscarArea() {
+	List<Areas> lista = new ArrayList<Areas>();
+	Areas area = null;
+	// objeto conexion
+	Connection con = null;
+	Statement sentencia = null;
+	ResultSet resultados = null;
+	DBManager dbm = new DBManager();
+	con = dbm.getConection();
+	try {
+		sentencia = con.createStatement();
+		String sql = "Select * from tb_area as ar order by ar.area_nombre ASC";
+		resultados = sentencia.executeQuery(sql);
+		while (resultados.next()) {
+			area = new Areas();
+			area.setArea_id((resultados.getInt("area_id")));
+			area.setArea_nombre(resultados.getString("area_nombre"));
+			lista.add(area);
+		}
+
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return lista;
+}
 	
 }
