@@ -12,7 +12,7 @@
 				<row>
 					<label>Tipo de artículo</label>
 					<combobox id="cmb_tipo" autodrop="true"
-						width="100%">
+						width="100%" constraint="no empty">
 						<template name="model">
 							<comboitem label="${each.tipo_nombre}"
 								value="${each}" />
@@ -22,7 +22,7 @@
 				<row>
 					<label>Area de Artículo</label>
 					<combobox id="cmb_area" autodrop="true"
-						width="100%">
+						width="100%" constraint="no empty">
 						<template name="model">
 							<comboitem label="${each.area_nombre}"
 								value="${each}" />
@@ -49,7 +49,7 @@
 				</row>
 				<row>
 					<label>Fecha</label>
-					<datebox id="txtfecha" />
+					<datebox id="txtfecha" constraint="no empty"/>
 				</row>
 				<row>
 					<label>
@@ -90,7 +90,7 @@
 							upload="true,maxsize=8192"
 							onUpload="@command('uploadFile',upload=event)" 
 							autodisable="self" />
-						<label id="ruta" value="Archivo.doc" />
+						<label id="nombreArticulo" value="Archivo.doc" />
 					</vbox>
 				</row>
 				<row>

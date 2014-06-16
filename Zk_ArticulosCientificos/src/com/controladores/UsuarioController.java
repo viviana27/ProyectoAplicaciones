@@ -110,7 +110,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			// usuario.setClave(textbox_Password.getValue());
 
 			result = dbusuarios.crearUsuario(usuario);
-		
+
 		}
 
 		if (result) {
@@ -133,13 +133,11 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 		} else {
 			alert("No se pudo realizar el registro");
 		}
-
+		winNuevoUsuario.detach();
 	}
 
 	public void onCreate$winNuevoUsuario() {
 
-		
-		
 		u = (Usuarios) winNuevoUsuario.getAttribute("usuario");
 		if (u != null) {
 			textbox_Usuario.setText(u.getUsuario());

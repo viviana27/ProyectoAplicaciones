@@ -1,5 +1,6 @@
 package com.controladores;
 
+import java.util.Date;
 import java.util.List;
 
 import org.zkoss.bind.annotation.Command;
@@ -9,6 +10,7 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.Media;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.UploadEvent;
@@ -21,6 +23,8 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
+
 import com.SubirDescargarArchivos.Util;
 import com.datos.DBAreas;
 import com.datos.DBArticulos;
@@ -37,13 +41,15 @@ import com.entidades.Usuarios;
 public class articuloController extends GenericForwardComposer<Component> {
 	private Combobox cmb_tipo, comboAutor2, comboAutor3, cmb_area;
 	public Textbox textbox_Titulo, textbox_Resumen, textbox_PClaves;
-	public Button button_Registrar, btnExaminar;
-	public Label ruta;
+	public Button button_Registrar, btnExaminar, button_Nuevo;
+	public Label nombreArticulo;
 	public Datebox txtfecha;
+	public Date fecha;
 	private Articulo a = null;
 	private PersonaArticulo pa = null;
-	public int idTipoArticulo = 0, idTipoArea = 0, idAutor2 = 0, idAutor3 = 0;
-	String NombreArchivo, direccion;
+	public int idTipoArticulo = 0, idTipoArea = 0, idAutor2 = 0, idAutor3 = 0,
+			idUsuario = 0, idArticuloSubido = 0;
+	String NombreArchi, direccion;
 	// //----------------------------------------------------------------------------
 	// codigo para subir un archivo al servidor
 	private Media media;
@@ -54,15 +60,8 @@ public class articuloController extends GenericForwardComposer<Component> {
 			@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event) {
 		// System.out.println("lo hicimos .........!");
 		media = event.getMedia();
-
-		if (Util.uploadFile(media)) {
-			NombreArchivo = media.getName();
-			ruta.setValue(NombreArchivo);
-			alert("Archivo Cargado....!");
-		}
-		// Messagebox.show(Labels.getLabel("app.successfull"));
-		else
-			Messagebox.show(Labels.getLabel("app.error"));
+		NombreArchi = media.getName();
+		nombreArticulo.setValue(NombreArchi);
 	}
 
 	public Media getMedia() {
@@ -81,6 +80,10 @@ public class articuloController extends GenericForwardComposer<Component> {
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		Combos();
+	}
+	
+	public void Combos(){
 		DBTipoArticulos dbtp = new DBTipoArticulos();
 		DBUsuario dbu = new DBUsuario();
 		List<TipoArticulos> listaTipos = dbtp.buscarTipos();
@@ -94,7 +97,6 @@ public class articuloController extends GenericForwardComposer<Component> {
 			ListModelList<Usuarios> listModel = new ListModelList<Usuarios>(
 					listaUsuarios);
 			comboAutor2.setModel(listModel);
-			// comboAutor3.setModel(listModel);
 		}
 		List<Usuarios> listaUsuarios1 = dbu.buscarUsuarios("");
 		if (listaUsuarios1 != null) {
@@ -112,52 +114,87 @@ public class articuloController extends GenericForwardComposer<Component> {
 		}
 	}
 
+	public void onClick$button_Nuevo() {
+		Window win = (Window) Executions.createComponents(
+				"Usuarios/nuevoUsuario.zul", null, null);
+		win.setClosable(true);
+		win.doModal();
+		Combos();
+	}
+
 	public void onClick$button_Registrar() throws Exception {
-		a = new Articulo();
-		obtenerRutaArchivoAdjuntado();
 		boolean result = false;
+		boolean result2 = false;
 		DBArticulos dbart = new DBArticulos();
-		a.setTipo_id(idTipoArticulo);
-		a.setId_area(idTipoArea);
-		a.setArt_titulo(textbox_Titulo.getValue());
-		a.setArt_resumen(textbox_Resumen.getValue());
-		a.setArt_palabras_clave(textbox_PClaves.getValue());
-		a.setArt_fecha_subida(txtfecha.getText());
-		System.out.println("fecha "+txtfecha.getText());
-		/*
-		 * a.set
-		 * 
-		 * a.setArt_archivo(direccion);
-		 * 
-		 * 
-		 * a.setArt_estado(1); /* a.setArt_titulo(textbox_Titulo.getValue());
-		 * a.setArt_archivo(ruta.getValue());
-		 * a.setArt_resumen(textbox_Resumen.getValue());
-		 * a.setArt_palabras_clave(textbox_Resumen.getValue());
-		 * a.setArt_fecha_subida(txtfecha.getValue()); a.setArt_estado(1);
-		 * a.setTipo_id(1); a.setArea_id_padre(0); a.setId_estado(1); result =
-		 * dbart.RegistrarArticulo(a); if (result) {
-		 * alert("Articulo registrado con exito"); } else {
-		 * alert("No se pudo realizar el registro"); } // pa para guardar datos
-		 * de otros autores *colaboradores de ese mismo // articulo // aquí iba
-		 * a validar si hay datos en los comboAutor2 y comboAutor3, // para
-		 * proceder a guardar // porque si no hay mas autores la tabla
-		 * tb_persona_articulo no es // obligatoria llenarla pa.setPers_id(1);
-		 * pa.setArti_id(1); pa.setPer_art_estado(1); pa.setPer_id_registra(1);
-		 * result = dbart.RegistrarPersonaArticulo(pa);
-		 * 
-		 * 
-		 * 
-		 * // Usuarios usua=new Usuarios(); // /* Session session =
-		 * Sessions.getCurrent(); Usuarios usua = (Usuarios)
-		 * session.getAttribute("User"); int idUsuario =usua.getId();
-		 * System.out.println(" id user "+usua.getId());
-		 */
+		fecha = txtfecha.getValue();
+		Sessions.getCurrent();
+		Usuarios usua = (Usuarios) session.getAttribute("User");
+		idUsuario = usua.getId();
+		a = new Articulo();
+		pa = new PersonaArticulo();
+		try {
+			if (nombreArticulo.getValue() != "Archivo.doc") {
+				if (Util.uploadFile(media)) {
+					obtenerRutaArchivoAdjuntado();
+					a.setTipo_id(idTipoArticulo);
+					a.setId_area(idTipoArea);
+					a.setArt_titulo(textbox_Titulo.getValue());
+					a.setArt_resumen(textbox_Resumen.getValue());
+					a.setArt_palabras_clave(textbox_PClaves.getValue());
+					a.setArt_fecha_subida(fecha);
+					a.setArt_archivo(direccion);
+					a.setArt_estado(1);
+					a.setId_estado(1);
+					a.setPer_id(idUsuario);
+					result = dbart.RegistrarArticulo(a);
+					if (result) {
+						alert("Articulo registrado con exito");
+					} else {
+						alert("No se pudo realizar el registro");
+					}
+				} else {
+					Messagebox.show(Labels.getLabel("app.error"));
+				}
+				if (comboAutor2.getValue() != null) {
+					ObtenerIdArticuloRegistrado(direccion);
+
+					System.out.println(" id autor2 en guardar: " + idAutor2);
+					pa.setPers_id(idAutor2);
+					pa.setArti_id(idArticuloSubido);
+					pa.setPer_art_estado(1);
+					pa.setPer_id_registra(idUsuario);
+					result2 = dbart.RegistrarPersonaArticulo(pa);
+				}
+				if (comboAutor3.getValue() != null) {
+					ObtenerIdArticuloRegistrado(direccion);
+
+					pa.setPers_id(idAutor3);
+					pa.setArti_id(idArticuloSubido);
+					pa.setPer_art_estado(1);
+					pa.setPer_id_registra(idUsuario);
+					result2 = dbart.RegistrarPersonaArticulo(pa);
+				}
+			} else {
+				alert("Suba articulo");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			alert("Suba articulo");
+		}
+
+		media = null;
+
+	}
+
+	public void ObtenerIdArticuloRegistrado(String direc) {
+		DBArticulos dba = new DBArticulos();
+		idArticuloSubido = dba.obtenerIdArticuloRegistrado(direc);
+		System.out.println("idArticulo registrado: " + idArticuloSubido);
 	}
 
 	public void obtenerRutaArchivoAdjuntado() {
 		Util u = new Util();
-		direccion = u.ruta + "/" + NombreArchivo;
+		direccion = u.ruta + "/" + NombreArchi;
 		System.out.println(direccion);
 	}
 
@@ -171,9 +208,9 @@ public class articuloController extends GenericForwardComposer<Component> {
 	}
 
 	public void onSelect$comboAutor2() {
-		Usuarios usu = (Usuarios) comboAutor2.getSelectedItem().getValue();
-		if (usu != null) {
-			idAutor2 = (usu.getId());
+		Usuarios usua = (Usuarios) comboAutor2.getSelectedItem().getValue();
+		if (usua != null) {
+			idAutor2 = (usua.getId());
 			System.out.println("autor2: " + idAutor2);
 		}
 	}

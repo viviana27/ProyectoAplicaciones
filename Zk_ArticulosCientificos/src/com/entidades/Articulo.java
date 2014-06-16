@@ -1,20 +1,28 @@
 package com.entidades;
 
+import java.util.Date;
+
 public class Articulo {
 	private int art_id;
 	private String art_titulo;
 	private String art_archivo;
 	private String art_resumen;
 	private String art_palabras_clave;
-	private String art_fecha_subida;
+	private Date art_fecha_subida;
 	private int art_estado;
 	private int tipo_id;
 	private int id_area;
-	
+	private int per_id;
+	private int id_estado;
+
+	public Articulo() {
+		super();
+	}
+
 	public Articulo(int art_id, String art_titulo, String art_archivo,
 			String art_resumen, String art_palabras_clave,
-			String art_fecha_subida, int art_estado, int tipo_id,
-			int area_id_padre, int id_estado) {
+			Date art_fecha_subida, int art_estado, int tipo_id, int id_area,
+			int per_id, int id_estado) {
 		super();
 		this.art_id = art_id;
 		this.art_titulo = art_titulo;
@@ -24,20 +32,9 @@ public class Articulo {
 		this.art_fecha_subida = art_fecha_subida;
 		this.art_estado = art_estado;
 		this.tipo_id = tipo_id;
-		this.area_id_padre = area_id_padre;
-		this.id_estado = id_estado;
-	}
-
-	public int getId_area() {
-		return id_area;
-	}
-
-	public void setId_area(int id_area) {
 		this.id_area = id_area;
-	}
-
-	public Articulo() {
-		super();
+		this.per_id = per_id;
+		this.id_estado = id_estado;
 	}
 
 	public int getArt_id() {
@@ -80,11 +77,11 @@ public class Articulo {
 		this.art_palabras_clave = art_palabras_clave;
 	}
 
-	public String getArt_fecha_subida() {
+	public Date getArt_fecha_subida() {
 		return art_fecha_subida;
 	}
 
-	public void setArt_fecha_subida(String art_fecha_subida) {
+	public void setArt_fecha_subida(Date art_fecha_subida) {
 		this.art_fecha_subida = art_fecha_subida;
 	}
 
@@ -104,12 +101,20 @@ public class Articulo {
 		this.tipo_id = tipo_id;
 	}
 
-	public int getArea_id_padre() {
-		return area_id_padre;
+	public int getId_area() {
+		return id_area;
 	}
 
-	public void setArea_id_padre(int area_id_padre) {
-		this.area_id_padre = area_id_padre;
+	public void setId_area(int id_area) {
+		this.id_area = id_area;
+	}
+
+	public int getPer_id() {
+		return per_id;
+	}
+
+	public void setPer_id(int per_id) {
+		this.per_id = per_id;
 	}
 
 	public int getId_estado() {
@@ -119,8 +124,5 @@ public class Articulo {
 	public void setId_estado(int id_estado) {
 		this.id_estado = id_estado;
 	}
-
-	private int area_id_padre;
-	private int id_estado;
 
 }

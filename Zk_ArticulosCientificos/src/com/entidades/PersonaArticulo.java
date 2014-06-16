@@ -7,6 +7,12 @@ public class PersonaArticulo {
 	private int per_art_estado;
 	private int per_id_registra;
 
+	
+	
+	public PersonaArticulo() {
+		super();
+	}
+
 	public PersonaArticulo(int per_art_id, int pers_id, int arti_id,
 			int per_art_estado, int per_id_registra) {
 		super();
