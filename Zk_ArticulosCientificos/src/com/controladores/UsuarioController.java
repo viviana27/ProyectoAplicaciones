@@ -138,6 +138,8 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 
 	public void onCreate$winNuevoUsuario() {
 
+		
+		
 		u = (Usuarios) winNuevoUsuario.getAttribute("usuario");
 		if (u != null) {
 			textbox_Usuario.setText(u.getUsuario());

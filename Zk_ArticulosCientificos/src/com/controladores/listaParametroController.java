@@ -34,6 +34,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		
 		actualizarLista();
 	}
 

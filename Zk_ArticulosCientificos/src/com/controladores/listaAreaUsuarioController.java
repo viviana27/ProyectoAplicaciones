@@ -42,9 +42,9 @@ public class listaAreaUsuarioController extends GenericForwardComposer<Component
 				actualizarLista();
 			}
 			else
-				if(u.getId_rol()==2 || u.getId_rol()==3){
+				
 					Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
-				}
+				
 		}
 		
 		
