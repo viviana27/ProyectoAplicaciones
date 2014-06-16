@@ -1,7 +1,9 @@
 package com.controladores;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
@@ -77,15 +79,30 @@ public class rolesController extends GenericForwardComposer<Component> {
 
 	public void onCreate$WinRegistrarRoles() {
 
-		rol = (Roles) WinRegistrarRoles.getAttribute("rol");
-		if (rol != null) {
-			textbox_rol.setText(rol.getRol_descripcion());
-			if (rol.getRol_estado() == 1) {
-				// chkvista.isChecked();
-				check_estado.setChecked(true);
-			}
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		if(u!=null){
+			if(u.getId_rol()==1){
 
+				
+				rol = (Roles) WinRegistrarRoles.getAttribute("rol");
+				if (rol != null) {
+					textbox_rol.setText(rol.getRol_descripcion());
+					if (rol.getRol_estado() == 1) {
+						// chkvista.isChecked();
+						check_estado.setChecked(true);
+					}
+
+				}
+			}
+			else
+				if(u.getId_rol()==2 || u.getId_rol()==3){
+					Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
+				}
 		}
+		
+
+
 	}
 
 }

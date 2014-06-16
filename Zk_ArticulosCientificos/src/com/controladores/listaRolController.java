@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -23,6 +25,7 @@ import org.zkoss.zul.Window;
 import com.datos.DBRoles;
 
 import com.entidades.Roles;
+import com.entidades.Usuarios;
 
 
 public class listaRolController extends GenericForwardComposer<Component> {
@@ -38,7 +41,21 @@ public class listaRolController extends GenericForwardComposer<Component> {
 	@Override	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
-		actualizarLista();
+		
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		if(u!=null){
+			if(u.getId_rol()==1){
+				actualizarLista();
+			}
+			else
+				if(u.getId_rol()==2 || u.getId_rol()==3){
+					Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
+				}
+		}
+		
+
+		
 	}
 
 	public void onClick$button_buscar() {

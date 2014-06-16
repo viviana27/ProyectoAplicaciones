@@ -75,13 +75,23 @@ public class listaRolUsuarioController extends
 	}
 
 	public void onCreate$winModificarRol() {
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		if(u!=null){
+			if(u.getId_rol()==1){
+				u = (Usuarios) winModificarRol.getAttribute("usuario");
+				if (u != null) {
+					textbox_Usuario.setText(u.getPersona().getPer_nombre() + " "
+							+ u.getPersona().getPer_apellido());
 
-		u = (Usuarios) winModificarRol.getAttribute("usuario");
-		if (u != null) {
-			textbox_Usuario.setText(u.getPersona().getPer_nombre() + " "
-					+ u.getPersona().getPer_apellido());
-
+				}
+			}
+			else
+				if(u.getId_rol()==2 || u.getId_rol()==3){
+					Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
+				}
 		}
+				
 	}
 
 }

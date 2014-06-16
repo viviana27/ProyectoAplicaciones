@@ -11,6 +11,8 @@ import org.zkoss.idom.Text;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -41,6 +43,19 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
 		//actualizarLista();
+		Session session = Sessions.getCurrent();
+		Usuarios us = (Usuarios) session.getAttribute("User");
+		if(us!=null){
+			if(us.getId_rol()==1){
+				actualizarLista();
+			}
+			else
+			{
+				if(us.getId_rol()==2 ||us.getId_rol()==3){
+					Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
+				}
+			}
+		}
 	}
 
 	public void onClick$toolbarbutton_Nuevo() {
