@@ -104,7 +104,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 					}
 				});
 
-		//if (confirmacion != false) {
+		if(confirmacion){
 			ParametrosEvaluacion rol = (ParametrosEvaluacion) listbox_Parametros
 					.getSelectedItem().getValue();
 			DBParametrosEvaluacion pa = new DBParametrosEvaluacion();
@@ -112,11 +112,12 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 			if (result != false) {
 				alert("Parametro eliminado correctamente");
 			} 
-			/*}
+			}
 		else {
 			alert("Eliminacion Cancelada");
-		}*/
+		}
 		actualizarLista();
+		
 	}
 
 	public void onClick$button_buscar() {

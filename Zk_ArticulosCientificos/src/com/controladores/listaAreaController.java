@@ -90,8 +90,6 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 		actualizarAreasLista();
 	}
 	
-	//eliminar un area
-
 	public void onClick$toolbarbutton_Eliminar() {
 	
 		boolean registros = false;
@@ -110,6 +108,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 			}
 			
 		});
+		if(confirmacion){
 		Areas a = listbox_areas.getSelectedItem().getValue();
 		DBAreas dba = new DBAreas ();
 		registros=dba.eliminarAreas(a);
@@ -117,6 +116,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 			alert("area eliminada correctamente");
 		}
 		actualizarAreasLista();
+		}
 	}
 	
 	public void onClick$button_buscar(){

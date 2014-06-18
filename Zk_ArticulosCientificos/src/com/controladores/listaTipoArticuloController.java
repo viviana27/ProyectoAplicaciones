@@ -34,7 +34,7 @@ public class listaTipoArticuloController extends
 	private Textbox textbox_buscar;
 	private Button button_buscar;
 	Listbox listbox_TipoArticulos;
-	boolean confirmacion=false;
+	boolean confirmacion = false;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -66,7 +66,7 @@ public class listaTipoArticuloController extends
 		win.doModal();
 		win.setAttribute("opcion", "listaTipos");
 		win.setAttribute("controladOrigen", this);
-		
+
 	}
 
 	public void onClick$toolbarbutton_Editar() {
@@ -81,7 +81,8 @@ public class listaTipoArticuloController extends
 		win.doModal();
 		win.setAttribute("opcion", "listaTipos");
 		win.setAttribute("controladorOrigen", this);
-		TipoArticulos tipo = (TipoArticulos ) listbox_TipoArticulos.getSelectedItem().getValue();
+		TipoArticulos tipo = (TipoArticulos) listbox_TipoArticulos
+				.getSelectedItem().getValue();
 		win.setAttribute("tipo", tipo);
 	}
 
@@ -92,9 +93,9 @@ public class listaTipoArticuloController extends
 			return;
 		}
 		// mesaagebox
-		Messagebox.show("Esta seguro de eliminar el tipo de articilo?", "confirmacion",
-				Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
-				new EventListener<Event>() {
+		Messagebox.show("Esta seguro de eliminar el tipo de articilo?",
+				"confirmacion", Messagebox.OK | Messagebox.CANCEL,
+				Messagebox.QUESTION, new EventListener<Event>() {
 
 					@Override
 					public void onEvent(Event evento) throws Exception {
@@ -104,11 +105,16 @@ public class listaTipoArticuloController extends
 						}
 					}
 				});
-		TipoArticulos tipo = (TipoArticulos) listbox_TipoArticulos.getSelectedItem().getValue();
-		DBTipoArticulos tipos= new DBTipoArticulos();
-		result = tipos.eliminarTipos(tipo);
-		if (result != false) {
-			alert("tipo de articulo eliminado correctamente");
+		if (confirmacion) {
+			TipoArticulos tipo = (TipoArticulos) listbox_TipoArticulos
+					.getSelectedItem().getValue();
+			DBTipoArticulos tipos = new DBTipoArticulos();
+			result = tipos.eliminarTipos(tipo);
+			if (result != false) {
+				alert("tipo de articulo eliminado correctamente");
+			}
+		}else {
+			alert("Eliminacion Cancelada");
 		}
 		actualizarLista();
 	}

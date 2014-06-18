@@ -120,7 +120,6 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			if (opcion != null && opcion.equals("listaUsuarios")) {
 				// entonces la ventana ufe llamada desde lista usuarios
 				// cerrar ventana
-
 				// actualizar la lista de usuarios
 				listaUsuarioController luc = (listaUsuarioController) winNuevoUsuario
 						.getAttribute("controladorOrigen");
@@ -128,7 +127,6 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 					luc.actualizarLista();
 				// luc.actualizarLista();
 				winNuevoUsuario.detach();
-
 			}
 		} else {
 			alert("No se pudo realizar el registro");

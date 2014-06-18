@@ -27,7 +27,6 @@ import com.datos.DBRoles;
 import com.entidades.Roles;
 import com.entidades.Usuarios;
 
-
 public class listaRolController extends GenericForwardComposer<Component> {
 	@Wire
 	Toolbarbutton toolbarbutton_Eliminar;
@@ -37,67 +36,55 @@ public class listaRolController extends GenericForwardComposer<Component> {
 	private Button button_buscar;
 	Listbox listbox_Roles;
 
-	boolean confirmacion=false;
-	@Override	public void doAfterCompose(Component comp) throws Exception {
+	boolean confirmacion = false;
+
+	@Override
+	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
-		
+
 		Session session = Sessions.getCurrent();
 		Usuarios u = (Usuarios) session.getAttribute("User");
-		if(u!=null){
-			if(u.getId_rol()==1){
+		if (u != null) {
+			if (u.getId_rol() == 1) {
 				actualizarLista();
+			} else if (u.getId_rol() == 2 || u.getId_rol() == 3) {
+				Executions
+						.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
 			}
-			else
-				if(u.getId_rol()==2 || u.getId_rol()==3){
-					Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
-				}
 		}
-		
 
-		
 	}
 
 	public void onClick$button_buscar() {
-		// actualiz<ar la lista segun el criterio de busqueda
-
 		actualizarLista();
 	}
 
 	public void actualizarLista() {
 		DBRoles dbr = new DBRoles();
 		List<Roles> lista = dbr.buscarRoles(textbox_buscar.getValue());
-		// establecer esta lista como modelo de dalos pasra el listbox
 		ListModelList<Roles> listModel = new ListModelList<Roles>(lista);
-		// establecer el modelo de datos
 		listbox_Roles.setModel(listModel);
-
 	}
+
 	public void onClick$toolbarbutton_Nuevo() {
 		Window win = (Window) Executions.createComponents(
 				"Mantenimiento/Roles/registroRol.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
-		
-		// guardar atributos en ventana
-		
-		//win.setAttribute("opcion", "registroRol") -- nombre de variable;
-				win.setAttribute("opcion", "listaRoles");
-				win.setAttribute("controladOrigen", this);
+		win.setAttribute("opcion", "listaRoles");
+		win.setAttribute("controladOrigen", this);
 	}
 
 	public void onClick$toolbarbutton_Editar() {
-		
 		if (listbox_Roles.getSelectedItem() == null) {
 			alert("Seleccione por favor un usuario");
 			return;
 		}
-
 		Window win = (Window) Executions.createComponents(
 				"Mantenimiento/Roles/registroRol.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
-		// guardar atributos en ventana
 		win.setAttribute("opcion", "listaRoles");
 		win.setAttribute("controladorOrigen", this);
 		Roles rol = (Roles) listbox_Roles.getSelectedItem().getValue();
@@ -105,37 +92,35 @@ public class listaRolController extends GenericForwardComposer<Component> {
 	}
 
 	public void onClick$toolbarbutton_Eliminar() {
-		// alert("Click en boton");
+		boolean result = false;
+		if (listbox_Roles.getSelectedItem() == null) {
+			alert("Seleccione el rol que desea eliminar");
+			return;
+		}
+		Messagebox.show("Esta seguro de eliminar el rol?", "confirmacion",
+				Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
+				new EventListener<Event>() {
 
-				boolean result = false;
-				if (listbox_Roles.getSelectedItem() == null) {
-					alert("Seleccione el rol que desea eliminar");
-					return;
-				}
-				// mesaagebox
-				Messagebox.show("Esta seguro de eliminar el rol?", "confirmacion",
-						Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
-						new EventListener<Event>() {
+					@Override
+					public void onEvent(Event evento) throws Exception {
+						if (evento.getName().equals("onOK")) {
+							confirmacion = true;
+						}
+					}
+				});
 
-							@Override
-							public void onEvent(Event evento) throws Exception {
-								// TODO Auto-generated method stub
-								if (evento.getName().equals("onOK")) {
-									confirmacion = true;
-								}
-							}
-						});
-
-				// if(confirmacion){
-				Roles rol = (Roles) listbox_Roles.getSelectedItem().getValue();
-				DBRoles roles = new DBRoles();
-				result = roles.eliminarRoles(rol);
-				if (result != false) {
-					alert("rol eliminado correctamente");
-				}
-				actualizarLista();
+		if (confirmacion) {
+			Roles rol = (Roles) listbox_Roles.getSelectedItem().getValue();
+			DBRoles roles = new DBRoles();
+			result = roles.eliminarRoles(rol);
+			if (result != false) {
+				alert("rol eliminado correctamente");
+			}
+		} else {
+			alert("Eliminacion Cancelada");
+		}
+		actualizarLista();
 
 	}
 
-	
 }

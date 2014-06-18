@@ -74,17 +74,16 @@ public class rolesController extends GenericForwardComposer<Component> {
 		} else {
 			alert("No se pudo realizar el registro");
 		}
-
+		WinRegistrarRoles.detach();
 	}
 
 	public void onCreate$WinRegistrarRoles() {
 
 		Session session = Sessions.getCurrent();
 		Usuarios u = (Usuarios) session.getAttribute("User");
-		if(u!=null){
-			if(u.getId_rol()==1){
+		if (u != null) {
+			if (u.getId_rol() == 1) {
 
-				
 				rol = (Roles) WinRegistrarRoles.getAttribute("rol");
 				if (rol != null) {
 					textbox_rol.setText(rol.getRol_descripcion());
@@ -94,14 +93,11 @@ public class rolesController extends GenericForwardComposer<Component> {
 					}
 
 				}
+			} else if (u.getId_rol() == 2 || u.getId_rol() == 3) {
+				Executions
+						.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
 			}
-			else
-				if(u.getId_rol()==2 || u.getId_rol()==3){
-					Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
-				}
 		}
-		
-
 
 	}
 
