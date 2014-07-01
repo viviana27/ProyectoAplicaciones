@@ -10,9 +10,14 @@ public class Articulo {
 	private String art_palabras_clave;
 	private Date art_fecha_subida;
 	private int art_estado;
+	private String nom_colaborador;
 	private int tipo_id;
+	private String tipo_nombre;
 	private int id_area;
+	private String area_nombre;
 	private int per_id;
+	private String per_nombre;
+	private String per_apellido;
 	private int id_estado;
 
 	public Articulo() {
@@ -124,5 +129,47 @@ public class Articulo {
 	public void setId_estado(int id_estado) {
 		this.id_estado = id_estado;
 	}
+
+	public String getTipo_nombre() {
+		return tipo_nombre;
+	}
+
+	public void setTipo_nombre(String tipo_nombre) {
+		this.tipo_nombre = tipo_nombre;
+	}
+
+	public String getArea_nombre() {
+		return area_nombre;
+	}
+
+	public void setArea_nombre(String area_nombre) {
+		this.area_nombre = area_nombre;
+	}
+
+	public String getPer_nombre() {
+		return per_nombre;
+	}
+
+	public void setPer_nombre(String per_nombre) {
+		this.per_nombre = per_nombre;
+	}
+
+	public String getPer_apellido() {
+		return per_apellido;
+	}
+
+	public void setPer_apellido(String per_apellido) {
+		this.per_apellido = per_apellido;
+	}
+
+	public String getNom_colaborador() {
+		return nom_colaborador;
+	}
+
+	public void setNom_colaborador(String nom_colaborador) {
+		this.nom_colaborador = nom_colaborador;
+	}
+	
+	
 
 }

@@ -40,7 +40,7 @@ import com.entidades.Usuarios;
 
 public class articuloController extends GenericForwardComposer<Component> {
 	private Combobox cmb_tipo, comboAutor2, comboAutor3, cmb_area;
-	public Textbox textbox_Titulo, textbox_Resumen, textbox_PClaves;
+	public Textbox textbox_Titulo, textbox_Resumen, textbox_PClaves, textbox_autor;
 	public Button button_Registrar, btnExaminar, button_Nuevo;
 	public Label nombreArticulo;
 	public Datebox txtfecha;
@@ -81,6 +81,12 @@ public class articuloController extends GenericForwardComposer<Component> {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
 		Combos();
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		if (u != null) {
+			 textbox_autor.setText(u.getPersona().getPer_nombre()
+						+ " " + u.getPersona().getPer_apellido());
+		}
 	}
 	
 	public void Combos(){
@@ -133,6 +139,10 @@ public class articuloController extends GenericForwardComposer<Component> {
 		a = new Articulo();
 		pa = new PersonaArticulo();
 		try {
+			if(textbox_Titulo.equals("")||textbox_Resumen.equals("")|| textbox_PClaves.equals("") || txtfecha.equals(null)|| cmb_tipo.equals(null)|| cmb_area.equals(null)||comboAutor2.equals(null)||comboAutor3.equals(null)){
+				alert("Ingrese todos los campos");
+			}else{
+			
 			if (nombreArticulo.getValue() != "Archivo.doc") {
 				if (Util.uploadFile(media)) {
 					obtenerRutaArchivoAdjuntado();
@@ -177,13 +187,26 @@ public class articuloController extends GenericForwardComposer<Component> {
 			} else {
 				alert("Suba articulo");
 			}
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			alert("Suba articulo");
 		}
-
+		
 		media = null;
+		limpiar();
 
+	}
+	public void limpiar(){
+		textbox_Titulo.setValue("");
+		textbox_Resumen.setValue("");
+		textbox_PClaves.setValue("");
+		cmb_tipo.setValue("");
+		comboAutor2.setValue("");
+		comboAutor3.setValue("");
+		cmb_area.setValue("");
+		nombreArticulo.setValue("");
+		txtfecha.setValue(null);
 	}
 
 	public void ObtenerIdArticuloRegistrado(String direc) {
@@ -230,4 +253,9 @@ public class articuloController extends GenericForwardComposer<Component> {
 			System.out.println("idTipo ares: " + idTipoArea);
 		}
 	}
+	
+	public void ListarTodosArticulos(){
+	}
+	
+	
 }

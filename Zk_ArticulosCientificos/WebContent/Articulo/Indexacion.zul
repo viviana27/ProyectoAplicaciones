@@ -1,18 +1,22 @@
 <?page title="Indexación" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Indexación" border="normal"
+	<window title="Registro de Articulos" border="normal"
 	 apply="com.controladores.articuloController"  >
-		<label
-			value="Proporcione palabras claves para indexar el envio, separe los términos en punto y coma.">
-		</label>
+		
 		<grid>
 
 			<rows>
-				
+				<row>
+					<label value="Nombre Autor Principal">
+					</label>
+					<textbox id="textbox_autor" disabled="true"
+						width="30%">
+					</textbox>
+				</row>
 				<row>
 					<label>Tipo de artículo</label>
 					<combobox id="cmb_tipo" autodrop="true"
-						width="100%" constraint="no empty">
+						width="30%">
 						<template name="model">
 							<comboitem label="${each.tipo_nombre}"
 								value="${each}" />
@@ -20,9 +24,9 @@
 					</combobox>
 				</row>
 				<row>
-					<label>Area de Artículo</label>
+					<label>Área de Artículo</label>
 					<combobox id="cmb_area" autodrop="true"
-						width="100%" constraint="no empty">
+						width="30%">
 						<template name="model">
 							<comboitem label="${each.area_nombre}"
 								value="${each}" />
@@ -30,50 +34,45 @@
 					</combobox>
 				</row>
 				<row>
-					<label>Titulo</label>
-					<textbox id="textbox_Titulo" constraint="no empty"
+					<label>Título:</label>
+					<textbox id="textbox_Titulo"
 						width="100%">
 					</textbox>
 				</row>
 				<row>
-					<label>Resumen</label>
-					<textbox id="textbox_Resumen" constraint="no empty"
+					<label>Resumen:</label>
+					<textbox id="textbox_Resumen"
+						height="200px" width="85%">
+					</textbox>
+				</row>
+				<row>
+				<label
+			value="Proporcione palabras claves referente al artículo, separe los términos en coma.">
+		</label>
+		</row>
+		<row>					<label>Palabras claves:</label>
+					<textbox id="textbox_PClaves" 
 						width="100%">
 					</textbox>
 				</row>
 				<row>
-					<label>Palabras claves</label>
-					<textbox id="textbox_PClaves" constraint="no empty"
-						width="100%">
-					</textbox>
+					<label>Fecha:</label>
+					<datebox id="txtfecha"/>
 				</row>
 				<row>
-					<label>Fecha</label>
-					<datebox id="txtfecha" constraint="no empty"/>
-				</row>
-				<row>
-					<label>
-						Nota: Todos los autores deben estar registrados
-						en el sistema, SI un autor NO ha sido
-						registrado, regístrelo para que pueda tener un
-						vínculo con el artículo que va a enviar
+				<label>
+						Seleccione al o los autores que colaboraron con el artículo mediante 
+						el ingreso del nombre
 					</label>
-					<button label="Nuevo Autor" id="button_Nuevo"
-						image="Imagenes/add.png">
-					</button>
-
-				</row>
-				<row>
-					<label>Otros Autores</label>
 					<vbox width="100%">
-						<combobox id="comboAutor2" width="100%"
+						<combobox id="comboAutor2" width="50%"
 							buttonVisible="self.checked" autodrop="true">
 							<template name="model">
 								<comboitem label="${each.persona.per_nombre} ${each.persona.per_apellido}"
 									value="${each}" />
 							</template>
 						</combobox>
-						<combobox id="comboAutor3" width="100%"
+						<combobox id="comboAutor3" width="50%"
 							buttonVisible="self.checked" autodrop="true">
 							<template name="model">
 								<comboitem label="${each.persona.per_nombre} ${each.persona.per_apellido}"

@@ -1,41 +1,41 @@
 <?page title="Articulos" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Articulos" border="normal" position="center,top">
+<window title="LISTADO DE ARTÍCULOS REGISTRADOS" border="normal" position="center,top" apply="com.controladores.ListaArticulosController">
 
 <listbox id="listaTareas" mold="paging" pageSize="4"
-			multiple="false" width="500"
+			multiple="false" width="100%"
 			emptyMessage="No personasfound in the result">
 
-			<auxhead sclass="category-center">
-				<auxheader label="Busqueda: " colspan="5" rowspan="1" />
+			<auxhead left= "true" sclass="category-center">
+				<auxheader label="Búsqueda de artículos por:" rowspan="2"/>
 			</auxhead>
 
 			<auxhead sclass="category-center">
-				<auxheader colspan="1" rowspan="1">
-					<label>Titulo:</label>
+				<auxheader  rowspan="1">
+					<label>Título:</label>
 					<textbox id="txtProyecto"></textbox>
 					<button id="idfiltroTitulo"
 						image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
-				<auxheader colspan="1" rowspan="1">
+				<auxheader rowspan="1">
 					<label>Autor:</label>
 					<textbox id="txtautor"></textbox>
 					<button id="idfiltroautor"
 						image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
-				<auxheader colspan="1" rowspan="1">
-					<label>Tipo de Artículo:</label>
+				<auxheader rowspan="1">
+					<label>Tipo_Artículo:</label>
 					<textbox id="txttipo"></textbox>
 					<button id="idtipo"
 						image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
 				
-				<auxheader colspan="3" rowspan="1">
+				<auxheader rowspan="1">
 					<label>Área</label>
-					<datebox id="txtarea" />
+					<textbox id="txtarea" />
 					<button id="idarea"
 						image="Imagenes/searchs.png">
 					</button>
@@ -44,17 +44,27 @@
 
 			</auxhead>
 			<auxhead sclass="category-center">
-				<auxheader label="Listado de Articulos " colspan="5"
-					rowspan="1" />
+				<auxheader label="Listado de Articulos "
+					 />
 			</auxhead>
 
-			<listhead sizable="true" menupopup="auto">
-				<listheader label=" " sort="auto" />
-				<listheader label="Titulo"/>
-				<listheader label="Autor"/>
-				<listheader label="Volumen"/>
-				<listheader label="Responsables" />
+			<listhead sizable="false" menupopup="auto">
+				<listheader label="Título" sort="auto(art_titulo)"/>
+				<listheader label="Autor" sort="auto(per_nombre)"/>
+				<listheader label="Participantes" sort="auto(nom_colaborador)"/>
+			    <listheader label="Tipo de Articulo" sort="auto(tipo_nombre)"/>
+				<listheader label="Área del Artículo" sort="auto(area_nombre)"/>
+			
 			</listhead>
+			<template name="model">
+				<listitem value="${each}">
+					<listcell label="${each.art_titulo}" />
+					<listcell label="${each.per_nombre} ${each.per_apellido}" />
+					<listcell label="${each.nom_colaborador} " />
+					<listcell label="${each.tipo_nombre}" />
+					<listcell label="${each.area_nombre}" />	
+					</listitem>
+			</template>
 </listbox>
 </window>
 </zk>

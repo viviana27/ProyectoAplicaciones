@@ -15,6 +15,7 @@ import com.entidades.Articulo;
 import com.entidades.Persona;
 import com.entidades.PersonaArticulo;
 import com.entidades.Roles;
+import com.entidades.TipoArticulos;
 import com.entidades.Usuarios;
 
 public class DBArticulos {
@@ -177,4 +178,93 @@ System.out.println("direccion a buscar: "+direc);
 		}
 		return idArticuloRegistrado;
 	}
+	
+	public List<Articulo> buscarArticulo(String titulo, String autor, String tipoa, String area) {
+		List<Articulo> lista = new ArrayList<Articulo>();
+		// objeto sentencia
+		Statement sentencia = null;
+		// objeto para resultados
+		ResultSet resultados = null;
+		// obtener la conexion a la base
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+//||
+		String sql = "";
+		if (titulo.equals("") && autor.equals("") && tipoa.equals("") && area.equals("") ) {
+			sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, " +
+					"ta.tipo_nombre, pa.per_art_id, p.per_nombre as autor " +
+					"FROM tb_persona AS p " +
+					"INNER JOIN tb_persona_articulo AS pa ON p.per_id = pa.pers_id " +
+					"INNER JOIN tb_persona AS p2 ON pa.per_id_registra = p2.per_id " +
+					"INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id " +
+					"INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  " +
+					"INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id " +
+					"WHERE a.id_estado =1 AND pa.per_art_estado =1 " +
+					"order by a.art_titulo";
+
+			System.out.println("ddff" + sql);
+		} else {
+			sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, " +
+					"ta.tipo_nombre, pa.per_art_id, p.per_nombre as autor " +
+					"FROM tb_persona AS p " +
+					"INNER JOIN tb_persona_articulo AS pa ON p.per_id = pa.pers_id " +
+					"INNER JOIN tb_persona AS p2 ON pa.per_id_registra = p2.per_id " +
+					"INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id " +
+					"INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  " +
+					"INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id " +
+					"WHERE a.id_estado =1 AND pa.per_art_estado =1 " +
+					"and (a.art_titulo like '%"
+					+ titulo
+					+ "%' and p2.per_nombre like '%"
+					+ autor
+					+ "%' and p2.per_apellido like '%"
+					+ autor
+					+ "%' and ta.tipo_nombre like '%"
+					+ tipoa
+					+ "%' and ar.area_nombre like '%"
+					+ area
+					+ "%') order by a.art_titulo";
+			
+		}
+		try {
+			sentencia = con.createStatement();
+			resultados = sentencia.executeQuery(sql);
+			System.out.println("LLega al codigo =)"+resultados);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		}
+		// recorrer el resultset
+		try {
+			PersonaArticulo personaarticulo = null;
+			Articulo articulo = null;
+			while (resultados.next()) {
+				articulo = new Articulo();
+				articulo.setArt_id(resultados.getInt("art_id"));
+				articulo.setArt_titulo(resultados.getString("art_titulo"));
+				articulo.setPer_nombre(resultados.getString("per_nombre"));
+				articulo.setPer_apellido(resultados.getString("per_apellido"));
+				articulo.setArea_nombre(resultados.getString("area_nombre"));
+				articulo.setTipo_nombre(resultados.getString("tipo_nombre"));
+				articulo.setNom_colaborador(resultados.getString("autor"));
+				lista.add(articulo);
+			}
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al recorrer resultset");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return lista;
+		
+	}
+
 }

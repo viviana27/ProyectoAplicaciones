@@ -48,7 +48,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 		Usuarios us = (Usuarios) session.getAttribute("User");
 		if (us != null) {
 			if (us.getId_rol() == 1) {
-				// actualizarLista();
+				//actualizarLista();
 			} else {
 				if (us.getId_rol() == 2 || us.getId_rol() == 3) {
 					Executions
@@ -118,7 +118,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 				null);
 		win.setClosable(true);
 		win.doModal();
-		win.setAttribute("opcion", "listaUsuarios");
+		win.setAttribute("opcion", "listaRolesUsuarios");
 		win.setAttribute("controladorOrigen", this);
 		Usuarios u = (Usuarios) listbox_MiembrosRoles.getSelectedItem()
 				.getValue();

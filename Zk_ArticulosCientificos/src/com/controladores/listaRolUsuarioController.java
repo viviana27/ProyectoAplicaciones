@@ -67,12 +67,14 @@ public class listaRolUsuarioController extends
 			result = dbusuarios.cambiarRol(u.getId(), r.getRol_id());
 			if (result) {
 				alert("rol asignado correctamente");
-				winModificarRol.detach();
 				actualizarLista();
+				winModificarRol.detach();
+			
 			} else {
 				alert("no se pudo completar la asignacion");
-				winModificarRol.detach();
 				actualizarLista();
+				winModificarRol.detach();
+				
 			}
 			
 		}
