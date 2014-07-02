@@ -84,11 +84,11 @@
 				<row>
 					<label value="Seleccionar archivo " />
 				<vbox width="100%">
-						<button label="Examinar" id="btnExaminar"
-					
+						<button label="Examinar" id="btnExaminar"					
 							upload="true,maxsize=8192"
 							onUpload="@command('uploadFile',upload=event)" 
 							autodisable="self" />
+		
 						<label id="nombreArticulo" value="Archivo.doc" />
 					</vbox>
 				</row>

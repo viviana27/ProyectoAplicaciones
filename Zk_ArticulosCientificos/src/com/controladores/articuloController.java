@@ -52,16 +52,24 @@ public class articuloController extends GenericForwardComposer<Component> {
 	String NombreArchi, direccion;
 	// //----------------------------------------------------------------------------
 	// codigo para subir un archivo al servidor
-	private Media media;
+	public Media media;
 
 	@NotifyChange("media")
 	@Command
 	public void onUpload$btnExaminar(
 			@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event) {
-		// System.out.println("lo hicimos .........!");
 		media = event.getMedia();
-		NombreArchi = media.getName();
-		nombreArticulo.setValue(NombreArchi);
+		String extension=media.getFormat();
+		if(extension.equals("docx")){
+			NombreArchi = media.getName();
+			nombreArticulo.setValue(NombreArchi);
+		}
+		else
+		{
+			alert("Debe subir un archivo de Word, este tiene una extensión :"+extension);
+			NombreArchi="";
+			nombreArticulo.setValue("");
+		}
 	}
 
 	public Media getMedia() {
