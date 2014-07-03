@@ -31,18 +31,9 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);	
-		Session session = Sessions.getCurrent();
-		Usuarios u = (Usuarios) session.getAttribute("User");
-		if(u!=null){
-			if(u.getId_rol()==1){
+		
 				actualizarLista();
 				listaTareas.renderAll();
-			}
-			else
-				
-					Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
-				
-		}
 		
 		
 	}
@@ -80,10 +71,13 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 		DBArticulos dbart = new DBArticulos();
 		// lista con usuarios encontrados
 		List<Articulo> lista = dbart.buscarArticulo( txtProyecto.getValue(), txtautor.getValue(), txttipo.getValue(), txtarea.getValue());
+		alert("xfd "+lista.size());
+		
 		// establecer esta lista como modelo de dalos pasra el listbox
 		ListModelList<Articulo> listModel = new ListModelList<Articulo>(lista);
 		// establecer el modelo de datos
 		listaTareas.setModel(listModel);
+		//alert("lista"+ ((Articulo)listaTareas.getItemAtIndex(0)));
 		listaTareas.renderAll();
 		
 
