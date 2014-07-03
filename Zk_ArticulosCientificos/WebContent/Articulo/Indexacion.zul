@@ -90,7 +90,7 @@
 							upload="true,maxsize=8192"
 							onUpload="@command('uploadFile',upload=event)" 
 							autodisable="self" />
-						<label id="ruta" value="Archivo.doc" />
+						<label id="nombreArchivo" value="Archivo.doc" />
 					</vbox>
 				</row>
 				<row>
