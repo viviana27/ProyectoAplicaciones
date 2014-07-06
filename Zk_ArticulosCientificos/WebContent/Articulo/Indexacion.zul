@@ -1,6 +1,6 @@
 <?page title="Indexación" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Registro de Articulos" border="normal"
+	<window title="Registro de Articulos" border="normal" id="winSubirArticulo"
 	 apply="com.controladores.articuloController"  >
 		
 		<grid>

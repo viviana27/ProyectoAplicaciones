@@ -15,6 +15,7 @@ import org.zkoss.zk.ui.Sessions;
 
 import com.entidades.Areas;
 import com.entidades.Articulo;
+import com.entidades.EstadoArticulo;
 import com.entidades.Persona;
 import com.entidades.PersonaArticulo;
 import com.entidades.Roles;
@@ -35,7 +36,7 @@ public class DBArticulos {
 					+ " art_archivo," + " art_resumen, "
 					+ " art_palabras_clave, " + " art_fecha_subida, "
 					+ " art_estado, " + " tipo_id, " + " area_id, "
-					+ " per_id," + " id_estado ) VAlUES (?,?,?,?,?,?,?,?,?,?)";
+					+ " per_id ) VAlUES (?,?,?,?,?,?,?,?,?)";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, art.getArt_titulo());
@@ -51,7 +52,6 @@ public class DBArticulos {
 			pstm.setInt(7, art.getTipo_id());
 			pstm.setInt(8, art.getId_area());
 			pstm.setInt(9, art.getPer_id());
-			pstm.setInt(10, art.getId_estado());
 			int filas_afectadas = pstm.executeUpdate();
 			con.commit();
 			resultado = true;
@@ -82,7 +82,7 @@ public class DBArticulos {
 		Connection con = dbm.getConection();
 		try {
 			con.setAutoCommit(false);
-			String sql = "INSERT INTO tb_persona_articulo" + " (pers_id,"
+			String sql = "INSERT INTO tb_persona_articulo " + " (pers_id,"
 					+ " arti_id," + " per_art_estado, "
 					+ " per_id_registra) VAlUES (?,?,?,?)";
 			PreparedStatement pstm = con.prepareStatement(sql);
@@ -91,6 +91,44 @@ public class DBArticulos {
 			pstm.setInt(2, perArt.getArti_id());
 			pstm.setInt(3, perArt.getPer_art_estado());
 			pstm.setInt(4, perArt.getPer_id_registra());
+			int filas_afectadas = pstm.executeUpdate();
+			con.commit();
+			resultado = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return resultado;
+	}
+	
+	public boolean RegistrarEstadoArticulo(EstadoArticulo estArt) {
+		boolean resultado = false;
+		// añadir el codigo
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		try {
+			con.setAutoCommit(false);
+			String sql = "INSERT INTO tb_estado_articulo " + " (id_articulo,"
+					+ " id_estado," + " id_persona, "
+					+ " fecha) VAlUES (?,?,?,CURRENT_DATE)";
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, estArt.getId_articulo());
+			pstm.setInt(2, estArt.getId_estado());
+			pstm.setInt(3, estArt.getId_persona());
 			int filas_afectadas = pstm.executeUpdate();
 			con.commit();
 			resultado = true;
@@ -154,10 +192,10 @@ public class DBArticulos {
 
 		Statement sentencia;
 		ResultSet resultados;
-System.out.println("direccion a buscar: "+direc);
+		System.out.println("direccion a buscar: " + direc);
 		String query = "Select ta.art_id from tb_articulo as ta where ta.art_archivo='"
-				+ direc+"'";
-		System.out.println("query: "+query);
+				+ direc + "'";
+		System.out.println("query: " + query);
 		try {
 			sentencia = con.createStatement();
 			resultados = sentencia.executeQuery(query);
@@ -181,9 +219,10 @@ System.out.println("direccion a buscar: "+direc);
 		}
 		return idArticuloRegistrado;
 	}
-	
-	public List<Articulo> buscarArticulo(String titulo, String autor, String tipoa, String area) {
-		int idUsuario=0;
+
+	public List<Articulo> buscarArticulo(int idEstado, String titulo, String autor,
+			String tipoa, String area) {
+		int idUsuario = 0;
 		List<Articulo> lista = new ArrayList<Articulo>();
 		// objeto sentencia
 		Statement sentencia = null;
@@ -196,35 +235,40 @@ System.out.println("direccion a buscar: "+direc);
 		Sessions.getCurrent();
 		Usuarios usua = (Usuarios) session.getAttribute("User");
 		idUsuario = usua.getId();
-		
-//||
 		String sql = "";
 		if (usua != null) {
 			if (usua.getId_rol() == 1) {
-				if (titulo.equals("") && autor.equals("") && tipoa.equals("") && area.equals("") ) {
-					sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, " +
-							"ta.tipo_nombre, pa.per_art_id, p.per_nombre as autor " +
-							"FROM tb_persona AS p " +
-							"INNER JOIN tb_persona_articulo AS pa ON p.per_id = pa.pers_id " +
-							"INNER JOIN tb_persona AS p2 ON pa.per_id_registra = p2.per_id " +
-							"INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id " +
-							"INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  " +
-							"INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id " +
-							"WHERE  a.id_estado =1 AND pa.per_art_estado =1 " +
-							"order by a.art_titulo";
+				if (titulo.equals("") && autor.equals("") && tipoa.equals("")
+						&& area.equals("")) {
+					sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, "
+							+ "ta.tipo_nombre, pa.per_art_id, CONCAT(p.per_nombre,' ', p.per_apellido) as autor, a.art_resumen, a.art_palabras_clave, "
+							+ "a.art_fecha_subida, CONCAT(p2.per_institucion_pertenece,' - ',p2.per_direccion_institucion) AS institucion1, CONCAT(p.per_institucion_pertenece,' - ',p.per_direccion_institucion) AS institucion2 "
+							+ "FROM tb_persona AS p "
+							+ "INNER JOIN tb_persona_articulo AS pa ON p.per_id = pa.pers_id "
+							+ "INNER JOIN tb_persona AS p2 ON pa.per_id_registra = p2.per_id "
+							+ "INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id "
+							+ "INNER JOIN tb_estado_articulo esa ON esa.id_articulo = a.art_id "
+							+ "INNER JOIN tb_estados est ON est.id_estado = esa.id_estado "
+							+ "INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  "
+							+ "INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id "
+							+ "WHERE esa.id_estado="+idEstado+" and a.art_estado =1 AND pa.per_art_estado =1 "
+							+ "order by a.art_titulo";
 
 					System.out.println("ddff" + sql);
 				} else {
-					sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, " +
-							"ta.tipo_nombre, pa.per_art_id, p.per_nombre as autor " +
-							"FROM tb_persona AS p " +
-							"INNER JOIN tb_persona_articulo AS pa ON p.per_id = pa.pers_id " +
-							"INNER JOIN tb_persona AS p2 ON pa.per_id_registra = p2.per_id " +
-							"INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id " +
-							"INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  " +
-							"INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id " +
-							"WHERE a.id_estado =1 AND pa.per_art_estado =1 " +
-							"and (a.art_titulo like '%"
+					sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, "
+							+ "ta.tipo_nombre, pa.per_art_id, CONCAT(p.per_nombre,' ', p.per_apellido) as autor, a.art_resumen, a.art_palabras_clave, a.art_fecha_subida, "
+							+ "CONCAT(p2.per_institucion_pertenece,' - ',p2.per_direccion_institucion) AS institucion1, CONCAT(p.per_institucion_pertenece,' - ',p.per_direccion_institucion) AS institucion2 "
+							+ "FROM tb_persona AS p "
+							+ "INNER JOIN tb_persona_articulo AS pa ON p.per_id = pa.pers_id "
+							+ "INNER JOIN tb_persona AS p2 ON pa.per_id_registra = p2.per_id "
+							+ "INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id "
+							+ "INNER JOIN tb_estado_articulo esa ON esa.id_articulo = a.art_id "
+							+ "INNER JOIN tb_estados est ON est.id_estado = esa.id_estado "							
+							+ "INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  "
+							+ "INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id "
+							+ "WHERE esa.id_estado="+idEstado+" and a.art_estado =1 AND pa.per_art_estado =1 "
+							+ "and (a.art_titulo like '%"
 							+ titulo
 							+ "%' and (p2.per_nombre like '%"
 							+ autor
@@ -235,12 +279,12 @@ System.out.println("direccion a buscar: "+direc);
 							+ "%' and ar.area_nombre like '%"
 							+ area
 							+ "%') order by a.art_titulo";
-					
+
 				}
 				try {
 					sentencia = con.createStatement();
 					resultados = sentencia.executeQuery(sql);
-					System.out.println("LLega al codigo =)"+resultados);
+					System.out.println("LLega al codigo =)" + resultados);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -253,12 +297,28 @@ System.out.println("direccion a buscar: "+direc);
 					while (resultados.next()) {
 						articulo = new Articulo();
 						articulo.setArt_id(resultados.getInt("art_id"));
-						articulo.setArt_titulo(resultados.getString("art_titulo"));
-						articulo.setPer_nombre(resultados.getString("per_nombre"));
-						articulo.setPer_apellido(resultados.getString("per_apellido"));
-						articulo.setArea_nombre(resultados.getString("area_nombre"));
-						articulo.setTipo_nombre(resultados.getString("tipo_nombre"));
-						articulo.setNom_colaborador(resultados.getString("autor"));
+						articulo.setArt_titulo(resultados
+								.getString("art_titulo"));
+						articulo.setPer_nombre(resultados
+								.getString("per_nombre"));
+						articulo.setPer_apellido(resultados
+								.getString("per_apellido"));
+						articulo.setArea_nombre(resultados
+								.getString("area_nombre"));
+						articulo.setTipo_nombre(resultados
+								.getString("tipo_nombre"));
+						articulo.setNom_colaborador(resultados
+								.getString("autor"));
+						articulo.setArt_resumen(resultados
+								.getString("art_resumen"));
+						articulo.setArt_palabras_clave(resultados
+								.getString("art_palabras_clave"));
+						articulo.setArt_fecha_subida(resultados
+								.getDate("art_fecha_subida"));
+						articulo.setPer_institucion1(resultados
+								.getString("institucion1"));
+						articulo.setPer_institucion2(resultados
+								.getString("institucion2"));
 						lista.add(articulo);
 					}
 					con.close();
@@ -274,57 +334,66 @@ System.out.println("direccion a buscar: "+direc);
 						e.printStackTrace();
 					}
 				}
-				
+
 			}
-			
-			} 
+
+		}
 		if (usua.getId_rol() == 2 || usua.getId_rol() == 3) {
-				if (titulo.equals("") && autor.equals("") && tipoa.equals("") && area.equals("") ) {
-					sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, " +
-							"ta.tipo_nombre, pa.per_art_id, p.per_nombre as autor " +
-							"FROM tb_persona AS p " +
-							"INNER JOIN tb_persona_articulo AS pa ON p.per_id = pa.pers_id " +
-							"INNER JOIN tb_persona AS p2 ON pa.per_id_registra = p2.per_id " +
-							"INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id " +
-							"INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  " +
-							"INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id " +
-							"WHERE p2.per_id="+idUsuario+" and a.id_estado =1 AND pa.per_art_estado =1 " +
-							"order by a.art_titulo";
+			if (titulo.equals("") && autor.equals("") && tipoa.equals("")
+					&& area.equals("")) {
+				sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, "
+						+ "ta.tipo_nombre, pa.per_art_id, CONCAT(p.per_nombre,' ', p.per_apellido) as autor,a.art_resumen, a.art_palabras_clave, "
+						+ "a.art_fecha_subida, CONCAT(p2.per_institucion_pertenece,' - ',p2.per_direccion_institucion) AS institucion1, " 
+						+ "CONCAT(p.per_institucion_pertenece,' - ',p.per_direccion_institucion) AS institucion2 "
+						+ "FROM tb_persona AS p "
+						+ "INNER JOIN tb_persona_articulo AS pa ON p.per_id = pa.per_id_registra "
+						+ "INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id "
+						+ "INNER JOIN tb_persona AS p2 ON pa.pers_id= p2.per_id "
+						+ "INNER JOIN tb_estado_articulo esa ON esa.id_articulo = a.art_id "
+						+ "INNER JOIN tb_estados est ON est.id_estado = esa.id_estado "
+						+ "INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  "
+						+ "INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id "
+						+ "WHERE esa.id_estado="+idEstado+" and pa.pers_id="
+						+ idUsuario
+						+ " and a.art_estado =1 AND pa.per_art_estado =1 "
+						+ "order by a.art_titulo";
 
-					System.out.println("ddff" + sql);
-				}
-				else
-				{
-					sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, " +
-							"ta.tipo_nombre, pa.per_art_id, p.per_nombre as autor " +
-							"FROM tb_persona AS p " +
-							"INNER JOIN tb_persona_articulo AS pa ON p.per_id = pa.pers_id " +
-							"INNER JOIN tb_persona AS p2 ON pa.per_id_registra = p2.per_id " +
-							"INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id " +
-							"INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  " +
-							"INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id " +
-							"WHERE p2.per_id="+idUsuario+" and a.id_estado =1 AND pa.per_art_estado =1 " +
-							"and (a.art_titulo like '%"
-							+ titulo
-							+ "%' and (p2.per_nombre like '%"
-							+ autor
-							+ "%' or p2.per_apellido like '%"
-							+ autor
-							+ "%') and ta.tipo_nombre like '%"
-							+ tipoa
-							+ "%' and ar.area_nombre like '%"
-							+ area
-							+ "%') order by a.art_titulo";
-					
-				}
+				System.out.println("sql:" + sql);
+			} else {
+				sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, "
+						+ "ta.tipo_nombre, pa.per_art_id, CONCAT(p.per_nombre,' ', p.per_apellido) as autor,a.art_resumen, a.art_palabras_clave, "
+						+ "a.art_fecha_subida,CONCAT(p2.per_institucion_pertenece,' - ',p2.per_direccion_institucion) AS institucion1, " 
+						+ "CONCAT(p.per_institucion_pertenece,' - ',p.per_direccion_institucion) AS institucion2 "
+						+ "FROM tb_persona AS p "
+						+ "INNER JOIN tb_persona_articulo AS pa ON p.per_id = pa.per_id_registra "
+						+ "INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id "
+						+ "INNER JOIN tb_persona AS p2 ON pa.pers_id= p2.per_id "
+						+ "INNER JOIN tb_estado_articulo esa ON esa.id_articulo = a.art_id "
+						+ "INNER JOIN tb_estados est ON est.id_estado = esa.id_estado "
+						+ "INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  "
+						+ "INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id "
+						+ "WHERE esa.id_estado="+idEstado+" and pa.pers_id="
+						+ idUsuario
+						+ " and a.art_estado =1 AND pa.per_art_estado =1 "
+						+ "and (a.art_titulo like '%"
+						+ titulo
+						+ "%' and (p2.per_nombre like '%"
+						+ autor
+						+ "%' or p2.per_apellido like '%"
+						+ autor
+						+ "%') and ta.tipo_nombre like '%"
+						+ tipoa
+						+ "%' and ar.area_nombre like '%"
+						+ area
+						+ "%') order by a.art_titulo";
 
-				          
-			
+			}
+
 		}
 		try {
 			sentencia = con.createStatement();
 			resultados = sentencia.executeQuery(sql);
-			System.out.println("LLega al codigo =)"+resultados);
+			System.out.println("LLega al codigo =)" + resultados);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -343,6 +412,16 @@ System.out.println("direccion a buscar: "+direc);
 				articulo.setArea_nombre(resultados.getString("area_nombre"));
 				articulo.setTipo_nombre(resultados.getString("tipo_nombre"));
 				articulo.setNom_colaborador(resultados.getString("autor"));
+				articulo.setArt_resumen(resultados.getString("art_resumen"));
+				articulo.setArt_palabras_clave(resultados
+						.getString("art_palabras_clave"));
+				articulo.setArt_fecha_subida(resultados
+						.getDate("art_fecha_subida"));
+
+				articulo.setPer_institucion1(resultados
+						.getString("institucion1"));
+				articulo.setPer_institucion2(resultados
+						.getString("institucion2"));
 				lista.add(articulo);
 			}
 			con.close();
@@ -358,11 +437,7 @@ System.out.println("direccion a buscar: "+direc);
 				e.printStackTrace();
 			}
 		}
-	
+
 		return lista;
 	}
 }
-
-
-		
-		

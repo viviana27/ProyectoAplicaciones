@@ -1,0 +1,38 @@
+<?page title="Detalle del Artículo" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Detalle del Artículo" border="normal"
+		id="winDetalleArticulo" width="50%"
+		apply="com.controladores.articuloController">
+		<div id="detalle" align="center">
+			<label
+				style="background-color: #CCCCCC; font-size:20px; font-weight: bold; color:blue;"
+				id="titulo">
+			</label>
+			<separator></separator>
+			<separator></separator>
+			<label id="nombreAutorP"></label>
+			<separator></separator>
+			<label id="nombreAutoresS"></label>
+			<separator></separator>
+			<separator></separator>
+			<label style="font-weight: bold; color:blue;"
+				value="Resumen:">
+			</label>
+			<separator></separator>
+			<label style="align:justify" id="resumen"></label>
+			<separator></separator>
+			<separator></separator>
+			<label style="font-weight: bold; color:blue;"
+				value="Palabras claves:">
+			</label>
+			<separator></separator>
+			<label id="palabrasClaves"></label>
+			<separator></separator>
+			<separator></separator>
+			<label style="font-weight: bold; color:blue;"
+				value="Fecha Recibido:">
+			</label>
+			<label id="fechaRecibido"></label>
+		</div>
+	</window>
+</zk>

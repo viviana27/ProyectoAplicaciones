@@ -19,6 +19,8 @@ public class Articulo {
 	private String per_nombre;
 	private String per_apellido;
 	private int id_estado;
+	private String per_institucion1;
+	private String per_institucion2;
 
 	public Articulo() {
 		super();
@@ -40,6 +42,23 @@ public class Articulo {
 		this.id_area = id_area;
 		this.per_id = per_id;
 		this.id_estado = id_estado;
+	}
+
+	
+	public String getPer_institucion1() {
+		return per_institucion1;
+	}
+
+	public void setPer_institucion1(String per_institucion1) {
+		this.per_institucion1 = per_institucion1;
+	}
+
+	public String getPer_institucion2() {
+		return per_institucion2;
+	}
+
+	public void setPer_institucion2(String per_institucion2) {
+		this.per_institucion2 = per_institucion2;
 	}
 
 	public int getArt_id() {

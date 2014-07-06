@@ -94,7 +94,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 		}
 
 		Window win = (Window) Executions.createComponents(
-				"VisualizarPerfil.zul", null, null);
+				"Usuarios/VisualizarPerfil.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
 		// guardar atributos en ventana
