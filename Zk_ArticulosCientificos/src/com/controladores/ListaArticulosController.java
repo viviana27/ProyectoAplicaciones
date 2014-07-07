@@ -71,7 +71,6 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 		DBArticulos dbart = new DBArticulos();
 		// lista con usuarios encontrados
 		List<Articulo> lista = dbart.buscarArticulo( txtProyecto.getValue(), txtautor.getValue(), txttipo.getValue(), txtarea.getValue());
-		alert("xfd "+lista.size());
 		
 		// establecer esta lista como modelo de dalos pasra el listbox
 		ListModelList<Articulo> listModel = new ListModelList<Articulo>(lista);

@@ -51,7 +51,7 @@
 			<listhead sizable="false" menupopup="auto">
 				<listheader label="Título" sort="auto(art_titulo)"/>
 				<listheader label="Autor" sort="auto(per_nombre)"/>
-				<listheader label="Participantes" sort="auto(nom_colaborador)"/>
+				<listheader label="Co-Autor" sort="auto(nom_colaborador)"/>
 			    <listheader label="Tipo de Articulo" sort="auto(tipo_nombre)"/>
 				<listheader label="Área del Artículo" sort="auto(area_nombre)"/>
 			

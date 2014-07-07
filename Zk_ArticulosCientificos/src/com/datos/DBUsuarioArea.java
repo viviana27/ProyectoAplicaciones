@@ -28,7 +28,7 @@ public class DBUsuarioArea {
 			con=dbm.getConection();
 			try {
 				sentencia = con.createStatement();
-				String sql="Select * from tb_area";
+				String sql="Select * from tb_area as ar where ar.area_estado=1 order by ar.area_nombre ASC";
 				resultados=sentencia.executeQuery(sql);		
 				while(resultados.next()){
 				
@@ -105,8 +105,7 @@ public class DBUsuarioArea {
 		
 	}
 	
-	
-	public List<UsuarioArea> buscarUsuariosArea(String criterio){
+		public List<UsuarioArea> buscarUsuariosArea(String criterio){
 		List<UsuarioArea> lista=new ArrayList<UsuarioArea>();
 		//objeto sentencia 
 		Statement sentencia=null;

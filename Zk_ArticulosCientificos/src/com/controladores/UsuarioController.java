@@ -22,6 +22,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 	private static final long serialVersionUID = 1L;
 	@Wire
 	private Textbox textbox_Usuario;
+	
 	private Label label_Usuario;
 	private Textbox textbox_Password;
 	private Textbox textbox_Nombres;
@@ -44,14 +45,25 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 	private Label label_dirinstitucion;
 	private Textbox textbox_clave_anterior;
 	private Textbox textbox_clave_nueva;
-	private Textbox textbox_rep_clave;
+	private Textbox textbox_rep_clave,textbox_Titulo,textbox_tipoar,textbox_area;
 	private Button button_Registrar;
 	private Button button_cambiar_clave;
 	private Window winVerUsuario;
 	private Window winNuevoUsuario;
 	private Window winCambioClave;
+	
 	private Usuarios u = null;
+	
 	DBUsuario dbusuarios = new DBUsuario();
+	int idarea=0;
+
+	
+	
+	@Override
+	public void doAfterCompose(Component comp) throws Exception {
+		// TODO Auto-generated method stub
+		super.doAfterCompose(comp);
+	}
 
 	public void onCreate$winVerUsuario() {
 		Session session = Sessions.getCurrent();
@@ -73,6 +85,8 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			alert("Error al obtener información");
 	}
 
+	
+	
 	public void onClick$button_Registrar() throws Exception {
 		boolean result = false;
 
