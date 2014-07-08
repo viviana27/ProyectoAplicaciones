@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModelList;
@@ -28,6 +30,13 @@ public class ListaArticulosEvaluador  extends GenericForwardComposer<Component>{
 		
 				actualizarLista();
 				listaArticulosporpar.renderAll();
+				Session sesion=Sessions.getCurrent();
+				Usuarios u=(Usuarios)sesion.getAttribute("User");
+				if(u!=null){
+					if(u.getId_rol()==3){
+						toolbarbutton_Editar.setVisible(false)	;
+					}
+				}
 	}
 	
 	public void onClick$idfiltroTitulo() {

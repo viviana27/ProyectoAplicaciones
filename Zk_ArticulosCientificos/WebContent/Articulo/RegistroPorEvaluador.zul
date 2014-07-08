@@ -30,6 +30,12 @@
 					</combobox>
 				</row>
 				<row>
+					<label id="lblidpersona" visible="false"
+						width="300px">
+					</label>
+
+				</row>
+				<row>
 					<button label="Guardar"
 						id="button_Registrar" image="Imagenes/save.png">
 					</button>

@@ -73,18 +73,22 @@ public class indexController extends GenericForwardComposer<Component> {
 		Menuitem menuitemA2 = new Menuitem("Evaluar Articulo");
 		Menuitem menuitemA3 = new Menuitem("Subir Nuevo Articulo");
 		Menuitem menuitemA4 = new Menuitem("Asignar Evaluadores a un Articulo");
+		Menuitem menuitemA5 = new Menuitem("Articulos Asignados a evaluar");
 		menuitemA1.setValue("Articulo/Listar Articulos.zul");
 		menuitemA2.setValue("Articulo/Evaluacion.zul");
 		menuitemA3.setValue("Articulo/Indexacion.zul");
 		menuitemA4.setValue("Articulo/Revision.zul");
+		menuitemA5.setValue("Articulo/Vista_Evaluador.zul");
 		menuitemA1.addEventListener("onClick", new MenuListener());
 		menuitemA2.addEventListener("onClick", new MenuListener());
 		menuitemA3.addEventListener("onClick", new MenuListener());
 		menuitemA4.addEventListener("onClick", new MenuListener());
+		menuitemA5.addEventListener("onClick", new MenuListener());
 		menupopupA.appendChild(menuitemA1);
 		// menupopupA.appendChild(menuitemA2);
 		menupopupA.appendChild(menuitemA3);
 		// menupopupA.appendChild(menuitemA4);
+		 menupopupA.appendChild(menuitemA5);
 		menuA.appendChild(menupopupA);
 		menubar_opciones.appendChild(menuA);
 
