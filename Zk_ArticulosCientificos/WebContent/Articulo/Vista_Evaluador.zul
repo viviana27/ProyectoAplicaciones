@@ -1,0 +1,54 @@
+<?page title="Listado de Articulos Asignados" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="lISTADO DE ARTICULOS ASIGNADOS AL EVALUADOR" border="normal" apply="com.controladores.ListaArticulosEvaluador">
+<!-- iniciar sesion como administrador y se cargan todos los articulos enviados -->
+<listbox id="listaArticulosporpar" mold="paging" pageSize="4"
+			multiple="false" width="100%"
+			emptyMessage="No personasfound in the result">
+
+			<auxhead left= "true" sclass="category-center">
+				<auxheader label="Búsqueda de artículos por:" rowspan="2"/>
+			</auxhead>
+
+			<auxhead sclass="category-center">
+				<auxheader  rowspan="1">
+					<label>Título:</label>
+					<textbox id="txtProyecto"></textbox>
+					<button id="idfiltroTitulo"
+						image="Imagenes/searchs.png">
+					</button>
+			</auxheader>
+				<auxheader  rowspan="1">
+					<div height="30px">
+			     <toolbar >
+				<toolbarbutton  image="Imagenes/editar.png"
+					id="toolbarbutton_Editar" label="Asignar Evaluador" />
+			      </toolbar>
+		        </div>
+				</auxheader>
+			
+			</auxhead>
+			<auxhead sclass="category-center">
+				<auxheader label="Listado de Articulos por evaluadores "
+					 />
+			</auxhead>
+
+			<listhead sizable="false" menupopup="auto">
+				<listheader label="Título" sort="auto(art_titulo)"/>
+				<listheader label="Área del Artículo" sort="auto(area_nombre)"/>
+				<listheader label="Par Asignado" sort="auto(per_nombre)"/>
+			
+			</listhead>
+			<template name="model">
+				<listitem value="${each}">
+					<listcell label="${each.art_titulo}" />
+					<listcell label="${each.area_nombre}" />
+					<listcell label="${each.per_nombre} ${each.per_apellido}" />		
+					</listitem>
+			</template>
+</listbox>
+
+			
+
+</window>
+</zk>

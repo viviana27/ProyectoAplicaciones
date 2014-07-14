@@ -24,7 +24,7 @@
 					<combobox id="cmb_evaluador" autodrop="true"
 						width="60%">
 						<template name="model">
-							<comboitem label="${each.per_nombre}"
+							<comboitem label="${each.per_nombre} ${each.per_apellido}"
 								value="${each}" />
 						</template>
 					</combobox>

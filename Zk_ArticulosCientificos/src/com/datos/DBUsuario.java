@@ -574,6 +574,7 @@ public class DBUsuario {
 				pares.setPersonas_id(resultados.getInt("per_id"));
 				System.out.println("id persona"+ resultados.getInt("per_id"));
 				pares.setPer_nombre(resultados.getString("per_nombre"));
+				pares.setPer_apellido(resultados.getString("per_apellido"));
 				// agrego usuario con datos cargados desde la base a mi lista de
 				// usuarios
 				lista.add(pares);

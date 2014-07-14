@@ -351,10 +351,10 @@ public class DBArticulos {
 							+ "INNER JOIN tb_estados est ON est.id_estado = esa.id_estado "
 							+ "INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  "
 							+ "INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id "
-							+ "WHERE esa.id_estado="+idEstado+" and pa.per_id_registra="
+							+ "WHERE esa.id_estado="+idEstado+" and (pa.per_id_registra="+idUsuario+" or pa.pers_id="
 							+ idUsuario
-							+ " and a.art_estado =1 AND pa.per_art_estado =1 "
-							+ "order by a.art_titulo";
+							+ ") and a.art_estado =1 AND pa.per_art_estado =1 "
+							+ "order by a.art_titulo ";
 
 					System.out.println("sql:" + sql);
 				} else {
@@ -370,9 +370,9 @@ public class DBArticulos {
 							+ "INNER JOIN tb_estados est ON est.id_estado = esa.id_estado "
 							+ "INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  "
 							+ "INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id "
-							+ "WHERE esa.id_estado="+idEstado+" and pa.per_id_registra="
+							+ "WHERE esa.id_estado="+idEstado+" and (pa.per_id_registra="+idUsuario+" or pa.pers_id="
 							+ idUsuario
-							+ " and a.art_estado =1 AND pa.per_art_estado =1 "
+							+ " )and a.art_estado =1 AND pa.per_art_estado =1 "
 							+ "and (a.art_titulo like '%"
 							+ titulo
 							+ "%' and (p2.per_nombre like '%"

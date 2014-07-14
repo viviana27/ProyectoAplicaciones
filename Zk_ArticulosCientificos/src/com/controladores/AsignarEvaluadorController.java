@@ -40,6 +40,7 @@ public class AsignarEvaluadorController extends GenericForwardComposer<Component
 	private Combobox cmb_evaluador;
 	int idarticulo=0;
 	int idpersona=0;
+	int idpersonaart=0;
 	int num_pares=0;
 	
 	public void onClick$button_Registrar() throws Exception {
@@ -66,14 +67,14 @@ public class AsignarEvaluadorController extends GenericForwardComposer<Component
 				result = dbusuarios.InsertarPar(par);
 				ea.setId_articulo(idarticulo);
 				ea.setId_estado(2);
-				ea.setId_persona(idpersona);
+				ea.setId_persona(idpersonaart);
 				result1 = dbusuarios.RegistrarEstadoArticulo(ea);
 
 }
+		
 if (result && result1) {
 	alert("Articulo asignado a los evaluadores correctamente ");
-	num_pares++;
-	// evaluar desde donde fue llamada esta ventana
+		// evaluar desde donde fue llamada esta ventana
 	String opcion = (String) winNuevoEvaluador.getAttribute("opcion");
 	if (opcion != null && opcion.equals("Revision")) {
 		// entonces la ventana ufe llamada desde lista usuarios
@@ -88,20 +89,16 @@ if (result && result1) {
 		winNuevoEvaluador.detach();
 
 	}
-	if(num_pares==2){
-		alert("Numero de pares correcto");
-		button_Registrar.setVisible(false);
-		
-	}
+	
 } else {
 	alert("No se pudo realizar el registro");
 }
+
 
 }
 	public void onSelect$cmb_evaluador() {
 		Pares pares = (Pares) cmb_evaluador.getSelectedItem().getValue();
 		if (pares != null) {
-			
 			idpersona= pares.getPersonas_id();
 	
 		}
@@ -119,6 +116,8 @@ if (result && result1) {
 					textbox_area.setText(art.getArea_nombre());
 					idarea=art.getId_area();
 					idarticulo=art.getArt_id();
+					idpersonaart=u.getId();
+					System.out.println("id persona que registra:"+idpersonaart);
 					List<Pares> lista = dbr.buscarEvaluador(idarea);
 					if (lista != null) {
 						ListModelList<Pares> listModel = new ListModelList<Pares>(

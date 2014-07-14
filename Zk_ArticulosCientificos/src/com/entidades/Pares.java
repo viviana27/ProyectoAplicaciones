@@ -5,6 +5,7 @@ public class Pares {
 	private int articulos_id;
 	private int personas_id;
 	private String per_nombre;
+	private String per_apellido;
 	private int estado_id;
 	private int cant_par;
 	private int par_estado;
@@ -56,6 +57,13 @@ public class Pares {
 	}
 	public int getCant_par() {
 		return cant_par;
+	}
+	
+	public String getPer_apellido() {
+		return per_apellido;
+	}
+	public void setPer_apellido(String per_apellido) {
+		this.per_apellido = per_apellido;
 	}
 	public void setCant_par(int cant_par) {
 		this.cant_par = cant_par;
