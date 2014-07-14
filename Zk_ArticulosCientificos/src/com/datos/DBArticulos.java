@@ -469,7 +469,7 @@ public class DBArticulos {
 							"WHERE ar.art_estado =1 " +
 							"ORDER BY  p.per_nombre";
 
-					System.out.println("ddff" + sql);
+					System.out.println("sentencia por rol administrador" + sql);
 				} else {
 					sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, a.area_nombre, " +
 							"a.area_id, p.per_nombre, p.per_apellido " +
