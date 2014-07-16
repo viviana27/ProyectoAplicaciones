@@ -55,7 +55,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 
 		// win.setAttribute("opcion", "registroRol") -- nombre de variable;
 		win.setAttribute("opcion", "listaparametros");
-		win.setAttribute("controladOrigen", this);
+		win.setAttribute("controladorOrigen", this);
 
 	}
 
@@ -84,7 +84,6 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 		// alert("Click en boton");
 
 		boolean result = false;
-		confirmacion = false;
 		if (listbox_Parametros.getSelectedItem() == null) {
 			alert("Seleccione el parametro que desea eliminar");
 			return;
@@ -112,8 +111,8 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 			if (result != false) {
 				alert("Parametro eliminado correctamente");
 			} 
-			}
-		else {
+			
+			}else {
 			alert("Eliminacion Cancelada");
 		}
 		actualizarLista();

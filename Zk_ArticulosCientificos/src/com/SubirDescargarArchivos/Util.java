@@ -37,6 +37,10 @@ public class Util {
 		return saveFile(media, getPath());
 	}
 
+	public static boolean downloadFile(Media media) {
+
+		return saveFile(media, getPath1());
+	}
 	// Gets the path of the current web application
 	public static String getPath() {
 		// return
@@ -49,6 +53,24 @@ public class Util {
 		complemento_nombre=Integer.toString(idUsuario);
 		
 		ruta = "C:/Uploads/Articulo"+complemento_nombre+nombre;
+		 System.out.println(" ruta: "+ruta);
+		File directorio = new File(ruta+separator);
+		directorio.mkdir();
+		return Executions.getCurrent().getDesktop().getCurrentDirectory()
+				+ ruta + separator;
+	}
+	
+	public static String getPath1() {
+		// return
+		// Executions.getCurrent().getDesktop().getWebApp().getRealPath(separator)+"uploads"+separator;
+		
+		Session session = Sessions.getCurrent();
+		Usuarios usua = (Usuarios) session.getAttribute("User");
+		int idUsuario = usua.getId();
+		String nombre=usua.getPersona().getPer_apellido();
+		//complemento_nombre=Integer.toString(idUsuario);
+		
+		ruta = "C:/Users/hp fg/Downloads"+nombre;
 		 System.out.println(" ruta: "+ruta);
 		File directorio = new File(ruta+separator);
 		directorio.mkdir();
@@ -70,6 +92,49 @@ public class Util {
 			String fileName = media.getName();
 
 			File arc = new File(path + fileName);
+
+			OutputStream aout = new FileOutputStream(arc);
+			out = new BufferedOutputStream(aout);
+			System.out.println("Nombre: " + media.getName() + " :StreamData: ");
+			// nombreArticulo=media.getName();
+			byte buffer[] = new byte[1024];
+			int ch = in.read(buffer);
+			while (ch != -1) {
+				out.write(buffer, 0, ch);
+				ch = in.read(buffer);
+			}
+			uploaded = true;
+		} catch (IOException ie) {
+			throw new RuntimeException(ie);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				if (out != null)
+					out.close();
+				if (in != null)
+					in.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return uploaded;
+	}
+	
+	
+	public static boolean saveFile1(Media media, String path1) {
+		boolean uploaded = false;
+
+		BufferedInputStream in = null;
+		BufferedOutputStream out = null;
+		try {
+			InputStream ins = media.getStreamData();
+
+			in = new BufferedInputStream(ins);
+
+			String fileName = media.getName();
+
+			File arc = new File(path1 + fileName);
 
 			OutputStream aout = new FileOutputStream(arc);
 			out = new BufferedOutputStream(aout);

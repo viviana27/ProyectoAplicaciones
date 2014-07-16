@@ -67,7 +67,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 		
 		//win.setAttribute("opcion", "registroArea") -- nombre de variable;
 				win.setAttribute("opcion", "listaAreas");
-				win.setAttribute("controladOrigen", this);
+				win.setAttribute("controladorOrigen", this);
 	}
 
 	public void onClick$toolbarbutton_Editar() {

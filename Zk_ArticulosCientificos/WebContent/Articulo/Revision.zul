@@ -7,7 +7,7 @@
 			emptyMessage="No personasfound in the result">
 
 			<auxhead left= "true" sclass="category-center">
-				<auxheader label="Búsqueda de artículos por:" rowspan="2"/>
+				<auxheader label="Búsqueda de artículos por:" rowspan="1"/>
 			</auxhead>
 
 			<auxhead sclass="category-center">
@@ -18,6 +18,13 @@
 						image="Imagenes/searchs.png">
 					</button>
 			</auxheader>
+			 <auxheader rowspan="1">
+					<label>Área</label>
+					<textbox id="txtarea" />
+					<button id="idarea" image="Imagenes/searchs.png">
+					</button>
+				</auxheader>
+			
 				<auxheader  rowspan="1">
 					<div height="30px">
 			     <toolbar >

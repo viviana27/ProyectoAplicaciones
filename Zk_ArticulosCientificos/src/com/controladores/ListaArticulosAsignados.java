@@ -1,10 +1,13 @@
 package com.controladores;
 
+import java.io.File;
 import java.util.List;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.util.media.ContentTypes;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -26,14 +29,19 @@ import com.datos.DBArticulos;
 import com.entidades.Articulo;
 import com.entidades.Usuarios;
 
-public class ListaArticulosEvaluador  extends GenericForwardComposer<Component>{
+public class ListaArticulosAsignados extends GenericForwardComposer<Component>{
 	Textbox txtProyecto;
 	Button idfiltroTitulo;
-	Listbox listaArticulosporpar;
-	Toolbarbutton toolbarbutton_Editar;
 	Textbox txtarea;
 	Button idarea;
-	
+	Listbox listaArticulosporpar;
+	Toolbarbutton toolbarbutton_Editar;
+	Button button_descargar;
+	String NombreArchi, direccion;
+	Label nombreArticulo;
+	public Media media;
+	@NotifyChange("media")
+	@Command
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);	
@@ -52,10 +60,9 @@ public class ListaArticulosEvaluador  extends GenericForwardComposer<Component>{
 	public void onClick$idfiltroTitulo() {
 		actualizarLista();
 	}
-	
+ 
 	public void onClick$idarea() {
 		actualizarLista();
-		System.out.println("holadfdf");
 	}
 	
 	public void actualizarLista() {
@@ -96,8 +103,65 @@ public class ListaArticulosEvaluador  extends GenericForwardComposer<Component>{
 		win.setAttribute("articulo", u);
 	}
 	
+	public void onUpload$button_descargar(
+			@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event) {
+		System.out.println("llego al boton");
+		media = event.getMedia();
+		String extension = media.getFormat();
+		if (extension.equals("docx")) {
+			NombreArchi = media.getName();
+			nombreArticulo.setValue(NombreArchi);
+		} else {
+			alert("Debe subir un archivo de Word, este tiene una extensión :"
+					+ extension);
+			NombreArchi = "";
+			nombreArticulo.setValue("");
+		}
+	}
 
 	
+	public Media getMedia() {
+		return media;
+	}
+
+	// simply download the file
+	@Command
+	public void downloadFile() {
+		String extension = media.getFormat();
+		if (media != null)
+			Filedownload.save(media);
+		
+		
+	}
+	
+	public void obtenerRutaArchivoAdjuntado() {
+		Util u = new Util();
+		direccion = u.ruta + "/" + NombreArchi;
+		System.out.println(direccion);
+	}
+	
+	public void onClick$button_descargar(){
+		//Directorio destino para las descargas
+		String folder = "descargas/";
+	//Crea el directorio de destino en caso de que no exista
+		File dir = new File(folder);
+		if (!dir.exists())
+		  if (!dir.mkdir())
+		    return; // no se pudo crear la carpeta de destino
+	}
 	
 	
+	
+	public void onSelect$listaArticulosporpar() {
+		Articulo art = (Articulo) listaArticulosporpar.getSelectedItem().getValue();
+		button_descargar.setVisible(true);
+		nombreArticulo.setVisible(true);
+		nombreArticulo.setValue(art.getArt_archivo());
+		System.out.println(art.getArt_archivo()+"archivoseleccionado");
+		
+		
+	
+	}
+
 }
+

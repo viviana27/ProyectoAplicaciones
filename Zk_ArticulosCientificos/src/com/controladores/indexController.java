@@ -88,7 +88,7 @@ public class indexController extends GenericForwardComposer<Component> {
 		// menupopupA.appendChild(menuitemA2);
 		menupopupA.appendChild(menuitemA3);
 		// menupopupA.appendChild(menuitemA4);
-		 menupopupA.appendChild(menuitemA5);
+		//menupopupA.appendChild(menuitemA5);
 		menuA.appendChild(menupopupA);
 		menubar_opciones.appendChild(menuA);
 
@@ -150,6 +150,7 @@ public class indexController extends GenericForwardComposer<Component> {
 				alert("Usuario con pocos Privilegios");
 			} else {
 				menupopupA.appendChild(menuitemA2);
+				menupopupA.appendChild(menuitemA5);
 			}
 
 		}

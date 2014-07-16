@@ -54,7 +54,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 	public int idTipoArticulo = 0, idTipoArea = 0, idAutor2 = 0, idAutor3 = 0,
 			idUsuario = 0, idArticuloSubido = 0;
 	private Articulo art = null;
-	String NombreArchi, direccion;
+	String NombreArchi, direccion, nom;
 	// //----------------------------------------------------------------------------
 	// codigo para subir un archivo al servidor
 	public Media media;
@@ -226,6 +226,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 	public void obtenerRutaArchivoAdjuntado() {
 		Util u = new Util();
 		direccion = u.ruta + "/" + NombreArchi;
+		nom= NombreArchi;
 		System.out.println(direccion);
 	}
 

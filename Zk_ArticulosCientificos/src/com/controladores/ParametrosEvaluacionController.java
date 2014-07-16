@@ -68,7 +68,8 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 				if(opcion!=null && opcion.equals("listaparametros")){
 					System.out.println(opcion+"");
 			listaParametroController lac = (listaParametroController) WinRegistrarParametros.getAttribute("controladorOrigen");
-			if(lac!=null) lac.actualizarLista();
+			if(lac!=null)
+				lac.actualizarLista();
 				WinRegistrarParametros.detach();
 					
 			}

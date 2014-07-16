@@ -1,6 +1,6 @@
 <?page title="Listado de Articulos Asignados" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="lISTADO DE ARTICULOS ASIGNADOS AL EVALUADOR" border="normal" apply="com.controladores.ListaArticulosEvaluador">
+<window title="lISTADO DE ARTICULOS ASIGNADOS AL EVALUADOR" border="normal" apply="com.controladores.ListaArticulosAsignados">
 <!-- iniciar sesion como administrador y se cargan todos los articulos enviados -->
 <listbox id="listaArticulosporpar" mold="paging" pageSize="4"
 			multiple="false" width="100%"
@@ -18,6 +18,14 @@
 						image="Imagenes/searchs.png">
 					</button>
 			</auxheader>
+			
+			<auxheader rowspan="1">
+					<label>Área</label>
+					<textbox id="txtarea" />
+					<button id="idarea" image="Imagenes/searchs.png">
+					</button>
+				</auxheader>
+			
 				<auxheader  rowspan="1">
 					<div height="30px">
 			     <toolbar >
@@ -37,7 +45,6 @@
 				<listheader label="Título" sort="auto(art_titulo)"/>
 				<listheader label="Área del Artículo" sort="auto(area_nombre)"/>
 				<listheader label="Par Asignado" sort="auto(per_nombre)"/>
-			
 			</listhead>
 			<template name="model">
 				<listitem value="${each}">
@@ -47,8 +54,14 @@
 					</listitem>
 			</template>
 </listbox>
-
-			
+           <label style="font-weight: bold; color:blue;"
+				value="Seleccione el artículo a descargar:">
+			</label>
+					<button label="Descargar articulo" id="button_descargar" visible="false"					
+							upload="true,maxsize=8192"
+							onUpload="@command('uploadFile',upload=event)" 
+							autodisable="self" />
+			<label id="nombreArticulo" value="Archivo.doc" visible="false"/>
 
 </window>
 </zk>

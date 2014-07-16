@@ -65,7 +65,7 @@ public class listaTipoArticuloController extends
 		win.setClosable(true);
 		win.doModal();
 		win.setAttribute("opcion", "listaTipos");
-		win.setAttribute("controladOrigen", this);
+		win.setAttribute("controladorOrigen", this);
 
 	}
 

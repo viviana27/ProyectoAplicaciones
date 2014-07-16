@@ -73,7 +73,7 @@ public class listaRolController extends GenericForwardComposer<Component> {
 		win.setClosable(true);
 		win.doModal();
 		win.setAttribute("opcion", "listaRoles");
-		win.setAttribute("controladOrigen", this);
+		win.setAttribute("controladorOrigen", this);
 	}
 
 	public void onClick$toolbarbutton_Editar() {

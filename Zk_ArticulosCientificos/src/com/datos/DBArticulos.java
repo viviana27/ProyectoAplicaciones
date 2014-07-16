@@ -190,8 +190,8 @@ public class DBArticulos {
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
 
-		Statement sentencia;
-		ResultSet resultados;
+		Statement sentencia=null;
+		ResultSet resultados=null;
 		System.out.println("direccion a buscar: " + direc);
 		String query = "Select ta.art_id from tb_articulo as ta where ta.art_archivo='"
 				+ direc + "'";
@@ -201,12 +201,16 @@ public class DBArticulos {
 			resultados = sentencia.executeQuery(query);
 			// recorrer el resultset
 			while (resultados.next()) {
+				Articulo arti =new Articulo();
+				arti.setArt_id(resultados.getInt("art_id"));
 				idArticuloRegistrado = (resultados.getInt("art_id"));
+				System.out.println("idart"+idArticuloRegistrado );
 			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("error al recorrer resultset");
 		} finally {
 			//
 			try {
@@ -441,7 +445,7 @@ public class DBArticulos {
 		return lista;
 	}
 	
-	public List<Articulo> buscarArticuloEvaluador(String titulo) {
+	public List<Articulo> buscarArticuloEvaluador(String titulo, String area) {
 		int idUsuario=0;
 		List<Articulo> lista = new ArrayList<Articulo>();
 		// objeto sentencia
@@ -460,8 +464,8 @@ public class DBArticulos {
 		String sql = "";
 		if (usua != null) {
 			if (usua.getId_rol() == 1) {
-				if (titulo.equals("") ) {
-					sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, a.area_nombre, " +
+				if (titulo.equals("") && area.equals("") ) {
+					sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo, a.area_nombre, " +
 							"a.area_id, p.per_nombre, p.per_apellido " +
 							"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 							"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
@@ -471,7 +475,7 @@ public class DBArticulos {
 
 					System.out.println("sentencia por rol administrador" + sql);
 				} else {
-					sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, a.area_nombre, " +
+					sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo, a.area_nombre, " +
 							"a.area_id, p.per_nombre, p.per_apellido " +
 							"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 							"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
@@ -479,13 +483,15 @@ public class DBArticulos {
 							"WHERE ar.art_estado =1 " +
 							"and (ar.art_titulo like '%"
 							+ titulo
+							+ "%' and a.area_nombre like '%"
+							+ area
 							+ "%' ) order by  p.per_nombre";
 					
 				}
 				try {
 					sentencia = con.createStatement();
 					resultados = sentencia.executeQuery(sql);
-					System.out.println("LLega al codigo =)"+resultados);
+					System.out.println("LLega al codigo =)");
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -499,10 +505,13 @@ public class DBArticulos {
 						articulo = new Articulo();
 						articulo.setArt_id(resultados.getInt("art_id"));
 						articulo.setArt_titulo(resultados.getString("art_titulo"));
+						System.out.println(articulo.getArt_titulo()+"  titulo");
 						articulo.setArea_nombre(resultados.getString("area_nombre"));
 						articulo.setId_area(resultados.getInt("area_id"));
 						articulo.setPer_nombre(resultados.getString("per_nombre"));
 						articulo.setPer_apellido(resultados.getString("per_apellido"));
+						articulo.setArt_archivo(resultados.getString("art_archivo"));
+						System.out.println(articulo.getArt_archivo()+"  archivo");
 						lista.add(articulo);
 					}
 					con.close();
@@ -521,9 +530,8 @@ public class DBArticulos {
 				
 			}
 			if (usua.getId_rol() == 3) {
-				if (titulo.equals("") ) {
-					if (titulo.equals("") ) {
-						sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, a.area_nombre, " +
+					if (titulo.equals("")  && area.equals("")) {
+						sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, a.area_nombre, " +
 								"a.area_id, p.per_id,p.per_nombre, p.per_apellido " +
 								"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 								"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
@@ -534,7 +542,7 @@ public class DBArticulos {
 
 						System.out.println("ddff" + sql);
 							} else {
-								sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, a.area_nombre, " +
+								sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, a.area_nombre, " +
 										"a.area_id, p.per_nombre, p.per_apellido " +
 										"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 										"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
@@ -543,6 +551,8 @@ public class DBArticulos {
 										"WHERE ar.art_estado =1 and p.per_id="+idUsuario+" and esa.id_estado=2 " +
 										"and (ar.art_titulo like '%"
 										+ titulo
+										+ "%' and a.area_nombre like '%"
+										+ area
 										+ "%' ) order by  p.per_nombre";
 								
 				}
@@ -568,6 +578,8 @@ public class DBArticulos {
 							articulo.setId_area(resultados.getInt("area_id"));
 							articulo.setPer_nombre(resultados.getString("per_nombre"));
 							articulo.setPer_apellido(resultados.getString("per_apellido"));
+							articulo.setArt_archivo(resultados.getString("art_archivo"));
+							System.out.println(articulo.getArt_archivo()+"  archivo");
 							lista.add(articulo);
 						}
 						con.close();
@@ -584,7 +596,7 @@ public class DBArticulos {
 						}
 					}
 					
-				}
+				
 				
 				}
 			} 
