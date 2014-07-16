@@ -11,6 +11,7 @@ import java.util.List;
 import com.entidades.ParametrosEvaluacion;
 
 public class DBParametrosEvaluacion {
+	public int sumaParametros=0;
 	public boolean CrearParametrosEvaluacion(ParametrosEvaluacion param ){
 		boolean registro = false;
 		//añadir el codigo
@@ -200,5 +201,51 @@ public class DBParametrosEvaluacion {
 			}
 		}
 		return result;
+	}
+	public int TotalParametrosEvaluacion(){
+		//List<ParametrosEvaluacion> lista=new ArrayList<ParametrosEvaluacion>();
+		Statement sentencia = null;
+		ResultSet registros=null;
+		
+		//busqueda a la base de datos
+		DBManager dbm = new DBManager();
+		Connection con= dbm.getConection();
+		String sql="";
+			sql = "SELECT sum(param_valor)as suma from tb_parametros_evaluacion where param_estado=1";
+					
+			System.out.println(""+sql);
+			
+		
+		
+		try {
+			sentencia=con.createStatement();
+			registros=sentencia.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			 System.out.println("error al ejecutar la sentencia");
+		}
+		
+		ParametrosEvaluacion a = null;
+		try {
+			while(registros.next()){
+				sumaParametros=registros.getInt("suma");
+			}
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+	finally{
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+		return sumaParametros;	
 	}
 }

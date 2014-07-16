@@ -42,5 +42,15 @@
 				</listitem>
 			</template>
 		</listbox>
+		<grid>
+			<columns>
+				<column  />
+				<column  />
+			</columns>
+			<rows>
+				<row><label value="Suma Total de Porcentaje: " /><label id="lbSumatotal" />
+				</row>
+			</rows>
+		</grid>
 	</window>
 </zk>

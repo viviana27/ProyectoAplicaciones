@@ -88,7 +88,7 @@
 							upload="true,maxsize=8192"
 							onUpload="@command('uploadFile',upload=event)" 
 							autodisable="self" />
-		
+	
 						<label id="nombreArticulo" value="Archivo.doc" />
 					</vbox>
 				</row>

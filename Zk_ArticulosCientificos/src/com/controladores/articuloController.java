@@ -41,6 +41,9 @@ import com.entidades.Usuarios;
 
 public class articuloController extends GenericForwardComposer<Component> {
 	private Combobox cmb_tipo, comboAutor2, comboAutor3, cmb_area;
+//	public Textbox textbox_Titulo, textbox_Resumen, textbox_PClaves;
+	//public Button button_Registrar, btnExaminar;
+	public Label nombreArchivo;
 	public Textbox textbox_Titulo, textbox_Resumen, textbox_PClaves,
 			textbox_autor;
 	public Button button_Registrar, btnExaminar, button_Nuevo;
@@ -50,6 +53,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 	public Date fecha;
 	private Articulo a = null;
 	private PersonaArticulo pa = null;
+
 	private EstadoArticulo ea=null;
 	public int idTipoArticulo = 0, idTipoArea = 0, idAutor2 = 0, idAutor3 = 0,
 			idUsuario = 0, idArticuloSubido = 0;
@@ -65,6 +69,8 @@ public class articuloController extends GenericForwardComposer<Component> {
 	public void onUpload$btnExaminar(
 			@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event) {
 		media = event.getMedia();
+	
+		
 		String extension = media.getFormat();
 		if (extension.equals("docx")) {
 			NombreArchi = media.getName();
@@ -131,6 +137,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 		boolean result2 = false;
 		boolean result3 = false;
 		DBArticulos dbart = new DBArticulos();
+	
 		fecha = txtfecha.getValue();
 		Sessions.getCurrent();
 		Usuarios usua = (Usuarios) session.getAttribute("User");
@@ -226,6 +233,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 
 	public void obtenerRutaArchivoAdjuntado() {
 		Util u = new Util();
+	
 		direccion = u.ruta + "/" + NombreArchi;
 		nom= NombreArchi;
 		System.out.println(direccion);
