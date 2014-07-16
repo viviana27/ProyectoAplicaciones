@@ -18,6 +18,7 @@ import org.zkoss.zul.Menupopup;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import com.datos.DBPermiso;
 import com.datos.DBUsuario;
 import com.entidades.Usuarios;
 
@@ -28,7 +29,8 @@ public class indexController extends GenericForwardComposer<Component> {
 	Menubar menubar_opciones;
 	Center centro;
 	Window winindex;
-
+	DBPermiso dbp = new DBPermiso();
+	int idtipousuario=0;
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
@@ -39,7 +41,7 @@ public class indexController extends GenericForwardComposer<Component> {
 	public void crearMenu() {
 		Session session = Sessions.getCurrent();
 		Usuarios u = (Usuarios) session.getAttribute("User");
-		int idtipousuario = u.getId_rol();
+		 idtipousuario= u.getId_rol();
 		Menu menuR = new Menu("Registros");
 		Menupopup menupopup = new Menupopup();
 		Menuitem menuitemR1 = new Menuitem("Registrar Nuevo Usuario");
@@ -84,11 +86,13 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuitemA3.addEventListener("onClick", new MenuListener());
 		menuitemA4.addEventListener("onClick", new MenuListener());
 		menuitemA5.addEventListener("onClick", new MenuListener());
-		menupopupA.appendChild(menuitemA1);
+		if(dbp.ConsultarPermisos(idtipousuario, 1)){
+		menupopupA.appendChild(menuitemA1);}
 		// menupopupA.appendChild(menuitemA2);
-		menupopupA.appendChild(menuitemA3);
+		if(dbp.ConsultarPermisos(idtipousuario, 2)){
+		menupopupA.appendChild(menuitemA3);}
 		// menupopupA.appendChild(menuitemA4);
-		 menupopupA.appendChild(menuitemA5);
+		menupopupA.appendChild(menuitemA5);
 		menuA.appendChild(menupopupA);
 		menubar_opciones.appendChild(menuA);
 
@@ -100,6 +104,7 @@ public class indexController extends GenericForwardComposer<Component> {
 		Menuitem menuitemM4 = new Menuitem("Listar Parámetros de Evaluación");
 		Menuitem menuitemM5 = new Menuitem("Asignar rol a un usuario");
 		Menuitem menuitemM6 = new Menuitem("Asignar área a un usuario");
+		Menuitem menuitemM7 = new Menuitem("Asignar Permisos");
 		menuitemM1.setImage("");
 		menuitemM2.setImage("");
 		menuitemM3.setImage("");
@@ -112,18 +117,21 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuitemM5
 				.setValue("Mantenimiento/RolesUsuario/listaRolesUsuarios.zul");
 		menuitemM6.setValue("Mantenimiento/Areas/listaAreasUsuarios.zul");
+		menuitemM7.setValue("Permiso/Permiso.zul");
 		menuitemM1.addEventListener("onClick", new MenuListener());
 		menuitemM2.addEventListener("onClick", new MenuListener());
 		menuitemM3.addEventListener("onClick", new MenuListener());
 		menuitemM4.addEventListener("onClick", new MenuListener());
 		menuitemM5.addEventListener("onClick", new MenuListener());
 		menuitemM6.addEventListener("onClick", new MenuListener());
+		menuitemM7.addEventListener("onClick", new MenuListener());
 		menupopupM.appendChild(menuitemM1);
 		menupopupM.appendChild(menuitemM2);
 		menupopupM.appendChild(menuitemM3);
 		menupopupM.appendChild(menuitemM4);
 		menupopupM.appendChild(menuitemM5);
 		menupopupM.appendChild(menuitemM6);
+		menupopupM.appendChild(menuitemM7);
 		menuM.appendChild(menupopupM);
 		// menubar_opciones.appendChild(menuM);
 
@@ -140,19 +148,20 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuN.appendChild(menupopupN);
 		menubar_opciones.appendChild(menuN);
 
-		if (idtipousuario == 1) {
+//		if (idtipousuario == 1) {
 			menubar_opciones.appendChild(menuR);
 			menupopupA.appendChild(menuitemA4);
 			menupopupN.appendChild(menuitemN1);
 			menubar_opciones.appendChild(menuM);
-		} else {
-			if (idtipousuario == 2) {
-				alert("Usuario con pocos Privilegios");
-			} else {
+	//	} else {
+		//	if (idtipousuario == 2) {
+			//	alert("Usuario con pocos Privilegios");
+			//} else {
+			
 				menupopupA.appendChild(menuitemA2);
-			}
+			//}
 
-		}
+		//}
 	}
 
 	@Wire
