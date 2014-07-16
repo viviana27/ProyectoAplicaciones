@@ -57,31 +57,47 @@ public class listaRolUsuarioController extends
 
 	public void onClick$button_Guardar() throws Exception {
 		boolean result = false;
-		
+
 		if (listbox_roles_usuarios.getSelectedItem() == null) {
 			alert("Seleccione un rol");
-		}else{
-			Roles r = (Roles) listbox_roles_usuarios.getSelectedItem().getValue();
+		} else {
+			Roles r = (Roles) listbox_roles_usuarios.getSelectedItem()
+					.getValue();
 			u = (Usuarios) winModificarRol.getAttribute("usuario");
 			result = dbusuarios.cambiarRol(u.getId(), r.getRol_id());
 			if (result) {
 				alert("rol asignado correctamente");
+				actualizarLista();
+				winModificarRol.detach();
+			
 			} else {
 				alert("no se pudo completar la asignacion");
-
+				actualizarLista();
+				winModificarRol.detach();
+				
 			}
+			
 		}
-		
+
 	}
 
 	public void onCreate$winModificarRol() {
-
-		u = (Usuarios) winModificarRol.getAttribute("usuario");
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
 		if (u != null) {
-			textbox_Usuario.setText(u.getPersona().getPer_nombre() + " "
-					+ u.getPersona().getPer_apellido());
+			if (u.getId_rol() == 1) {
+				u = (Usuarios) winModificarRol.getAttribute("usuario");
+				if (u != null) {
+					textbox_Usuario.setText(u.getPersona().getPer_nombre()
+							+ " " + u.getPersona().getPer_apellido());
 
+				}
+			} else if (u.getId_rol() == 2 || u.getId_rol() == 3) {
+				Executions
+						.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
+			}
 		}
+
 	}
 
 }

@@ -9,6 +9,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -22,6 +23,7 @@ import com.entidades.ParametrosEvaluacion;
 
 public class listaParametroController extends GenericForwardComposer<Component> {
 	@Wire
+	Label lbSumatotal;
 	Toolbarbutton toolbarbutton_Eliminar;
 	Toolbarbutton toolbarbutton_Nuevo;
 	Toolbarbutton toolbarbutton_Editar;
@@ -34,6 +36,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		
 		actualizarLista();
 	}
 
@@ -54,7 +57,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 
 		// win.setAttribute("opcion", "registroRol") -- nombre de variable;
 		win.setAttribute("opcion", "listaparametros");
-		win.setAttribute("controladOrigen", this);
+		win.setAttribute("controladorOrigen", this);
 
 	}
 
@@ -77,6 +80,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 		ParametrosEvaluacion parame = (ParametrosEvaluacion) listbox_Parametros
 				.getSelectedItem().getValue();
 		win.setAttribute("param", parame);
+		
 	}
 
 	public void onClick$toolbarbutton_Eliminar() {
@@ -103,7 +107,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 					}
 				});
 
-		//if (confirmacion != false) {
+		if(confirmacion){
 			ParametrosEvaluacion rol = (ParametrosEvaluacion) listbox_Parametros
 					.getSelectedItem().getValue();
 			DBParametrosEvaluacion pa = new DBParametrosEvaluacion();
@@ -111,11 +115,12 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 			if (result != false) {
 				alert("Parametro eliminado correctamente");
 			} 
-			/*}
+			}
 		else {
 			alert("Eliminacion Cancelada");
-		}*/
+		}
 		actualizarLista();
+		
 	}
 
 	public void onClick$button_buscar() {
@@ -131,7 +136,9 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 				lista);
 		// establecer el modelo de datos
 		listbox_Parametros.setModel(listModel);
-
+		dbr=new DBParametrosEvaluacion();
+		lbSumatotal.setStyle("font-weight: bold; color:red;");
+		lbSumatotal.setValue(dbr.TotalParametrosEvaluacion()+"%");
 	}
 
 }

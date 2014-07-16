@@ -1,0 +1,52 @@
+<?page title="Asignar articulos a evaluadores" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Asignar articulos a evaluadores" border="normal" width="1000px"
+		height="a00px" id="winNuevoEvaluador"
+		apply="com.controladores.AsignarEvaluadorController">
+<grid>
+
+			<rows>
+							
+				<row>
+					<label>Título:</label>
+					<textbox id="textbox_Titulo"
+						width="150%">
+					</textbox>
+				</row>
+				<row>
+					<label>Àrea de Artìculo:</label>
+					<textbox id="textbox_area"
+						width="60%">
+					</textbox>
+				</row>
+				<row>
+					<label>Evaluadores:</label>
+					<combobox id="cmb_evaluador" autodrop="true"
+						width="60%">
+						<template name="model">
+							<comboitem label="${each.per_nombre} ${each.per_apellido}"
+								value="${each}" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label id="lblidpersona" visible="false"
+						width="300px">
+					</label>
+
+				</row>
+				<row>
+					<button label="Guardar"
+						id="button_Registrar" image="Imagenes/save.png">
+					</button>
+					<button label="Cancelar" id="button_cancelar"
+						image="Imagenes/delete.png">
+					</button>
+				</row>
+			</rows>
+	<!-- -->
+		</grid>
+
+
+	</window>
+</zk>

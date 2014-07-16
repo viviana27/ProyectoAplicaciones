@@ -1,6 +1,6 @@
 <?page title="Roles Usuarios" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Roles Usuarios" border="normal"
+	<window title="Listado de Evaluadores por area" border="normal"
 		id="WinListarRolUsuarios" apply="com.controladores.listaAreaUsuarioController">
 		<div height="50px">
 			<fisheyebar id="fsb"

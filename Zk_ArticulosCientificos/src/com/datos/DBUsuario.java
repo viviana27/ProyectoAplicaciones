@@ -10,8 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.entidades.Areas;
+import com.entidades.Pares;
 import com.entidades.Persona;
 import com.entidades.Roles;
+import com.entidades.UsuarioArea;
 import com.entidades.Usuarios;
 
 public class DBUsuario {
@@ -543,4 +546,46 @@ public class DBUsuario {
 		}
 		return result;
 	}
+	
+	//cargar evaluadores
+	
+	public List<Pares> buscarEvaluador(int area) {
+		List<Pares> lista = new ArrayList<Pares>();
+		// objeto sentencia
+		Statement sentencia = null;
+		// objeto para resultados
+		ResultSet resultados = null;
+		Pares pares = null;
+		System.out.println("id area"+ area);
+		// obtener la conexion a la base
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		try {
+			
+			sentencia = con.createStatement();
+			//String sql="Select * from tb_rol where rol_estado=1";
+			String 	sql = "Select p.per_id, p.per_nombre, p.per_apellido from tb_persona as p, " +
+					"tb_usuario as u, tb_persona_area as pa where p.per_id=u.persona_id " +
+					"and u.rol_id_usuario=3 and pa.area_id='"+area+"' and pa.per_id=u.persona_id";
+		System.out.println("el sql con evaluador"+ sql);
+			resultados=sentencia.executeQuery(sql);		
+			while(resultados.next()){
+				pares = new Pares();
+				pares.setPersonas_id(resultados.getInt("per_id"));
+				System.out.println("id persona"+ resultados.getInt("per_id"));
+				pares.setPer_nombre(resultados.getString("per_nombre"));
+				pares.setPer_apellido(resultados.getString("per_apellido"));
+				// agrego usuario con datos cargados desde la base a mi lista de
+				// usuarios
+				lista.add(pares);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return lista;
+	}
+
 }

@@ -21,7 +21,6 @@ import org.zkoss.zul.Window;
 import com.datos.DBUsuario;
 import com.entidades.Usuarios;
 
-
 public class indexController extends GenericForwardComposer<Component> {
 	private static final long serialVersionUID = 1L;
 	// enlazamos los componentes de la vista con variables de referencia
@@ -29,30 +28,32 @@ public class indexController extends GenericForwardComposer<Component> {
 	Menubar menubar_opciones;
 	Center centro;
 	Window winindex;
+
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
 		crearMenu();
 	}
+
 	public void crearMenu() {
 		Session session = Sessions.getCurrent();
 		Usuarios u = (Usuarios) session.getAttribute("User");
-		int idtipousuario =u.getId_rol();
+		int idtipousuario = u.getId_rol();
 		Menu menuR = new Menu("Registros");
 		Menupopup menupopup = new Menupopup();
 		Menuitem menuitemR1 = new Menuitem("Registrar Nuevo Usuario");
 		Menuitem menuitemR2 = new Menuitem("Listar Usuarios");
 		menuitemR1.setValue("Usuarios/nuevoUsuario.zul");
-		//menuitemR2.setValue("listaUsuarios.zul");
+		// menuitemR2.setValue("listaUsuarios.zul");
 		menuitemR2.setValue("Usuarios/listaUsuarios.zul");
 		menuitemR1.addEventListener("onClick", new MenuListener());
 		menuitemR2.addEventListener("onClick", new MenuListener());
 		menupopup.appendChild(menuitemR1);
 		menupopup.appendChild(menuitemR2);
 		menuR.appendChild(menupopup);
-		//menubar_opciones.appendChild(menuR);	
-		
+		// menubar_opciones.appendChild(menuR);
+
 		Menu menuP = new Menu("Perfil de usuario");
 		Menupopup menupopupP = new Menupopup();
 		Menuitem menuitemP1 = new Menuitem("Visualizar Perfil");
@@ -64,29 +65,33 @@ public class indexController extends GenericForwardComposer<Component> {
 		menupopupP.appendChild(menuitemP1);
 		menupopupP.appendChild(menuitemP2);
 		menuP.appendChild(menupopupP);
-		menubar_opciones.appendChild(menuP);	
-		
+		menubar_opciones.appendChild(menuP);
+
 		Menu menuA = new Menu("Articulos ....");
 		Menupopup menupopupA = new Menupopup();
 		Menuitem menuitemA1 = new Menuitem("Listar Articulos");
 		Menuitem menuitemA2 = new Menuitem("Evaluar Articulo");
 		Menuitem menuitemA3 = new Menuitem("Subir Nuevo Articulo");
 		Menuitem menuitemA4 = new Menuitem("Asignar Evaluadores a un Articulo");
+		Menuitem menuitemA5 = new Menuitem("Articulos Asignados a evaluar");
 		menuitemA1.setValue("Articulo/Listar Articulos.zul");
 		menuitemA2.setValue("Articulo/Evaluacion.zul");
 		menuitemA3.setValue("Articulo/Indexacion.zul");
 		menuitemA4.setValue("Articulo/Revision.zul");
+		menuitemA5.setValue("Articulo/Vista_Evaluador.zul");
 		menuitemA1.addEventListener("onClick", new MenuListener());
 		menuitemA2.addEventListener("onClick", new MenuListener());
 		menuitemA3.addEventListener("onClick", new MenuListener());
 		menuitemA4.addEventListener("onClick", new MenuListener());
+		menuitemA5.addEventListener("onClick", new MenuListener());
 		menupopupA.appendChild(menuitemA1);
-		//menupopupA.appendChild(menuitemA2);
+		// menupopupA.appendChild(menuitemA2);
 		menupopupA.appendChild(menuitemA3);
-		//menupopupA.appendChild(menuitemA4);
+		// menupopupA.appendChild(menuitemA4);
+		 menupopupA.appendChild(menuitemA5);
 		menuA.appendChild(menupopupA);
 		menubar_opciones.appendChild(menuA);
-		
+
 		Menu menuM = new Menu("Mantenimiento");
 		Menupopup menupopupM = new Menupopup();
 		Menuitem menuitemM1 = new Menuitem("Listar Areas ");
@@ -102,8 +107,10 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuitemM1.setValue("Mantenimiento/Areas/listaAreas.zul");
 		menuitemM2.setValue("Mantenimiento/Roles/listaRoles.zul");
 		menuitemM3.setValue("Mantenimiento/TipoArticulo/listaTipoArticulo.zul");
-		menuitemM4.setValue("Mantenimiento/ParametrosEvaluacion/listaParametrosEvaluacion.zul");
-		menuitemM5.setValue("Mantenimiento/RolesUsuario/listaRolesUsuarios.zul");
+		menuitemM4
+				.setValue("Mantenimiento/ParametrosEvaluacion/listaParametrosEvaluacion.zul");
+		menuitemM5
+				.setValue("Mantenimiento/RolesUsuario/listaRolesUsuarios.zul");
 		menuitemM6.setValue("Mantenimiento/Areas/listaAreasUsuarios.zul");
 		menuitemM1.addEventListener("onClick", new MenuListener());
 		menuitemM2.addEventListener("onClick", new MenuListener());
@@ -118,8 +125,8 @@ public class indexController extends GenericForwardComposer<Component> {
 		menupopupM.appendChild(menuitemM5);
 		menupopupM.appendChild(menuitemM6);
 		menuM.appendChild(menupopupM);
-		//menubar_opciones.appendChild(menuM);
-		
+		// menubar_opciones.appendChild(menuM);
+
 		Menu menuN = new Menu("Notificaciones");
 		Menupopup menupopupN = new Menupopup();
 		Menuitem menuitemN1 = new Menuitem("Enviar Notificaciones");
@@ -128,34 +135,32 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuitemN2.setValue("Notificaciones/listaNotificaciones.zul");
 		menuitemN1.addEventListener("onClick", new MenuListener());
 		menuitemN2.addEventListener("onClick", new MenuListener());
-		//menupopupN.appendChild(menuitemN1);
+		// menupopupN.appendChild(menuitemN1);
 		menupopupN.appendChild(menuitemN2);
 		menuN.appendChild(menupopupN);
 		menubar_opciones.appendChild(menuN);
-		
-		if (idtipousuario==1) {
+
+		if (idtipousuario == 1) {
+			menubar_opciones.appendChild(menuR);
 			menupopupA.appendChild(menuitemA4);
 			menupopupN.appendChild(menuitemN1);
-			menubar_opciones.appendChild(menuR);
-			menubar_opciones.appendChild(menuM);	
-		}else{
-			if(idtipousuario==2){
+			menubar_opciones.appendChild(menuM);
+		} else {
+			if (idtipousuario == 2) {
 				alert("Usuario con pocos Privilegios");
-			}else{
+			} else {
 				menupopupA.appendChild(menuitemA2);
 			}
-			
+
 		}
 	}
-	
 
 	@Wire
 	private Textbox textbox_User;
 	private Textbox textbox_Password;
 	Button button_Ingresar;
 	Button button_Cancelar;
-	
-	
+
 	class MenuListener implements EventListener {
 		// metodo que se ejecute cuando se produce el evento
 		@Override
@@ -174,5 +179,5 @@ public class indexController extends GenericForwardComposer<Component> {
 		}
 
 	}
-	
+
 }

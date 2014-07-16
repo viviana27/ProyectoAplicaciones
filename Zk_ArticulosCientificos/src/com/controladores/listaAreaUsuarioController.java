@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
@@ -33,7 +35,19 @@ public class listaAreaUsuarioController extends GenericForwardComposer<Component
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);	
-		actualizarLista();
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		if(u!=null){
+			if(u.getId_rol()==1){
+				actualizarLista();
+			}
+			else
+				
+					Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
+				
+		}
+		
+		
 	}
 
 

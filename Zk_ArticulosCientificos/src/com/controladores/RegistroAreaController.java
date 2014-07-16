@@ -1,5 +1,8 @@
 package com.controladores;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
@@ -9,6 +12,7 @@ import org.zkoss.zul.Window;
 
 import com.datos.DBAreas;
 import com.entidades.Areas;
+import com.entidades.Usuarios;
 
 public class RegistroAreaController extends GenericForwardComposer<Component>
 {
@@ -78,15 +82,29 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 
 	//se ejecuta el crear ventana
 		public void onCreate$WinRegistrarAreas(){
-			are=(Areas) WinRegistrarAreas.getAttribute("areas");
-			if(are!=null){		
-				textbox_area.setText(are.getArea_nombre());
-				textbox_descArea.setText(are.getArea_descripcion());
-				if (are.getArea_estado()==1){
-					//chkvista.isChecked();
-					check_estado.setChecked(true);
+			Session session = Sessions.getCurrent();
+			Usuarios u = (Usuarios) session.getAttribute("User");
+			if(u!=null){
+				if(u.getId_rol()==1){
+					are=(Areas) WinRegistrarAreas.getAttribute("areas");
+					if(are!=null){		
+						textbox_area.setText(are.getArea_nombre());
+						textbox_descArea.setText(are.getArea_descripcion());
+						if (are.getArea_estado()==1){
+							//chkvista.isChecked();
+							check_estado.setChecked(true);
+						}
+						
+					}					
+
+				}
+				else{
+					if(u.getId_rol()==2 || u.getId_rol()==3){
+						Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
+					}
+				}
 				}
 				
-			}					
-		}
+
+					}
 }

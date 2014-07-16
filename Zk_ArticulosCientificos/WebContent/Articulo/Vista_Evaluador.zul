@@ -1,6 +1,6 @@
-<?page title="Revision" contentType="text/html;charset=UTF-8"?>
+<?page title="Listado de Articulos Asignados" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="ASIGNAR ARTICULOS A PARES" border="normal" apply="com.controladores.ListaArticulosEvaluador">
+<window title="lISTADO DE ARTICULOS ASIGNADOS AL EVALUADOR" border="normal" apply="com.controladores.ListaArticulosEvaluador">
 <!-- iniciar sesion como administrador y se cargan todos los articulos enviados -->
 <listbox id="listaArticulosporpar" mold="paging" pageSize="4"
 			multiple="false" width="100%"

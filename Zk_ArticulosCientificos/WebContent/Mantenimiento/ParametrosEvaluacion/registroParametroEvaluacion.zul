@@ -27,6 +27,8 @@
 					<button label="Cancelar" id="button_Cancelar" image="Imagenes/delete.png" 
 				onClick="WinRegistrarParametros.detach()" />
 				</row>
+				<row><label value="Suma Total de Porcentaje: " /><label id="lbSumatotal" />
+				</row>
 			</rows>
 		</grid>
 	</window>

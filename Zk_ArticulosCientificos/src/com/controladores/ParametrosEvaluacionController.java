@@ -1,8 +1,10 @@
 package com.controladores;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Checkbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -12,12 +14,13 @@ import com.datos.DBParametrosEvaluacion;
 import com.entidades.ParametrosEvaluacion;
 
 public class ParametrosEvaluacionController extends GenericForwardComposer<Component>{
-	
+	private static final long serialVersionUID = 1L;
+	@Wire
 	private Textbox textbox_area,textbox_valor;
 	private Checkbox check_estado;
 	private Window WinRegistrarParametros;
 	private ParametrosEvaluacion param=null;
-	
+	Label lbSumatotal;
 	private int i=0,valor=0;
 	
 	public void onClick$button_Registrar(){
@@ -88,6 +91,21 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 				check_estado.setChecked(true);
 			}
 
+		}
+		
+		DBParametrosEvaluacion dbar = new DBParametrosEvaluacion();
+		lbSumatotal.setStyle("font-weight: bold; color:green;");
+		int resto=0;
+		lbSumatotal.setValue(dbar.TotalParametrosEvaluacion()+"");
+		resto=Integer.parseInt( lbSumatotal.getValue())-Integer.parseInt( textbox_valor.getValue());
+		lbSumatotal.setValue(resto+"");
+	}
+	public void onBlur$textbox_valor(){
+		int resto=0;
+		resto=100-Integer.parseInt(lbSumatotal.getValue());
+		if (resto<Integer.parseInt(textbox_valor.getValue())){
+			alert("la suma total de parametros no debe exeder al 100% del total ");
+			textbox_valor.setValue("");
 		}
 	}
 }

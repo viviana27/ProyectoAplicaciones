@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
@@ -39,7 +41,18 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
-		actualizarAreasLista();
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		if(u!=null){
+			if(u.getId_rol()==1){
+				actualizarAreasLista();
+			}
+			else
+				if(u.getId_rol()==2 || u.getId_rol()==3){
+					Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
+				}
+		}
+		
 	}
 
 	public void onClick$toolbarbutton_Nuevo() {
@@ -77,8 +90,6 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 		actualizarAreasLista();
 	}
 	
-	//eliminar un area
-
 	public void onClick$toolbarbutton_Eliminar() {
 	
 		boolean registros = false;
@@ -97,6 +108,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 			}
 			
 		});
+		if(confirmacion){
 		Areas a = listbox_areas.getSelectedItem().getValue();
 		DBAreas dba = new DBAreas ();
 		registros=dba.eliminarAreas(a);
@@ -104,6 +116,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 			alert("area eliminada correctamente");
 		}
 		actualizarAreasLista();
+		}
 	}
 	
 	public void onClick$button_buscar(){
@@ -123,8 +136,5 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 		listbox_areas.setModel(listModel);
 
 	}
-	
-	
-	
 	
 }

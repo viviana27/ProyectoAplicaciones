@@ -219,7 +219,7 @@ public List<Areas> buscarArea() {
 	con = dbm.getConection();
 	try {
 		sentencia = con.createStatement();
-		String sql = "Select * from tb_area as ar order by ar.area_nombre ASC";
+		String sql = "Select * from tb_area as ar  where ar.area_estado=1 order by ar.area_nombre ASC";
 		resultados = sentencia.executeQuery(sql);
 		while (resultados.next()) {
 			area = new Areas();

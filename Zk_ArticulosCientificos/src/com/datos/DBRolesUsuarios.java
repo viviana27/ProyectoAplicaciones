@@ -24,7 +24,7 @@ public class DBRolesUsuarios {
 			try {
 				sentencia = con.createStatement();
 				//String sql="Select * from tb_rol where rol_estado=1";
-				String sql="Select * from tb_rol";
+				String sql="Select * from tb_rol where rol_estado=1";
 				resultados=sentencia.executeQuery(sql);		
 				while(resultados.next()){
 					

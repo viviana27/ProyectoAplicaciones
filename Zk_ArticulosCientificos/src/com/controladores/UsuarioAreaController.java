@@ -3,6 +3,9 @@ package com.controladores;
 import java.util.List;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
@@ -107,7 +110,11 @@ public class UsuarioAreaController extends GenericForwardComposer<Component> {
 	}
 	
 public void onCreate$winNuevoUsuarioArea() {
+	Session session = Sessions.getCurrent();
+	Usuarios us = (Usuarios) session.getAttribute("User");
+	if(us!=null){
 		
+	if(us.getId_rol()==1){
 		u = (UsuarioArea) winNuevoUsuarioArea.getAttribute("usuario");
 		if (u != null) {
 			textbox_Pnombre.setText(u.getPersonaarea().getPer_nombre());
@@ -119,5 +126,14 @@ public void onCreate$winNuevoUsuarioArea() {
 			lblidarea.setValue(id);
 		}
 	}
+	else
+	{
+		if(us.getId_rol()==2|| us.getId_rol()==3){
+			Executions.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
+		}
+	}
 	
-}
+	}
+	}
+	
+	}

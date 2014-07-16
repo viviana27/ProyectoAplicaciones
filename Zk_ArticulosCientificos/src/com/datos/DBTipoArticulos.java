@@ -61,7 +61,7 @@ public class DBTipoArticulos {
 		con = dbm.getConection();
 		try {
 			sentencia = con.createStatement();
-			String sql = "Select * from tb_tipo_articulo";
+			String sql = "Select * from tb_tipo_articulo as t where t.tipo_estado=1 order by t.tipo_nombre ASC";
 			resultados = sentencia.executeQuery(sql);
 			while (resultados.next()) {
 				tipo = new TipoArticulos();
@@ -184,7 +184,7 @@ public class DBTipoArticulos {
 		Connection con = dbm.getConection();
 		try {
 			con.setAutoCommit(false);
-			String sql = "UPDATE tb_tipo_articulo SET tipo_estado=? WHERE tipo_id=?";
+			String sql = "UPDATE tb_tipo_articulo SET tipo_estado=? WHERE tipo_id=? ";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, 0);
 			pstm.setInt(2, tipo.getTipo_id());

@@ -1,60 +1,91 @@
 <?page title="Articulos" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Articulos" border="normal" position="center,top">
-
-<listbox id="listaTareas" mold="paging" pageSize="4"
-			multiple="false" width="500"
+	<window title="LISTADO DE ARTÍCULOS CIENTÍFICOS" border="normal"
+		position="center,top"
+		apply="com.controladores.ListaArticulosController">
+		<div id="estado" align="center">
+			<label style="font-weight: bold; color:red;">
+				Listar según estado:
+			</label>
+			<combobox id="cmb_estados" autodrop="true"
+						width="30%">
+						<template name="model">
+							<comboitem label="${each.estado_descripcion}"
+								value="${each}" />
+						</template>
+					</combobox>
+			<separator></separator>
+			<label style="color:green;">
+				Para ver detalle de un artículo, seleccione con un click
+				sobre la lista
+			</label>
+		</div>
+		<listbox id="listaTareas" mold="paging" pageSize="4"
+			multiple="false" width="100%"
 			emptyMessage="No personasfound in the result">
 
-			<auxhead sclass="category-center">
-				<auxheader label="Busqueda: " colspan="5" rowspan="1" />
+			<auxhead left="true" sclass="category-center">
+				<auxheader label="Búsqueda de artículos por:"
+					rowspan="2" />
 			</auxhead>
 
 			<auxhead sclass="category-center">
-				<auxheader colspan="1" rowspan="1">
-					<label>Titulo:</label>
+				<auxheader rowspan="1">
+					<label>Título:</label>
 					<textbox id="txtProyecto"></textbox>
 					<button id="idfiltroTitulo"
 						image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
-				<auxheader colspan="1" rowspan="1">
+				<auxheader rowspan="1">
 					<label>Autor:</label>
 					<textbox id="txtautor"></textbox>
 					<button id="idfiltroautor"
 						image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
-				<auxheader colspan="1" rowspan="1">
-					<label>Tipo de Artículo:</label>
+				<auxheader rowspan="1">
+					<label>Tipo Art.:</label>
 					<textbox id="txttipo"></textbox>
-					<button id="idtipo"
-						image="Imagenes/searchs.png">
+					<button id="idtipo" image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
-				
-				<auxheader colspan="3" rowspan="1">
+
+				<auxheader rowspan="1">
 					<label>Área</label>
-					<datebox id="txtarea" />
-					<button id="idarea"
-						image="Imagenes/searchs.png">
+					<textbox id="txtarea" />
+					<button id="idarea" image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
 
 
 			</auxhead>
-			<auxhead sclass="category-center">
-				<auxheader label="Listado de Articulos " colspan="5"
-					rowspan="1" />
-			</auxhead>
+			<!--  <auxhead sclass="category-center" >
+				<auxheader label="Listado de Articulos "
+				/>
+				</auxhead>-->
 
-			<listhead sizable="true" menupopup="auto">
-				<listheader label=" " sort="auto" />
-				<listheader label="Titulo"/>
-				<listheader label="Autor"/>
-				<listheader label="Volumen"/>
-				<listheader label="Responsables" />
+			<listhead sizable="false" menupopup="auto">
+				<listheader label="Título" sort="auto(art_titulo)" />
+				<listheader label="Autor" sort="auto(per_nombre)" />
+				<listheader label="Co-Autores"
+					sort="auto(nom_colaborador)" />
+				<listheader label="Tipo de Articulo"
+					sort="auto(tipo_nombre)" />
+				<listheader label="Área del Artículo"
+					sort="auto(area_nombre)" />
+			
 			</listhead>
-</listbox>
-</window>
+			<template name="model">
+				<listitem value="${each}">
+					<listcell label="${each.art_titulo}" />
+					<listcell
+						label="${each.per_nombre} ${each.per_apellido}" />
+					<listcell label="${each.nom_colaborador} " />
+					<listcell label="${each.tipo_nombre}" />
+					<listcell label="${each.area_nombre}" />
+				</listitem>
+			</template>
+		</listbox>
+	</window>
 </zk>
