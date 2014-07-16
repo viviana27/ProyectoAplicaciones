@@ -83,9 +83,10 @@ public class articuloController extends GenericForwardComposer<Component> {
 
 	// simply download the file
 	@Command
-	public void downloadFile() {
+	public void downloadFile(Media media) {
 		if (media != null)
 			Filedownload.save(media);
+		alert("descarga exitosa");
 	}
 
 	public void doAfterCompose(Component comp) throws Exception {
@@ -228,6 +229,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 		direccion = u.ruta + "/" + NombreArchi;
 		nom= NombreArchi;
 		System.out.println(direccion);
+		System.out.println(nom);
 	}
 
 	public void onSelect$cmb_tipo() {

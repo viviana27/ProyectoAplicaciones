@@ -1,7 +1,14 @@
 package com.controladores;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -28,6 +35,8 @@ import com.SubirDescargarArchivos.Util;
 import com.datos.DBArticulos;
 import com.entidades.Articulo;
 import com.entidades.Usuarios;
+import com.lowagie.text.Document;
+
 
 public class ListaArticulosAsignados extends GenericForwardComposer<Component>{
 	Textbox txtProyecto;
@@ -36,10 +45,11 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component>{
 	Button idarea;
 	Listbox listaArticulosporpar;
 	Toolbarbutton toolbarbutton_Editar;
-	Button button_descargar;
+	Button button_descarga;
 	String NombreArchi, direccion;
 	Label nombreArticulo;
 	public Media media;
+	File f;
 	@NotifyChange("media")
 	@Command
 	public void doAfterCompose(Component comp) throws Exception {
@@ -103,63 +113,40 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component>{
 		win.setAttribute("articulo", u);
 	}
 	
-	public void onUpload$button_descargar(
-			@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event) {
-		System.out.println("llego al boton");
-		media = event.getMedia();
-		String extension = media.getFormat();
-		if (extension.equals("docx")) {
-			NombreArchi = media.getName();
-			nombreArticulo.setValue(NombreArchi);
-		} else {
-			alert("Debe subir un archivo de Word, este tiene una extensión :"
-					+ extension);
-			NombreArchi = "";
-			nombreArticulo.setValue("");
-		}
-	}
 
-	
-	public Media getMedia() {
-		return media;
-	}
+
 
 	// simply download the file
 	@Command
-	public void downloadFile() {
-		String extension = media.getFormat();
-		if (media != null)
-			Filedownload.save(media);
-		
-		
+	public void onClick$button_descarga() {
+		Articulo art = (Articulo) listaArticulosporpar.getSelectedItem().getValue();
+	//	nombreArticulo.setVisible(true);
+		nombreArticulo.setValue(art.getArt_archivo());
+		f= new File(nombreArticulo.getValue());
+		System.out.println("nombre completo"+ nombreArticulo.getValue());
+			try {
+				Filedownload.save(f,null);
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		alert("descarga exitosa");
 	}
 	
-	public void obtenerRutaArchivoAdjuntado() {
-		Util u = new Util();
-		direccion = u.ruta + "/" + NombreArchi;
-		System.out.println(direccion);
-	}
-	
-	public void onClick$button_descargar(){
-		//Directorio destino para las descargas
-		String folder = "descargas/";
-	//Crea el directorio de destino en caso de que no exista
-		File dir = new File(folder);
-		if (!dir.exists())
-		  if (!dir.mkdir())
-		    return; // no se pudo crear la carpeta de destino
-	}
+
 	
 	
+
+
+ 
 	
 	public void onSelect$listaArticulosporpar() {
 		Articulo art = (Articulo) listaArticulosporpar.getSelectedItem().getValue();
-		button_descargar.setVisible(true);
-		nombreArticulo.setVisible(true);
+		//nombreArticulo.setVisible(true);
+		button_descarga.setVisible(true);
+		String ruta;
 		nombreArticulo.setValue(art.getArt_archivo());
-		System.out.println(art.getArt_archivo()+"archivoseleccionado");
-		
-		
 	
 	}
 

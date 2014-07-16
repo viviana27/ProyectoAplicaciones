@@ -465,7 +465,8 @@ public class DBArticulos {
 		if (usua != null) {
 			if (usua.getId_rol() == 1) {
 				if (titulo.equals("") && area.equals("") ) {
-					sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo, a.area_nombre, " +
+					sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo, " +
+							" a.area_nombre, " +
 							"a.area_id, p.per_nombre, p.per_apellido " +
 							"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 							"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
@@ -475,7 +476,8 @@ public class DBArticulos {
 
 					System.out.println("sentencia por rol administrador" + sql);
 				} else {
-					sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo, a.area_nombre, " +
+					sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo," +
+							" a.area_nombre, " +
 							"a.area_id, p.per_nombre, p.per_apellido " +
 							"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 							"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
@@ -531,7 +533,8 @@ public class DBArticulos {
 			}
 			if (usua.getId_rol() == 3) {
 					if (titulo.equals("")  && area.equals("")) {
-						sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, a.area_nombre, " +
+						sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, " +
+								" a.area_nombre, " +
 								"a.area_id, p.per_id,p.per_nombre, p.per_apellido " +
 								"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 								"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
@@ -542,7 +545,8 @@ public class DBArticulos {
 
 						System.out.println("ddff" + sql);
 							} else {
-								sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, a.area_nombre, " +
+								sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo," +
+										" a.area_nombre, " +
 										"a.area_id, p.per_nombre, p.per_apellido " +
 										"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 										"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
@@ -579,7 +583,7 @@ public class DBArticulos {
 							articulo.setPer_nombre(resultados.getString("per_nombre"));
 							articulo.setPer_apellido(resultados.getString("per_apellido"));
 							articulo.setArt_archivo(resultados.getString("art_archivo"));
-							System.out.println(articulo.getArt_archivo()+"  archivo");
+							System.out.println(articulo.getArt_archivo()+"  ruta");
 							lista.add(articulo);
 						}
 						con.close();

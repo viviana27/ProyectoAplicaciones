@@ -55,13 +55,11 @@
 			</template>
 </listbox>
            <label style="font-weight: bold; color:blue;"
-				value="Seleccione el artículo a descargar:">
+				value="Seleccione el artículo a descargar y clic en el botón:">
 			</label>
-					<button label="Descargar articulo" id="button_descargar" visible="false"					
-							upload="true,maxsize=8192"
-							onUpload="@command('uploadFile',upload=event)" 
-							autodisable="self" />
-			<label id="nombreArticulo" value="Archivo.doc" visible="false"/>
+			<button  label="Descargar archivo"  mold="trendy" id="button_descarga" 
+			onClick="@command('downloadFile')" visible="false" />
+		    <label id="nombreArticulo" value="Archivo.docx" visible="false"/>
 
 </window>
 </zk>

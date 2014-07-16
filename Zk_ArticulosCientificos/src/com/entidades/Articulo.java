@@ -5,7 +5,6 @@ import java.util.Date;
 public class Articulo {
 	private int art_id;
 	private String art_titulo;
-	private String nomb;
 	private String art_archivo;
 	private String art_resumen;
 	private String art_palabras_clave;
@@ -190,13 +189,8 @@ public class Articulo {
 		this.nom_colaborador = nom_colaborador;
 	}
 
-	public String getNomb() {
-		return nomb;
-	}
 
-	public void setNomb(String nomb) {
-		this.nomb = nomb;
-	}
+	
 	
 	
 
