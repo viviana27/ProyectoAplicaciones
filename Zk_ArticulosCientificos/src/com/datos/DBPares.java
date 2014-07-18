@@ -21,7 +21,7 @@ public class DBPares {
 		Connection con = dbm.getConection();
 		try {
 			con.setAutoCommit(false);
-			String sql="INSERT INTO tb_pares (articulos_id, personas_id, id_esta, par_cantidad, par_estado )" +
+			String sql="INSERT INTO tb_pares (articulos_id, personas_id, id_estado, par_cantidad, par_estado )" +
 					" VAlUES (?,?,?,?,?)";
 			PreparedStatement pstm = con.prepareStatement(sql,
 					Statement.RETURN_GENERATED_KEYS);
@@ -145,4 +145,32 @@ public class DBPares {
 		return resultado;
 		
 	}
+	public int contarRegistros(int id)
+	{
+		int a=0;
+		DBManager dbm = new DBManager();
+		Connection con= dbm.getConection();
+	//contar
+	Statement sentencia = null;
+	ResultSet resultado = null;
+	String sql1 ="select count(*)as contar from tb_pares " +
+			"where tb_pares.articulos_id="+id;
+	try {
+		sentencia = con.createStatement();
+		resultado = sentencia.executeQuery(sql1);
+		System.out.println("codigonuevoooooo"+resultado);
+		while (resultado.next()) {
+			a=resultado.getInt("contar");
+		}
+		//fin del contar
+		
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println(a);
+	return a;
+	}
+
 }

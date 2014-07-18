@@ -587,5 +587,50 @@ public class DBUsuario {
 		
 		return lista;
 	}
+	public List<Pares> buscarPar(int area, int idarticulo, int idpersona){
+		List<Pares> listanueva = new ArrayList<Pares>();
+		Statement sentencia = null;
+		// objeto para resultados
+		ResultSet resultados = null;
+		Pares pares = null;
+		
+		// obtener la conexion a la base
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		try {
+			
+			sentencia = con.createStatement();
+			//String sql="Select * from tb_rol where rol_estado=1";
+			String 	sql = "Select p.per_id, p.per_nombre, p.per_apellido from tb_persona as p, " +
+					"tb_usuario as u, tb_persona_area as pa, tb_pares as par where p.per_id=u.persona_id " +
+					"and u.rol_id_usuario=3 and pa.area_id= '"+area+"' and pa.per_id=u.persona_id and " +
+					"(par.personas_id <> p.per_id and par.articulos_id='"+idarticulo+"')";
+			
+		System.out.println("el sql con evaluador proximo a buscar "+ sql);
+			resultados=sentencia.executeQuery(sql);		
+			if(resultados.next()){
+				pares = new Pares();
+				pares.setPersonas_id(resultados.getInt("per_id"));
+				System.out.println("id persona"+ resultados.getInt("per_id"));
+				pares.setPer_nombre(resultados.getString("per_nombre"));
+				pares.setPer_apellido(resultados.getString("per_apellido"));
+				// agrego usuario con datos cargados desde la base a mi lista de
+				// usuarios
+				listanueva.add(pares);
+			
+			
+			}else{
+				listanueva=null;
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listanueva;
+		
+	}
 
 }

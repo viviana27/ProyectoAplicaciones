@@ -28,6 +28,7 @@ public class AsignarEvaluadorController extends GenericForwardComposer<Component
 	//se ejecuta al crear la ventana
 	// registrar un nuevo evaluador
 	private static final long serialVersionUID = 1L;
+	int regcontar;
 	@Wire
 	
 	private Window winNuevoEvaluador;
@@ -69,6 +70,7 @@ public class AsignarEvaluadorController extends GenericForwardComposer<Component
 				ea.setId_estado(2);
 				ea.setId_persona(idpersonaart);
 				result1 = dbusuarios.RegistrarEstadoArticulo(ea);
+				regcontar=dbusuarios.contarRegistros(idarticulo);
 
 }
 		
@@ -97,14 +99,26 @@ if (result && result1) {
 
 }
 	public void onSelect$cmb_evaluador() {
+		DBPares dbusuarios = new DBPares();	
+		DBUsuario dbu=new DBUsuario();
 		Pares pares = (Pares) cmb_evaluador.getSelectedItem().getValue();
-		if (pares != null) {
-			idpersona= pares.getPersonas_id();
-	
+		
+		int regcontar2=dbusuarios.contarRegistros(idarticulo);
+		
+		if(regcontar2==2){
+			alert("No se permite el ingreso de un nuevo evaluador");
 		}
+		else{
+			if (pares != null) {
+				idpersona = pares.getPersonas_id();
+			}
+		
+		}
+		
 	}
 	
 	public void onCreate$winNuevoEvaluador(){
+		DBPares dbusuarios = new DBPares();	
 		DBUsuario dbr = new DBUsuario();
 		Session sesion=Sessions.getCurrent();
 		Usuarios u=(Usuarios)sesion.getAttribute("User");
@@ -119,10 +133,33 @@ if (result && result1) {
 					idpersonaart=u.getId();
 					System.out.println("id persona que registra:"+idpersonaart);
 					List<Pares> lista = dbr.buscarEvaluador(idarea);
+					List<Pares> listanueva = dbr.buscarPar(idarea, idarticulo, idpersona);
+					int regcontar1=dbusuarios.contarRegistros(idarticulo);
+					if(regcontar1==2){
+						button_Registrar.setVisible(false);
+						//alert("No se permite el ingreso de un nuevo evaluador");
+					}
+					if(listanueva==null){
+						System.out.println("el de lista nueva es null");
+					}
+					else
+					{
+						System.out.println("el de lista nueva no es nullllllll");
+					}
 					if (lista != null) {
-						ListModelList<Pares> listModel = new ListModelList<Pares>(
-								lista);
-						cmb_evaluador.setModel(listModel);
+						if(listanueva==null){
+							System.out.println("es nullo en condicion");
+							ListModelList<Pares> listModel = new ListModelList<Pares>(
+									lista);
+							cmb_evaluador.setModel(listModel);	
+						}
+					else{
+							ListModelList<Pares> listModel = new ListModelList<Pares>(
+									listanueva);
+							cmb_evaluador.setModel(listModel);	
+						}
+							
+						
 					}
 	}
 				}
