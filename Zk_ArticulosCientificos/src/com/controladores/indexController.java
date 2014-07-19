@@ -159,7 +159,9 @@ public class indexController extends GenericForwardComposer<Component> {
 			//} else {
 			
 				menupopupA.appendChild(menuitemA2);
-				menupopupA.appendChild(menuitemA5);
+				if(dbp.ConsultarPermisos(idtipousuario, 5)){
+				menupopupA.appendChild(menuitemA5); }
+				
 			//}
 
 		//}
