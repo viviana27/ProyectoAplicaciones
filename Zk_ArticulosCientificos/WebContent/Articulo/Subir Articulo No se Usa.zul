@@ -1,0 +1,37 @@
+<?page title="Enviar" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Enviar" border="normal" width="80%">
+
+		<grid width="100%">
+			<rows>
+			
+				<row>
+				<checkbox id="idparam1" value="" />
+				<label value="El articulo a enviar no ha sido publicado previamente." />
+				</row>
+				<row>
+				<checkbox id="idparam2" value="" />
+					<label value="El tema del articulo no es copia de ningun otro" />
+				</row>
+				<row>
+				<checkbox id="idparam3" value="" />
+					<label value="El documento tiene contendi original, producto de su investigacion." />
+				</row>
+				<row>
+				<checkbox id="idparam4" value="" />
+					<label value="El archivo enviado esta en formato pdf"/>
+				</row>
+						
+				<row>
+				<label value="Las politicas y privacidad de esta revista consta de la exclusividad de uso de su informacion personal solo con 
+				fines declarados por la revista cientifica tecnologica de la UPSE"/>
+				<button label="Guardar y Continuar" id="button_Registrar"
+						image="iconos/save.png">
+					</button>
+				</row>	
+			</rows>
+				
+		</grid>
+
+</window>
+</zk>

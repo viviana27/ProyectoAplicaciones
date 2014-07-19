@@ -35,8 +35,8 @@
 				</auxheader>
 			
 			</auxhead>
-			<auxhead sclass="category-center">
-				<auxheader label="Listado de Articulos por evaluadores "
+			<auxhead sclass="category-center" >
+				<auxheader colspan="3" label="Listado de Articulos por evaluadores "
 					 />
 			</auxhead>
 

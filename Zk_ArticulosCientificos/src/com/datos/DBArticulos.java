@@ -472,7 +472,7 @@ public class DBArticulos {
 							"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
 							"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
 							"WHERE ar.art_estado =1 " +
-							"ORDER BY  p.per_nombre";
+							"ORDER BY  p.per_nombre ";
 
 					System.out.println("sentencia por rol administrador" + sql);
 				} else {
