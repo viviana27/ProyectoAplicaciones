@@ -27,7 +27,7 @@ public class DBParametrosEvaluacion {
 			
 			pstm.setString(1, param.getParam_descripcion());
 			pstm.setInt(2, param.getParam_valor());
-			pstm.setInt(3, 1);
+			pstm.setInt(3, param.getParam_estado());
 			
 			//ejecutar el Preparedsatatement
 			int filas_afectadas=pstm.executeUpdate();

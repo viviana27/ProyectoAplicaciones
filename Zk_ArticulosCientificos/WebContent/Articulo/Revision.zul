@@ -8,8 +8,8 @@
 
 			<auxhead left= "true" sclass="category-center">
 				<auxheader label="Búsqueda de artículos por:" rowspan="1"/>
+	
 			</auxhead>
-
 			<auxhead sclass="category-center">
 				<auxheader  rowspan="1">
 					<label>Título:</label>
@@ -31,8 +31,10 @@
 				<toolbarbutton  image="Imagenes/editar.png"
 					id="toolbarbutton_Editar" label="Asignar Evaluador" />
 			      </toolbar>
+			      
 		        </div>
 				</auxheader>
+				
 			
 			</auxhead>
 			<auxhead sclass="category-center">
