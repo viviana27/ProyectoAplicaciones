@@ -1,5 +1,6 @@
 package com.datos;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -288,7 +289,7 @@ public class DBArticulos {
 				try {
 					sentencia = con.createStatement();
 					resultados = sentencia.executeQuery(sql);
-					System.out.println("LLega al codigo =)" + resultados);
+										System.out.println("LLega al codigo =)" + resultados);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -313,6 +314,7 @@ public class DBArticulos {
 								.getString("tipo_nombre"));
 						articulo.setNom_colaborador(resultados
 								.getString("autor"));
+						//articulo.setNom_colaborador1(resultados.getString("coautor"));
 						articulo.setArt_resumen(resultados
 								.getString("art_resumen"));
 						articulo.setArt_palabras_clave(resultados
@@ -444,6 +446,8 @@ public class DBArticulos {
 
 		return lista;
 	}
+
+	
 	
 	public List<Articulo> buscarArticuloEvaluador(String titulo, String area) {
 		int idUsuario=0;
