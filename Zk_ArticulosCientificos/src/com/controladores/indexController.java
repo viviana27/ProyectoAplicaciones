@@ -86,8 +86,9 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuitemA3.addEventListener("onClick", new MenuListener());
 		menuitemA4.addEventListener("onClick", new MenuListener());
 		menuitemA5.addEventListener("onClick", new MenuListener());
-		if(dbp.ConsultarPermisos(idtipousuario, 1)){
-		menupopupA.appendChild(menuitemA1);}
+		
+		//if(dbp.ConsultarPermisos(idtipousuario, 1)){
+		menupopupA.appendChild(menuitemA1);
 		// menupopupA.appendChild(menuitemA2);
 		if(dbp.ConsultarPermisos(idtipousuario, 2)){
 		menupopupA.appendChild(menuitemA3);}
