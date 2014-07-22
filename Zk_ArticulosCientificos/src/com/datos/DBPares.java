@@ -21,7 +21,7 @@ public class DBPares {
 		Connection con = dbm.getConection();
 		try {
 			con.setAutoCommit(false);
-			String sql="INSERT INTO tb_pares (articulos_id, personas_id, id_estado, par_cantidad, par_estado )" +
+			String sql="INSERT INTO tb_pares (articulos_id, personas_id, id_esta, par_cantidad, par_estado )" +
 					" VAlUES (?,?,?,?,?)";
 			PreparedStatement pstm = con.prepareStatement(sql,
 					Statement.RETURN_GENERATED_KEYS);

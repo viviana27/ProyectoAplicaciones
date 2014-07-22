@@ -4,7 +4,7 @@
 		position="center,top"
 		apply="com.controladores.ListaArticulosController">
 		<div id="estado" align="center">
-			<label style="font-weight: bold; color:red;">
+			<label style="font-weight: bold; color:blue;">
 				Listar según estado:
 			</label>
 			<combobox id="cmb_estados" autodrop="true"
