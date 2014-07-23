@@ -2,7 +2,7 @@ package com.entidades;
 
 public class ParametrosArticulo {
 	private int param_art_id;
-	private int param_art_valor;
+	private double param_art_valor;
 	private int param_id;
 	private int person_id;
 	private int articul_id;
@@ -11,7 +11,7 @@ public class ParametrosArticulo {
 		super();
 	}
 
-	public ParametrosArticulo(int param_art_id, int param_art_valor,
+	public ParametrosArticulo(int param_art_id, double param_art_valor,
 			int param_id, int person_id, int articul_id) {
 		super();
 		this.param_art_id = param_art_id;
@@ -29,11 +29,11 @@ public class ParametrosArticulo {
 		this.param_art_id = param_art_id;
 	}
 
-	public int getParam_art_valor() {
+	public double getParam_art_valor() {
 		return param_art_valor;
 	}
 
-	public void setParam_art_valor(int param_art_valor) {
+	public void setParam_art_valor(double param_art_valor) {
 		this.param_art_valor = param_art_valor;
 	}
 

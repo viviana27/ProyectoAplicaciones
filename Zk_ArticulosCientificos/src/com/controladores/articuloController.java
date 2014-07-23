@@ -197,6 +197,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 					ObtenerIdArticuloRegistrado(direccion);
 					ea.setId_articulo(idArticuloSubido);
 					ea.setId_estado(1);
+					ea.setId_utl_estado(1);
 					ea.setId_persona(idUsuario);
 					result3 = dbart.RegistrarEstadoArticulo(ea);
 				} else {

@@ -592,7 +592,8 @@ public class DBUsuario {
 		Statement sentencia = null;
 		// objeto para resultados
 		ResultSet resultados = null;
-		Pares pares = null;
+		Pares pares=null;
+		pares = new Pares();;
 		
 		// obtener la conexion a la base
 		DBManager dbm = new DBManager();
@@ -609,7 +610,7 @@ public class DBUsuario {
 		System.out.println("el sql con evaluador proximo a buscar "+ sql);
 			resultados=sentencia.executeQuery(sql);		
 			if(resultados.next()){
-				pares = new Pares();
+				
 				pares.setPersonas_id(resultados.getInt("per_id"));
 				System.out.println("id persona"+ resultados.getInt("per_id"));
 				pares.setPer_nombre(resultados.getString("per_nombre"));

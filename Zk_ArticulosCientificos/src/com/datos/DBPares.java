@@ -69,14 +69,15 @@ public class DBPares {
 		Connection con = dbm.getConection();
 		try {
 			con.setAutoCommit(false);
-			String sql = "INSERT INTO tb_estado_articulo " + " (id_articulo,"
-					+ " id_estado," + " id_persona, "
-					+ " fecha) VAlUES (?,?,?,CURRENT_DATE)";
+			String sql = "INSERT INTO tb_estado_articulo (id_articulo,"
+					+ " id_estado, id_ult_estado, id_persona, "
+					+ " fecha) VAlUES (?,?,?,?,CURRENT_DATE)";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm = con.prepareStatement(sql);
 			pstm.setInt(1, estArt.getId_articulo());
 			pstm.setInt(2, estArt.getId_estado());
-			pstm.setInt(3, estArt.getId_persona());
+			pstm.setInt(3, estArt.getId_utl_estado());
+			pstm.setInt(4, estArt.getId_persona());
 			int filas_afectadas = pstm.executeUpdate();
 			con.commit();
 			resultado = true;

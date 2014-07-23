@@ -106,7 +106,7 @@ public class Permisos extends GenericForwardComposer<Component> {
 	}
 
 	public void presentarLista() {
-		for (int i = 0; i <= listModel.size() - 2; i++) {
+		for (int i = 0; i <= listModel.size() - 1; i++) {
 
 			Listitem item = (Listitem) listbox_Permisos.getItems().get(i);
 			List<Component> listaceldas = item.getChildren();

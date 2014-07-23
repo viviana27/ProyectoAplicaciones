@@ -14,6 +14,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import com.datos.DBArticulos;
 import com.datos.DBPares;
 import com.datos.DBUsuario;
 import com.entidades.Areas;
@@ -35,7 +36,7 @@ public class AsignarEvaluadorController extends GenericForwardComposer<Component
 	private Textbox textbox_Titulo,textbox_area;
 	private Button button_Registrar;
 	int idarea;
-	private Label lblidpersona;
+	private Label lblidpersona,idestado;
 	private Pares par = null;
 	private Articulo art=null;
 	private Combobox cmb_evaluador;
@@ -43,11 +44,13 @@ public class AsignarEvaluadorController extends GenericForwardComposer<Component
 	int idpersona=0;
 	int idpersonaart=0;
 	int num_pares=0;
+	int idare=0;
 	
 	public void onClick$button_Registrar() throws Exception {
 		boolean result = false;
 		boolean result1 = false;
-	
+		boolean result2=false;
+		DBArticulos dba = new DBArticulos();
 		EstadoArticulo ea=new EstadoArticulo();
 		DBPares dbusuarios = new DBPares();	
 		System.out.println("idArticulonuevo:"+idarticulo);
@@ -66,11 +69,29 @@ public class AsignarEvaluadorController extends GenericForwardComposer<Component
 			} else {
 				Pares par= new Pares(0,idarticulo,idpersona,2,2,1 );
 				result = dbusuarios.InsertarPar(par);
+				regcontar=dbusuarios.contarRegistros(idarticulo);
+				String opcion = (String) winNuevoEvaluador.getAttribute("opcion");
+				if (opcion != null && opcion.equals("Revision")) {
+					// entonces la ventana ufe llamada desde lista usuarios
+					// cerrar ventana
+
+					// actualizar la lista de usuarios
+					ListaArticulosEvaluador luc = (ListaArticulosEvaluador) winNuevoEvaluador
+							.getAttribute("controladorOrigen");
+					if (luc != null)
+						luc.actualizarLista();
+					// luc.actualizarLista();
+					winNuevoEvaluador.detach();
+
+				}
+
+				if(regcontar==2){
 				ea.setId_articulo(idarticulo);
 				ea.setId_estado(2);
+				ea.setId_utl_estado(1);
 				ea.setId_persona(idpersonaart);
 				result1 = dbusuarios.RegistrarEstadoArticulo(ea);
-				regcontar=dbusuarios.contarRegistros(idarticulo);
+				}
 
 }
 		
@@ -93,9 +114,19 @@ if (result && result1) {
 	}
 	
 } else {
-	alert("No se pudo realizar el registro");
+	alert("Asignacion correcta... Asigne el siguiente evaluador");
 }
-
+				/*    List<EstadoArticulo> listaestado = dba.buscarestados(idarticulo);
+					String id = null;
+			        id = Integer.toString(listaestado.get(0).getId_utl_estado());
+			        System.out.print("hola" + id);
+			        idestado.setValue(id);
+					System.out.println("resultado ultimo estadoooooo:"+id);
+					EstadoArticulo estad=new EstadoArticulo();
+					estad.setId_utl_estado(Integer.parseInt(id));
+					result2=dba.Actualizr_estadoar(estad);
+					System.out.println("resultado ultimo estado:"+estad.getId_utl_estado());
+*/
 
 }
 	public void onSelect$cmb_evaluador() {
@@ -120,6 +151,7 @@ if (result && result1) {
 	public void onCreate$winNuevoEvaluador(){
 		DBPares dbusuarios = new DBPares();	
 		DBUsuario dbr = new DBUsuario();
+		DBArticulos dba = new DBArticulos();
 		Session sesion=Sessions.getCurrent();
 		Usuarios u=(Usuarios)sesion.getAttribute("User");
 		if(u!=null){
@@ -161,7 +193,8 @@ if (result && result1) {
 							
 						
 					}
-	}
+					
+					}
 				}
 						
 		}

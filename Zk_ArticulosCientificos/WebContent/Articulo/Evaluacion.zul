@@ -31,7 +31,7 @@
 					<listcell label="${each.param_descripcion}" />
 					<listcell label="${each.param_valor}" />
 					<listcell sclass="textColumn">
-						<doublebox value="5" />
+					
 					</listcell>
 				</listitem>
 			</template>
@@ -44,7 +44,7 @@
 				<listfooter align="center">
 					<label
 						style="font-size: 20px; font-weight: bold;	color:black;"
-						id="caliFinal" value="45" />
+						id="caliFinal" />
 					<separator></separator>
 					<button label="Observaciones" id="button_Obs"
 						image="Imagenes/folder.png" upload="true,maxsize=8192"
@@ -54,9 +54,10 @@
 			</listfoot>
 		</listbox>
 		<div id="boton" align="center">
-			<button label="Registrar" id="button_Registrar"
+			<button label="Registrar" id="button_Registrar12"
 				image="Imagenes/save.png">
 			</button>
 		</div>
+		
 	</window>
 </zk>

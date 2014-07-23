@@ -11,6 +11,7 @@ public class Articulo {
 	private Date art_fecha_subida;
 	private int art_estado;
 	private String nom_colaborador;
+	private String nom_colaborador1;
 	private int tipo_id;
 	private String tipo_nombre;
 	private int id_area;
@@ -45,6 +46,15 @@ public class Articulo {
 	}
 
 	
+	
+	public String getNom_colaborador1() {
+		return nom_colaborador1;
+	}
+
+	public void setNom_colaborador1(String nom_colaborador1) {
+		this.nom_colaborador1 = nom_colaborador1;
+	}
+
 	public String getPer_institucion1() {
 		return per_institucion1;
 	}
