@@ -11,6 +11,7 @@ public class Articulo {
 	private Date art_fecha_subida;
 	private int art_estado;
 	private String nom_colaborador;
+	private String nom_colaborador2;
 	private int tipo_id;
 	private String tipo_nombre;
 	private int id_area;
@@ -67,6 +68,14 @@ public class Articulo {
 
 	public void setArt_id(int art_id) {
 		this.art_id = art_id;
+	}
+
+	public String getNom_colaborador2() {
+		return nom_colaborador2;
+	}
+
+	public void setNom_colaborador2(String nom_colaborador2) {
+		this.nom_colaborador2 = nom_colaborador2;
 	}
 
 	public String getArt_titulo() {

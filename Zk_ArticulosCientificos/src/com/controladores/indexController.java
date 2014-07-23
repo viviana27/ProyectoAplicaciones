@@ -72,28 +72,32 @@ public class indexController extends GenericForwardComposer<Component> {
 		Menu menuA = new Menu("Articulos ....");
 		Menupopup menupopupA = new Menupopup();
 		Menuitem menuitemA1 = new Menuitem("Listar Articulos");
-		//Menuitem menuitemA2 = new Menuitem("Evaluar Articulo");
+		Menuitem menuitemA2 = new Menuitem("Evaluar Articulo");
 		Menuitem menuitemA3 = new Menuitem("Subir Nuevo Articulo");
 		Menuitem menuitemA4 = new Menuitem("Asignar Evaluadores a un Articulo");
 		Menuitem menuitemA5 = new Menuitem("Articulos Asignados a evaluar");
+		Menuitem menuitemA6 = new Menuitem("Listar Articulos Autores");
 		menuitemA1.setValue("Articulo/Listar Articulos.zul");
-		//menuitemA2.setValue("Articulo/Evaluacion.zul");
+		menuitemA2.setValue("Articulo/Evaluacion.zul");
 		menuitemA3.setValue("Articulo/Subir Articulo.zul");
 		menuitemA4.setValue("Articulo/Revision.zul");
 		menuitemA5.setValue("Articulo/Vista_Evaluador.zul");
+		menuitemA6.setValue("Articulo/ListarArticuloAutor.zul");
 		menuitemA1.addEventListener("onClick", new MenuListener());
-		//menuitemA2.addEventListener("onClick", new MenuListener());
+		menuitemA2.addEventListener("onClick", new MenuListener());
 		menuitemA3.addEventListener("onClick", new MenuListener());
 		menuitemA4.addEventListener("onClick", new MenuListener());
 		menuitemA5.addEventListener("onClick", new MenuListener());
+		menuitemA6.addEventListener("onClick", new MenuListener());
 		
-		//if(dbp.ConsultarPermisos(idtipousuario, 1)){
-		menupopupA.appendChild(menuitemA1);
-		// menupopupA.appendChild(menuitemA2);
-		//if(dbp.ConsultarPermisos(idtipousuario, 2)){
-		//menupopupA.appendChild(menuitemA3);}
+	if(dbp.ConsultarPermisos(idtipousuario, 1)){
+		menupopupA.appendChild(menuitemA1);}
+		 menupopupA.appendChild(menuitemA2);
+		if(dbp.ConsultarPermisos(idtipousuario, 2)){
+		menupopupA.appendChild(menuitemA3);}
 		// menupopupA.appendChild(menuitemA4);
 		//menupopupA.appendChild(menuitemA5);
+		 menupopupA.appendChild(menuitemA6);
 		menuA.appendChild(menupopupA);
 		menubar_opciones.appendChild(menuA);
 
@@ -159,7 +163,7 @@ public class indexController extends GenericForwardComposer<Component> {
 			//	alert("Usuario con pocos Privilegios");
 			//} else {
 			
-				//menupopupA.appendChild(menuitemA2);
+				menupopupA.appendChild(menuitemA2);
 				if(dbp.ConsultarPermisos(idtipousuario, 5)){
 				menupopupA.appendChild(menuitemA5); }
 				

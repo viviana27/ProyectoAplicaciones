@@ -22,6 +22,7 @@
 								value="${each}" />
 						</template>
 					</combobox>
+					<label id="idtipo" visible="false" ></label>
 				</row>
 				<row>
 					<label>Área de Artículo</label>
@@ -32,6 +33,7 @@
 								value="${each}" />
 						</template>
 					</combobox>
+					<label id="idarea"  visible="false"></label>
 				</row>
 				<row>
 					<label>Título:</label>
@@ -41,7 +43,7 @@
 				</row>
 				<row>
 					<label>Resumen:</label>
-					<textbox id="textbox_Resumen"
+					<textbox id="textbox_Resumen" rows="5" cols="40"
 						height="200px" width="85%">
 					</textbox>
 				</row>

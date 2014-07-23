@@ -1,6 +1,7 @@
 <?page title="Parámetros de Evaluación" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Parámetros de Evaluación" border="normal" id="WinRegistrarParametros"
+	<window title="Parámetros de Evaluación" border="normal"
+		id="WinRegistrarParametros"
 		apply="com.controladores.ParametrosEvaluacionController">
 		<grid>
 			<columns>
@@ -10,24 +11,30 @@
 			<rows>
 				<row>
 					<label value="Parámetro de Evaluación:" />
-					<textbox id="textbox_area"
-						constraint="no empty" />
+					<textbox id="textbox_area" constraint="no empty" />
 				</row>
 				<row>
 					<label value="Porcentaje de Evaluación:" />
-					<textbox id="textbox_valor"
-						constraint="no empty" />
+					<div>
+						<textbox id="textbox_valor"
+							constraint="no empty" />
+						<label value="%" />
+					</div>
 				</row>
 				<row>
 					<label value="Estado:" />
 					<checkbox id="check_estado" />
 				</row>
 				<row>
-					<button label="Registrar" id="button_Registrar" image="Imagenes/save.png"/>
-					<button label="Cancelar" id="button_Cancelar" image="Imagenes/delete.png" 
-				onClick="WinRegistrarParametros.detach()" />
+					<button label="Registrar" id="button_Registrar"
+						image="Imagenes/save.png" />
+					<button label="Cancelar" id="button_Cancelar"
+						image="Imagenes/delete.png"
+						onClick="WinRegistrarParametros.detach()" />
 				</row>
-				<row><label value="Suma Total de Porcentaje: " /><label id="lbSumatotal" />
+				<row>
+					<label value="Suma Total de Porcentaje: " />
+					<label id="lbSumatotal" />
 				</row>
 			</rows>
 		</grid>

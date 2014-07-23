@@ -60,13 +60,14 @@ public class Permisos extends GenericForwardComposer<Component> {
 	}
 
 	public void onSelect$cbTipoRol() {
+		// recorrerLista();
 		Roles usu = (Roles) cbTipoRol.getSelectedItem().getValue();
 		if (usu != null) {
 			lbIdrol.setValue(Integer.toString(usu.getRol_id()));
-			actualizarLista();
-			// presentarLista();
+		actualizarLista();
 		}
-	}
+		///presentarLista();
+	} 
 
 	public void actualizarLista() {
 		DBPermiso dbp = new DBPermiso();
@@ -74,6 +75,7 @@ public class Permisos extends GenericForwardComposer<Component> {
 				.getValue()));
 		listModel = new ListModelList<Permiso>(lista);
 		listbox_Permisos.setModel(listModel);
+		//presentarLista();
 	}
 
 	public void onCellClicked(ForwardEvent event) {
@@ -129,7 +131,7 @@ public class Permisos extends GenericForwardComposer<Component> {
 	public void recorrerLista() {
 		// alert(listModel.size()+"");
 		Permiso per = null;
-		for (int i = 0; i <= listModel.size() - 2; i++) {
+		for (int i = 0; i <= listModel.size() - 1; i++) {
 			per = new Permiso();
 			Listitem item = (Listitem) listbox_Permisos.getItems().get(i);
 			List<Component> listaceldas = item.getChildren();
@@ -158,7 +160,7 @@ public class Permisos extends GenericForwardComposer<Component> {
 
 			listaPermisos.add(per);
 		}
-		// System.out.println(listaPermisos.size()+"");
+		 System.out.println(listaPermisos.size()+"");
 	}
 
 	public void onClick$button_Cancelar() {
