@@ -37,67 +37,65 @@ import com.entidades.Articulo;
 import com.entidades.Usuarios;
 import com.lowagie.text.Document;
 
-
-public class ListaArticulosAsignados extends GenericForwardComposer<Component>{
+public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 	Textbox txtProyecto;
 	Button idfiltroTitulo;
 	Textbox txtarea;
 	Button idarea;
 	Listbox listaArticulosporpar;
 	Toolbarbutton toolbarbutton_Editar;
-	Button button_descarga;
+	Button button_descarga, evaluar;
 	String NombreArchi, direccion;
 	Label nombreArticulo;
 	public Media media;
 	File f;
+
 	@NotifyChange("media")
 	@Command
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
-		super.doAfterCompose(comp);	
-		
-				actualizarLista();
-				listaArticulosporpar.renderAll();
-				Session sesion=Sessions.getCurrent();
-				Usuarios u=(Usuarios)sesion.getAttribute("User");
-				if(u!=null){
-					if(u.getId_rol()==3){
-						toolbarbutton_Editar.setVisible(false)	;
-					}
-				}
+		super.doAfterCompose(comp);
+
+		actualizarLista();
+		listaArticulosporpar.renderAll();
+		Session sesion = Sessions.getCurrent();
+		Usuarios u = (Usuarios) sesion.getAttribute("User");
+		if (u != null) {
+			if (u.getId_rol() == 3) {
+				toolbarbutton_Editar.setVisible(false);
+			}
+		}
 	}
-	
+
 	public void onClick$idfiltroTitulo() {
 		actualizarLista();
 	}
- 
+
 	public void onClick$idarea() {
 		actualizarLista();
 	}
-	
+
 	public void actualizarLista() {
 		// obtener datos de la base
 		// lista de usuarios
 		DBArticulos dbart = new DBArticulos();
 		// lista con usuarios encontrados
-		List<Articulo> lista = dbart.buscarArticuloEvaluador( txtProyecto.getValue(), txtarea.getValue());
+		List<Articulo> lista = dbart.buscarArticuloEvaluador(
+				txtProyecto.getValue(), txtarea.getValue());
 		// establecer esta lista como modelo de dalos pasra el listbox
 		ListModelList<Articulo> listModel = new ListModelList<Articulo>(lista);
 		// establecer el modelo de datos
 		listaArticulosporpar.setModel(listModel);
-		//alert("lista"+ ((Articulo)listaTareas.getItemAtIndex(0)));
+		// alert("lista"+ ((Articulo)listaTareas.getItemAtIndex(0)));
 		listaArticulosporpar.renderAll();
-		
-
 	}
-	
+
 	public void onClick$toolbarbutton_Editar() {
 		// verificar q usuario haya seleccionado un elemento de la lista
 		if (listaArticulosporpar.getSelectedItem() == null) {
 			alert("Seleccione por favor un articulo");
 			return;
 		}
-
 		Window win = (Window) Executions.createComponents(
 				"Articulo/RegistroPorEvaluador.zul", null, null);
 		win.setClosable(true);
@@ -108,47 +106,53 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component>{
 		// dos opciones
 		// pasar todo el objeto usuario
 		// pasar un identificador id de Usuario
-		Articulo u = (Articulo) listaArticulosporpar.getSelectedItem().getValue();
-		
+		Articulo u = (Articulo) listaArticulosporpar.getSelectedItem()
+				.getValue();
+
 		win.setAttribute("articulo", u);
 	}
-	
-
-
 
 	// simply download the file
 	@Command
 	public void onClick$button_descarga() {
-		Articulo art = (Articulo) listaArticulosporpar.getSelectedItem().getValue();
-	//	nombreArticulo.setVisible(true);
+		Articulo art = (Articulo) listaArticulosporpar.getSelectedItem()
+				.getValue();
+		// nombreArticulo.setVisible(true);
 		nombreArticulo.setValue(art.getArt_archivo());
-		f= new File(nombreArticulo.getValue());
-		System.out.println("nombre completo"+ nombreArticulo.getValue());
-			try {
-				Filedownload.save(f,null);
-				
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		f = new File(nombreArticulo.getValue());
+		System.out.println("nombre completo" + nombreArticulo.getValue());
+		try {
+			Filedownload.save(f, null);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		alert("descarga exitosa");
 	}
-	
 
-	
-	
-
-
- 
-	
 	public void onSelect$listaArticulosporpar() {
-		Articulo art = (Articulo) listaArticulosporpar.getSelectedItem().getValue();
-		//nombreArticulo.setVisible(true);
+		Articulo art = (Articulo) listaArticulosporpar.getSelectedItem()
+				.getValue();
+		// nombreArticulo.setVisible(true);
 		button_descarga.setVisible(true);
 		String ruta;
 		nombreArticulo.setValue(art.getArt_archivo());
-	
+
+	}
+
+	public void onClick$evaluar() {
+		if (listaArticulosporpar.getSelectedItem() == null) {
+			alert("Seleccione por favor un articulo");
+			return;
+		}
+		Window win = (Window) Executions.createComponents(
+				"Articulo/Evaluacion.zul", null, null);
+		win.setClosable(true);
+		win.doModal();
+		Articulo arti = (Articulo) listaArticulosporpar.getSelectedItem()
+				.getValue();
+		win.setAttribute("articulo", arti);
 	}
 
 }
-

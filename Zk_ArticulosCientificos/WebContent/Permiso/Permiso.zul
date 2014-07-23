@@ -1,6 +1,7 @@
 <?page title="Permisos" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Permisos" border="normal" id="WinPermisos" apply="com.seguridad.Permisos">
+	<window title="Permisos" border="normal" id="WinPermisos"
+		apply="com.seguridad.Permisos">
 		<div>
 			<grid>
 				<columns>
@@ -11,11 +12,11 @@
 						<div>
 							<label value="Tipo Rol: " />
 							<combobox id="cbTipoRol" width="110px">
-						<template name="model">
-							<comboitem label="${each.rol_descripcion}"
-								value="${each}" />
-						</template>
-					</combobox>
+								<template name="model">
+									<comboitem
+										label="${each.rol_descripcion}" value="${each}" />
+								</template>
+							</combobox>
 						</div>
 					</row>
 				</rows>
@@ -26,21 +27,30 @@
 				emptyMessage="No existen datos que cumplan el criterio de busqueda"
 				id="listbox_Permisos" disabled="true">
 				<listhead menupopup="auto" sizable="false">
-					<listheader label="idPermiso" sort="auto" visible="false"/>
-					<listheader label="idFormulario" sort="auto" visible="false"/>
+					<listheader label="idPermiso" sort="auto"
+						visible="false" />
+					<listheader label="idFormulario" sort="auto"
+						visible="false" />
 					<listheader label="Nombre" sort="auto" />
-					<listheader label="idRol" sort="auto" visible="false"/>
-					<listheader label="Permiso" sort="auto" visible="false" />
+					<listheader label="idRol" sort="auto"
+						visible="false" />
+					<listheader label="Permiso" sort="auto"
+						visible="false" />
 					<listheader label="Estado" sort="auto" />
 				</listhead>
 				<template name="model">
 					<listitem value="${each}">
-						<listcell label="${each.id_permiso}"  visible="false"/>
-						<listcell label="${each.id_formulario}" visible="false" />
+						<listcell label="${each.id_permiso}"
+							visible="false" />
+						<listcell label="${each.id_formulario}"
+							visible="false" />
 						<listcell label="${each.nombreFormulario}" />
-						<listcell label="${each.id_rol}" visible="false" />
-						<listcell label="${each.permiso}"  forward="onClick=onCellClicked" visible="false"/>
-						<listcell label="${each.permisoEstado}" forward="onClick=onCellClicked"/>
+						<listcell label="${each.id_rol}"
+							visible="false" />
+						<listcell label="${each.permiso}"
+							forward="onClick=onCellClicked" visible="false" />
+						<listcell label="${each.permisoEstado}"
+							forward="onClick=onCellClicked" />
 					</listitem>
 				</template>
 			</listbox>
@@ -54,11 +64,12 @@
 			<rows>
 				<row>
 					<button label="Registrar" id="button_Registrar" />
-					<button label="Cancelar" id="button_Cancelar"	onClick="" />
-					
+					<button label="Cancelar" id="button_Cancelar"
+						onClick="" />
+
 				</row>
 			</rows>
-			
+
 		</grid>
 		<label id="lbIdrol" value="rol" visible="false" />
 	</window>

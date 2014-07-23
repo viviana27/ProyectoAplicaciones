@@ -59,19 +59,11 @@ public class ListaArticulosEvaluador  extends GenericForwardComposer<Component>{
 	}
 	
 	public void actualizarLista() {
-		// obtener datos de la base
-		// lista de usuarios
 		DBArticulos dbart = new DBArticulos();
-		// lista con usuarios encontrados
 		List<Articulo> lista = dbart.buscarArticuloEvaluador( txtProyecto.getValue(), txtarea.getValue());
-		// establecer esta lista como modelo de dalos pasra el listbox
 		ListModelList<Articulo> listModel = new ListModelList<Articulo>(lista);
-		// establecer el modelo de datos
 		listaArticulosporpar.setModel(listModel);
-		//alert("lista"+ ((Articulo)listaTareas.getItemAtIndex(0)));
 		listaArticulosporpar.renderAll();
-		
-
 	}
 	
 	public void onClick$toolbarbutton_Editar() {

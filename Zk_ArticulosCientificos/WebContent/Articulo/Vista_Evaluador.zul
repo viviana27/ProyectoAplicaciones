@@ -1,65 +1,81 @@
 <?page title="Listado de Articulos Asignados" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="lISTADO DE ARTICULOS ASIGNADOS AL EVALUADOR" border="normal" apply="com.controladores.ListaArticulosAsignados">
-<!-- iniciar sesion como administrador y se cargan todos los articulos enviados -->
-<listbox id="listaArticulosporpar" mold="paging" pageSize="4"
+	<window title="lISTADO DE ARTICULOS ASIGNADOS AL EVALUADOR"
+		border="normal" apply="com.controladores.ListaArticulosAsignados">
+		<!-- iniciar sesion como administrador y se cargan todos los articulos enviados -->
+		<listbox id="listaArticulosporpar" mold="paging" pageSize="6"
 			multiple="false" width="100%"
 			emptyMessage="No personasfound in the result">
 
-			<auxhead left= "true" sclass="category-center">
-				<auxheader label="Búsqueda de artículos por:" rowspan="2"/>
+			<auxhead left="true" sclass="category-center">
+				<auxheader align="center"
+					label="Búsqueda de artículos por:" rowspan="2" />
 			</auxhead>
 
 			<auxhead sclass="category-center">
-				<auxheader  rowspan="1">
+				<auxheader align="center" rowspan="1">
 					<label>Título:</label>
 					<textbox id="txtProyecto"></textbox>
 					<button id="idfiltroTitulo"
 						image="Imagenes/searchs.png">
 					</button>
-			</auxheader>
-			
-			<auxheader rowspan="1">
+				</auxheader>
+
+				<auxheader align="center" rowspan="1">
 					<label>Área</label>
 					<textbox id="txtarea" />
 					<button id="idarea" image="Imagenes/searchs.png">
 					</button>
 				</auxheader>
-			
-				<auxheader  rowspan="1">
+
+				<auxheader align="center" rowspan="1">
 					<div height="30px">
-			     <toolbar >
-				<toolbarbutton  image="Imagenes/editar.png"
-					id="toolbarbutton_Editar" label="Asignar Evaluador" />
-			      </toolbar>
-		        </div>
+						<toolbar>
+							<toolbarbutton image="Imagenes/editar.png"
+								id="toolbarbutton_Editar" label="Asignar Evaluador" />
+						</toolbar>
+					</div>
 				</auxheader>
-			
+
 			</auxhead>
 			<auxhead sclass="category-center">
-				<auxheader label="Listado de Articulos por evaluadores "
-					 />
+
+				<auxheader colspan="2" align="center"
+					label="Listado de Articulos por evaluadores " />
+				<auxheader align="center">
+					<label
+						style="font-size: 14px; font-weight: bold;	color:red;">
+						Evaluar:
+					</label>
+					<button id="evaluar" image="Imagenes/edit.png">
+					</button>
+				</auxheader>
 			</auxhead>
 
 			<listhead sizable="false" menupopup="auto">
-				<listheader label="Título" sort="auto(art_titulo)"/>
-				<listheader label="Área del Artículo" sort="auto(area_nombre)"/>
-				<listheader label="Par Asignado" sort="auto(per_nombre)"/>
+				<listheader align="left" label="Título"
+					sort="auto(art_titulo)" />
+				<listheader align="center" label="Área del Artículo"
+					sort="auto(area_nombre)" />
+				<listheader align="center" label="Par Asignado"
+					sort="auto(per_nombre)" />
 			</listhead>
 			<template name="model">
 				<listitem value="${each}">
 					<listcell label="${each.art_titulo}" />
 					<listcell label="${each.area_nombre}" />
-					<listcell label="${each.per_nombre} ${each.per_apellido}" />		
-					</listitem>
+					<listcell
+						label="${each.per_nombre} ${each.per_apellido}" />
+				</listitem>
 			</template>
-</listbox>
-           <label style="font-weight: bold; color:blue;"
-				value="Seleccione el artículo a descargar y clic en el botón:">
-			</label>
-			<button  label="Descargar archivo"  mold="trendy" id="button_descarga" 
-			onClick="@command('downloadFile')" visible="false" />
-		    <label id="nombreArticulo" value="Archivo.docx" visible="false"/>
+		</listbox>
+		<label style="font-weight: bold; color:blue;"
+			value="Seleccione el artículo a descargar y clic en el botón:">
+		</label>
+		<button label="Descargar archivo" mold="trendy"
+			id="button_descarga" onClick="@command('downloadFile')"
+			visible="false" />
+		<label id="nombreArticulo" value="Archivo.docx" visible="false" />
 
-</window>
+	</window>
 </zk>
