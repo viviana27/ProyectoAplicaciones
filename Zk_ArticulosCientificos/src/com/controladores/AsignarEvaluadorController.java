@@ -45,6 +45,7 @@ public class AsignarEvaluadorController extends GenericForwardComposer<Component
 	int idpersonaart=0;
 	int num_pares=0;
 	int idare=0;
+	int regcontar2=0;
 	
 	public void onClick$button_Registrar() throws Exception {
 		boolean result = false;
@@ -70,7 +71,34 @@ public class AsignarEvaluadorController extends GenericForwardComposer<Component
 				Pares par= new Pares(0,idarticulo,idpersona,2,2,1 );
 				result = dbusuarios.InsertarPar(par);
 				regcontar=dbusuarios.contarRegistros(idarticulo);
-				String opcion = (String) winNuevoEvaluador.getAttribute("opcion");
+				if(regcontar==2){
+					ea.setId_articulo(idarticulo);
+					ea.setId_estado(2);
+					ea.setId_utl_estado(1);
+					ea.setId_persona(idpersonaart);
+					result1 = dbusuarios.RegistrarEstadoArticulo(ea);
+					}
+			}
+		if (result && result1) {
+			alert("Articulo asignado a los evaluadores correctamente ");
+				// evaluar desde donde fue llamada esta ventana
+			String opcion = (String) winNuevoEvaluador.getAttribute("opcion");
+			if (opcion != null && opcion.equals("Revision")) {
+				// entonces la ventana ufe llamada desde lista usuarios
+				// cerrar ventana
+
+				// actualizar la lista de usuarios
+				ListaArticulosEvaluador luc = (ListaArticulosEvaluador) winNuevoEvaluador
+						.getAttribute("controladorOrigen");
+				if (luc != null)
+					luc.actualizarLista();
+				// luc.actualizarLista();
+				winNuevoEvaluador.detach();
+
+			}
+		}else{
+			alert("Asignacion correcta... Asigne el siguiente evaluador");
+			String opcion = (String) winNuevoEvaluador.getAttribute("opcion");
 				if (opcion != null && opcion.equals("Revision")) {
 					// entonces la ventana ufe llamada desde lista usuarios
 					// cerrar ventana
@@ -85,37 +113,10 @@ public class AsignarEvaluadorController extends GenericForwardComposer<Component
 
 				}
 
-				if(regcontar==2){
-				ea.setId_articulo(idarticulo);
-				ea.setId_estado(2);
-				ea.setId_utl_estado(1);
-				ea.setId_persona(idpersonaart);
-				result1 = dbusuarios.RegistrarEstadoArticulo(ea);
-				}
+				
 
 }
-		
-if (result && result1) {
-	alert("Articulo asignado a los evaluadores correctamente ");
-		// evaluar desde donde fue llamada esta ventana
-	String opcion = (String) winNuevoEvaluador.getAttribute("opcion");
-	if (opcion != null && opcion.equals("Revision")) {
-		// entonces la ventana ufe llamada desde lista usuarios
-		// cerrar ventana
-
-		// actualizar la lista de usuarios
-		ListaArticulosEvaluador luc = (ListaArticulosEvaluador) winNuevoEvaluador
-				.getAttribute("controladorOrigen");
-		if (luc != null)
-			luc.actualizarLista();
-		// luc.actualizarLista();
-		winNuevoEvaluador.detach();
-
-	}
 	
-} else {
-	alert("Asignacion correcta... Asigne el siguiente evaluador");
-}
 				/*    List<EstadoArticulo> listaestado = dba.buscarestados(idarticulo);
 					String id = null;
 			        id = Integer.toString(listaestado.get(0).getId_utl_estado());

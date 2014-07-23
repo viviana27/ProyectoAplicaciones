@@ -12,7 +12,7 @@
 				<row>
 					<label value="Nombre Usuario/a:"></label>
 					<textbox id="textbox_Usuario"
-						constraint="no empty">
+						constraint="no empty" >
 					</textbox>
 				</row>
 				<row>
@@ -54,7 +54,7 @@
 				<row>
 					<label value="Teléfono Convencional:"></label>
 					<textbox id="textbox_Telefono"
-						constraint="no empty">
+						constraint="no empty" >
 					</textbox>
 				</row>
 				<row>

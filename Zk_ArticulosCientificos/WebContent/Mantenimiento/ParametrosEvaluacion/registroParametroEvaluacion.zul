@@ -19,7 +19,7 @@
 					<textbox id="textbox_valor"
 						constraint="no empty"  width="50px"/>
 						<label value="%" />
-						</div>
+				</div>
 				</row>
 				<row>
 					<label value="Estado:" />
