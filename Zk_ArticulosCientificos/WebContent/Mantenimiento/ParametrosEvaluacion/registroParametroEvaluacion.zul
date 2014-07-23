@@ -15,8 +15,10 @@
 				</row>
 				<row>
 					<label value="Porcentaje de Evaluación:" />
+					<div>
 					<textbox id="textbox_valor"
-						constraint="no empty" />
+						constraint="no empty" width="50px"/>
+				    <label value="%" /></div>
 				</row>
 				<row>
 					<label value="Estado:" />

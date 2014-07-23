@@ -86,6 +86,11 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 	}
 
 	
+	public void onBlur$textbox_Nombres(){
+		
+		}
+	
+	
 	
 	public void onClick$button_Registrar() throws Exception {
 		boolean result = false;

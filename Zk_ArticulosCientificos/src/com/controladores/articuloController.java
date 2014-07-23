@@ -131,7 +131,8 @@ public class articuloController extends GenericForwardComposer<Component> {
 			cmb_area.setModel(listModel);
 		}
 	}
-
+	
+	
 	public void onClick$button_Registrar() throws Exception {
 		boolean result = false;
 		boolean result2 = false;

@@ -130,7 +130,7 @@ public class DBTipoArticulos {
 					+ " order by tipo_nombre";
 			System.out.println("busqueda" + sql);
 		} else {
-			sql = "SELECT * FROMtb_tipo_articulo"
+			sql = "SELECT * FROM tb_tipo_articulo"
 					+ " WHERE tipo_estado=1 and (tipo_nombre like '%"
 					+ criterio + "%')";
 
@@ -144,8 +144,8 @@ public class DBTipoArticulos {
 			e.printStackTrace();
 			System.out.println("error al ejecutar la sentencia");
 		}
+		TipoArticulos tipo = null;
 		try {
-			TipoArticulos tipo = null;
 			while (resultado.next()) {
 				tipo = new TipoArticulos();
 				tipo.setTipo_id(resultado.getInt("tipo_id"));
