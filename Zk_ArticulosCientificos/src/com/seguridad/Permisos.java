@@ -83,7 +83,7 @@ public class Permisos extends GenericForwardComposer<Component> {
 		MouseEvent mouseEvent = (MouseEvent) event.getOrigin();
 		Listcell target = (Listcell) mouseEvent.getTarget();
 		if (target.getLabel().equals("Activo")) {
-			target.setStyle("font-weight: bold; color:blue;");
+			target.setStyle("font-weight: bold; color:red;");
 			target.setLabel("Inactivo");
 		} else {
 			target.setStyle("font-weight: bold; color:green;");
@@ -108,7 +108,7 @@ public class Permisos extends GenericForwardComposer<Component> {
 	}
 
 	public void presentarLista() {
-		for (int i = 0; i <= listModel.size() - 2; i++) {
+		for (int i = 0; i <= listModel.size() - 1; i++) {
 
 			Listitem item = (Listitem) listbox_Permisos.getItems().get(i);
 			List<Component> listaceldas = item.getChildren();
@@ -123,7 +123,7 @@ public class Permisos extends GenericForwardComposer<Component> {
 			if (estado.equals("Activo")) {
 				liEstado.setStyle("font-weight: bold; color:green;");
 			} else {
-				liEstado.setStyle("font-weight: bold; color:blue;");
+				liEstado.setStyle("font-weight: bold; color:red;");
 			}
 		}
 	}
@@ -131,16 +131,17 @@ public class Permisos extends GenericForwardComposer<Component> {
 	public void recorrerLista() {
 		// alert(listModel.size()+"");
 		Permiso per = null;
+
 		for (int i = 0; i <= listModel.size() - 1; i++) {
 			per = new Permiso();
 			Listitem item = (Listitem) listbox_Permisos.getItems().get(i);
 			List<Component> listaceldas = item.getChildren();
 			Listcell liId = (Listcell) listaceldas.get(0);
-			Listcell liIdFormulario = (Listcell) listaceldas.get(1);
+		    Listcell liIdFormulario = (Listcell) listaceldas.get(1);
 			Listcell liEstado = (Listcell) listaceldas.get(5);
 			String estado = liEstado.getLabel();
 			int idPermsio = Integer.parseInt(liId.getLabel());
-			int idFormulario = Integer.parseInt(liIdFormulario.getLabel());
+			  int idFormulario = Integer.parseInt(liIdFormulario.getLabel());
 			int idRol = Integer.parseInt(lbIdrol.getValue());
 			int permiso = 0;
 			if (estado.equals("Activo")) {
@@ -160,7 +161,6 @@ public class Permisos extends GenericForwardComposer<Component> {
 
 			listaPermisos.add(per);
 		}
-		 System.out.println(listaPermisos.size()+"");
 	}
 
 	public void onClick$button_Cancelar() {

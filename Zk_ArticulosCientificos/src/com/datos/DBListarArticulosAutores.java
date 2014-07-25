@@ -459,7 +459,7 @@ public class DBListarArticulosAutores {
 		return lista;
 	}
 
-	/*public List<Articulo> buscarArticuloEvaluador(int IdPersona) {
+	public List<Articulo> buscarArticuloEvaluador(int IdPersona) {
 		List<Articulo> lista = new ArrayList<Articulo>();
 		Statement sentencia = null;
 		ResultSet registros = null;
@@ -467,10 +467,10 @@ public class DBListarArticulosAutores {
 		// busqueda a la base de datos
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
-		String sql = "select ta.art_id,ta.art_titulo,tp.per_nombre,tp.per_apellido,tpa.pers_id,tta.tipo_nombre, tar.area_nombre from (((tb_articulo as ta inner join tb_persona as tp on ta.per_id=tp.per_id)inner join tb_tipo_articulo as tta on ta.tipo_id=tta.tipo_id)inner join tb_area as tar on ta.area_id=tar.area_id)inner join tb_persona_articulo as tpa on ta.art_id=tpa.arti_id where tp.per_id="
+		String sql = "select ta.art_id,ta.art_titulo,tp.per_id,tp.per_nombre,tp.per_apellido,tpa.pers_id,tta.tipo_id,tta.tipo_nombre, tar.area_id,tar.area_nombre,ta.art_resumen,ta.art_palabras_clave,tareva.eval_observacion,tareva.nombre,tareva.direccion from ((((tb_articulo as ta inner join tb_persona as tp on ta.per_id=tp.per_id)inner join tb_tipo_articulo as tta on ta.tipo_id=tta.tipo_id)inner join tb_area as tar on ta.area_id=tar.area_id)inner join tb_persona_articulo as tpa on ta.art_id=tpa.arti_id)inner join tb_articulos_evaluados as tareva on ta.art_id=tareva.ar_id where tp.per_id="
 				+ IdPersona;
 
-		System.out.println("" + sql);
+		System.out.println("Sql Return Articulo: " + sql);
 
 		try {
 			sentencia = con.createStatement();
@@ -487,11 +487,20 @@ public class DBListarArticulosAutores {
 				a = new Articulo();
 				a.setArt_id(registros.getInt("art_id"));
 				a.setArt_titulo(registros.getString("art_titulo"));
+				a.setPer_id(registros.getInt("per_id"));
 				a.setPer_nombre(registros.getString("per_nombre"));
 				a.setPer_apellido(registros.getString("per_apellido"));
+				a.setIdColaborador(registros.getInt("pers_id"));
+				a.setTipo_id(registros.getInt("tipo_id"));
 				a.setTipo_nombre(registros.getString("tipo_nombre"));
+				a.setId_area(registros.getInt("area_id"));
 				a.setArea_nombre(registros.getString("area_nombre"));
-				
+				a.setArt_resumen(registros.getString("art_resumen"));
+				a.setArt_palabras_clave(registros
+						.getString("art_palabras_clave"));
+				a.setObservacion(registros.getString("eval_observacion"));
+				a.setNombreArticulo(registros.getString("nombre"));
+				a.setRuta(registros.getString("direccion"));
 				// agrego usuario con datos cargados desde la base a mi lista de
 				// usuarios
 				lista.add(a);
@@ -510,7 +519,51 @@ public class DBListarArticulosAutores {
 				e.printStackTrace();
 			}
 		}
+		String nombreColaboradores = "";
+		String Colaboradores="";
+		int id;
+		for (int i = 0; i < lista.size(); i++) {
+			System.out.println("tamaño " + lista.size());
+			id=lista.get(i).getArt_id();
+			Connection conC = dbm.getConection();
+			String sql1 = "select per_nombre,per_apellido from tb_persona where per_id="
+					+ lista.get(i).getIdColaborador();
+			try {
+				sentencia = conC.createStatement();
+				registros = sentencia.executeQuery(sql1);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("error al ejecutar la sentencia");
+			}
+			try {
+				while (registros.next()) {
+					nombreColaboradores = nombreColaboradores
+							+ registros.getString("per_nombre") + " "
+							+ registros.getString("per_apellido") + ",";
+				}
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			finally {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(lista.get(i).getArt_id()==id){
+				Colaboradores=Colaboradores+nombreColaboradores;
+			System.out.println("nombre colaboradores : " + nombreColaboradores);}
+			else{
+				Colaboradores="";
+			}
+		}
 
 		return lista;
-	}*/
+	}
 }

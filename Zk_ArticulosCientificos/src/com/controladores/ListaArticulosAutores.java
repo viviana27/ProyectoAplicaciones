@@ -84,7 +84,7 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 		actualizarLista();
 	}
 	public void actualizarLista() {
-		/*DBListarArticulosAutores dbart = new DBListarArticulosAutores();
+		DBListarArticulosAutores dbart = new DBListarArticulosAutores();
 		
 		List<Articulo> lista = dbart.buscarArticuloEvaluador(idPersona);
 		
@@ -93,10 +93,10 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 		
 		listaTareas.setModel(listModel);
 		
-		listaTareas.renderAll();*/
+		listaTareas.renderAll();
 		// obtener datos de la base
 				// lista de usuarios
-				DBArticulos dbart = new DBArticulos();
+			/*	DBArticulos dbart = new DBArticulos();
 				// lista con usuarios encontrados
 				List<Articulo> lista = dbart.buscarArticulo(idEstado,txtProyecto.getValue(),
 						txtautor.getValue(), txttipo.getValue(), txtarea.getValue());
@@ -106,7 +106,8 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 				// establecer el modelo de datos
 				listaTareas.setModel(listModel);
 				// alert("lista"+ ((Articulo)listaTareas.getItemAtIndex(0)));
-				listaTareas.renderAll();
+				listaTareas.renderAll();*/
+				alert("aca estoy mmm");
 
 	}
 	public void onSelect$listaTareas() {
@@ -115,7 +116,7 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 			return;
 		}
 		Window win = (Window) Executions.createComponents(
-				"Articulo/Subir Articulo.zul", null, null);
+				"Articulo/Subir Articulo Corregido.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
 		win.setAttribute("opcion", "listaArticuloAutor");

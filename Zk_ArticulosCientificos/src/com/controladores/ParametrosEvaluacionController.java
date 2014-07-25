@@ -23,6 +23,7 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 	Label lbSumatotal;
 	private int i=0,valor=0;
 	
+	
 	public void onClick$button_Registrar(){
 		//System.out.println("estamos aca");
 		 boolean registro=false;
@@ -74,11 +75,19 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 			if(lac!=null)
 				lac.actualizarLista();
 				WinRegistrarParametros.detach();
-					
+				mensaje();
 			}
 				}
 			else {
 				alert("No se pudo realizar el registro");
+				}
+	}
+	
+	public void mensaje(){
+		if(Integer.parseInt(lbSumatotal.getValue())<100)
+				{
+			alert("Por favor modificar el valor del parametro " +
+				"o agregar un nuevo parametro hasta completar el 100% ");
 				}
 	}
 	
@@ -100,13 +109,19 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 		lbSumatotal.setValue(dbar.TotalParametrosEvaluacion()+"");
 		resto=Integer.parseInt( lbSumatotal.getValue())-Integer.parseInt( textbox_valor.getValue());
 		lbSumatotal.setValue(resto+"");
+	
 	}
+	
 	public void onBlur$textbox_valor(){
 		int resto=0;
 		resto=100-Integer.parseInt(lbSumatotal.getValue());
 		if (resto<Integer.parseInt(textbox_valor.getValue())){
 			alert("la suma total de parametros no debe exeder al 100% del total ");
+			alert("la suma total ya esta completa con los 100%");
 			textbox_valor.setValue("");
-		}
+				
+			}
+			
+		
 	}
 }

@@ -120,7 +120,7 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 		// nombreArticulo.setVisible(true);
 		nombreArticulo.setValue(art.getArt_archivo());
 		f = new File(nombreArticulo.getValue());
-		System.out.println("nombre completo" + nombreArticulo.getValue());
+		//System.out.println("nombre completo" + nombreArticulo.getValue());
 		try {
 			Filedownload.save(f, null);
 

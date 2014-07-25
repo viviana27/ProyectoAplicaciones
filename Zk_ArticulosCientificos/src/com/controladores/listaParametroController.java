@@ -126,6 +126,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 		actualizarLista();
 	}
 
+	
 	public void actualizarLista() {
 		DBParametrosEvaluacion dbr = new DBParametrosEvaluacion();
 		List<ParametrosEvaluacion> lista = dbr
@@ -138,6 +139,6 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 		dbr=new DBParametrosEvaluacion();
 		lbSumatotal.setStyle("font-weight: bold; color:red;");
 		lbSumatotal.setValue(dbr.TotalParametrosEvaluacion()+"%");
-	}
+     	}
 
 }

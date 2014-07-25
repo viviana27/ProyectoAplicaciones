@@ -28,9 +28,9 @@
 			emptyMessage="No existen datos que cumplan el criterio de busqueda"
 			id="listbox_TipoArticulos" disabled="true">
 			<listhead menupopup="auto" sizable="false">
-				<listheader label="Tipo de Artículo" sort="auto"
+				<listheader label="Tipo de Artículo" sort="auto(tipo_nombre)"
 					sortDirection="ascending" />
-				<listheader label="Estado" sort="auto" />
+				<listheader label="Estado" sort="auto(tipoestado)" />
 			</listhead>
 			<template name="model">
 				<listitem value="${each}">

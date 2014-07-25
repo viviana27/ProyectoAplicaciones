@@ -80,8 +80,8 @@
 				<listitem value="${each}">
 					<listcell label="${each.art_titulo}" />
 					<listcell
-						label="${each.per_nombre} ${each.per_apellido}" />
-					<listcell label="${each.nom_colaborador} " />
+						label="${each.nom_colaborador}" />
+					<listcell label="${each.nom_colaborador1} " />
 					<listcell label="${each.tipo_nombre}" />
 					<listcell label="${each.area_nombre}" />
 				</listitem>

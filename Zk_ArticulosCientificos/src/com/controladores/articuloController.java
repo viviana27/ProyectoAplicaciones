@@ -1,5 +1,7 @@
 package com.controladores;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.List;
 
@@ -44,10 +46,10 @@ public class articuloController extends GenericForwardComposer<Component> {
 	private Combobox cmb_tipo, comboAutor2, comboAutor3, cmb_area;
 	// public Textbox textbox_Titulo, textbox_Resumen, textbox_PClaves;
 	// public Button button_Registrar, btnExaminar;
-	public Label nombreArchivo;
+	public Label nombreArchivo, nombreArticuloCorregido,lblDescargar;
 	public Textbox textbox_Titulo, textbox_Resumen, textbox_PClaves,
 			textbox_autor;
-	public Button button_Registrar, btnExaminar, button_Nuevo;
+	public Button button_Registrar, btnExaminar, button_Nuevo,button_descarga;
 	public Label nombreArticulo, titulo, nombreAutorP, nombreAutoresS, resumen,
 			palabrasClaves, fechaRecibido, institucion, direccionInstitucion,
 			idtipo, idarea;
@@ -65,11 +67,13 @@ public class articuloController extends GenericForwardComposer<Component> {
 	boolean result2 = false;
 	boolean result3 = false;
 	DBArticulos dbart = new DBArticulos();
-
+String direccionArticuloCorregido;
 	// //----------------------------------------------------------------------------
 	// codigo para subir un archivo al servidor
 	public Media media;
 	public Window winDetalleArticulo, winSubirArticulo;
+
+	File f;
 
 	@NotifyChange("media")
 	@Command
@@ -357,6 +361,40 @@ public class articuloController extends GenericForwardComposer<Component> {
 				comboAutor3.setValue(li.get(1).getPer_nombre() + " "
 						+ li.get(1).getPer_apellido());
 			}
+			if (art.getNombreArticulo().trim().length() > 0
+					|| art.getObservacion().trim().length() > 0) {
+				// /alert("tiene notificaciones observaciones ");
+				System.out.println("nombre articulo max cadena: "
+						+ art.getNombreArticulo() + " "
+						+ art.getNombreArticulo().trim().length());
+				nombreArticuloCorregido.setValue(art.getNombreArticulo());
+				direccionArticuloCorregido=art.getRuta();
+				
+			} else {
+				System.out.println("no tiene notificaciones :");
+				button_descarga.setVisible(false);
+				nombreArticuloCorregido.setVisible(false);
+				lblDescargar.setVisible(false);
+			}
+
 		}
+	}
+
+	@Command
+	public void onClick$button_descarga() {
+		// Articulo art = (Articulo) listaArticulosporpar.getSelectedItem()
+		// .getValue();
+		// nombreArticulo.setVisible(true);
+		nombreArticuloCorregido.setValue(art.getArt_archivo());
+		f = new File(direccionArticuloCorregido);
+		// System.out.println("nombre completo" + nombreArticulo.getValue());
+		try {
+			Filedownload.save(f, null);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		alert("descarga exitosa");
 	}
 }

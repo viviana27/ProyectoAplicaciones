@@ -46,6 +46,8 @@
 					<textbox id="textbox_Resumen" rows="5" cols="40"
 						height="200px" width="85%">
 					</textbox>
+					<label value="idestado" visible="false">
+					</label>
 				</row>
 				<row>
 				<label

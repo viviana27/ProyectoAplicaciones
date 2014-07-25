@@ -129,7 +129,7 @@ public class DBAreas {
 		} else {
 			sql = "SELECT * FROM tb_area as a" +
 					" WHERE a.area_estado=1 and (a.area_nombre like '%"
-					+ area+"%')";
+					+ area + "%')";
 					
 			System.out.println(""+sql);
 			
