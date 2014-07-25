@@ -17,7 +17,8 @@
 				</auxheader>
 			</auxhead>
 			<listhead sizable="false" menupopup="auto">
-				<listheader visible="false" label="id" sort="auto(each.param_id)" />
+				<listheader visible="false" label="id"
+					sort="auto(each.param_id)" />
 				<listheader label="Parámetro"
 					sort="auto(each.param_descripcion)" />
 				<listheader align="center" label="Calificación Estándar"
@@ -31,26 +32,35 @@
 					<listcell label="${each.param_descripcion}" />
 					<listcell label="${each.param_valor}" />
 					<listcell sclass="textColumn">
-					
+
 					</listcell>
 				</listitem>
 			</template>
 			<listfoot>
-				<listfooter span="2" >
-					<label>Calificación total:</label>
+				<listfooter span="2">
+				
 					<separator></separator>
 					<label>Anexar Observaciones</label>
 				</listfooter>
 				<listfooter align="center">
+					<div>
+						<label>Calificación total:</label>
 					<label
-						style="font-size: 20px; font-weight: bold;	color:black;"
-						id="caliFinal" />
-					<separator></separator>
-					<button label="Observaciones" id="button_Obs"
-						image="Imagenes/folder.png" upload="true,maxsize=8192"
-						onUpload="@command('uploadFile',upload=event)" autodisable="self" />
-					<label id="nombreArch" />
+							style="font-size: 20px; font-weight: bold;	color:black;"
+							id="caliFinal" />
+						<separator></separator>
+						<textbox id="txtObservacion" rows="5" cols="40"
+						height="50px" width="85%">
+						</textbox>
+						
+						<button label="Observaciones" id="button_Obs"
+							image="Imagenes/folder.png" upload="true,maxsize=8192"
+							onUpload="@command('uploadFile',upload=event)"
+							autodisable="self" />							
+						<label id="nombreArch" />
+					</div>
 				</listfooter>
+
 			</listfoot>
 		</listbox>
 		<div id="boton" align="center">
@@ -58,6 +68,6 @@
 				image="Imagenes/save.png">
 			</button>
 		</div>
-		
+
 	</window>
 </zk>

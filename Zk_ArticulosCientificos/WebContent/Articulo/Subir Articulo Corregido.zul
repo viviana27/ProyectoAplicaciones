@@ -1,14 +1,13 @@
 <?page title="Indexación" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Registro de Articulos" border="normal" id="winSubirArticulo"
-	 apply="com.controladores.articuloController"  >
-		
+	<window title="Registro de Articulos" border="normal"
+		id="winSubirArticulo" apply="com.controladores.articuloController">
+
 		<grid>
 
 			<rows>
 				<row>
-					<label value="Nombre Autor Principal">
-					</label>
+					<label value="Nombre Autor Principal"></label>
 					<textbox id="textbox_autor" disabled="true"
 						width="30%">
 					</textbox>
@@ -22,7 +21,7 @@
 								value="${each}" />
 						</template>
 					</combobox>
-					<label id="idtipo" visible="false" ></label>
+					<label id="idtipo" visible="false"></label>
 				</row>
 				<row>
 					<label>Área de Artículo</label>
@@ -33,53 +32,52 @@
 								value="${each}" />
 						</template>
 					</combobox>
-					<label id="idarea"  visible="false"></label>
+					<label id="idarea" visible="false"></label>
 				</row>
 				<row>
 					<label>Título:</label>
-					<textbox id="textbox_Titulo"
-						width="100%">
-					</textbox>
+					<textbox id="textbox_Titulo" width="100%"></textbox>
 				</row>
 				<row>
 					<label>Resumen:</label>
 					<textbox id="textbox_Resumen" rows="5" cols="40"
 						height="200px" width="85%">
 					</textbox>
-					<label value="idestado" visible="false">
+					<label value="idestado" visible="false"></label>
+				</row>
+				<row>
+					<label
+						value="Proporcione palabras claves referente al artículo, separe los términos en coma.">
 					</label>
 				</row>
 				<row>
-				<label
-			value="Proporcione palabras claves referente al artículo, separe los términos en coma.">
-		</label>
-		</row>
-		<row>					<label>Palabras claves:</label>
-					<textbox id="textbox_PClaves" 
-						width="100%">
+					<label>Palabras claves:</label>
+					<textbox id="textbox_PClaves" width="100%">
 					</textbox>
 				</row>
 				<row>
 					<label>Fecha:</label>
-					<datebox id="txtfecha"/>
+					<datebox id="txtfecha" />
 				</row>
 				<row>
-				<label>
-						Seleccione al o los autores que colaboraron con el artículo mediante 
-						el ingreso del nombre
+					<label>
+						Seleccione al o los autores que colaboraron con
+						el artículo mediante el ingreso del nombre
 					</label>
 					<vbox width="100%">
 						<combobox id="comboAutor2" width="50%"
 							buttonVisible="self.checked" autodrop="true">
 							<template name="model">
-								<comboitem label="${each.persona.per_nombre} ${each.persona.per_apellido}"
+								<comboitem
+									label="${each.persona.per_nombre} ${each.persona.per_apellido}"
 									value="${each}" />
 							</template>
 						</combobox>
 						<combobox id="comboAutor3" width="50%"
 							buttonVisible="self.checked" autodrop="true">
 							<template name="model">
-								<comboitem label="${each.persona.per_nombre} ${each.persona.per_apellido}"
+								<comboitem
+									label="${each.persona.per_nombre} ${each.persona.per_apellido}"
 									value="${each}" />
 							</template>
 						</combobox>
@@ -87,14 +85,29 @@
 				</row>
 				<row>
 					<label value="Seleccionar archivo " />
-				<vbox width="100%">
-						<button label="Examinar" id="btnExaminar"					
+					<vbox width="100%">
+						<button label="Examinar" id="btnExaminar"
 							upload="true,maxsize=8192"
-							onUpload="@command('uploadFile',upload=event)" 
+							onUpload="@command('uploadFile',upload=event)"
 							autodisable="self" />
-	
+
 						<label id="nombreArticulo" value="Archivo.doc" />
 					</vbox>
+				</row>
+				<row>
+					<div>
+						<label value="Descargar Correcion: " id="lblDescargar"/>
+						<label id="nombreArticuloCorregido"
+							value="Archivo.docx" visible="true" />
+					</div>
+					<vbox width="100%">
+
+						<button label="Descargar archivo" mold="trendy"
+							id="button_descarga" onClick="@command('downloadFile')"
+							visible="true" />
+
+					</vbox>
+
 				</row>
 				<row>
 					<button label="Guardar y Enviar"
@@ -104,8 +117,10 @@
 						image="Imagenes/delete.png">
 					</button>
 				</row>
+
+
 			</rows>
-	<!-- -->
+			<!-- -->
 		</grid>
 
 

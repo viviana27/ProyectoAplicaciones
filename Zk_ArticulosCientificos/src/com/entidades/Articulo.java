@@ -11,6 +11,7 @@ public class Articulo {
 	private Date art_fecha_subida;
 	private int art_estado;
 	private String nom_colaborador;
+	private String nom_colaborador2;
 	private String nom_colaborador1;
 	private int tipo_id;
 	private String tipo_nombre;
@@ -22,6 +23,33 @@ public class Articulo {
 	private int id_estado;
 	private String per_institucion1;
 	private String per_institucion2;
+	private int idColaborador;
+	private String observacion;
+	private String nombreArticulo;
+	private String ruta;
+	public String getObservacion() {
+		return observacion;
+	}
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
+	}
+
+	public String getNombreArticulo() {
+		return nombreArticulo;
+	}
+
+	public void setNombreArticulo(String nombreArticulo) {
+		this.nombreArticulo = nombreArticulo;
+	}
+
+	public String getRuta() {
+		return ruta;
+	}
+
+	public void setRuta(String ruta) {
+		this.ruta = ruta;
+	}
 
 	public Articulo() {
 		super();
@@ -47,6 +75,14 @@ public class Articulo {
 
 	
 	
+	public int getIdColaborador() {
+		return idColaborador;
+	}
+
+	public void setIdColaborador(int idColaborador) {
+		this.idColaborador = idColaborador;
+	}
+
 	public String getNom_colaborador1() {
 		return nom_colaborador1;
 	}
@@ -77,6 +113,14 @@ public class Articulo {
 
 	public void setArt_id(int art_id) {
 		this.art_id = art_id;
+	}
+
+	public String getNom_colaborador2() {
+		return nom_colaborador2;
+	}
+
+	public void setNom_colaborador2(String nom_colaborador2) {
+		this.nom_colaborador2 = nom_colaborador2;
 	}
 
 	public String getArt_titulo() {

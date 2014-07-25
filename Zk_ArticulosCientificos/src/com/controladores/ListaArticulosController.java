@@ -50,6 +50,7 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 			ListModelList<Estados> listModel = new ListModelList<Estados>(
 					listaEstados);
 			cmb_estados.setModel(listModel);
+		
 		}
 	}
 
@@ -112,6 +113,8 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 		if (est != null) {
 			idEstado = (est.getId_estado());
 		}
+		alert("aca toy");
 		actualizarLista();
 	}
+	
 }

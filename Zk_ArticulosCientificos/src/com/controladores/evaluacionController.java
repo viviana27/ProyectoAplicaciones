@@ -24,6 +24,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.SubirDescargarArchivos.Util;
@@ -44,7 +45,7 @@ import com.entidades.Usuarios;
 public class evaluacionController extends GenericForwardComposer<Component> {
 	public Label nombreArch, tit, caliFinal;
 	Doublebox calific;
-	Button button_Registrar, button_Registrar12,button_Obs;
+	Button button_Registrar, button_Registrar12, button_Obs;
 	Window WinEvaluarArticulo;
 	Listbox parametros;
 	int reg_evaluados;
@@ -53,20 +54,20 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	Articulo art;
 	private Usuarios u = null;
 	private Date fecha = new Date(0);
-      SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy"); 
-      java.sql.Date fechaActual = new java.sql.Date(0); 
-      //java.util.Date fechaActual = new java.util.Date();
-	int vmax,vprome, idArticuloSubido = 0;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	java.sql.Date fechaActual = new java.sql.Date(0);
+	// java.util.Date fechaActual = new java.util.Date();
+	int vmax, vprome, idArticuloSubido = 0;
 	
 	boolean registro = false;
-	public Media media;
+	public Media media = null;
 	ArticuloEvaluado are = null;
 	int ida=0,id=0;
 	public Window winDetalleArticulo, winSubirArticulo;
-	int valorMax =0;
-	double acum=0;
+	int valorMax = 0;
+	double acum = 0;
 	Double valor = 0.0;
-
+	Textbox txtObservacion;
 	String NombreArchi, direccion, nom;
 
 	@NotifyChange("media")
@@ -134,7 +135,6 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 		}
 	}
 
-
 	public void recorrerLista() {
 
 		Usuarios u = (Usuarios) session.getAttribute("User");
@@ -155,7 +155,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 				int valorMax = Integer.parseInt(valorM.getLabel());
 				Double valor = ((Doublebox) pVal.getFirstChild()).getValue();
 				acum = acum + valor;
-				caliFinal.setValue(acum+" /100");
+				caliFinal.setValue(acum + " /100");
 				if (valor < 0 || valor > valorMax || valor.equals("")) {
 					alert("verifique calificación en:'" + parametro.getLabel()
 							+ "'");
@@ -198,8 +198,23 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 		
 		if(reg_evaluados<2){
 			
+			
 			DBParametrosArticulos dbp = new DBParametrosArticulos();
 			bandera = dbp.guardarEvaluacion(listaParam);
+			if (media != null) {
+				if (Util.uploadFileObservacion(media)) {
+					alert("se subio");
+					obtenerRutaArchivoAdjuntado();
+					arte.setNombre(nom);
+					arte.setDireccion(direccion);
+				}
+			}else{
+				//alert("Q pasa");
+				
+				arte.setNombre("");
+				arte.setDireccion("");
+			}
+			
 			ea.setId_articulo(ida);
 			System.out.println("id articulo evaluacion"+ida);
 			ea.setId_estado(3);
@@ -221,6 +236,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			System.out.println("el reg contar del if es "+reg_evaluados);
 			if (bandera && result && result1) {
 				alert("Evaluación registrada con exito");
+				acum=0;
 
 			} else {
 				alert("Fallamos...!");
@@ -266,15 +282,15 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	public void ObtenerIdArticuloRegistrado(String direc) {
 		DBArticulos dba = new DBArticulos();
 		idArticuloSubido = dba.obtenerIdArticuloRegistrado(direc);
-		System.out.println("idArticulo registrado: " + idArticuloSubido);
+		// System.out.println("idArticulo registrado: " + idArticuloSubido);
 	}
 
 	public void obtenerRutaArchivoAdjuntado() {
 		Util u = new Util();
 		direccion = u.ruta + "/" + NombreArchi;
 		nom = NombreArchi;
-		System.out.println(direccion);
-		System.out.println(nom);
+		System.out.println("Direccion EvaluacionController: " + direccion);
+		System.out.println("Nombre file EvaluacionController " + nom);
 	}
 
 	/*

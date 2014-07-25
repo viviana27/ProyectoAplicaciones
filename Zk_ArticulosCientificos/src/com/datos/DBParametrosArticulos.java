@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.zkoss.zul.Textbox;
+
 import com.entidades.ParametrosArticulo;
 import com.entidades.ParametrosEvaluacion;
 import com.entidades.Permiso;

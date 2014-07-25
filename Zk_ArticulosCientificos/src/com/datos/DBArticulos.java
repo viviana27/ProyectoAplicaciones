@@ -611,6 +611,39 @@ System.out.println("la fecha es : "+fecha);
 
 		return lista;
 	}
+	public List<Persona> buscarColaboradores(int criterio) {
+		List<Persona> lista = new ArrayList<Persona>();
+		Statement sentencia = null;
+		ResultSet resultado = null;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		String sql = "SELECT tp.per_nombre, tp.per_apellido FROM tb_persona_articulo AS tpa INNER JOIN tb_persona tp ON tpa.pers_id = tp.per_id WHERE tpa.arti_id ="+criterio;
+		
+		try {
+			sentencia = con.createStatement();
+			resultado = sentencia.executeQuery(sql);
+			
+			while (resultado.next()) {
+				 Persona persona = new Persona();
+				persona.setPer_nombre(resultado.getString("per_nombre"));
+				persona.setPer_apellido(resultado.getString("per_apellido"));
+				lista.add(persona);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return lista;
+	}
+
 	
 	
 	public List<EstadoArticulo> buscarestados(int criterio) {

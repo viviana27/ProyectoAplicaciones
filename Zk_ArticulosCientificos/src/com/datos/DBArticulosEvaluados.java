@@ -138,26 +138,31 @@ public class DBArticulosEvaluados {
 		Connection con = dbm.getConection();
 		try {
 			con.setAutoCommit(false);
-			String sql = " INSERT INTO tb_articulos_evaluados(eval_promedio,eval_cantidad," +
-					" vol_id, estad_id,eval_estado,ar_id,eval_observacion,eval_fecha ) VAlUES (?,?,?,?,?,?,?,CURRENT_DATE)";
+			String sql = " INSERT INTO tb_articulos_evaluados (eval_promedio,eval_cantidad," +
+					" vol_id, estad_id,eval_estado,ar_id,eval_observacion,nombre,direccion, eval_fecha) VAlUES (?,?,?,?,?,?,?,?,?,CURRENT_DATE)";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm = con.prepareStatement(sql);
 			pstm.setDouble(1, artEval.getEval_promedio());
+
+			System.out.println("pROMEDIO: "+artEval.getEval_promedio());
 			pstm.setInt(2, artEval.getEval_cantidad());
 			
-			System.out.println("cantidad"+artEval.getEval_cantidad());
+			System.out.println("cantidad: "+artEval.getEval_cantidad());
 			
 			pstm.setInt(3, 1);
-			System.out.println("volumen"+artEval.getVol_id());
+			System.out.println("volumen: "+artEval.getVol_id());
 			pstm.setInt(4, 3);
-			System.out.println("estadoid"+artEval.getEstad_id());
+			System.out.println("estadoid: "+artEval.getEstad_id());
 			pstm.setInt(5, 1);
-			System.out.println("estado del art"+artEval.getEval_estado());
+			System.out.println("estado del art: "+artEval.getEval_estado());
 			pstm.setInt(6, artEval.getAr_id());
-			System.out.println("id articulo"+artEval.getAr_id());
+			System.out.println("id articulo: "+artEval.getAr_id());
 			pstm.setString(7, artEval.getEval_observacion());
-			System.out.println("observacion"+artEval.getEval_observacion());
-			System.out.println("fecha"+artEval.getEval_fecha());
+			System.out.println("observacion: "+artEval.getEval_observacion());
+			pstm.setString(8, artEval.getNombre());
+			System.out.println("nombre : "+artEval.getNombre());
+			pstm.setString(9, artEval.getDireccion());
+			System.out.println("fecha:"+artEval.getEval_fecha());
 			int filas_afectadas = pstm.executeUpdate();
 			System.out.println("filas"+filas_afectadas);
 			con.commit();

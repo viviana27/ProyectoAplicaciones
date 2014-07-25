@@ -1,5 +1,7 @@
 package com.controladores;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -41,14 +44,15 @@ import com.entidades.Usuarios;
 
 public class articuloController extends GenericForwardComposer<Component> {
 	private Combobox cmb_tipo, comboAutor2, comboAutor3, cmb_area;
-//	public Textbox textbox_Titulo, textbox_Resumen, textbox_PClaves;
-	//public Button button_Registrar, btnExaminar;
-	public Label nombreArchivo;
+	// public Textbox textbox_Titulo, textbox_Resumen, textbox_PClaves;
+	// public Button button_Registrar, btnExaminar;
+	public Label nombreArchivo, nombreArticuloCorregido,lblDescargar;
 	public Textbox textbox_Titulo, textbox_Resumen, textbox_PClaves,
 			textbox_autor;
-	public Button button_Registrar, btnExaminar, button_Nuevo;
+	public Button button_Registrar, btnExaminar, button_Nuevo,button_descarga;
 	public Label nombreArticulo, titulo, nombreAutorP, nombreAutoresS, resumen,
-			palabrasClaves, fechaRecibido, institucion, direccionInstitucion;
+			palabrasClaves, fechaRecibido, institucion, direccionInstitucion,
+			idtipo, idarea;
 	public Datebox txtfecha;
 	public Date fecha;
 	private Articulo a = null;
@@ -59,10 +63,17 @@ public class articuloController extends GenericForwardComposer<Component> {
 			idUsuario = 0, idArticuloSubido = 0;
 	private Articulo art = null;
 	String NombreArchi, direccion, nom;
+	boolean result = false;
+	boolean result2 = false;
+	boolean result3 = false;
+	DBArticulos dbart = new DBArticulos();
+String direccionArticuloCorregido;
 	// //----------------------------------------------------------------------------
 	// codigo para subir un archivo al servidor
 	public Media media;
 	public Window winDetalleArticulo, winSubirArticulo;
+
+	File f;
 
 	@NotifyChange("media")
 	@Command
@@ -103,12 +114,14 @@ public class articuloController extends GenericForwardComposer<Component> {
 
 	public void Combos() {
 		DBTipoArticulos dbtp = new DBTipoArticulos();
+		TipoArticulos tipo = new TipoArticulos();
 		DBUsuario dbu = new DBUsuario();
 		List<TipoArticulos> listaTipos = dbtp.buscarTipos();
 		if (listaTipos != null) {
 			ListModelList<TipoArticulos> listModel = new ListModelList<TipoArticulos>(
 					listaTipos);
 			cmb_tipo.setModel(listModel);
+			idtipo.setValue(Integer.toString(tipo.getTipo_id()));
 		}
 		List<Usuarios> listaUsuarios = dbu.buscarUsuarios("");
 		if (listaUsuarios != null) {
@@ -124,11 +137,13 @@ public class articuloController extends GenericForwardComposer<Component> {
 			comboAutor3.setModel(listModel);
 		}
 		DBAreas dba = new DBAreas();
+		Areas ar = new Areas();
 		List<Areas> listaAreas = dba.buscarArea();
 		if (listaTipos != null) {
 			ListModelList<Areas> listModel = new ListModelList<Areas>(
 					listaAreas);
 			cmb_area.setModel(listModel);
+			idarea.setValue(Integer.toString(ar.getArea_id()));
 		}
 	}
 	
@@ -155,52 +170,55 @@ public class articuloController extends GenericForwardComposer<Component> {
 			} else {
 
 				if (nombreArticulo.getValue() != "Archivo.doc") {
-					if (Util.uploadFile(media)) {
-						obtenerRutaArchivoAdjuntado();
-						a.setTipo_id(idTipoArticulo);
-						a.setId_area(idTipoArea);
-						a.setArt_titulo(textbox_Titulo.getValue());
-						a.setArt_resumen(textbox_Resumen.getValue());
-						a.setArt_palabras_clave(textbox_PClaves.getValue());
-						a.setArt_fecha_subida(fecha);
-						a.setArt_archivo(direccion);
-						a.setArt_estado(1);
-						//a.setId_estado(1);
-						a.setPer_id(idUsuario);
-						result = dbart.RegistrarArticulo(a);
-						if (result) {
-							alert("Articulo registrado con exito");
+					if (art == null) {
+						if (Util.uploadFile(media)) {
+							obtenerRutaArchivoAdjuntado();
+							a.setTipo_id(idTipoArticulo);
+							a.setId_area(idTipoArea);
+							a.setArt_titulo(textbox_Titulo.getValue());
+							a.setArt_resumen(textbox_Resumen.getValue());
+							a.setArt_palabras_clave(textbox_PClaves.getValue());
+							a.setArt_fecha_subida(fecha);
+							a.setArt_archivo(direccion);
+							a.setArt_estado(1);
+							// a.setId_estado(1);
+							a.setPer_id(idUsuario);
+							result = dbart.RegistrarArticulo(a);
+							if (result) {
+								alert("Articulo registrado con exito");
+							} else {
+								alert("No se pudo realizar el registro");
+							}
 						} else {
-							alert("No se pudo realizar el registro");
+							Messagebox.show(Labels.getLabel("app.error"));
 						}
+						Colaboradores();
 					} else {
-						Messagebox.show(Labels.getLabel("app.error"));
+						alert("existe");
+						if (Util.uploadFile(media)) {
+							obtenerRutaArchivoAdjuntado();
+							a.setArt_id(a.getArt_id());
+							alert(a.getArt_id() + "");
+							/*
+							 * a.setTipo_id(idTipoArticulo);
+							 * a.setId_area(idTipoArea);
+							 * a.setArt_titulo(textbox_Titulo.getValue());
+							 * a.setArt_resumen(textbox_Resumen.getValue());
+							 * a.setArt_palabras_clave
+							 * (textbox_PClaves.getValue());
+							 * a.setArt_fecha_subida(fecha);
+							 * a.setArt_archivo(direccion); a.setArt_estado(1);
+							 * // a.setId_estado(1); a.setPer_id(idUsuario);
+							 * result = dbart.RegistrarArticulo(a); if (result)
+							 * { alert("Articulo registrado con exito"); } else
+							 * { alert("No se pudo realizar el registro"); } }
+							 * else {
+							 * Messagebox.show(Labels.getLabel("app.error")); }
+							 * Colaboradores();
+							 */
+						}
 					}
-					if (comboAutor2.getValue() != null) {
-						ObtenerIdArticuloRegistrado(direccion);
-
-						System.out
-								.println(" id autor2 en guardar: " + idAutor2);
-						pa.setPers_id(idAutor2);
-						pa.setArti_id(idArticuloSubido);
-						pa.setPer_art_estado(1);
-						pa.setPer_id_registra(idUsuario);
-						result2 = dbart.RegistrarPersonaArticulo(pa);
-					}
-					if (comboAutor3.getValue() != null) {
-						ObtenerIdArticuloRegistrado(direccion);
-						pa.setPers_id(idAutor3);
-						pa.setArti_id(idArticuloSubido);
-						pa.setPer_art_estado(1);
-						pa.setPer_id_registra(idUsuario);
-						result2 = dbart.RegistrarPersonaArticulo(pa);
-					}					
-					ObtenerIdArticuloRegistrado(direccion);
-					ea.setId_articulo(idArticuloSubido);
-					ea.setId_estado(1);
-					ea.setId_utl_estado(1);
-					ea.setId_persona(idUsuario);
-					result3 = dbart.RegistrarEstadoArticulo(ea);
+				
 				} else {
 					alert("Suba articulo");
 				}
@@ -213,6 +231,32 @@ public class articuloController extends GenericForwardComposer<Component> {
 		media = null;
 		limpiar();
 
+	}
+
+	public void Colaboradores() {
+		if (comboAutor2.getValue() != null) {
+			ObtenerIdArticuloRegistrado(direccion);
+
+			System.out.println(" id autor2 en guardar: " + idAutor2);
+			pa.setPers_id(idAutor2);
+			pa.setArti_id(idArticuloSubido);
+			pa.setPer_art_estado(1);
+			pa.setPer_id_registra(idUsuario);
+			result2 = dbart.RegistrarPersonaArticulo(pa);
+		}
+		if (comboAutor3.getValue() != null) {
+			ObtenerIdArticuloRegistrado(direccion);
+			pa.setPers_id(idAutor3);
+			pa.setArti_id(idArticuloSubido);
+			pa.setPer_art_estado(1);
+			pa.setPer_id_registra(idUsuario);
+			result2 = dbart.RegistrarPersonaArticulo(pa);
+		}
+		ObtenerIdArticuloRegistrado(direccion);
+		ea.setId_articulo(idArticuloSubido);
+		ea.setId_estado(1);
+		ea.setId_persona(idUsuario);
+		result3 = dbart.RegistrarEstadoArticulo(ea);
 	}
 
 	public void limpiar() {
@@ -295,11 +339,64 @@ public class articuloController extends GenericForwardComposer<Component> {
 
 	public void onCreate$winSubirArticulo() {
 		Combos();
+		TipoArticulos dbtp = new TipoArticulos();
+		art = (Articulo) winSubirArticulo.getAttribute("articulo");
 		Session session = Sessions.getCurrent();
 		Usuarios u = (Usuarios) session.getAttribute("User");
-		if (u != null) {
-			textbox_autor.setText(u.getPersona().getPer_nombre() + " "
-					+ u.getPersona().getPer_apellido());
+		textbox_autor.setText(u.getPersona().getPer_nombre() + " "
+				+ u.getPersona().getPer_apellido());
+		if (art != null) {
+			// System.out.println("arti titulo: " + art.getArt_titulo());
+			textbox_Titulo.setText(art.getArt_titulo());
+			textbox_Resumen.setText(art.getArt_resumen());
+			textbox_PClaves.setText(art.getArt_palabras_clave());
+			// comboAutor2.setValue(art.getNom_colaborador());
+			cmb_tipo.setValue(art.getTipo_nombre());
+			cmb_area.setValue(art.getArea_nombre());
+
+			DBArticulos da = new DBArticulos();
+			List<Persona> li = da.buscarColaboradores(art.getArt_id());
+			System.out.println("lista: " + li.size());
+			comboAutor2.setValue(li.get(0).getPer_nombre() + " "
+					+ li.get(0).getPer_apellido());
+			if (li.size() > 1) {
+				comboAutor3.setValue(li.get(1).getPer_nombre() + " "
+						+ li.get(1).getPer_apellido());
+			}
+			if (art.getNombreArticulo().trim().length() > 0
+					|| art.getObservacion().trim().length() > 0) {
+				// /alert("tiene notificaciones observaciones ");
+				System.out.println("nombre articulo max cadena: "
+						+ art.getNombreArticulo() + " "
+						+ art.getNombreArticulo().trim().length());
+				nombreArticuloCorregido.setValue(art.getNombreArticulo());
+				direccionArticuloCorregido=art.getRuta();
+				
+			} else {
+				System.out.println("no tiene notificaciones :");
+				button_descarga.setVisible(false);
+				nombreArticuloCorregido.setVisible(false);
+				lblDescargar.setVisible(false);
+			}
+
 		}
+	}
+
+	@Command
+	public void onClick$button_descarga() {
+		// Articulo art = (Articulo) listaArticulosporpar.getSelectedItem()
+		// .getValue();
+		// nombreArticulo.setVisible(true);
+		nombreArticuloCorregido.setValue(art.getArt_archivo());
+		f = new File(direccionArticuloCorregido);
+		// System.out.println("nombre completo" + nombreArticulo.getValue());
+		try {
+			Filedownload.save(f, null);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		alert("descarga exitosa");
 	}
 }
