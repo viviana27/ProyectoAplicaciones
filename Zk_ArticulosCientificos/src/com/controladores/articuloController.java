@@ -282,10 +282,10 @@ public class articuloController extends GenericForwardComposer<Component> {
 		art = (Articulo) winDetalleArticulo.getAttribute("articulo");
 		if (art != null) {
 			titulo.setValue(art.getArt_titulo());
-			nombreAutorP.setValue(art.getPer_nombre() + " "
-					+ art.getPer_apellido() + ". \n"
+			nombreAutorP.setValue(art.getNom_colaborador()+" "
+					+ ". \n"
 					+ art.getPer_institucion1()) ;
-			nombreAutoresS.setValue(art.getNom_colaborador() + ". \n"
+			nombreAutoresS.setValue(art.getNom_colaborador1() + ". \n"
 					+ art.getPer_institucion2());
 			resumen.setValue(art.getArt_resumen());
 			palabrasClaves.setValue(art.getArt_palabras_clave());

@@ -32,7 +32,7 @@
 			<label style="font-weight: bold; color:blue;"
 				value="Fecha Recibido:">
 			</label>
-			<label id="fechaRecibido"></label>
+		<label id="fechaRecibido"></label> 
 		</div>
 	</window>
 </zk>

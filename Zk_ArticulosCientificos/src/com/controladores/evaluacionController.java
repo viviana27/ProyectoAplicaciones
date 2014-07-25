@@ -47,6 +47,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	Button button_Registrar, button_Registrar12,button_Obs;
 	Window WinEvaluarArticulo;
 	Listbox parametros;
+	int reg_evaluados;
 	ListModelList<ParametrosEvaluacion> listModel;
 	List<ParametrosArticulo> listaParam = new ArrayList<ParametrosArticulo>();
 	Articulo art;
@@ -56,11 +57,11 @@ public class evaluacionController extends GenericForwardComposer<Component> {
       java.sql.Date fechaActual = new java.sql.Date(0); 
       //java.util.Date fechaActual = new java.util.Date();
 	int vmax,vprome, idArticuloSubido = 0;
-	boolean bandera = false;
+	
 	boolean registro = false;
 	public Media media;
 	ArticuloEvaluado are = null;
-	int ida=0;
+	int ida=0,id=0;
 	public Window winDetalleArticulo, winSubirArticulo;
 	int valorMax =0;
 	double acum=0;
@@ -99,17 +100,21 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	}
 
 	public void onCreate$WinEvaluarArticulo() {
-		art = (Articulo) WinEvaluarArticulo.getAttribute("articulo");
-		if (art != null) {
-			tit.setValue(art.getArt_titulo());
-			
-			ida=art.getArt_id();
-			System.out.println("EL NUEVO ID"+ida);
-		} else {
-			alert("No se pudo recuperar información del artículo");
-		}
-		actualizarLista();
+		
+			art = (Articulo) WinEvaluarArticulo.getAttribute("articulo");
+			if (art != null) {
+				tit.setValue(art.getArt_titulo());
+				
+				ida=art.getArt_id();
+				System.out.println("EL NUEVO ID"+ida);
+			} else {
+				alert("No se pudo recuperar información del artículo");
+			}
+			actualizarLista();
+	
 	}
+		
+			
 
 	public void actualizarLista() {
 		DBParametrosEvaluacion dbp = new DBParametrosEvaluacion();
@@ -170,122 +175,92 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 		}
 	}
 	
-	/*public void recorrerLista() {
-		Usuarios u = (Usuarios) session.getAttribute("User");
-		ParametrosArticulo pa = null;
-		DBParametrosArticulos dbp = new DBParametrosArticulos();
-		boolean result = false;
-		boolean result1 = false;
-		EstadoArticulo ea=new EstadoArticulo();
-		ArticuloEvaluado arte= new ArticuloEvaluado();
-			DBArticulosEvaluados dbaev= new DBArticulosEvaluados();
-		for (int i = 0; i <= listModel.size() - 1; i++) {
-			pa = new ParametrosArticulo();
-
-			Listitem item = (Listitem) parametros.getItems().get(i);
-
-			List<Component> listaceldas = item.getChildren();
-
-			Listcell pId = (Listcell) listaceldas.get(0);
-			Listcell parametro = (Listcell) listaceldas.get(1);
-			Listcell valorM = (Listcell) listaceldas.get(2);
-			Listcell pVal = (Listcell) listaceldas.get(3);
-			
-			
-			int idParam = Integer.parseInt(pId.getLabel());
-			valorMax = Integer.parseInt(valorM.getLabel());
-			valor = ((Doublebox) pVal.getFirstChild()).getValue();
-			if (valor > valorMax) {
-				alert("verifique calificación en:'"+parametro.getLabel()+"'");
-				item.setStyle("background-color: red;");
-			}
-			else{
-				if ( are!=null) {}
-				// existe estoy editando
-				
-			else{
-				
-					pa.setParam_art_valor(valor);
-					pa.setParam_id(idParam);
-					pa.setPerson_id(u.getId());
-					pa.setArticul_id(art.getArt_id());
-					listaParam.add(pa);
-					bandera=dbp.guardarEvaluacion(listaParam);
-					ea.setId_articulo(ida);
-					System.out.println("id articulo evaluacion"+ida);
-					ea.setId_estado(3);
-					System.out.println("id estado evaluado"+ea.getId_estado());
-					ea.setId_utl_estado(1);
-					ea.setId_persona(u.getId());
-					result= dbaev.RegistrarEstadoArticulo(ea);
-					arte.setEval_promedio(Double.parseDouble(caliFinal.getValue()));
-					arte.setEval_cantidad(2);
-					arte.setVol_id(1);
-					arte.setEstad_id(3);
-					arte.setEval_estado(1);
-					arte.setAr_id(ida);
-					arte.setEval_observacion("observacion");
-					result1=dbaev.RegistroArt_Evaluados(arte);
-					}
-				
-
-		}
-			
-		}
-		if(result && result1 && bandera){
-			alert("Guardado Exitosamente");
-		}
-		else{
-			alert("Fallamos...!");
-		}
-	}
-	*/
-public void onClick$button_Registrar12(){
+	public void onClick$button_Registrar12(){
 	Usuarios u = (Usuarios) session.getAttribute("User");
 	EstadoArticulo ea=new EstadoArticulo();
+	DBArticulos dba = new DBArticulos();
+	boolean bandera = false;
 	boolean result = false;
 	boolean result1 = false;
+	boolean result2=false;
 	ArticuloEvaluado arte= new ArticuloEvaluado();
 	DBArticulosEvaluados dbaev= new DBArticulosEvaluados();
+	
 	if(direccion!=null){
 		
 	}
 	else
 	{
 		recorrerLista();
-		DBParametrosArticulos dbp = new DBParametrosArticulos();
-		bandera = dbp.guardarEvaluacion(listaParam);
+		reg_evaluados=dbaev.contarEvaluados(ida);
 		
+		System.out.println("el reg contar primero  es "+reg_evaluados);
 		
-		if (bandera) {
-			alert("Evaluación registrada con exito");
+		if(reg_evaluados<2){
+			
+			DBParametrosArticulos dbp = new DBParametrosArticulos();
+			bandera = dbp.guardarEvaluacion(listaParam);
+			ea.setId_articulo(ida);
+			System.out.println("id articulo evaluacion"+ida);
+			ea.setId_estado(3);
+			System.out.println("id estado evaluado"+ea.getId_estado());
+			ea.setId_utl_estado(1);
+			ea.setId_persona(u.getId());
+			result= dbaev.RegistrarEstadoArticulo(ea);
+			
+			arte.setEval_promedio(acum);
+			arte.setEval_cantidad(1);
+			arte.setVol_id(1);
+			arte.setEstad_id(3);
+			arte.setEval_estado(1);
+			arte.setAr_id(ida);
+			arte.setEval_observacion("observacion");
+			result1=dbaev.RegistroArt_Evaluados(arte);
+			
+			
+			System.out.println("el reg contar del if es "+reg_evaluados);
+			if (bandera && result && result1) {
+				alert("Evaluación registrada con exito");
 
-		} else {
-			alert("Fallamos...!");
+			} else {
+				alert("Fallamos...!");
+			}
+			/*if(result && result1){
+				alert("Guardado Exitosamente");
+				
+			}
+			else{
+				alert("Fallamos...!");
+			}*/
+		
+		}
+		else
+		{
+			String opcion=(String)WinEvaluarArticulo.getAttribute("opcion");
+			alert("No se puede evaluar");
+			if(opcion!=null && opcion.equals("Evaluacion")){
+				ListaArticulosAsignados lac = (ListaArticulosAsignados) WinEvaluarArticulo.getAttribute("controladorOrigen");
+				if(lac!=null) lac.actualizarLista();
+				WinEvaluarArticulo.detach();
+
+		}
+		}
+		List<EstadoArticulo> listaestado = dba.buscarestados(ida);
+		id = listaestado.get(1).getId();
+		result2 = dba.Actualizr_estadoar(id, ida);
 		}
 		
-		ea.setId_articulo(ida);
-		System.out.println("id articulo evaluacion"+ida);
-		ea.setId_estado(3);
-		System.out.println("id estado evaluado"+ea.getId_estado());
-		ea.setId_utl_estado(1);
-		ea.setId_persona(u.getId());
-		result= dbaev.RegistrarEstadoArticulo(ea);
-		arte.setEval_promedio(acum);
-		arte.setEval_cantidad(2);
-		arte.setVol_id(1);
-		arte.setEstad_id(3);
-		arte.setEval_estado(1);
-		arte.setAr_id(ida);
-		arte.setEval_observacion("observacion");
-		result1=dbaev.RegistroArt_Evaluados(arte);
-		}
-	if(result && result1){
-		alert("Guardado Exitosamente");
-	}
-	else{
-		alert("Fallamos...!");
-	}
+		
+		
+/*	String opcion=(String)WinEvaluarArticulo.getAttribute("opcion");
+	if(opcion!=null && opcion.equals("Evaluacion")){
+		ListaArticulosAsignados lac = (ListaArticulosAsignados) WinEvaluarArticulo.getAttribute("controladorOrigen");
+		if(lac!=null) lac.actualizarLista();
+		WinEvaluarArticulo.detach();
+
+		}*/
+
+	
 }
 	
 	public void ObtenerIdArticuloRegistrado(String direc) {

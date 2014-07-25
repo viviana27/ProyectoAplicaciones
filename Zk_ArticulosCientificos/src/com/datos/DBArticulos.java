@@ -226,7 +226,7 @@ System.out.println("la fecha es : "+fecha);
 		return idArticuloRegistrado;
 	}
 
-	public List<Articulo> buscarArticulo(int idEstadoult, String titulo, String autor,
+	public List<Articulo> buscarArticulo(int idEstado, String titulo, String autor,
 			String tipoa, String area) {
 		int idUsuario = 0;
 		List<Articulo> lista = new ArrayList<Articulo>();
@@ -252,6 +252,52 @@ System.out.println("la fecha es : "+fecha);
 				 */
 					
 					try {
+						CallableStatement proc;
+						proc = con.prepareCall("{call spautor(?)}");
+						proc.setInt(1, idEstado);
+						proc.execute();
+						Articulo articulo = null;
+						  ResultSet rs = proc.getResultSet();
+						  while (rs.next()) {
+							  articulo = new Articulo();
+								articulo.setArt_id(rs.getInt("artid"));
+								articulo.setArt_titulo(rs
+										.getString("artTitulo"));
+								articulo.setNom_colaborador(rs
+										.getString("autor"));
+								
+								articulo.setArea_nombre(rs
+										.getString("area_nombre"));
+								articulo.setTipo_nombre(rs
+										.getString("tipo_nombre"));
+								//articulo.setNom_colaborador1(resultados.getString("coautor"));
+								articulo.setArt_resumen(rs
+										.getString("art_resumen"));
+								articulo.setNom_colaborador1(rs.getString("coautor"));
+								articulo.setArt_palabras_clave(rs
+										.getString("art_palab_clave"));
+								articulo.setPer_institucion1(rs
+										.getString("per_institucion1"));
+								articulo.setPer_institucion2(rs
+										.getString("per_institucion2"));
+								articulo.setArt_fecha_subida(rs
+										.getDate("art_fecha_subida"));
+								
+								lista.add(articulo);
+							  	System.out.println("Name : " + rs.getString(5));
+						  }
+
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					System.out.println("ddff" + sql);
+				}
+			
+		 /*else {
+						try {
 						CallableStatement proc;
 						proc = con.prepareCall("{call spautor(?)}");
 						proc.setInt(1, idEstadoult);
@@ -290,37 +336,6 @@ System.out.println("la fecha es : "+fecha);
 						e.printStackTrace();
 					}
 
-					System.out.println("ddff" + sql);
-				}
-			
-		 /*else {
-					sql = "SELECT a.art_id, a.art_titulo, p2.per_id, p2.per_nombre, p2.per_apellido, ar.area_nombre, "
-							+ "ta.tipo_nombre, pa.per_art_id, CONCAT(p.per_nombre,' ', p.per_apellido) as autor,a.art_resumen, a.art_palabras_clave, "
-							+ "a.art_fecha_subida,CONCAT(p2.per_institucion_pertenece,' - ',p2.per_direccion_institucion) AS institucion1, " 
-							+ "CONCAT(p.per_institucion_pertenece,' - ',p.per_direccion_institucion) AS institucion2 "
-							+ "FROM tb_persona AS p2 "
-							+ "INNER JOIN tb_persona_articulo AS pa ON p2.per_id = pa.per_id_registra "
-							+ "INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id "
-							+ "INNER JOIN tb_persona AS p ON pa.pers_id= p.per_id "
-							+ "INNER JOIN tb_estado_articulo esa ON esa.id_articulo = a.art_id "
-							+ "INNER JOIN tb_estados est ON est.id_estado = esa.id_estado "
-							+ "INNER JOIN tb_area AS ar ON a.area_id= ar.area_id  "
-							+ "INNER JOIN tb_tipo_articulo ta ON ta.tipo_id = a.tipo_id "
-							+ "WHERE esa.id_estado="+idEstado+" and (pa.per_id_registra="+idUsuario+" or pa.pers_id="
-							+ idUsuario
-							+ " )and a.art_estado =1 AND pa.per_art_estado =1 "
-							+ "and (a.art_titulo like '%"
-							+ titulo
-							+ "%' and (p2.per_nombre like '%"
-							+ autor
-							+ "%' or p2.per_apellido like '%"
-							+ autor
-							+ "%') and ta.tipo_nombre like '%"
-							+ tipoa
-							+ "%' and ar.area_nombre like '%"
-							+ area
-							+ "%') order by a.art_titulo";
-
 				}*/
 
 			}
@@ -331,7 +346,7 @@ System.out.println("la fecha es : "+fecha);
 						try {
 							CallableStatement proc;
 							proc = con.prepareCall("{call sp_segun_autor(?,?)}");
-							proc.setInt(1, idEstadoult);
+							proc.setInt(1, idEstado);
 							proc.setInt(2, idUsuario);
 							proc.execute();
 							Articulo articulo = null;
@@ -358,6 +373,8 @@ System.out.println("la fecha es : "+fecha);
 											.getString("per_institucion1"));
 									articulo.setPer_institucion2(rs
 											.getString("per_institucion2"));
+									articulo.setArt_fecha_subida(rs
+											.getDate("art_fecha_subida"));
 									lista.add(articulo);
 								  	System.out.println("Name : " + rs.getString(3));
 							  }
@@ -602,7 +619,7 @@ System.out.println("la fecha es : "+fecha);
 		ResultSet resultado = null;
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
-		String sql = "select te.id_estado,te.id_ult_estado from tb_estado_articulo as te where  te.id_articulo="+criterio;
+		String sql = "select te.id, te.id_estado,te.id_ult_estado from tb_estado_articulo as te where  te.id_articulo="+criterio;
 		
 		try {
 			sentencia = con.createStatement();
@@ -610,6 +627,7 @@ System.out.println("la fecha es : "+fecha);
 			
 			while (resultado.next()) {
 				 EstadoArticulo estado = new EstadoArticulo();
+				 estado.setId(resultado.getInt("id"));
 				estado.setId_utl_estado(resultado.getInt("id_ult_estado"));
 				lista.add(estado);
 			}
@@ -628,7 +646,7 @@ System.out.println("la fecha es : "+fecha);
 		return lista;
 	}
 	
-	public boolean Actualizr_estadoar(EstadoArticulo estad){
+	public boolean Actualizr_estadoar(int estad, int ida){
 
 		boolean registro=false;
 		//crear un objeto para la conexion
@@ -640,10 +658,11 @@ System.out.println("la fecha es : "+fecha);
 			con.setAutoCommit(false);
 			String sql="UPDATE tb_estado_articulo SET"
 					+" id_ult_estado=?"
-					+" where id=?";
+					+" where id=? and id_articulo=?";
 			PreparedStatement pstm=con.prepareStatement(sql);	
 			pstm.setInt(1,0);
-			pstm.setInt(2,estad.getId());
+			pstm.setInt(2,estad);
+			pstm.setInt(3,ida);
 			//ejecutar el prepaaredStatement
 			//retorna el numero de filas afectadas o retorna 0 si no se pudo realizar
 			int num=pstm.executeUpdate();

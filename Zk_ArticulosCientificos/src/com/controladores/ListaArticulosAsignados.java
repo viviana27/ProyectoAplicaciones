@@ -33,6 +33,7 @@ import org.zkoss.zul.Window;
 
 import com.SubirDescargarArchivos.Util;
 import com.datos.DBArticulos;
+import com.datos.DBParametrosEvaluacion;
 import com.entidades.Articulo;
 import com.entidades.Usuarios;
 import com.lowagie.text.Document;
@@ -146,13 +147,22 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 			alert("Seleccione por favor un articulo");
 			return;
 		}
+		DBParametrosEvaluacion dp= new DBParametrosEvaluacion();
+		int registro = 0;
+		registro= dp.TotalParametros();
+		if(registro==100){
+			
 		Window win = (Window) Executions.createComponents(
 				"Articulo/Evaluacion.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
 		Articulo arti = (Articulo) listaArticulosporpar.getSelectedItem()
 				.getValue();
+		win.setAttribute("opcion", "Evaluacion");
 		win.setAttribute("articulo", arti);
 	}
-
+	else{
+		alert("No está disponible los parámetros a considerar");
+	}
+}
 }

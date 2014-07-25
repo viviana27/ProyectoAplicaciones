@@ -143,9 +143,10 @@ public class DBArticulosEvaluados {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm = con.prepareStatement(sql);
 			pstm.setDouble(1, artEval.getEval_promedio());
-			System.out.println("hola aqui"+artEval.getEval_promedio());
 			pstm.setInt(2, artEval.getEval_cantidad());
+			
 			System.out.println("cantidad"+artEval.getEval_cantidad());
+			
 			pstm.setInt(3, 1);
 			System.out.println("volumen"+artEval.getVol_id());
 			pstm.setInt(4, 3);
@@ -181,6 +182,34 @@ public class DBArticulosEvaluados {
 		return resultado;
 	}
 	
+	public int contarEvaluados(int idarticulo)
+	{
+		int a=0;
+		DBManager dbm = new DBManager();
+		Connection con= dbm.getConection();
+	//contar
+	Statement sentencia = null;
+	ResultSet resultado = null;
+	String sql1 ="select count(*)as contar from tb_articulos_evaluados "+
+			"where tb_articulos_evaluados.ar_id=" +idarticulo;
+	try {
+		sentencia = con.createStatement();
+		resultado = sentencia.executeQuery(sql1);
+		System.out.println("codigonuevoooooo"+resultado);
+		while (resultado.next()) {
+			a=resultado.getInt("contar");
+		}
+		//fin del contar
+		
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println(a);
+	return a;
+	}
+
 	
 	
 	public List<EstadoArticulo> buscarestados(int criterio) {
