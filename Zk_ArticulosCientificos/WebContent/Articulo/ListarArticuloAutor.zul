@@ -68,7 +68,7 @@
 				<listheader label="Título" sort="auto(art_titulo)" />
 				<listheader label="Autor" sort="auto(per_nombre)" />
 				<listheader label="Co-Autores"
-					sort="auto(nom_colaborador)" />
+					sort="auto(nom_colaborador)" visible="false"/>
 				<listheader label="Tipo de Articulo"
 					sort="auto(tipo_nombre)" />
 				<listheader label="Área del Artículo"
@@ -80,7 +80,7 @@
 					<listcell label="${each.art_titulo}" />
 					<listcell
 						label="${each.per_nombre} ${each.per_apellido}" />
-					<listcell label="${each.nom_colaborador} " />
+					<listcell label="${each.nom_colaborador} " visible="false"/>
 					<listcell label="${each.tipo_nombre}" />
 					<listcell label="${each.area_nombre}" />
 				</listitem>

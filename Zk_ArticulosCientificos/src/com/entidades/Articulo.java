@@ -27,6 +27,15 @@ public class Articulo {
 	private String observacion;
 	private String nombreArticulo;
 	private String ruta;
+	private int idPadre;
+	public int getIdPadre() {
+		return idPadre;
+	}
+
+	public void setIdPadre(int idPadre) {
+		this.idPadre = idPadre;
+	}
+
 	public String getObservacion() {
 		return observacion;
 	}

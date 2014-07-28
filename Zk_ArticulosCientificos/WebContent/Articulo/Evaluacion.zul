@@ -8,7 +8,7 @@
 			</label>
 		</div>
 		<listbox id="parametros" mold="paging" pageSize="10"
-			multiple="false" width="100%" emptyMessage="">
+			multiple="false" width="100%" emptyMessage="" >
 
 			<auxhead sclass="category-center">
 
@@ -27,7 +27,7 @@
 					label="Calificación/Evaluación" />
 			</listhead>
 			<template name="model">
-				<listitem value="${each}">
+				<listitem value="${each}" >
 					<listcell visible="false" label="${each.param_id}" />
 					<listcell label="${each.param_descripcion}" />
 					<listcell label="${each.param_valor}" />

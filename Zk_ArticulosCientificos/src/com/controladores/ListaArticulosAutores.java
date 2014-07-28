@@ -9,6 +9,7 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
@@ -35,6 +36,7 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 	Textbox txtautor;
 	Textbox txttipo;
 	Textbox txtarea;
+	Label lblCantidadEvaluaciones;
 	Articulo u= new Articulo();
 	private Window winSubirArticulo;
 	@Override
@@ -64,7 +66,7 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 		Usuarios u = (Usuarios) session.getAttribute("User");
 		 idPersona= u.getPersona().getPer_id();
 		 
-		alert("aca toy: "+idEstado +"id Rol: "+idPersona);
+		//alert("aca toy: "+idEstado +"id Rol: "+idPersona);
 	
 		actualizarLista();
 	}
@@ -107,22 +109,32 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 				listaTareas.setModel(listModel);
 				// alert("lista"+ ((Articulo)listaTareas.getItemAtIndex(0)));
 				listaTareas.renderAll();*/
-				alert("aca estoy mmm");
+			alert("aca estoy listaArticulosAutores");
 
 	}
 	public void onSelect$listaTareas() {
+		//Articulo a=new Articulo();
 		if (listaTareas.getSelectedItem() == null) {
 			alert("Seleccion un artículo");
 			return;
 		}
+		int contareva=0;
+		DBArticulos dbart = new DBArticulos();
+		Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
+		contareva=dbart.CantidadEvaluaciones(art.getArt_id());
+		System.out.println("-------------------------"+contareva+" : : "+art.getArt_id() );
+		if (contareva==2){
 		Window win = (Window) Executions.createComponents(
 				"Articulo/Subir Articulo Corregido.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
 		win.setAttribute("opcion", "listaArticuloAutor");
 		win.setAttribute("controladorOrigen", this);
-		Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
+		
 		win.setAttribute("articulo", art);
+		}else{
+			alert("Articulo aun no ha sido evaluado por el par completo");
+		}
 	}
 	
 	public void onCreate$winSubirArticulo() {
