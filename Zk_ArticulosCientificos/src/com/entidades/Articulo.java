@@ -20,7 +20,7 @@ public class Articulo {
 	private int per_id;
 	private String per_nombre;
 	private String per_apellido;
-	private int id_estado;
+	private int id_padre;
 	private String per_institucion1;
 	private String per_institucion2;
 	private int idColaborador;
@@ -58,7 +58,7 @@ public class Articulo {
 	public Articulo(int art_id, String art_titulo, String art_archivo,
 			String art_resumen, String art_palabras_clave,
 			Date art_fecha_subida, int art_estado, int tipo_id, int id_area,
-			int per_id, int id_estado) {
+			int per_id, int id_padre) {
 		super();
 		this.art_id = art_id;
 		this.art_titulo = art_titulo;
@@ -70,7 +70,7 @@ public class Articulo {
 		this.tipo_id = tipo_id;
 		this.id_area = id_area;
 		this.per_id = per_id;
-		this.id_estado = id_estado;
+		this.id_padre = id_padre;
 	}
 
 	
@@ -195,12 +195,14 @@ public class Articulo {
 		this.per_id = per_id;
 	}
 
-	public int getId_estado() {
-		return id_estado;
+
+
+	public int getId_padre() {
+		return id_padre;
 	}
 
-	public void setId_estado(int id_estado) {
-		this.id_estado = id_estado;
+	public void setId_padre(int id_padre) {
+		this.id_padre = id_padre;
 	}
 
 	public String getTipo_nombre() {

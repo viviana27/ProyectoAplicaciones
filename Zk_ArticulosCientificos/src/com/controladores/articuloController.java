@@ -31,6 +31,7 @@ import org.zkoss.zul.Window;
 import com.SubirDescargarArchivos.Util;
 import com.datos.DBAreas;
 import com.datos.DBArticulos;
+import com.datos.DBArticulosEvaluados;
 import com.datos.DBTipoArticulos;
 import com.datos.DBUsuario;
 import com.entidades.Areas;
@@ -68,6 +69,8 @@ public class articuloController extends GenericForwardComposer<Component> {
 	boolean result3 = false;
 	DBArticulos dbart = new DBArticulos();
 String direccionArticuloCorregido;
+int ida=0,id=0;
+int idart=0, regcontar =0;
 	// //----------------------------------------------------------------------------
 	// codigo para subir un archivo al servidor
 	public Media media;
@@ -152,6 +155,8 @@ String direccionArticuloCorregido;
 		boolean result = false;
 		boolean result2 = false;
 		boolean result3 = false;
+		boolean result4 = false;
+		boolean result5 = false;
 		DBArticulos dbart = new DBArticulos();
 	
 		fecha = txtfecha.getValue();
@@ -181,7 +186,7 @@ String direccionArticuloCorregido;
 							a.setArt_fecha_subida(fecha);
 							a.setArt_archivo(direccion);
 							a.setArt_estado(1);
-							// a.setId_estado(1);
+							a.setId_padre(0);
 							a.setPer_id(idUsuario);
 							result = dbart.RegistrarArticulo(a);
 							if (result) {
@@ -197,8 +202,9 @@ String direccionArticuloCorregido;
 						alert("existe");
 						if (Util.uploadFile(media)) {
 							obtenerRutaArchivoAdjuntado();
-							a.setArt_id(a.getArt_id());
-							alert(a.getArt_id() + "");
+							idart=art.getArt_id();
+						//	a.setArt_id(idart);
+						//	alert(idart + "");
 							/*
 							 * a.setTipo_id(idTipoArticulo);
 							 * a.setId_area(idTipoArea);
@@ -216,7 +222,31 @@ String direccionArticuloCorregido;
 							 * Messagebox.show(Labels.getLabel("app.error")); }
 							 * Colaboradores();
 							 */
+							a.setTipo_id(idTipoArticulo);
+							a.setId_area(idTipoArea);
+							a.setArt_titulo(textbox_Titulo.getValue());
+							a.setArt_resumen(textbox_Resumen.getValue());
+							a.setArt_palabras_clave(textbox_PClaves.getValue());
+							a.setArt_fecha_subida(fecha);
+							a.setArt_archivo(direccion);
+							a.setArt_estado(1);
+							a.setId_padre(idart);
+							a.setPer_id(idUsuario);
+							result = dbart.RegistrarArticulo(a);
+							DBArticulos dbar=new DBArticulos();
+							List<EstadoArticulo> listaestado = dbar.buscarestados(idart);
+							id = listaestado.get(3).getId();
+							System.out.println("id estado ultimo estado"+id);
+							result5 = dbar.Actualizr_estadoar(id, idart);
+							if (result) {
+								alert("Articulo registrado con exito");
+							} else {
+								alert("No se pudo realizar el registro");
+							}
+						} else {
+							Messagebox.show(Labels.getLabel("app.error"));
 						}
+						Colaboradores2();	
 					}
 				
 				} else {
@@ -255,10 +285,39 @@ String direccionArticuloCorregido;
 		ObtenerIdArticuloRegistrado(direccion);
 		ea.setId_articulo(idArticuloSubido);
 		ea.setId_estado(1);
+		ea.setId_utl_estado(1);
 		ea.setId_persona(idUsuario);
 		result3 = dbart.RegistrarEstadoArticulo(ea);
 	}
 
+	public void Colaboradores2() {
+		if (comboAutor2.getValue() != null) {
+			ObtenerIdArticuloRegistrado(direccion);
+
+			System.out.println(" id autor2 en guardar: " + idAutor2);
+			pa.setPers_id(idAutor2);
+			pa.setArti_id(idArticuloSubido);
+			pa.setPer_art_estado(1);
+			pa.setPer_id_registra(idUsuario);
+			result2 = dbart.RegistrarPersonaArticulo(pa);
+		}
+		if (comboAutor3.getValue() != null) {
+			ObtenerIdArticuloRegistrado(direccion);
+			pa.setPers_id(idAutor3);
+			pa.setArti_id(idArticuloSubido);
+			pa.setPer_art_estado(1);
+			pa.setPer_id_registra(idUsuario);
+			result2 = dbart.RegistrarPersonaArticulo(pa);
+		}
+		ObtenerIdArticuloRegistrado(direccion);
+		ea.setId_articulo(idArticuloSubido);
+		ea.setId_estado(2);
+		ea.setId_utl_estado(1);
+		ea.setId_persona(idUsuario);
+		result3 = dbart.RegistrarEstadoArticulo(ea);
+	}
+
+	
 	public void limpiar() {
 		textbox_Titulo.setValue("");
 		textbox_Resumen.setValue("");
@@ -271,6 +330,8 @@ String direccionArticuloCorregido;
 		txtfecha.setValue(null);
 	}
 
+
+	
 	public void ObtenerIdArticuloRegistrado(String direc) {
 		DBArticulos dba = new DBArticulos();
 		idArticuloSubido = dba.obtenerIdArticuloRegistrado(direc);
@@ -334,6 +395,7 @@ String direccionArticuloCorregido;
 			resumen.setValue(art.getArt_resumen());
 			palabrasClaves.setValue(art.getArt_palabras_clave());
 			fechaRecibido.setValue(art.getArt_fecha_subida().toString());
+			
 		}
 	}
 
@@ -390,13 +452,34 @@ String direccionArticuloCorregido;
 		nombreArticuloCorregido.setValue(art.getArt_archivo());
 		f = new File(direccionArticuloCorregido);
 		// System.out.println("nombre completo" + nombreArticulo.getValue());
-		try {
-			Filedownload.save(f, null);
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		alert("descarga exitosa");
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		DBArticulos dba=new DBArticulos();
+		DBArticulosEvaluados dbaev= new DBArticulosEvaluados();
+		idart=art.getArt_id();
+		System.out.println("id articulo evaluacion"+idart);
+		regcontar = dba.contarRegistrosestados(idart);
+			if(regcontar==4){	
+				button_descarga.setVisible(false);
+				alert("Ya se descargó el archivo obervaciones");
+			}else{
+			try {
+				Filedownload.save(f, null);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			EstadoArticulo esa=new EstadoArticulo();
+			esa.setId_articulo(idart);
+			esa.setId_estado(6);
+			esa.setId_utl_estado(1);
+			esa.setId_persona(u.getId());
+			result= dbaev.RegistrarEstadoArticulo(esa);
+			List<EstadoArticulo> listaestado = dba.buscarestados(idart);
+			id = listaestado.get(2).getId();
+			result2 = dba.Actualizr_estadoar(id, idart);
+			alert("descarga exitosa");
+			}
+	
 	}
+	
 }

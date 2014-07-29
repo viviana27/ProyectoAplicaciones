@@ -37,7 +37,7 @@ public class DBArticulos {
 					+ " art_archivo," + " art_resumen, "
 					+ " art_palabras_clave, " + " art_fecha_subida, "
 					+ " art_estado, " + " tipo_id, " + " area_id, "
-					+ " per_id ) VAlUES (?,?,?,?,?,?,?,?,?)";
+					+ " per_id, id_padre ) VAlUES (?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, art.getArt_titulo());
@@ -53,6 +53,7 @@ System.out.println("la fecha es : "+fecha);
 			pstm.setInt(7, art.getTipo_id());
 			pstm.setInt(8, art.getId_area());
 			pstm.setInt(9, art.getPer_id());
+			pstm.setInt(10, art.getId_padre());
 			int filas_afectadas = pstm.executeUpdate();
 			con.commit();
 			resultado = true;
@@ -724,6 +725,35 @@ System.out.println("la fecha es : "+fecha);
 		
 		return registro;
 		
+	}
+	
+	
+	public int contarRegistrosestados(int id)
+	{
+		int a=0;
+		DBManager dbm = new DBManager();
+		Connection con= dbm.getConection();
+	//contar
+	Statement sentencia = null;
+	ResultSet resultado = null;
+	String sql1 ="select count(*)as contar from tb_estado_articulo " +
+			"where id_articulo="+id;
+	try {
+		sentencia = con.createStatement();
+		resultado = sentencia.executeQuery(sql1);
+		System.out.println("codigonuevoooooo"+resultado);
+		while (resultado.next()) {
+			a=resultado.getInt("contar");
+		}
+		//fin del contar
+		
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println(a);
+	return a;
 	}
 	
 	

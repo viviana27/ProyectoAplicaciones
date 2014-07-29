@@ -51,10 +51,10 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuitemR2.setValue("Usuarios/listaUsuarios.zul");
 		menuitemR1.addEventListener("onClick", new MenuListener());
 		menuitemR2.addEventListener("onClick", new MenuListener());
-		if(dbp.ConsultarPermisos(idtipousuario, 15)){
-			menupopup.appendChild(menuitemR1);}
-		if(dbp.ConsultarPermisos(idtipousuario, 16)){
-			menupopup.appendChild(menuitemR2);}
+		//if(dbp.ConsultarPermisos(idtipousuario, 15)){
+			menupopup.appendChild(menuitemR1);//}
+		//if(dbp.ConsultarPermisos(idtipousuario, 16)){
+			menupopup.appendChild(menuitemR2);//}
 		menuR.appendChild(menupopup);
 		menubar_opciones.appendChild(menuR);
 		
@@ -152,15 +152,15 @@ public class indexController extends GenericForwardComposer<Component> {
 			menupopupM.appendChild(menuitemM3);//}
 		//if(dbp.ConsultarPermisos(idtipousuario, 20)){
 			menupopupM.appendChild(menuitemM4);//}
-		if(dbp.ConsultarPermisos(idtipousuario, 21)){
-			menupopupM.appendChild(menuitemM5);}
-		if(dbp.ConsultarPermisos(idtipousuario, 22)){
-			menupopupM.appendChild(menuitemM6);}
-		if(dbp.ConsultarPermisos(idtipousuario, 23)){
-			menupopupM.appendChild(menuitemM7);}
+		//if(dbp.ConsultarPermisos(idtipousuario, 21)){
+			menupopupM.appendChild(menuitemM5);//}
+		//if(dbp.ConsultarPermisos(idtipousuario, 22)){
+			menupopupM.appendChild(menuitemM6);//}
+		//if(dbp.ConsultarPermisos(idtipousuario, 23)){
+			menupopupM.appendChild(menuitemM7);//}
 		
 		menuM.appendChild(menupopupM);
-		// menubar_opciones.appendChild(menuM);
+		menubar_opciones.appendChild(menuM);
 
 		Menu menuN = new Menu("Notificaciones");
 		Menupopup menupopupN = new Menupopup();

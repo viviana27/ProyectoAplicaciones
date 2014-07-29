@@ -467,7 +467,14 @@ public class DBListarArticulosAutores {
 		// busqueda a la base de datos
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
-		String sql = "select ta.art_id,ta.art_titulo,tp.per_id,tp.per_nombre,tp.per_apellido,tpa.pers_id,tta.tipo_id,tta.tipo_nombre, tar.area_id,tar.area_nombre,ta.art_resumen,ta.art_palabras_clave,tareva.eval_observacion,tareva.nombre,tareva.direccion from ((((tb_articulo as ta inner join tb_persona as tp on ta.per_id=tp.per_id)inner join tb_tipo_articulo as tta on ta.tipo_id=tta.tipo_id)inner join tb_area as tar on ta.area_id=tar.area_id)inner join tb_persona_articulo as tpa on ta.art_id=tpa.arti_id)inner join tb_articulos_evaluados as tareva on ta.art_id=tareva.ar_id where tp.per_id="
+		String sql = "select ta.art_id,ta.art_titulo,tp.per_id,tp.per_nombre," +
+				"tp.per_apellido,tpa.pers_id,tta.tipo_id,tta.tipo_nombre, " +
+				"tar.area_id,tar.area_nombre,ta.art_resumen,ta.art_palabras_clave," +
+				"tareva.eval_observacion,tareva.nombre,tareva.direccion from" +
+				" ((((tb_articulo as ta inner join tb_persona as tp on ta.per_id=tp.per_id)" +
+				"inner join tb_tipo_articulo as tta on ta.tipo_id=tta.tipo_id)inner join tb_area " +
+				"as tar on ta.area_id=tar.area_id)inner join tb_persona_articulo as tpa on ta.art_id=tpa.arti_id)" +
+				"inner join tb_articulos_evaluados as tareva on ta.art_id=tareva.ar_id where tp.per_id="
 				+ IdPersona;
 
 		System.out.println("Sql Return Articulo: " + sql);
