@@ -81,7 +81,9 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 		// lista de usuarios
 		DBArticulos dbart = new DBArticulos();
 		// lista con usuarios encontrados
-		List<Articulo> lista = dbart.buscarArticuloEvaluador(
+		
+		//articulo a evaluar debe actualizarse en  lista
+		List<Articulo> lista = dbart.buscarArticuloAEvaluar(
 				txtProyecto.getValue(), txtarea.getValue());
 		// establecer esta lista como modelo de dalos pasra el listbox
 		ListModelList<Articulo> listModel = new ListModelList<Articulo>(lista);

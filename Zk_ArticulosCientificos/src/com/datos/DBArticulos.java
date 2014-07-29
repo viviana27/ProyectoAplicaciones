@@ -341,6 +341,7 @@ System.out.println("la fecha es : "+fecha);*/
 		return idArticuloRegistrado;
 	}
 
+
 	public List<Articulo> buscarArticulo(int idEstado, String titulo, String autor,
 			String tipoa, String area) {
 		int idUsuario = 0;
@@ -365,7 +366,7 @@ System.out.println("la fecha es : "+fecha);*/
 				 * Aqui se cambia el sql por el nuevo procedimiento
 				 * 
 				 */
-					System.out.println("idestado en Bd: "+idEstado);
+					
 					try {
 						CallableStatement proc;
 						proc = con.prepareCall("{call spautor(?)}");
@@ -408,14 +409,18 @@ System.out.println("la fecha es : "+fecha);*/
 						e.printStackTrace();
 					}
 
-					//System.out.println("ddff" + sql);
+					System.out.println("ddff" + sql);
 				}
 			
-		 /*else {
+		 else {
 						try {
 						CallableStatement proc;
-						proc = con.prepareCall("{call spautor(?)}");
-						proc.setInt(1, idEstadoult);
+						proc = con.prepareCall("{call spautorparametros(?,?,?,?,?)}");
+						proc.setInt(1, idEstado);
+						proc.setString(2, '%'+titulo+'%');
+						proc.setString(3, '%'+autor+'%');
+						proc.setString(4, '%'+tipoa+'%');
+						proc.setString(5, '%'+area+'%');
 						proc.execute();
 						Articulo articulo = null;
 						  ResultSet rs = proc.getResultSet();
@@ -451,7 +456,7 @@ System.out.println("la fecha es : "+fecha);*/
 						e.printStackTrace();
 					}
 
-				}*/
+				}
 
 			}
 			else{
@@ -504,58 +509,56 @@ System.out.println("la fecha es : "+fecha);*/
 					
 
 					}
+					else{
+						try {
+						CallableStatement proc;
+						proc = con.prepareCall("{call sp_segun_autorparame(?,?,?,?,?,?)}");
+						proc.setInt(1, idEstado);
+						proc.setInt(2, idUsuario);
+						proc.setString(3, '%'+titulo+'%');
+						proc.setString(4, '%'+autor+'%');
+						proc.setString(5, '%'+tipoa+'%');
+						proc.setString(6, '%'+area+'%');
+						proc.execute();
+						Articulo articulo = null;
+						  ResultSet rs = proc.getResultSet();
+						  while (rs.next()) {
+							  articulo = new Articulo();
+								articulo.setArt_id(rs.getInt("artid"));
+								articulo.setArt_titulo(rs
+										.getString("artTitulo"));
+								articulo.setNom_colaborador(rs
+										.getString("autor"));
+								
+								articulo.setArea_nombre(rs
+										.getString("area_nombre"));
+								articulo.setTipo_nombre(rs
+										.getString("tipo_nombre"));
+								//articulo.setNom_colaborador1(resultados.getString("coautor"));
+								articulo.setArt_resumen(rs
+										.getString("art_resumen"));
+								articulo.setNom_colaborador1(rs.getString("coautor"));
+								articulo.setArt_palabras_clave(rs
+										.getString("art_palab_clave"));
+								articulo.setPer_institucion1(rs
+										.getString("per_institucion1"));
+								articulo.setPer_institucion2(rs
+										.getString("per_institucion2"));
+								lista.add(articulo);
+							  	System.out.println("Name : " + rs.getString(5));
+						  }
+
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					}
 				
 			}
+				
 		}
 
-			/*
-		try {
-			sentencia = con.createStatement();
-			resultados = sentencia.executeQuery(sql);
-			System.out.println("LLega al codigo =)" + resultados);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("error al ejecutar la sentencia");
-		}
-		// recorrer el resultset
-		try {
-			
-			Articulo articulo = null;
-			while (resultados.next()) {
-				articulo = new Articulo();
-				articulo.setArt_id(resultados.getInt("art_id"));
-				articulo.setArt_titulo(resultados.getString("art_titulo"));
-				articulo.setPer_nombre(resultados.getString("per_nombre"));
-				articulo.setPer_apellido(resultados.getString("per_apellido"));
-				articulo.setArea_nombre(resultados.getString("area_nombre"));
-				articulo.setTipo_nombre(resultados.getString("tipo_nombre"));
-				articulo.setNom_colaborador(resultados.getString("autor"));
-				articulo.setArt_resumen(resultados.getString("art_resumen"));
-				articulo.setArt_palabras_clave(resultados
-						.getString("art_palabras_clave"));
-				articulo.setArt_fecha_subida(resultados
-						.getDate("art_fecha_subida"));
-
-				articulo.setPer_institucion1(resultados
-						.getString("institucion1"));
-				articulo.setPer_institucion2(resultados
-						.getString("institucion2"));
-				lista.add(articulo);
-			}
-			con.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("error al recorrer resultset");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}*/
 		}
 		return lista;
 
@@ -584,23 +587,23 @@ System.out.println("la fecha es : "+fecha);*/
 		if (usua != null) {
 			if (usua.getId_rol() == 1) {
 				if (titulo.equals("") && area.equals("") ) {
-					sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo, " +
-							" a.area_nombre, " +
-							"a.area_id, p.per_nombre, p.per_apellido " +
-							"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
-							"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
-							"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
-							"WHERE ar.art_estado =1 " +
-							"ORDER BY  p.per_nombre ";
+					sql = "SELECT ar.art_id, ar.art_titulo, ar.art_archivo, " +
+							"a.area_nombre, a.area_id, p.per_nombre, p.per_apellido " +
+							"FROM tb_persona AS p right join tb_pares as pa " +
+							"on pa.personas_id=p.per_id right join tb_articulo as ar" +
+							" on ar.per_id=p.per_id inner join tb_area as a " +
+							"on a.area_id=ar.area_id right join tb_estado_articulo as esa " +
+							"on esa.id_articulo=ar.art_id where(esa.id_estado=1 and esa.id_ult_estado=1)";
 
 					System.out.println("sentencia por rol administrador" + sql);
 				} else {
-					sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo," +
-							" a.area_nombre, " +
-							"a.area_id, p.per_nombre, p.per_apellido " +
-							"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
-							"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
-							"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
+					sql =  "SELECT ar.art_id, ar.art_titulo, ar.art_archivo, " +
+							"a.area_nombre, a.area_id, p.per_nombre, p.per_apellido " +
+							"FROM tb_persona AS p right join tb_pares as pa " +
+							"on pa.personas_id=p.per_id right join tb_articulo as ar" +
+							" on ar.per_id=p.per_id inner join tb_area as a " +
+							"on a.area_id=ar.area_id right join tb_estado_articulo as esa " +
+							"on esa.id_articulo=ar.art_id "+
 							"WHERE ar.art_estado =1 " +
 							"and (ar.art_titulo like '%"
 							+ titulo
@@ -656,7 +659,7 @@ System.out.println("la fecha es : "+fecha);*/
 								" a.area_nombre, " +
 								"a.area_id, p.per_id,p.per_nombre, p.per_apellido " +
 								"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
-								"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
+								"right JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
 								"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
 								"LEFT JOIN tb_estado_articulo esa ON esa.id_articulo = ar.art_id " +
 								"WHERE ar.art_estado =1 and p.per_id="+idUsuario+" and esa.id_estado=2 "+
@@ -668,7 +671,7 @@ System.out.println("la fecha es : "+fecha);*/
 										" a.area_nombre, " +
 										"a.area_id, p.per_nombre, p.per_apellido " +
 										"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
-										"RIGHT JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
+										"right JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
 										"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
 										"LEFT JOIN tb_estado_articulo esa ON esa.id_articulo = ar.art_id " +
 										"WHERE ar.art_estado =1 and p.per_id="+idUsuario+" and esa.id_estado=2 " +
@@ -726,6 +729,178 @@ System.out.println("la fecha es : "+fecha);*/
 
 		return lista;
 	}
+	
+	//articulos para evaluar
+		public List<Articulo> buscarArticuloAEvaluar(String titulo, String area) {
+			int idUsuario=0;
+			List<Articulo> lista = new ArrayList<Articulo>();
+			// objeto sentencia
+			Statement sentencia = null;
+			// objeto para resultados
+			ResultSet resultados = null;
+			// obtener la conexion a la base
+			DBManager dbm = new DBManager();
+			Connection con = dbm.getConection();
+			Session session = Sessions.getCurrent();
+			Sessions.getCurrent();
+			Usuarios usua = (Usuarios) session.getAttribute("User");
+			idUsuario = usua.getId();
+			
+	//||
+			String sql = "";
+			if (usua != null) {
+				if (usua.getId_rol() == 1) {
+					if (titulo.equals("") && area.equals("") ) {
+						sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo, " +
+								"a.area_nombre, a.area_id, p.per_nombre, p.per_apellido " +
+								"FROM tb_persona AS p " +
+								"left JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
+								"left JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
+								"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id" +
+								" WHERE ar.art_estado =1 ORDER BY p.per_nombre";
+
+						System.out.println("sentencia por rol administrador" + sql);
+					} else {
+						sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo," +
+								" a.area_nombre, " +
+								"a.area_id, p.per_nombre, p.per_apellido " +
+								"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
+								"left JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
+								"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
+								"WHERE ar.art_estado =1 " +
+								"and (ar.art_titulo like '%"
+								+ titulo
+								+ "%' and a.area_nombre like '%"
+								+ area
+								+ "%' ) order by  p.per_nombre";
+						
+					}
+					try {
+						sentencia = con.createStatement();
+						resultados = sentencia.executeQuery(sql);
+						System.out.println("LLega al codigo =)");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println("error al ejecutar la sentencia");
+					}
+					// recorrer el resultset
+					try {
+						PersonaArticulo personaarticulo = null;
+						Articulo articulo = null;
+						while (resultados.next()) {
+							articulo = new Articulo();
+							articulo.setArt_id(resultados.getInt("art_id"));
+							articulo.setArt_titulo(resultados.getString("art_titulo"));
+							System.out.println(articulo.getArt_titulo()+"  titulo");
+							articulo.setArea_nombre(resultados.getString("area_nombre"));
+							articulo.setId_area(resultados.getInt("area_id"));
+							articulo.setPer_nombre(resultados.getString("per_nombre"));
+							articulo.setPer_apellido(resultados.getString("per_apellido"));
+							articulo.setArt_archivo(resultados.getString("art_archivo"));
+							System.out.println(articulo.getArt_archivo()+"  archivo");
+							lista.add(articulo);
+						}
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println("error al recorrer resultset");
+					} finally {
+						try {
+							con.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+				}
+				if (usua.getId_rol() == 3) {
+						if (titulo.equals("")  && area.equals("")) {
+							/*sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, " +
+									" a.area_nombre, " +
+									"a.area_id, p.per_id,p.per_nombre, p.per_apellido " +
+									"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
+									"left JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
+									"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
+									"LEFT JOIN tb_estado_articulo esa ON esa.id_articulo = ar.art_id " +
+									"WHERE ar.art_estado =1 and p.per_id="+idUsuario+" and esa.id_estado=2 "+
+									"ORDER BY  p.per_nombre";
+*/
+							sql="SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, " +
+									"a.area_nombre, a.area_id, p.per_id,p.per_nombre, p.per_apellido" +
+									" FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = " +
+									"p.per_id left JOIN tb_articulo AS ar ON ar.art_id = " +
+									"pa.articulos_id LEFT JOIN tb_area AS a ON a.area_id = " +
+									"ar.area_id LEFT JOIN tb_estado_articulo esa ON esa.id_articulo =" +
+									" ar.art_id WHERE ar.art_estado =1 and p.per_id=12 and" +
+									" (esa.id_estado=2 and esa.id_ult_estado=1) ORDER BY p.per_nombre";
+							System.out.println("ddff" + sql);
+								} else {
+									sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo," +
+											" a.area_nombre, " +
+											"a.area_id, p.per_nombre, p.per_apellido " +
+											"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
+											"left JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
+											"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
+											"LEFT JOIN tb_estado_articulo esa ON esa.id_articulo = ar.art_id " +
+											"WHERE ar.art_estado =1 and p.per_id="+idUsuario+" and esa.id_estado=2 " +
+											"and (ar.art_titulo like '%"
+											+ titulo
+											+ "%' and a.area_nombre like '%"
+											+ area
+											+ "%' ) order by  p.per_nombre";
+									
+					}
+
+						try {
+							sentencia = con.createStatement();
+							resultados = sentencia.executeQuery(sql);
+							System.out.println("LLega al codigo =)"+resultados);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							System.out.println("error al ejecutar la sentencia");
+						}
+						// recorrer el resultset
+						try {
+							PersonaArticulo personaarticulo = null;
+							Articulo articulo = null;
+							while (resultados.next()) {
+								articulo = new Articulo();
+								articulo.setArt_id(resultados.getInt("art_id"));
+								articulo.setArt_titulo(resultados.getString("art_titulo"));
+								articulo.setArea_nombre(resultados.getString("area_nombre"));
+								articulo.setId_area(resultados.getInt("area_id"));
+								articulo.setPer_nombre(resultados.getString("per_nombre"));
+								articulo.setPer_apellido(resultados.getString("per_apellido"));
+								articulo.setArt_archivo(resultados.getString("art_archivo"));
+								System.out.println(articulo.getArt_archivo()+"  ruta");
+								lista.add(articulo);
+							}
+							con.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							System.out.println("error al recorrer resultset");
+						} finally {
+							try {
+								con.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
+					
+					
+					}
+				} 
+
+			return lista;
+		}
+
 	public List<Persona> buscarColaboradores(int criterio) {
 		List<Persona> lista = new ArrayList<Persona>();
 		Statement sentencia = null;

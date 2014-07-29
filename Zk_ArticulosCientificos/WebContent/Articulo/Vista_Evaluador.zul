@@ -1,6 +1,6 @@
 <?page title="Listado de Articulos Asignados" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="lISTADO DE ARTICULOS ASIGNADOS AL EVALUADOR"
+	<window title="LISTADO DE ARTICULOS ASIGNADOS AL EVALUADOR"
 		border="normal" apply="com.controladores.ListaArticulosAsignados">
 		<!-- iniciar sesion como administrador y se cargan todos los articulos enviados -->
 		<listbox id="listaArticulosporpar" mold="paging" pageSize="6"

@@ -50,7 +50,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	Button button_Registrar, button_Registrar12, button_Obs;
 	Window WinEvaluarArticulo;
 	Listbox parametros;
-	int reg_evaluados;
+	int reg_evaluados,evaluador;
 	ListModelList<ParametrosEvaluacion> listModel;
 	List<ParametrosArticulo> listaParam = new ArrayList<ParametrosArticulo>();
 	Articulo art;
@@ -194,11 +194,12 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	else
 	{
 		recorrerLista();
+		evaluador= dbaev.existeEvaluador(ida);
 		reg_evaluados=dbaev.contarEvaluados(ida);
 		
 		System.out.println("el reg contar primero  es "+reg_evaluados);
 		
-		if(reg_evaluados<2){
+		if(reg_evaluados<2 && u.getId() != evaluador){
 			
 			
 			DBParametrosArticulos dbp = new DBParametrosArticulos();
@@ -245,7 +246,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 				acum=0;
 
 			} else {
-				alert("Fallamos...!");
+				//alert("Fallamos...!");
 			}
 			/*if(result && result1){
 				alert("Guardado Exitosamente");
@@ -259,7 +260,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 		else
 		{
 			String opcion=(String)WinEvaluarArticulo.getAttribute("opcion");
-			alert("No se puede evaluar");
+			alert("No se puede evaluar, el articulo ya fue evaluado");
 			if(opcion!=null && opcion.equals("Evaluacion")){
 				ListaArticulosAsignados lac = (ListaArticulosAsignados) WinEvaluarArticulo.getAttribute("controladorOrigen");
 				if(lac!=null) lac.actualizarLista();

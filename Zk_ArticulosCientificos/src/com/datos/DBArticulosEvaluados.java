@@ -249,6 +249,34 @@ public class DBArticulosEvaluados {
 		return lista;
 	}
 
+	public int existeEvaluador(int idarticulo)
+	{
+		
+		int a=0;
+		DBManager dbm = new DBManager();
+		Connection con= dbm.getConection();
+	//contar
+	Statement sentencia = null;
+	ResultSet resultado = null;
+	String sql1 ="Select distinct pa.person_id from tb_parametros_articulo pa, " +
+			"tb_articulo as ar where ar.art_id=pa.articul_id and ar.art_id= ' "+idarticulo+" '";
+	try {
+		sentencia = con.createStatement();
+		resultado = sentencia.executeQuery(sql1);
+		System.out.println("Db articulos evaluados-2 veces de registro"+resultado);
+		while (resultado.next()) {
+			a=resultado.getInt("person_id");
+		}
+		//fin del contar
+		
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println(a);
+	return a;
+	}
 
 
 }
