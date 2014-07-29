@@ -14,7 +14,9 @@ import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.DropEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Decimalbox;
@@ -69,7 +71,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	Double valor = 0.0;
 	Textbox txtObservacion;
 	String NombreArchi, direccion, nom;
-
+	
 	@NotifyChange("media")
 	@Command
 	public void onUpload$button_Obs(
@@ -129,13 +131,13 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			Listitem item = (Listitem) parametros.getItems().get(y);
 			List<Component> lceldas = item.getChildren();
 			Listcell lc = (Listcell) lceldas.get(3);
-			Doublebox dt = new Doublebox();
+			Doublebox dt= new Doublebox();
 			dt.setId("db" + y);
 			dt.setParent(lc);
 			// alert("" + lc.getLabel());
 		}
 	}
-
+	 
 	public void recorrerLista() {
 
 		Usuarios u = (Usuarios) session.getAttribute("User");
@@ -217,7 +219,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			}
 			
 			ea.setId_articulo(ida);
-			System.out.println("id articulo evaluacion"+ida);
+			System.out.println("id articulo evaluacion: "+ida);
 			ea.setId_estado(3);
 			System.out.println("id estado evaluado"+ea.getId_estado());
 			ea.setId_utl_estado(1);
@@ -228,10 +230,14 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			arte.setEval_cantidad(1);
 			arte.setVol_id(1);
 			arte.setEstad_id(3);
-			arte.setEval_estado(1);
+			arte.setEval_estado(1); 
 			arte.setAr_id(ida);
-			arte.setEval_observacion("observacion");
-			result1=dbaev.RegistroArt_Evaluados(arte);
+			arte.setEval_observacion(txtObservacion.getValue().trim());
+			if(acum<70 && (txtObservacion.getValue().trim().length()<1 && media==null)){
+			alert("articulo con calificacion menor a 70, por favor adjuntar o escribir observaciones");
+			}else{
+				result1=dbaev.RegistroArt_Evaluados(arte);	
+			}
 			
 			
 			System.out.println("el reg contar del if es "+reg_evaluados);
@@ -300,4 +306,5 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	 * alert("la suma total de parametros no debe exeder al 100% del total ");
 	 * caliFinal.setValue(""); } }
 	 */
+	
 }

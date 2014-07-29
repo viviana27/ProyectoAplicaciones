@@ -84,7 +84,7 @@ public class indexController extends GenericForwardComposer<Component> {
 		Menuitem menuitemA3 = new Menuitem("Subir Nuevo Articulo");
 		Menuitem menuitemA4 = new Menuitem("Asignar Evaluadores a un Articulo");
 		Menuitem menuitemA5 = new Menuitem("Articulos Asignados a evaluar");
-		Menuitem menuitemA6 = new Menuitem("Listar Articulos Autores");
+		Menuitem menuitemA6 = new Menuitem("Listar Articulos a Corregir");
 		menuitemA1.setValue("Articulo/Listar Articulos.zul");
 		//menuitemA2.setValue("Articulo/Evaluacion.zul");
 		menuitemA3.setValue("Articulo/Subir Articulo.zul");

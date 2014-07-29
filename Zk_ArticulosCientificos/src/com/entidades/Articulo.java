@@ -20,13 +20,32 @@ public class Articulo {
 	private int per_id;
 	private String per_nombre;
 	private String per_apellido;
-	private int id_padre;
 	private String per_institucion1;
 	private String per_institucion2;
 	private int idColaborador;
 	private String observacion;
 	private String nombreArticulo;
 	private String ruta;
+	private int idPadre;
+	private int padre;
+	public int getIdPadre() {
+		return idPadre;
+	}
+
+	public void setIdPadre(int idPadre) {
+		this.idPadre = idPadre;
+	}
+	
+
+	
+	public int getPadre() {
+		return padre;
+	}
+
+	public void setPadre(int padre) {
+		this.padre = padre;
+	}
+
 	public String getObservacion() {
 		return observacion;
 	}
@@ -58,7 +77,7 @@ public class Articulo {
 	public Articulo(int art_id, String art_titulo, String art_archivo,
 			String art_resumen, String art_palabras_clave,
 			Date art_fecha_subida, int art_estado, int tipo_id, int id_area,
-			int per_id, int id_padre) {
+			int per_id) {
 		super();
 		this.art_id = art_id;
 		this.art_titulo = art_titulo;
@@ -70,7 +89,6 @@ public class Articulo {
 		this.tipo_id = tipo_id;
 		this.id_area = id_area;
 		this.per_id = per_id;
-		this.id_padre = id_padre;
 	}
 
 	
@@ -195,15 +213,6 @@ public class Articulo {
 		this.per_id = per_id;
 	}
 
-
-
-	public int getId_padre() {
-		return id_padre;
-	}
-
-	public void setId_padre(int id_padre) {
-		this.id_padre = id_padre;
-	}
 
 	public String getTipo_nombre() {
 		return tipo_nombre;

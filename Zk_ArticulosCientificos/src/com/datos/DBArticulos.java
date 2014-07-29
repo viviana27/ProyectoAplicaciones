@@ -17,6 +17,7 @@ import org.zkoss.zk.ui.Sessions;
 import com.entidades.Areas;
 import com.entidades.Articulo;
 import com.entidades.EstadoArticulo;
+import com.entidades.ObservacionesEvaluadores;
 import com.entidades.Persona;
 import com.entidades.PersonaArticulo;
 import com.entidades.Roles;
@@ -37,7 +38,7 @@ public class DBArticulos {
 					+ " art_archivo," + " art_resumen, "
 					+ " art_palabras_clave, " + " art_fecha_subida, "
 					+ " art_estado, " + " tipo_id, " + " area_id, "
-					+ " per_id, id_padre ) VAlUES (?,?,?,?,?,?,?,?,?,?)";
+					+ " per_id) VAlUES (?,?,?,?,?,?,?,?,?)";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, art.getArt_titulo());
@@ -53,7 +54,6 @@ System.out.println("la fecha es : "+fecha);
 			pstm.setInt(7, art.getTipo_id());
 			pstm.setInt(8, art.getId_area());
 			pstm.setInt(9, art.getPer_id());
-			pstm.setInt(10, art.getId_padre());
 			int filas_afectadas = pstm.executeUpdate();
 			con.commit();
 			resultado = true;
@@ -77,6 +77,120 @@ System.out.println("la fecha es : "+fecha);
 		return resultado;
 	}
 
+	public boolean RegistrarArticuloModificado(Articulo art,int idAutor2 ,int idAutor3) {
+		boolean resultado = false;
+		// añadir el codigo
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		Statement sentencia=null;
+		ResultSet resultadoSet = null;
+		int filas_afectadas=0;
+		try {
+			con.setAutoCommit(false);
+			//DBManager dbm = new DBManager();
+		//	Connection cone = dbm.getConection();
+
+			//por defecto es true asi q lo cambiamos
+			
+			String sqlUpdate="UPDATE tb_articulo SET art_estado=? where art_id=?";
+			PreparedStatement pstm=con.prepareStatement(sqlUpdate);
+			pstm.setInt(1,0);
+			pstm.setInt(2,art.getIdPadre());
+			int num=pstm.executeUpdate();
+			
+			//pstm.setInt(3, rol.getRol_id());
+			
+			//ejecutar el prepaaredStatement
+			//retorna el numero de filas afectadas o retorna 0 si no se pudo realizar
+			//int num=pstm.executeUpdate();
+		//	Connection con1 = dbm.getConection();
+			//con.setAutoCommit(false);
+			String sql = "INSERT INTO tb_articulo" + " (art_titulo, art_archivo, art_resumen, "
+					+ " art_palabras_clave, "
+					+ " art_estado, " + " tipo_id, " + " area_id, "
+					+ " per_id, id_padre, padre , art_fecha_subida ) VAlUES (?,?,?,?,?,?,?,?,?,?,CURRENT_DATE)";
+			//pstm=new PreparedStatement();
+			PreparedStatement pstm1 = con.prepareStatement(sql);
+			pstm1 = con.prepareStatement(sql);
+			pstm1.setString(1, art.getArt_titulo());
+			pstm1.setString(2, art.getArt_archivo());
+			pstm1.setString(3, art.getArt_resumen());
+			pstm1.setString(4, art.getArt_palabras_clave());
+
+			/*java.sql.Date fecha = new java.sql.Date(art.getArt_fecha_subida()
+					.getTime());
+System.out.println("la fecha es : "+fecha);*/
+			
+			pstm1.setInt(5, art.getArt_estado());
+			pstm1.setInt(6, art.getTipo_id());
+			pstm1.setInt(7, art.getId_area());
+			pstm1.setInt(8, art.getPer_id());
+			pstm1.setInt(9, art.getIdPadre());
+			pstm1.setInt(10,art.getPadre());
+			num = pstm1.executeUpdate();
+			
+			
+			String sqlTbPerArticulo="INSERT into tb_persona_articulo (pers_id,per_art_estado,per_id_registra,arti_id) values (?,?,?,(SELECT MAX(art_id) AS id FROM tb_articulo))";
+			PreparedStatement pstm2 = con.prepareStatement(sqlTbPerArticulo);
+			pstm2 = con.prepareStatement(sqlTbPerArticulo);
+			pstm2.setInt(1, idAutor2);
+			pstm2.setInt(2, 1);
+			pstm2.setInt(3, art.getPer_id());
+			//num = pstm2.executeUpdate();
+			
+			String sqlTbPerArticuloAutor2="INSERT into tb_persona_articulo (pers_id,arti_id,per_art_estado,per_id_registra) values (?,(SELECT MAX(art_id) AS id FROM tb_articulo),?,?)";
+			PreparedStatement pstm3 = con.prepareStatement(sqlTbPerArticuloAutor2);
+			pstm3 = con.prepareStatement(sqlTbPerArticuloAutor2);
+			pstm3.setInt(1, idAutor3);
+			pstm3.setInt(2, 1);
+			pstm3.setInt(3, art.getPer_id());
+			//num = pstm3.executeUpdate();
+			
+			String sqlBuscaEvaluadores="select * from tb_pares where articulos_id="+art.getIdPadre();
+			//PreparedStatement pstm3 = con.prepareStatement(sqlTbPerArticulo);
+			sentencia = con.createStatement();
+			resultadoSet = sentencia.executeQuery(sqlBuscaEvaluadores);
+			String sqlInsertEvaluadores="INSERT into tb_pares (personas_id,id_esta,par_cantidad,par_estado,articulos_id) values (?,?,?,?,(SELECT MAX(art_id) AS id FROM tb_articulo))";
+			while (resultadoSet.next()) {
+				System.out.println("idEvaluador: "+resultadoSet.getInt("personas_id"));
+				PreparedStatement pstm4=con.prepareStatement(sqlInsertEvaluadores);
+				pstm4=con.prepareStatement(sqlInsertEvaluadores);
+				pstm4.setInt(1,resultadoSet.getInt("personas_id"));
+				pstm4.setInt(2,2);
+				pstm4.setInt(3,2);
+				pstm4.setInt(4,1);
+				filas_afectadas	=pstm4.executeUpdate();
+			}
+			
+			String sqlUpdateEstado="Update tb_estado_articulo set id_ult_estado=0 where id_articulo=?";
+			PreparedStatement pstm5 = con.prepareStatement(sqlUpdateEstado);
+			pstm5 = con.prepareStatement(sqlUpdateEstado);
+			pstm5.setInt(1, art.getIdPadre());
+			num=pstm5.executeUpdate();
+			
+		//	
+			
+			con.commit();
+			resultado = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return resultado;
+	}
 	public boolean RegistrarPersonaArticulo(PersonaArticulo perArt) {
 		boolean resultado = false;
 		// añadir el codigo
@@ -251,7 +365,7 @@ System.out.println("la fecha es : "+fecha);
 				 * Aqui se cambia el sql por el nuevo procedimiento
 				 * 
 				 */
-					
+					System.out.println("idestado en Bd: "+idEstado);
 					try {
 						CallableStatement proc;
 						proc = con.prepareCall("{call spautor(?)}");
@@ -294,7 +408,7 @@ System.out.println("la fecha es : "+fecha);
 						e.printStackTrace();
 					}
 
-					System.out.println("ddff" + sql);
+					//System.out.println("ddff" + sql);
 				}
 			
 		 /*else {
@@ -757,4 +871,175 @@ System.out.println("la fecha es : "+fecha);
 	}
 	
 	
+/*	public boolean Actualizr_estadoarmodificado(int estad1, int ida){
+
+		boolean registro=false;
+		//crear un objeto para la conexion
+		DBManager dbm =new DBManager();
+		Connection con= dbm.getConection();
+		//vamos a guardar utilizando transacciones 
+		try {
+			//por defecto es true asi q lo cambiamos
+			con.setAutoCommit(false);
+			String sql="UPDATE tb_estado_articulo SET"
+					+" id_ult_estado=?"
+					+" where id=? and id_articulo=?";
+			PreparedStatement pstm=con.prepareStatement(sql);	
+			pstm.setInt(1,0);
+			pstm.setInt(2,estad1);
+			pstm.setInt(4,ida);
+			//ejecutar el prepaaredStatement
+			//retorna el numero de filas afectadas o retorna 0 si no se pudo realizar
+			int num=pstm.executeUpdate();
+				//si no hay error 
+				con.commit();
+				registro=true;
+				
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}finally{
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return registro;
+		
+	}
+	*/
+	public int buscarPromedioArticulo(int idArticulo) {
+		int promedio=0;
+		Statement sentencia = null;
+		ResultSet resultado = null;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		String sql = "select sum(eval_promedio)/2 as promedio from tb_articulos_evaluados where ar_id="+idArticulo;
+		try {
+			sentencia = con.createStatement();
+			resultado = sentencia.executeQuery(sql);
+			
+			while (resultado.next()) {
+				 promedio=(resultado.getInt("promedio"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return promedio;
+	}
+	public int CantidadEvaluaciones(int idArticulo) {
+		int promedio=0;
+		Statement sentencia = null;
+		ResultSet resultado = null;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		String sql = "select count(*) as cantidad from tb_articulos_evaluados where ar_id="+idArticulo;
+		try {
+			sentencia = con.createStatement();
+			resultado = sentencia.executeQuery(sql);
+			
+			while (resultado.next()) {
+				 promedio=(resultado.getInt("cantidad"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return promedio;
+	}
+	
+	public int Cantidadcorreciones(int idpadre) {
+		int cantico=0;
+		Statement sentencia = null;
+		ResultSet resultado = null;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		String sql = "select count(*) as cantidad from tb_articulo where padre="+idpadre;
+		try {
+			sentencia = con.createStatement();
+			resultado = sentencia.executeQuery(sql);
+			
+			while (resultado.next()) {
+				 cantico=(resultado.getInt("cantidad"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return cantico;
+	}
+	
+	
+	
+	
+	
+	
+	public List<ObservacionesEvaluadores> ObservacionesEvaluaciones(int idArticulo) {
+		//int promedio=0;
+		List<ObservacionesEvaluadores> lista = new ArrayList<ObservacionesEvaluadores>();
+		Statement sentencia = null;
+		ResultSet resultado = null;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		String sql = "select eval_observacion,nombre,direccion from tb_articulos_evaluados where ar_id="+idArticulo;
+		try {
+			sentencia = con.createStatement();
+			resultado = sentencia.executeQuery(sql);
+			
+			while (resultado.next()) {
+				 ObservacionesEvaluadores obs = new ObservacionesEvaluadores();
+				 obs.setEval_observacion(resultado.getString("eval_observacion"));
+				 obs.setNombre(resultado.getString("nombre"));
+				 obs.setDireccion(resultado.getString("direccion"));
+				 lista.add(obs);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return lista;
+	}
 }

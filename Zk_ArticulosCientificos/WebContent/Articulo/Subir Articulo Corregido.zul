@@ -7,6 +7,66 @@
 
 			<rows>
 				<row>
+					<div>
+						<label value="Codigo Articulo: " />
+						<label id="lblidArticulo" />
+					</div>
+					<div>
+						<label value="Calificacion Articulo: " />
+						<label id="lblCalificacion" />
+
+					</div>
+				</row>
+				<row>
+					<div>
+
+						<label value="Observaciones 1" />
+
+						<textbox id="txtObservaciones" rows="5"
+							cols="40" height="50px" width="85%" disabled="true"/>
+					</div>
+					<div>
+
+						<label value="Observaciones 2" />
+
+						<textbox id="txtObservaciones2" rows="5"
+							cols="40" height="50px" width="85%" disabled="true"/>
+					</div>
+				</row>
+				<row>
+					<div>
+						<label value="Descargar Correcion: "
+							id="lblDescargar" />
+						<label id="nombreArticuloCorregido"
+							value="Archivo.docx" visible="true" />
+					
+					<vbox width="100%">
+						<button label="Descargar archivo" mold="trendy"
+							id="button_descarga" onClick="@command('downloadFile')"
+							visible="true" />
+					</vbox>
+					</div>
+					<div>
+						<label value="Descargar Correcion: "
+							id="lblDescargar2" />
+						<label id="nombreArticuloCorregido2"
+							value="Archivo.docx" visible="true" />
+					
+					<vbox width="100%">
+						<button label="Descargar archivo" mold="trendy"
+							id="button_descarga2" onClick="@command('downloadFile')"
+							visible="true" />
+					</vbox>
+					</div>
+				</row>
+				<row>
+					<div>
+						<label value="Evaluciones: " />
+						<label id="lblCantidadEvaluaciones" />
+
+					</div>
+				</row>
+				<row>
 					<label value="Nombre Autor Principal"></label>
 					<textbox id="textbox_autor" disabled="true"
 						width="30%">
@@ -25,8 +85,8 @@
 				</row>
 				<row>
 					<label>Área de Artículo</label>
-					<combobox id="cmb_area" autodrop="true"
-						width="30%">
+					<combobox id="cmb_area" autodrop="true" width="30%"
+						disabled="true">
 						<template name="model">
 							<comboitem label="${each.area_nombre}"
 								value="${each}" />
@@ -54,10 +114,6 @@
 					<label>Palabras claves:</label>
 					<textbox id="textbox_PClaves" width="100%">
 					</textbox>
-				</row>
-				<row>
-					<label>Fecha:</label>
-					<datebox id="txtfecha" />
 				</row>
 				<row>
 					<label>
@@ -94,21 +150,7 @@
 						<label id="nombreArticulo" value="Archivo.doc" />
 					</vbox>
 				</row>
-				<row>
-					<div>
-						<label value="Descargar Correcion: " id="lblDescargar"/>
-						<label id="nombreArticuloCorregido"
-							value="Archivo.docx" visible="true" />
-					</div>
-					<vbox width="100%">
 
-						<button label="Descargar archivo" mold="trendy"
-							id="button_descarga" onClick="@command('downloadFile')"
-							visible="true" />
-
-					</vbox>
-
-				</row>
 				<row>
 					<button label="Guardar y Enviar"
 						id="button_Registrar" image="Imagenes/save.png">
