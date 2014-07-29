@@ -31,6 +31,7 @@ import org.zkoss.zul.Window;
 import com.SubirDescargarArchivos.Util;
 import com.datos.DBAreas;
 import com.datos.DBArticulos;
+import com.datos.DBArticulosEvaluados;
 import com.datos.DBTipoArticulos;
 import com.datos.DBUsuario;
 import com.entidades.Areas;
@@ -70,6 +71,9 @@ public class articuloController extends GenericForwardComposer<Component> {
 	boolean result3 = false;
 	DBArticulos dbart = new DBArticulos();
 	String direccionArticuloCorregido,direccionArticuloCorregido2;
+int ida=0,id=0;
+int idart=0,idpadre1=0, regcontar =0,reconta=0;
+
 	// //----------------------------------------------------------------------------
 	// codigo para subir un archivo al servidor
 	public Media media;
@@ -149,9 +153,6 @@ public class articuloController extends GenericForwardComposer<Component> {
 	}
 
 	public void onClick$button_Registrar() throws Exception {
-		boolean result = false;
-		boolean result2 = false;
-		boolean result3 = false;
 		DBArticulos dbart = new DBArticulos();
 
 
@@ -169,7 +170,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 			alert("Ingrese todos los campos");
 		} else {
 
-			if (nombreArticulo.getValue() != "Archivo.doc") {
+	if (nombreArticulo.getValue() != "Archivo.doc") {
 				if (art == null) {
 					if (Util.uploadFile(media)) {
 						obtenerRutaArchivoAdjuntado();
@@ -196,6 +197,9 @@ public class articuloController extends GenericForwardComposer<Component> {
 					Colaboradores();
 				} else {
 					//alert("existe");
+					DBArticulos contac=new DBArticulos();
+	                reconta= contac.Cantidadcorreciones(idpadre1);
+	                if(reconta==0){
 					if (Util.uploadFile(media)) {
 						obtenerRutaArchivoAdjuntado();
 						 onSelect$cmb_tipo();
@@ -212,6 +216,9 @@ public class articuloController extends GenericForwardComposer<Component> {
 						a.setId_area(idTipoArea);
 						a.setPer_id(idUsuario);
 						a.setIdPadre(Integer.parseInt(lblidArticulo.getValue().trim()));
+						a.setPadre(Integer.parseInt(lblidArticulo.getValue().trim()));
+						System.out.println("idpadreprincipal"+idart);
+						System.out.println("reconta"+reconta);
 						result = dbart.RegistrarArticuloModificado(a,idAutor2,idAutor3);
 						if (result) {
 							alert("Articulo registrado con exito");
@@ -221,6 +228,43 @@ public class articuloController extends GenericForwardComposer<Component> {
 						Colaboradores2();
 						
 					}
+	                }else{
+	                	if(reconta>0 && reconta<=1){
+	                		if (Util.uploadFile(media)) {
+	    						obtenerRutaArchivoAdjuntado();
+	    						 onSelect$cmb_tipo();
+	    						 onSelect$comboAutor2();
+	    						 onSelect$comboAutor3();
+	    						 onSelect$cmb_area();
+	    						a = new Articulo();
+	    						a.setArt_titulo(textbox_Titulo.getValue().trim());
+	    						a.setArt_archivo(direccion);
+	    						a.setArt_resumen(textbox_Resumen.getValue().trim());
+	    						a.setArt_palabras_clave(textbox_PClaves.getValue().trim());
+	    						a.setArt_estado(1);
+	    						a.setTipo_id(idTipoArticulo);
+	    						a.setId_area(idTipoArea);
+	    						a.setPer_id(idUsuario);
+	    						a.setIdPadre(Integer.parseInt(lblidArticulo.getValue().trim()));
+	    						a.setPadre(idpadre1);
+	    						System.out.println("reconta"+reconta);
+	    						System.out.println("idpadreprincipal"+idpadre1);
+	    						result = dbart.RegistrarArticuloModificado(a,idAutor2,idAutor3);
+	    						if (result) {
+	    							alert("Articulo registrado con exito");
+	    						} else {
+	    							alert("No se pudo realizar el registro");
+	    						}
+	    						Colaboradores2();
+	    						
+	    					}
+	                	}else{
+	                		if(reconta>=2){
+	                		alert("ya no puede subir una nueva correccion del articulo");
+	                		
+	                		}
+	                	}
+	                }
 				}
 
 			} else {
@@ -291,6 +335,8 @@ public class articuloController extends GenericForwardComposer<Component> {
 		ea.setId_persona(idUsuario);
 		result3 = dbart.RegistrarEstadoArticulo(ea);
 	}
+
+	
 	public void limpiar() {
 		textbox_Titulo.setValue("");
 		textbox_Resumen.setValue("");
@@ -303,6 +349,8 @@ public class articuloController extends GenericForwardComposer<Component> {
 		//txtfecha.setValue(null);
 	}
 
+
+	
 	public void ObtenerIdArticuloRegistrado(String direc) {
 		DBArticulos dba = new DBArticulos();
 		idArticuloSubido = dba.obtenerIdArticuloRegistrado(direc);
@@ -365,7 +413,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 			resumen.setValue(art.getArt_resumen());
 			palabrasClaves.setValue(art.getArt_palabras_clave());
 			fechaRecibido.setValue(art.getArt_fecha_subida().toString());
-			System.out.println("en Detalle Articulo el idArticulo: "+art.getArt_id());
+			
 		}
 	}
 
@@ -378,7 +426,9 @@ public class articuloController extends GenericForwardComposer<Component> {
 		textbox_autor.setText(u.getPersona().getPer_nombre() + " "
 				+ u.getPersona().getPer_apellido());
 		if (art != null) {
-			
+			idart=art.getArt_id();
+			idpadre1=art.getPadre();
+			System.out.println("id ultimo paaaaa"+idpadre1);
 			System.out.println("en Modificar Articulo el idArticulo: "+art.getArt_id());
 			lblidArticulo.setValue(Integer.toString(art.getArt_id()));
 			buscarPromedioArticulo(art.getArt_id());
@@ -465,7 +515,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 		}
 		alert("descarga exitosa");
 	}
-	public void onClick$button_descarga2() {
+public void onClick$button_descarga2() {
 		
 		f2 = new File(direccionArticuloCorregido2);
 		try {
@@ -477,4 +527,5 @@ public class articuloController extends GenericForwardComposer<Component> {
 		}
 		alert("descarga exitosa");
 	}
+	
 }

@@ -564,7 +564,7 @@ public class DBUsuario {
 			
 			sentencia = con.createStatement();
 			//String sql="Select * from tb_rol where rol_estado=1";
-			String 	sql = "Select p.per_id, p.per_nombre, p.per_apellido from tb_persona as p, " +
+			String 	sql = "Select p.per_id, p.per_nombre, p.per_apellido, p.per_email from tb_persona as p, " +
 					"tb_usuario as u, tb_persona_area as pa where p.per_id=u.persona_id " +
 					"and u.rol_id_usuario=3 and pa.area_id='"+area+"' and pa.per_id=u.persona_id";
 		System.out.println("el sql con evaluador"+ sql);
@@ -575,6 +575,7 @@ public class DBUsuario {
 				System.out.println("id persona"+ resultados.getInt("per_id"));
 				pares.setPer_nombre(resultados.getString("per_nombre"));
 				pares.setPer_apellido(resultados.getString("per_apellido"));
+				pares.setPer_email(resultados.getString("per_email"));
 				// agrego usuario con datos cargados desde la base a mi lista de
 				// usuarios
 				lista.add(pares);
@@ -602,7 +603,7 @@ public class DBUsuario {
 			
 			sentencia = con.createStatement();
 			//String sql="Select * from tb_rol where rol_estado=1";
-			String 	sql = "Select p.per_id, p.per_nombre, p.per_apellido from tb_persona as p, " +
+			String 	sql = "Select p.per_id, p.per_nombre, p.per_apellido, p.per_email from tb_persona as p, " +
 					"tb_usuario as u, tb_persona_area as pa, tb_pares as par where p.per_id=u.persona_id " +
 					"and u.rol_id_usuario=3 and pa.area_id= '"+area+"' and pa.per_id=u.persona_id and " +
 					"(par.personas_id <> p.per_id and par.articulos_id='"+idarticulo+"')";
@@ -615,6 +616,7 @@ public class DBUsuario {
 				System.out.println("id persona"+ resultados.getInt("per_id"));
 				pares.setPer_nombre(resultados.getString("per_nombre"));
 				pares.setPer_apellido(resultados.getString("per_apellido"));
+				pares.setPer_email(resultados.getString("per_email"));
 				// agrego usuario con datos cargados desde la base a mi lista de
 				// usuarios
 				listanueva.add(pares);

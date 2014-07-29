@@ -9,6 +9,7 @@ public class Pares {
 	private int estado_id;
 	private int cant_par;
 	private int par_estado;
+	private String per_email;
 	public Pares(int par_id, int articulos_id, int personas_id,
 			int estado_id, int cant_par, int par_estado) {
 		super();
@@ -31,6 +32,13 @@ public class Pares {
 	}
 
 	
+	
+	public String getPer_email() {
+		return per_email;
+	}
+	public void setPer_email(String per_email) {
+		this.per_email = per_email;
+	}
 	public int getArticulos_id() {
 		return articulos_id;
 	}

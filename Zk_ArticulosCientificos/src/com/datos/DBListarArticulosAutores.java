@@ -459,19 +459,37 @@ public class DBListarArticulosAutores {
 		return lista;
 	}
 
-	public List<Articulo> buscarArticuloEvaluador(int IdPersona) {
+	public List<Articulo> buscarArticuloEvaluador(String titulo, String area, String tipoa) {
 		List<Articulo> lista = new ArrayList<Articulo>();
 		Statement sentencia = null;
 		ResultSet registros = null;
-
+		int idUsuario = 0;
+		Session session = Sessions.getCurrent();
+		Sessions.getCurrent();
+		Usuarios usua = (Usuarios) session.getAttribute("User");
+		idUsuario = usua.getId();
 		// busqueda a la base de datos
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
+		String sql = "SELECT ta.art_id, ta.art_titulo, tp.per_id, tp.per_nombre, tp.per_apellido, " +
+				"tpa.pers_id, tta.tipo_id, tta.tipo_nombre, tar.area_id, tar.area_nombre, ta.art_resumen,ta.padre," +
+				"ta.art_palabras_clave, tareva.eval_observacion, tareva.nombre, tareva.direccion " +
+				" FROM (((((tb_articulo AS ta INNER JOIN tb_persona AS tp ON ta.per_id = tp.per_id ) " +
+				"INNER JOIN tb_tipo_articulo AS tta ON ta.tipo_id = tta.tipo_id ) " +
+				"INNER JOIN tb_area AS tar ON ta.area_id = tar.area_id) INNER JOIN tb_persona_articulo AS tpa ON ta.art_id = tpa.arti_id ) " +
+				"INNER JOIN tb_estado_articulo esa ON esa.id_articulo = ta.art_id INNER JOIN tb_estados est ON est.id_estado = esa.id_estado )" +
+				"INNER JOIN tb_articulos_evaluados AS tareva ON ta.art_id = tareva.ar_id WHERE tp.per_id ="
+				+ idUsuario +" AND ta.art_estado =1 AND ( esa.id_estado =3 AND esa.id_ult_estado =1 ) " +
+				"and (ta.art_titulo like '%"
+				+ titulo
+				+ "%' and tar.area_nombre like '%"
+				+ area
+				+ "%' and tta.tipo_nombre like '%"
+				+ tipoa
+				+ "%' ) ORDER BY ta.art_titulo";		
+			
 		
-		
-		String sql = "select ta.art_id,ta.art_titulo,tp.per_id,tp.per_nombre,tp.per_apellido,tpa.pers_id,tta.tipo_id,tta.tipo_nombre, tar.area_id,tar.area_nombre,ta.art_resumen,ta.art_palabras_clave,tareva.eval_observacion,tareva.nombre,tareva.direccion from ((((tb_articulo as ta inner join tb_persona as tp on ta.per_id=tp.per_id)inner join tb_tipo_articulo as tta on ta.tipo_id=tta.tipo_id)inner join tb_area as tar on ta.area_id=tar.area_id)inner join tb_persona_articulo as tpa on ta.art_id=tpa.arti_id)inner join tb_articulos_evaluados as tareva on ta.art_id=tareva.ar_id where ta.art_estado =1 and tp.per_id="
-				+ IdPersona;
-
+	
 		System.out.println("Sql Return Articulo: " + sql);
 
 		try {
@@ -488,8 +506,6 @@ public class DBListarArticulosAutores {
 			while (registros.next()) {
 				a = new Articulo();
 				a.setArt_id(registros.getInt("art_id"));
-				System.out.println("--------------------- : "
-						+ registros.getInt("art_id"));
 				a.setArt_titulo(registros.getString("art_titulo"));
 				a.setPer_id(registros.getInt("per_id"));
 				a.setPer_nombre(registros.getString("per_nombre"));
@@ -505,6 +521,8 @@ public class DBListarArticulosAutores {
 				a.setObservacion(registros.getString("eval_observacion"));
 				a.setNombreArticulo(registros.getString("nombre"));
 				a.setRuta(registros.getString("direccion"));
+				a.setPadre(registros.getInt("padre"));
+				System.out.println("padre ultimo"+ a.getPadre());
 				// agrego usuario con datos cargados desde la base a mi lista de
 				// usuarios
 				lista.add(a);
@@ -524,7 +542,7 @@ public class DBListarArticulosAutores {
 			}
 		}
 		String nombreColaboradores = "";
-		String Colaboradores = "";
+		String Colaboradores="";
 		int id;
 		boolean bandera;
 		do {

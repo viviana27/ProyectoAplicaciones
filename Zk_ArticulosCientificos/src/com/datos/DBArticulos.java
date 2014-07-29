@@ -38,7 +38,7 @@ public class DBArticulos {
 					+ " art_archivo," + " art_resumen, "
 					+ " art_palabras_clave, " + " art_fecha_subida, "
 					+ " art_estado, " + " tipo_id, " + " area_id, "
-					+ " per_id ) VAlUES (?,?,?,?,?,?,?,?,?)";
+					+ " per_id) VAlUES (?,?,?,?,?,?,?,?,?)";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, art.getArt_titulo());
@@ -108,7 +108,7 @@ System.out.println("la fecha es : "+fecha);
 			String sql = "INSERT INTO tb_articulo" + " (art_titulo, art_archivo, art_resumen, "
 					+ " art_palabras_clave, "
 					+ " art_estado, " + " tipo_id, " + " area_id, "
-					+ " per_id, id_padre , art_fecha_subida ) VAlUES (?,?,?,?,?,?,?,?,?,CURRENT_DATE)";
+					+ " per_id, id_padre, padre , art_fecha_subida ) VAlUES (?,?,?,?,?,?,?,?,?,?,CURRENT_DATE)";
 			//pstm=new PreparedStatement();
 			PreparedStatement pstm1 = con.prepareStatement(sql);
 			pstm1 = con.prepareStatement(sql);
@@ -126,7 +126,7 @@ System.out.println("la fecha es : "+fecha);*/
 			pstm1.setInt(7, art.getId_area());
 			pstm1.setInt(8, art.getPer_id());
 			pstm1.setInt(9, art.getIdPadre());
-			
+			pstm1.setInt(10,art.getPadre());
 			num = pstm1.executeUpdate();
 			
 			
@@ -1017,6 +1017,35 @@ System.out.println("la fecha es : "+fecha);*/
 	}
 	
 	
+	public int contarRegistrosestados(int id)
+	{
+		int a=0;
+		DBManager dbm = new DBManager();
+		Connection con= dbm.getConection();
+	//contar
+	Statement sentencia = null;
+	ResultSet resultado = null;
+	String sql1 ="select count(*)as contar from tb_estado_articulo " +
+			"where id_articulo="+id;
+	try {
+		sentencia = con.createStatement();
+		resultado = sentencia.executeQuery(sql1);
+		System.out.println("codigonuevoooooo"+resultado);
+		while (resultado.next()) {
+			a=resultado.getInt("contar");
+		}
+		//fin del contar
+		
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println(a);
+	return a;
+	}
+	
+	
 /*	public boolean Actualizr_estadoarmodificado(int estad1, int ida){
 
 		boolean registro=false;
@@ -1120,6 +1149,41 @@ System.out.println("la fecha es : "+fecha);*/
 		}
 		return promedio;
 	}
+	
+	public int Cantidadcorreciones(int idpadre) {
+		int cantico=0;
+		Statement sentencia = null;
+		ResultSet resultado = null;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		String sql = "select count(*) as cantidad from tb_articulo where padre="+idpadre;
+		try {
+			sentencia = con.createStatement();
+			resultado = sentencia.executeQuery(sql);
+			
+			while (resultado.next()) {
+				 cantico=(resultado.getInt("cantidad"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return cantico;
+	}
+	
+	
+	
+	
+	
+	
 	public List<ObservacionesEvaluadores> ObservacionesEvaluaciones(int idArticulo) {
 		//int promedio=0;
 		List<ObservacionesEvaluadores> lista = new ArrayList<ObservacionesEvaluadores>();

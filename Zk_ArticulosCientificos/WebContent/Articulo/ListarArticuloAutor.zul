@@ -1,24 +1,8 @@
 <?page title="Listar Articulo Autor" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="LISTADO DE ARTÍCULOS CIENTÍFICOS" border="normal"
+	<window title="LISTADO DE ARTÍCULOS EVALUADOS CON OBSERVACIONES" border="normal"
 		position="center,top" id="winNuevoArticulo"
 		apply="com.controladores.ListaArticulosAutores">
-		<div id="estado" align="center">
-			<label style="font-weight: bold; color:blue;">
-				Listar según estado:
-			</label>
-			<combobox id="cmb_estados" autodrop="true" width="30%">
-				<template name="model">
-					<comboitem label="${each.estado_descripcion}"
-						value="${each}" />
-				</template>
-			</combobox>
-			<separator></separator>
-			<label style="color:green;">
-				Para ver detalle de un artículo, seleccione con un click
-				sobre la lista
-			</label>
-		</div>
 		<listbox id="listaTareas" mold="paging" pageSize="4"
 			multiple="false" width="100%"
 			emptyMessage="No personasfound in the result">
@@ -33,13 +17,6 @@
 					<label>Título:</label>
 					<textbox id="txtProyecto"></textbox>
 					<button id="idfiltroTitulo"
-						image="Imagenes/searchs.png">
-					</button>
-				</auxheader>
-				<auxheader rowspan="1">
-					<label>Autor:</label>
-					<textbox id="txtautor"></textbox>
-					<button id="idfiltroautor"
 						image="Imagenes/searchs.png">
 					</button>
 				</auxheader>

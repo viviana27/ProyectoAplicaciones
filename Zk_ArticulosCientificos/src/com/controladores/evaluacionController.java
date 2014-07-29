@@ -76,6 +76,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	@Command
 	public void onUpload$button_Obs(
 			@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event) {
+	
 		media = event.getMedia();
 
 		String extension = media.getFormat();
