@@ -96,12 +96,15 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 			alert("Seleccion un artículo");
 			return;
 		}
-		int contareva=0;
+		int contareva=0,contarco=0;
 		DBArticulos dbart = new DBArticulos();
 		Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
 		contareva=dbart.CantidadEvaluaciones(art.getArt_id());
+		contarco=dbart.Cantidadcorreciones(art.getPadre());
 		System.out.println("-------------------------"+contareva+" : : "+art.getArt_id() );
+		System.out.println("-------------------------"+contarco+" : : "+art.getPadre() );
 		if (contareva==2){
+			if(contarco<=1){
 		Window win = (Window) Executions.createComponents(
 				"Articulo/Subir Articulo Corregido.zul", null, null);
 		win.setClosable(true);
@@ -110,6 +113,9 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 		win.setAttribute("controladorOrigen", this);
 		
 		win.setAttribute("articulo", art);
+		}else{
+			alert("No se puede subir una nueva correccion del articulo");
+		}
 		}else{
 			alert("Articulo aun no ha sido evaluado por el par completo");
 		}

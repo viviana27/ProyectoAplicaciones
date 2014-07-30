@@ -5,6 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -12,7 +20,6 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.DropEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
@@ -44,6 +51,7 @@ import com.entidades.Pares;
 import com.entidades.Permiso;
 import com.entidades.Usuarios;
 
+
 public class evaluacionController extends GenericForwardComposer<Component> {
 	public Label nombreArch, tit, caliFinal;
 	Doublebox calific;
@@ -71,7 +79,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	Double valor = 0.0;
 	Textbox txtObservacion;
 	String NombreArchi, direccion, nom;
-	
+	String email2;
 	@NotifyChange("media")
 	@Command
 	public void onUpload$button_Obs(
@@ -168,7 +176,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 					pa.setParam_id(idParam);
 					pa.setPerson_id(u.getId());
 					pa.setArticul_id(art.getArt_id());
-
+                    email2= art.getEmail();
 					listaParam.add(pa);
 				}
 			}
@@ -243,6 +251,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			
 			System.out.println("el reg contar del if es "+reg_evaluados);
 			if (bandera && result && result1) {
+				
 				alert("Evaluación registrada con exito");
 				acum=0;
 
@@ -286,6 +295,8 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 
 	
 }
+	
+	
 	
 	public void ObtenerIdArticuloRegistrado(String direc) {
 		DBArticulos dba = new DBArticulos();

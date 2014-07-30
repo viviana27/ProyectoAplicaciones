@@ -576,6 +576,7 @@ public class DBUsuario {
 				pares.setPer_nombre(resultados.getString("per_nombre"));
 				pares.setPer_apellido(resultados.getString("per_apellido"));
 				pares.setPer_email(resultados.getString("per_email"));
+				System.out.println("email   :"+pares.getPer_email());
 				// agrego usuario con datos cargados desde la base a mi lista de
 				// usuarios
 				lista.add(pares);
@@ -617,6 +618,7 @@ public class DBUsuario {
 				pares.setPer_nombre(resultados.getString("per_nombre"));
 				pares.setPer_apellido(resultados.getString("per_apellido"));
 				pares.setPer_email(resultados.getString("per_email"));
+				System.out.println("email"+pares.getPer_email());
 				// agrego usuario con datos cargados desde la base a mi lista de
 				// usuarios
 				listanueva.add(pares);

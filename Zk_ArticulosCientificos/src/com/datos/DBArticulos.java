@@ -398,7 +398,7 @@ System.out.println("la fecha es : "+fecha);*/
 										.getString("per_institucion2"));
 								articulo.setArt_fecha_subida(rs
 										.getDate("art_fecha_subida"));
-								
+								//articulo.setEmail(rs.getString("per_email"));
 								lista.add(articulo);
 							  	System.out.println("Name : " + rs.getString(5));
 						  }
@@ -752,7 +752,7 @@ System.out.println("la fecha es : "+fecha);*/
 				if (usua.getId_rol() == 1) {
 					if (titulo.equals("") && area.equals("") ) {
 						sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo, " +
-								"a.area_nombre, a.area_id, p.per_nombre, p.per_apellido " +
+								"a.area_nombre, a.area_id, p.per_nombre, p.per_apellido, p.per_email " +
 								"FROM tb_persona AS p " +
 								"left JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 								"left JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
@@ -763,7 +763,7 @@ System.out.println("la fecha es : "+fecha);*/
 					} else {
 						sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo, ar.art_archivo," +
 								" a.area_nombre, " +
-								"a.area_id, p.per_nombre, p.per_apellido " +
+								"a.area_id, p.per_nombre, p.per_apellido, p.per_email " +
 								"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 								"left JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
 								"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
@@ -798,6 +798,7 @@ System.out.println("la fecha es : "+fecha);*/
 							articulo.setPer_nombre(resultados.getString("per_nombre"));
 							articulo.setPer_apellido(resultados.getString("per_apellido"));
 							articulo.setArt_archivo(resultados.getString("art_archivo"));
+							articulo.setEmail(resultados.getString("per_email"));
 							System.out.println(articulo.getArt_archivo()+"  archivo");
 							lista.add(articulo);
 						}
@@ -818,29 +819,29 @@ System.out.println("la fecha es : "+fecha);*/
 				}
 				if (usua.getId_rol() == 3) {
 						if (titulo.equals("")  && area.equals("")) {
-							/*sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, " +
+							sql = "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, " +
 									" a.area_nombre, " +
-									"a.area_id, p.per_id,p.per_nombre, p.per_apellido " +
+									"a.area_id, p.per_id,p.per_nombre, p.per_apellido, p.per_email " +
 									"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 									"left JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
 									"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
 									"LEFT JOIN tb_estado_articulo esa ON esa.id_articulo = ar.art_id " +
 									"WHERE ar.art_estado =1 and p.per_id="+idUsuario+" and esa.id_estado=2 "+
 									"ORDER BY  p.per_nombre";
-*/
-							sql="SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, " +
+
+					/*		sql="SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo, " +
 									"a.area_nombre, a.area_id, p.per_id,p.per_nombre, p.per_apellido" +
 									" FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = " +
 									"p.per_id left JOIN tb_articulo AS ar ON ar.art_id = " +
 									"pa.articulos_id LEFT JOIN tb_area AS a ON a.area_id = " +
 									"ar.area_id LEFT JOIN tb_estado_articulo esa ON esa.id_articulo =" +
 									" ar.art_id WHERE ar.art_estado =1 and p.per_id=12 and" +
-									" (esa.id_estado=2 and esa.id_ult_estado=1) ORDER BY p.per_nombre";
+									" (esa.id_estado=2 and esa.id_ult_estado=1) ORDER BY p.per_nombre";*/
 							System.out.println("ddff" + sql);
 								} else {
 									sql =  "SELECT pa.articulos_id, ar.art_id, ar.art_titulo,ar.art_archivo," +
 											" a.area_nombre, " +
-											"a.area_id, p.per_nombre, p.per_apellido " +
+											"a.area_id, p.per_nombre, p.per_apellido, p.per_email " +
 											"FROM tb_persona AS p LEFT JOIN tb_pares AS pa ON pa.personas_id = p.per_id " +
 											"left JOIN tb_articulo AS ar ON ar.art_id = pa.articulos_id " +
 											"LEFT JOIN tb_area AS a ON a.area_id = ar.area_id " +
@@ -875,6 +876,7 @@ System.out.println("la fecha es : "+fecha);*/
 								articulo.setId_area(resultados.getInt("area_id"));
 								articulo.setPer_nombre(resultados.getString("per_nombre"));
 								articulo.setPer_apellido(resultados.getString("per_apellido"));
+								articulo.setEmail(resultados.getString("per_email"));
 								articulo.setArt_archivo(resultados.getString("art_archivo"));
 								System.out.println(articulo.getArt_archivo()+"  ruta");
 								lista.add(articulo);

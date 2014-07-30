@@ -18,6 +18,11 @@
 					<textbox id="textbox_area"
 						width="60%">
 					</textbox>
+					<div>
+					<textbox value="remitente" id="remite" visible="false"></textbox>
+					<textbox value="recibe" id="recibe" visible="false"></textbox>
+					<textbox value="mensaje" id="mensaje" visible="false"></textbox>
+					</div>
 				</row>
 				<row>
 					<label>Evaluadores:</label>

@@ -2,8 +2,18 @@ package com.controladores;
 
 import java.util.List;
 
+import java.util.Properties;
+
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
@@ -14,6 +24,8 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+//import com.controller.Exception;
+//import com.controller.String;
 import com.datos.DBArticulos;
 import com.datos.DBPares;
 import com.datos.DBUsuario;
@@ -23,6 +35,7 @@ import com.entidades.EstadoArticulo;
 import com.entidades.Pares;
 import com.entidades.Persona;
 import com.entidades.Usuarios;
+//import com.hibernate.deportistas.Tbmiembros;
 
 public class AsignarEvaluadorController extends
 		GenericForwardComposer<Component> {
@@ -46,7 +59,9 @@ public class AsignarEvaluadorController extends
 	int num_pares = 0;
 	int idare = 0;
 	int regcontar2 = 0;
-
+	String email,email2;
+	String persorecibe;
+	Textbox remite,mensaje, recibe; 
 	public void onClick$button_Registrar() throws Exception {
 		boolean result = false;
 		boolean result1 = false;
@@ -78,6 +93,12 @@ public class AsignarEvaluadorController extends
 				ea.setId_persona(idpersonaart);
 				result1 = dbusuarios.RegistrarEstadoArticulo(ea);
 			}
+			
+			//notificaciones
+
+			enviarEmail();
+			
+			
 		}
 		if (result && result1) {
 			alert("Articulo asignado a los evaluadores correctamente ");
@@ -122,7 +143,7 @@ public class AsignarEvaluadorController extends
 		DBPares dbusuarios = new DBPares();
 		DBUsuario dbu = new DBUsuario();
 		Pares pares = (Pares) cmb_evaluador.getSelectedItem().getValue();
-
+		email2=pares.getPer_email();
 		int regcontar2 = dbusuarios.contarRegistros(idarticulo);
 
 		if (regcontar2 == 2) {
@@ -135,12 +156,98 @@ public class AsignarEvaluadorController extends
 		}
 
 	}
+	
+	//notificaciones a enviar al evaluador
+	private void enviarEmail() {
+	/*	try {
+			// Propiedades de la conexión
+			Properties props = new Properties();
+			props.setProperty("mail.smtp.host", "smtp.gmail.com");
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			props.setProperty("mail.smtp.port", "587");
+			props.setProperty("mail.smtp.auth", "true");
+
+			// Preparamos la sesion	
+			Session session = Session.getDefaultInstance(props);
+			org.zkoss.zk.ui.Session sesion = Sessions.getCurrent();
+			Usuarios u = (Usuarios) sesion.getAttribute("User");
+			// Recoger los datos
+			// String str_De = jtfRemitente.getText();
+			String str_De = u.getPersona().getPer_email();
+			String str_PwRemitente = "ponce1992";
+			System.out.println("email remitente------------: "+u.getPersona().getPer_email());
+			String str_Para = email2;
+			System.out.println("email destino------------: "+str_Para);
+			//String destinos[] = str_Para.split(",");
+			String str_Asunto = "Artículo asignado a evaluar";
+			String str_Mensaje = "Se le ha asignado un articulo a Evaluar por favor revisar en el sistema";
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(str_De));
+			
+			Address[] receptores = new Address[] { new InternetAddress(
+					str_De) };
+			receptores[0] = new InternetAddress(str_Para);
+			// receptores.
+			message.addRecipients(Message.RecipientType.TO, receptores);
+			message.setSubject(str_Asunto);
+			message.setText(str_Mensaje);
+			// Lo enviamos.
+			Transport t = ( session).getTransport("smtp");
+			t.connect(str_De, str_PwRemitente);
+			t.sendMessage(message,
+					message.getRecipients(Message.RecipientType.TO));
+
+			// Cierre de la conexion.
+			t.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}*/
+		//try {
+			// Propiedades de la conexión
+			Properties props = new Properties();
+			props.setProperty("mail.smtp.host", "smtp.gmail.com");
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			props.setProperty("mail.smtp.port", "587");
+			props.setProperty("mail.smtp.auth", "true");
+
+			// Preparamos la sesion
+			Session session = Session.getDefaultInstance(props);
+			session.setDebug(true);
+
+			org.zkoss.zk.ui.Session sesion = Sessions.getCurrent();
+			Usuarios u = (Usuarios) sesion.getAttribute("User");
+			MimeMessage message = new MimeMessage(session);
+			try {
+				String de=u.getPersona().getPer_email();
+				String clave="darwinemilio";
+				message.setFrom(new InternetAddress("haydeponcep@gmail.com"));
+				message.addRecipient(Message.RecipientType.TO, new InternetAddress(email2));
+				message.setSubject("Notificacion Sistema Articulos Cientificos UPSE");
+				message.setText("Se le ha asignado un artìculo a evaluar");
+				Transport t = session.getTransport("smtp");
+				//t.connect("emiliorr2013@gmail.com","darwinemilio");
+				t.connect(de,clave);
+				t.sendMessage(message,message.getAllRecipients());
+				t.close();
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+	}
+	
+	
 
 	public void onCreate$winNuevoEvaluador() {
 		DBPares dbusuarios = new DBPares();
 		DBUsuario dbr = new DBUsuario();
 		DBArticulos dba = new DBArticulos();
-		Session sesion = Sessions.getCurrent();
+		org.zkoss.zk.ui.Session sesion = Sessions.getCurrent();
 		Usuarios u = (Usuarios) sesion.getAttribute("User");
 		if (u != null) {
 			if (u.getId_rol() == 1) {
@@ -150,6 +257,7 @@ public class AsignarEvaluadorController extends
 					textbox_area.setText(art.getArea_nombre());
 					idarea = art.getId_area();
 					idarticulo = art.getArt_id();
+					email= art.getEmail();
 					idpersonaart = u.getId();
 					System.out.println("id persona que registra:"
 							+ idpersonaart);

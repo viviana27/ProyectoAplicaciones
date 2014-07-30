@@ -84,7 +84,6 @@ public class ListaArticulosEvaluador  extends GenericForwardComposer<Component>{
 		// pasar todo el objeto usuario
 		// pasar un identificador id de Usuario
 		Articulo u = (Articulo) listaArticulosporpar.getSelectedItem().getValue();
-		
 		win.setAttribute("articulo", u);
 	}
 	

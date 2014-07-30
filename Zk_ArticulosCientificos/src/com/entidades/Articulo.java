@@ -10,6 +10,7 @@ public class Articulo {
 	private String art_palabras_clave;
 	private Date art_fecha_subida;
 	private int art_estado;
+	private String email;
 	private String nom_colaborador;
 	private String nom_colaborador2;
 	private String nom_colaborador1;
@@ -38,6 +39,14 @@ public class Articulo {
 	
 
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public int getPadre() {
 		return padre;
 	}

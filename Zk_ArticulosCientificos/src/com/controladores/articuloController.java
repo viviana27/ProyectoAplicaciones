@@ -259,7 +259,7 @@ int idart=0,idpadre1=0, regcontar =0,reconta=0;
 	    						
 	    					}
 	                	}else{
-	                		if(reconta>=2){
+	                		if(reconta==2){
 	                		alert("ya no puede subir una nueva correccion del articulo");
 	                		
 	                		}

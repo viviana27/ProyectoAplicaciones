@@ -33,6 +33,7 @@ import org.zkoss.zul.Window;
 
 import com.SubirDescargarArchivos.Util;
 import com.datos.DBArticulos;
+import com.datos.DBArticulosEvaluados;
 import com.datos.DBParametrosEvaluacion;
 import com.entidades.Articulo;
 import com.entidades.Usuarios;
@@ -49,6 +50,8 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 	String NombreArchi, direccion;
 	Label nombreArticulo;
 	public Media media;
+	String emailper;
+	int registro = 0, cantid2=0,idart=0,evaluador=0;
 	File f;
 
 	@NotifyChange("media")
@@ -56,7 +59,6 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
-
 		actualizarLista();
 		listaArticulosporpar.renderAll();
 		Session sesion = Sessions.getCurrent();
@@ -137,6 +139,7 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 	public void onSelect$listaArticulosporpar() {
 		Articulo art = (Articulo) listaArticulosporpar.getSelectedItem()
 				.getValue();
+		idart=art.getArt_id();
 		// nombreArticulo.setVisible(true);
 		button_descarga.setVisible(true);
 		String ruta;
@@ -150,10 +153,17 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 			return;
 		}
 		DBParametrosEvaluacion dp= new DBParametrosEvaluacion();
-		int registro = 0;
+		DBArticulosEvaluados dbart=new DBArticulosEvaluados();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		Articulo art=new Articulo();
+		emailper=art.getEmail();
 		registro= dp.TotalParametros();
-		if(registro==100){
-			
+		cantid2=dbart.contarEvaluados(idart);
+		System.out.println("cantidad evalauciones"+cantid2);
+		evaluador= dbart.existeEvaluador(idart);
+		System.out.println("id articulo"+evaluador);
+		if(registro==100 ){
+			if(cantid2<2 && u.getId() != evaluador){
 		Window win = (Window) Executions.createComponents(
 				"Articulo/Evaluacion.zul", null, null);
 		win.setClosable(true);
@@ -163,6 +173,10 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 		win.setAttribute("opcion", "Evaluacion");
 		win.setAttribute("articulo", arti);
 	}
+			else{
+				alert("No se puede evaluar, el articulo ya fue evaluado");
+			}
+		}
 	else{
 		alert("No está disponible los parámetros a considerar");
 	}
