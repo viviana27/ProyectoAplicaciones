@@ -1,6 +1,6 @@
 <?page title="Indexación" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Registro de Articulos" border="normal"
+	<window title="Registro de Artículo Corregido" border="normal"
 		id="winSubirArticulo" apply="com.controladores.articuloController">
 
 		<grid>
@@ -8,25 +8,28 @@
 			<rows>
 				<row>
 					<div>
-						<label value="Codigo Articulo: " />
-						<label id="lblidArticulo" />
+					<label value="Promedio Total de la Evaluación: " style="font-weight: bold; font-size:20px; " />
+						<label id="lblCalificacion" style="font-weight: bold; font-size:20px; "/>
+						
 					</div>
 					<div>
-						<label value="Calificacion Articulo: " />
-						<label id="lblCalificacion" />
+						<label value="Codigo Articulo: " visible="false" />
+						<label id="lblidArticulo"  visible="false"  />
 
 					</div>
 				</row>
 				<row>
 					<div>
-
+                        <label value="Evaluador 1" style="font-weight: bold; font-size:14px;"/> <separator>
+                        </separator>
 						<label value="Observaciones 1" />
 
 						<textbox id="txtObservaciones" rows="5"
 							cols="40" height="50px" width="85%" disabled="true"/>
 					</div>
 					<div>
-
+ 						<label value="Evaluador 2" style="font-weight: bold; font-size:14px;"/> <separator>
+                        </separator>
 						<label value="Observaciones 2" />
 
 						<textbox id="txtObservaciones2" rows="5"
@@ -147,7 +150,7 @@
 							onUpload="@command('uploadFile',upload=event)"
 							autodisable="self" />
 
-						<label id="nombreArticulo" value="Archivo.doc" />
+						<label id="nombreArticulo" />
 					</vbox>
 				</row>
 

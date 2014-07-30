@@ -73,9 +73,9 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 	public void onSelect$listaTareas() {
 		org.zkoss.zk.ui.Session sesion = Sessions.getCurrent();
 		Usuarios u = (Usuarios) sesion.getAttribute("User");
-		if(idEstado==3 && u.getId_rol()==1){
+		if(idEstado==6 && u.getId_rol()==1){
 			Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
-			email2=art.getEmail();
+			//email2=art.getEmail();
 			System.out.println("email autor"+email2);
 			enviarEmail();
 		}else{
@@ -182,7 +182,7 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 						String de=u.getPersona().getPer_email();
 						String clave="darwinemilio";
 						message.setFrom(new InternetAddress("haydeponcep@gmail.com"));
-						message.addRecipient(Message.RecipientType.TO, new InternetAddress(email2));
+						message.addRecipient(Message.RecipientType.TO, new InternetAddress("vivianasmalave@gmail.com"));
 						message.setSubject("Notificacion Sistema Articulos Cientificos UPSE");
 						message.setText("Tiene observaciones en su Artículo Científico");
 						Transport t = session.getTransport("smtp");

@@ -170,7 +170,7 @@ int idart=0,idpadre1=0, regcontar =0,reconta=0;
 			alert("Ingrese todos los campos");
 		} else {
 
-	if (nombreArticulo.getValue() != "Archivo.doc") {
+	if (nombreArticulo.getValue().trim().length() > 0 ) {
 				if (art == null) {
 					if (Util.uploadFile(media)) {
 						obtenerRutaArchivoAdjuntado();

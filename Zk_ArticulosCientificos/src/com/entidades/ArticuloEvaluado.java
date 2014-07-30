@@ -8,7 +8,6 @@ public class ArticuloEvaluado {
 	private Date eval_fecha;
 	private double eval_promedio;
 	private int eval_cantidad;
-	private int vol_id;
 	private int estad_id;
 	private int eval_estado;
 	private int ar_id;
@@ -53,13 +52,6 @@ public class ArticuloEvaluado {
 	public void setEval_cantidad(int eval_cantidad) {
 		this.eval_cantidad = eval_cantidad;
 	}
-	public int getVol_id() {
-		return vol_id;
-	}
-	public void setVol_id(int vol_id) {
-		this.vol_id = vol_id;
-	}
-	
 	
 	public int getEstad_id() {
 		return estad_id;
@@ -79,8 +71,6 @@ public class ArticuloEvaluado {
 	public void setAr_id(int ar_id) {
 		this.ar_id = ar_id;
 	}
-	
-	
 
 	public String getEval_observacion() {
 		return eval_observacion;
@@ -107,14 +97,13 @@ public class ArticuloEvaluado {
 		this.eval_observacion = eval_observacion;
 	}*/
 	public ArticuloEvaluado(int eval_id, Date eval_fecha, double eval_promedio,
-			int eval_cantidad, int vol_id, int estad_id, int eval_estado,
+			int eval_cantidad, int estad_id, int eval_estado,
 			int ar_id, String nombre, String direccion, String eval_observacion) {
 		super();
 		this.eval_id = eval_id;
 		this.eval_fecha = eval_fecha;
 		this.eval_promedio = eval_promedio;
 		this.eval_cantidad = eval_cantidad;
-		this.vol_id = vol_id;
 		this.estad_id = estad_id;
 		this.eval_estado = eval_estado;
 		this.ar_id = ar_id;

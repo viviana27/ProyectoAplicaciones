@@ -237,7 +237,6 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			
 			arte.setEval_promedio(acum);
 			arte.setEval_cantidad(1);
-			arte.setVol_id(1);
 			arte.setEstad_id(3);
 			arte.setEval_estado(1); 
 			arte.setAr_id(ida);
@@ -245,7 +244,14 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			if(acum<70 && (txtObservacion.getValue().trim().length()<1 && media==null)){
 			alert("articulo con calificacion menor a 70, por favor adjuntar o escribir observaciones");
 			}else{
-				result1=dbaev.RegistroArt_Evaluados(arte);	
+				result1=dbaev.RegistroArt_Evaluados(arte);
+				ea.setId_articulo(ida);
+				System.out.println("id articulo evaluacion: "+ida);
+				ea.setId_estado(6);
+				System.out.println("id estado evaluado"+ea.getId_estado());
+				ea.setId_utl_estado(1);
+				ea.setId_persona(u.getId());
+				result= dbaev.RegistrarEstadoArticulo(ea);
 			}
 			
 			
@@ -254,6 +260,12 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 				
 				alert("Evaluación registrada con exito");
 				acum=0;
+				   String opcion=(String)WinEvaluarArticulo.getAttribute("opcion");
+					if(opcion!=null && opcion.equals("Evaluacion")){
+						ListaArticulosAsignados lac = (ListaArticulosAsignados) WinEvaluarArticulo.getAttribute("controladorOrigen");
+						if(lac!=null) lac.actualizarLista();
+						WinEvaluarArticulo.detach();
+
 
 			} else {
 				//alert("Fallamos...!");
@@ -275,7 +287,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 				ListaArticulosAsignados lac = (ListaArticulosAsignados) WinEvaluarArticulo.getAttribute("controladorOrigen");
 				if(lac!=null) lac.actualizarLista();
 				WinEvaluarArticulo.detach();
-
+			}
 		}
 		}
 		List<EstadoArticulo> listaestado = dba.buscarestados(ida);
@@ -283,15 +295,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 		result2 = dba.Actualizr_estadoar(id, ida);
 		}
 		
-		
-		
-/*	String opcion=(String)WinEvaluarArticulo.getAttribute("opcion");
-	if(opcion!=null && opcion.equals("Evaluacion")){
-		ListaArticulosAsignados lac = (ListaArticulosAsignados) WinEvaluarArticulo.getAttribute("controladorOrigen");
-		if(lac!=null) lac.actualizarLista();
-		WinEvaluarArticulo.detach();
-
-		}*/
+	
 
 	
 }

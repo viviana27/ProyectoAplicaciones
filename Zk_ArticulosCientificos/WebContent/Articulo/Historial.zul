@@ -1,0 +1,46 @@
+<?page title="Historial de Articulo" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Historial de Artículo" border="normal"
+		position="center,top"
+		apply="com.controladores.HistorialArticulosController">
+		<div id="estado" align="center">
+			<label style="font-weight: bold; color:blue;">
+				Seleccione el artículo para ver historial:
+			</label>
+			<combobox id="cmb_articulos" autodrop="true" width="80%">
+				<template name="model">
+					<comboitem label="${each.art_titulo}"
+						value="${each}" />
+				</template>
+			</combobox>
+
+		</div>
+		<listbox id="listaHistorial" mold="paging" pageSize="4"
+			multiple="false" width="100%" emptyMessage="Sin resultados">
+
+			<listhead sizable="false" menupopup="auto">
+				<listheader label="Fecha" sort="auto" />
+				<listheader label="Estado" sort="auto" />
+				<listheader label="Modificado por" sort="auto" />
+
+			</listhead>
+			<template name="model">
+				<listitem value="${each}">
+					<listcell label="${each.fecha}" />
+					<listcell
+						label="${each.estados.estado_descripcion}" />
+					<listcell label="${each.persona.per_nombre} " />
+
+				</listitem>
+			</template>
+		</listbox>
+		<div>
+			<timeline id="timeline" height="300px" width="100%">
+				<bandinfo width="70%" id="bandinfoMonth"
+					intervalUnit="month" intervalPixels="200" />
+				<bandinfo width="30%" id="bandinfoYear"
+					intervalUnit="year" intervalPixels="300" syncWith="bandinfoMonth" />
+			</timeline>
+		</div>
+	</window>
+</zk>

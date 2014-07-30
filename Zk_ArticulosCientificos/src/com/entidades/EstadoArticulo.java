@@ -9,6 +9,10 @@ private int id_estado;
 private int id_persona;
 private Date fecha;
 private int id_utl_estado;
+private Estados estados;
+private Persona persona;
+private Articulo articulo;
+
 public EstadoArticulo() {
 	super();
 }
@@ -58,5 +62,25 @@ public Date getFecha() {
 public void setFecha(Date fecha) {
 	this.fecha = fecha;
 }
+public Estados getEstados() {
+	return estados;
+}
+public void setEstados(Estados estados) {
+	this.estados = estados;
+}
+public Persona getPersona() {
+	return persona;
+}
+public void setPersona(Persona persona) {
+	this.persona = persona;
+}
+public Articulo getArticulo() {
+	return articulo;
+}
+public void setArticulo(Articulo articulo) {
+	this.articulo = articulo;
+}
+
+
 
 }
