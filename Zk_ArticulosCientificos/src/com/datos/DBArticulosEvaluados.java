@@ -139,7 +139,7 @@ public class DBArticulosEvaluados {
 		try {
 			con.setAutoCommit(false);
 			String sql = " INSERT INTO tb_articulos_evaluados (eval_promedio,eval_cantidad," +
-					" estad_id,eval_estado,ar_id,eval_observacion,nombre,direccion, eval_fecha) VAlUES (?,?,?,?,?,?,?,?,?,CURRENT_DATE)";
+					" estad_id,eval_estado,ar_id,eval_observacion,nombre,direccion, eval_fecha) VAlUES (?,?,?,?,?,?,?,?,CURRENT_DATE)";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm = con.prepareStatement(sql);
 			pstm.setDouble(1, artEval.getEval_promedio());

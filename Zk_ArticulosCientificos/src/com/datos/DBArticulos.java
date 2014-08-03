@@ -28,6 +28,7 @@ import com.entidades.Usuarios;
 public class DBArticulos {
 	public int idArticuloRegistrado = 0;
 	int idUsuario = 0;
+	boolean existe;
 	Session session = Sessions.getCurrent();
 
 	public boolean RegistrarArticulo(Articulo art) {
@@ -405,7 +406,7 @@ public class DBArticulos {
 									.getString("per_institucion2"));
 							articulo.setArt_fecha_subida(rs
 									.getDate("art_fecha_subida"));
-							// articulo.setEmail(rs.getString("per_email"));
+							articulo.setEmail(rs.getString("per_email"));
 							lista.add(articulo);
 							System.out.println("Name : " + rs.getString(5));
 						}
@@ -450,6 +451,9 @@ public class DBArticulos {
 							articulo.setPer_institucion2(rs
 									.getString("per_institucion2"));
 							lista.add(articulo);
+							articulo.setArt_fecha_subida(rs
+									.getDate("art_fecha_subida"));
+							articulo.setEmail(rs.getString("per_email"));
 							System.out.println("Name : " + rs.getString(5));
 						}
 
@@ -498,6 +502,8 @@ public class DBArticulos {
 										.getString("per_institucion2"));
 								articulo.setArt_fecha_subida(rs
 										.getDate("art_fecha_subida"));
+								articulo.setEmail(rs.getString("per_email"));
+								
 								lista.add(articulo);
 								System.out.println("Name : " + rs.getString(3));
 							}
@@ -546,6 +552,10 @@ public class DBArticulos {
 										.getString("per_institucion1"));
 								articulo.setPer_institucion2(rs
 										.getString("per_institucion2"));
+								articulo.setArt_fecha_subida(rs
+										.getDate("art_fecha_subida"));
+								articulo.setEmail(rs.getString("per_email"));
+								
 								lista.add(articulo);
 								System.out.println("Name : " + rs.getString(5));
 							}
@@ -978,9 +988,9 @@ public class DBArticulos {
 		ResultSet resultado = null;
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
-		String sql = "select te.id, te.id_estado,te.id_ult_estado from tb_estado_articulo as te where  te.id_articulo="
+		String sql = "select te.id, te.id_estado,te.id_ult_estado " +
+				"from tb_estado_articulo as te where  te.id_articulo="
 				+ criterio;
-
 		try {
 			sentencia = con.createStatement();
 			resultado = sentencia.executeQuery(sql);
@@ -1367,5 +1377,118 @@ public class DBArticulos {
 		}
 
 		return lista;
+	}
+	//actualizar estado aceptado 
+	
+	public boolean ActualizarEstadoAceptado(int id_articulo){
+		boolean registro = false;
+		// crear un objeto para la conexion
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		// vamos a guardar utilizando transacciones
+		try {
+			
+			
+			CallableStatement proc;
+			proc = con.prepareCall("{call actualizar_estado(?)}");
+			proc.setInt(1, id_articulo);
+			proc.execute();
+			registro = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return registro;
+
+		
+	}// fin de actualiza estado para articulo aceptado
+	
+	//obtener padre del articulo 
+	public int IDpadre (int idart){
+		
+		int idpadre=0;
+		Statement sentencia = null;
+		ResultSet resultado = null;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		String sql = "select a.padre as idpadre from tb_articulo as a where a.art_id="
+				+ idart;
+		try {
+			sentencia = con.createStatement();
+			resultado = sentencia.executeQuery(sql);
+
+			if (resultado.next()) {
+				existe = true;
+				idpadre = (resultado.getInt("idpadre"));
+			}
+			else{
+				existe=false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return idpadre;
+	}
+	
+	public boolean act_rechazados(int id){
+		boolean registro=true;
+		Statement sentencia = null;
+		ResultSet resultado = null;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		try {
+			// por defecto es true asi q lo cambiamos
+						con.setAutoCommit(false);
+						String sql = "update tb_estado_articulo set id_ult_estado=? where" +
+								" id_articulo=? and (id_estado=3 or id_estado=6 or id_estado=2)";
+						PreparedStatement pstm = con.prepareStatement(sql);
+						pstm.setInt(1, 0);
+						pstm.setInt(2, id);
+						
+						// ejecutar el prepaaredStatement
+						// retorna el numero de filas afectadas o retorna 0 si no se pudo
+						// realizar
+						int num = pstm.executeUpdate();
+						// si no hay error
+						con.commit();
+						registro = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return registro;
 	}
 }

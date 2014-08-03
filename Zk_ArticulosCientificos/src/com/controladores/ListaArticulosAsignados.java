@@ -51,6 +51,7 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 	Label nombreArticulo;
 	public Media media;
 	String emailper;
+	int prom=0;
 	int registro = 0, cantid2=0,idart=0,evaluador=0;
 	File f;
 
@@ -98,7 +99,7 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 	public void onClick$toolbarbutton_Editar() {
 		// verificar q usuario haya seleccionado un elemento de la lista
 		if (listaArticulosporpar.getSelectedItem() == null) {
-			alert("Seleccione por favor un articulo");
+			alert("Seleccione por favor un articulo :)");
 			return;
 		}
 		Window win = (Window) Executions.createComponents(
@@ -164,6 +165,7 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 		System.out.println("id articulo"+evaluador);
 		if(registro==100 ){
 			if(cantid2<2 && u.getId() != evaluador){
+				
 		Window win = (Window) Executions.createComponents(
 				"Articulo/Evaluacion.zul", null, null);
 		win.setClosable(true);
@@ -173,12 +175,13 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 		win.setAttribute("opcion", "Evaluacion");
 		win.setAttribute("articulo", arti);
 	}
-			else{
+	else{
 				alert("No se puede evaluar, el articulo ya fue evaluado");
 			}
 		}
 	else{
 		alert("No está disponible los parámetros a considerar");
 	}
+		
 }
 }

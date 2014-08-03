@@ -68,13 +68,17 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	java.sql.Date fechaActual = new java.sql.Date(0);
 	// java.util.Date fechaActual = new java.util.Date();
 	int vmax, vprome, idArticuloSubido = 0;
-	
+	int cont;
+	int cont1;
+	int cont2;
+	int cantid2=0,prom=0;
 	boolean registro = false;
 	public Media media = null;
 	ArticuloEvaluado are = null;
 	int ida=0,id=0;
 	public Window winDetalleArticulo, winSubirArticulo;
 	int valorMax = 0;
+int existe;
 	double acum = 0;
 	Double valor = 0.0;
 	Textbox txtObservacion;
@@ -194,9 +198,10 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	boolean result = false;
 	boolean result1 = false;
 	boolean result2=false;
+	boolean result4=false;
 	ArticuloEvaluado arte= new ArticuloEvaluado();
 	DBArticulosEvaluados dbaev= new DBArticulosEvaluados();
-	
+	DBArticulos dbar = new DBArticulos();
 	if(direccion!=null){
 		
 	}
@@ -227,6 +232,8 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 				arte.setDireccion("");
 			}
 			
+			//tabla estado articulo
+			
 			ea.setId_articulo(ida);
 			System.out.println("id articulo evaluacion: "+ida);
 			ea.setId_estado(3);
@@ -234,6 +241,12 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			ea.setId_utl_estado(1);
 			ea.setId_persona(u.getId());
 			result= dbaev.RegistrarEstadoArticulo(ea);
+		
+			DBArticulosEvaluados dbart = new DBArticulosEvaluados();
+			cantid2=dbart.contarEvaluados(ida);
+			System.out.println("la cantidad en evaluacion controller "+cantid2);
+			
+			//tabla articulo evaluado
 			
 			arte.setEval_promedio(acum);
 			arte.setEval_cantidad(1);
@@ -241,9 +254,13 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			arte.setEval_estado(1); 
 			arte.setAr_id(ida);
 			arte.setEval_observacion(txtObservacion.getValue().trim());
+						
 			if(acum<70 && (txtObservacion.getValue().trim().length()<1 && media==null)){
 			alert("articulo con calificacion menor a 70, por favor adjuntar o escribir observaciones");
-			}else{
+			}
+			else{
+			//para articulo con estado observado
+				
 				result1=dbaev.RegistroArt_Evaluados(arte);
 				ea.setId_articulo(ida);
 				System.out.println("id articulo evaluacion: "+ida);
@@ -252,14 +269,14 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 				ea.setId_utl_estado(1);
 				ea.setId_persona(u.getId());
 				result= dbaev.RegistrarEstadoArticulo(ea);
+				
 			}
-			
-			
+						
 			System.out.println("el reg contar del if es "+reg_evaluados);
 			if (bandera && result && result1) {
 				
 				alert("Evaluación registrada con exito");
-				acum=0;
+				
 				   String opcion=(String)WinEvaluarArticulo.getAttribute("opcion");
 					if(opcion!=null && opcion.equals("Evaluacion")){
 						ListaArticulosAsignados lac = (ListaArticulosAsignados) WinEvaluarArticulo.getAttribute("controladorOrigen");
@@ -270,14 +287,6 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			} else {
 				//alert("Fallamos...!");
 			}
-			/*if(result && result1){
-				alert("Guardado Exitosamente");
-				
-			}
-			else{
-				alert("Fallamos...!");
-			}*/
-		
 		}
 		else
 		{
@@ -289,16 +298,104 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 				WinEvaluarArticulo.detach();
 			}
 		}
+	}//FIN DEL REG EVALUADO
+		System.out.println("El reg_evaluado antes del if para promedio es: "+reg_evaluados);
+		if(reg_evaluados==1){
+		prom= dbar.buscarPromedioArticulo(ida);
+		
+		if(prom>70){
+			System.out.println("El contador de si existe es 70: "+cont);
+			DBArticulos dbarti = new DBArticulos();
+			existe=dbarti.IDpadre(ida);
+			cont=dbarti.Cantidadcorreciones(existe);
+			if(existe!=0){
+			System.out.println("El contador de si existe es: "+cont);
+				if(cont<3){
+				System.out.println("Cuando el id articulo existe Kata");
+				result2=dbarti.ActualizarEstadoAceptado(ida);
+				ea.setId_articulo(ida);
+				System.out.println("id articulo evaluacion promedio: "+ida);
+				ea.setId_estado(4);
+				System.out.println("id estado evaluado"+ea.getId_estado());
+				ea.setId_utl_estado(1);
+				ea.setId_persona(u.getId());
+				result4= dbaev.RegistrarEstadoArticulo(ea);
+				
+				}
+				System.out.println("El contador de si existe es antes de 2: "+cont);
+				if(cont==2){
+					result2=dbarti.ActualizarEstadoAceptado(ida);
+					ea.setId_articulo(ida);
+					System.out.println("id articulo evaluacion promedio: "+ida);
+					ea.setId_estado(4);
+					System.out.println("id estado evaluado"+ea.getId_estado());
+					ea.setId_utl_estado(1);
+					ea.setId_persona(u.getId());
+					result4= dbaev.RegistrarEstadoArticulo(ea);
+					
+				}
+			}
+			else{
+				System.out.println("El contador de si existe es else: "+cont);
+			//actualizacion de estado
+			DBArticulos dbart = new DBArticulos();
+			result2=dbart.ActualizarEstadoAceptado(ida);	
+			ea.setId_articulo(ida);
+			System.out.println("id articulo evaluacion promedio: "+ida);
+			ea.setId_estado(4);
+			System.out.println("id estado evaluado"+ea.getId_estado());
+			ea.setId_utl_estado(1);
+			ea.setId_persona(u.getId());
+			result4= dbaev.RegistrarEstadoArticulo(ea);
+			}	
 		}
+		
+		else{
+			DBArticulos dbarti = new DBArticulos();
+			existe=dbarti.IDpadre(ida);
+			cont1=dbarti.Cantidadcorreciones(existe);
+			System.out.println("el cont 1 de padre es antes existe: "+cont1);
+				
+				if(existe!=0){
+					if(cont1<3){
+					System.out.println("el cont 1 de padre es: "+cont1);
+					cont2=dbarti.Cantidadcorreciones(cont1);
+					
+						result2=dbarti.ActualizarEstadoAceptado(ida);
+							
+						ea.setId_articulo(ida);
+						System.out.println("id articulo evaluacion promedio de nuevo estado 6 :): "+ida);
+						ea.setId_estado(6);
+						System.out.println("id estado evaluado"+ea.getId_estado());
+						ea.setId_utl_estado(1);
+						ea.setId_persona(u.getId());
+						result4= dbaev.RegistrarEstadoArticulo(ea);
+						System.out.println("El contador de si existe es antes del cont1: "+cont1);
+					}
+					if(cont1==2){
+						result2=dbarti.act_rechazados(ida);
+						ea.setId_articulo(ida);
+						System.out.println("id articulo evaluacion promedio :) de nuevo estado 5: "+ida);
+						ea.setId_estado(5);
+						System.out.println("id estado evaluado"+ea.getId_estado());
+						ea.setId_utl_estado(1);
+						ea.setId_persona(u.getId());
+						result4= dbaev.RegistrarEstadoArticulo(ea);
+					
+					}
+				}
+		
+		}
+		}
+		
 		List<EstadoArticulo> listaestado = dba.buscarestados(ida);
 		id = listaestado.get(1).getId();
 		result2 = dba.Actualizr_estadoar(id, ida);
-		}
 		
+	}//fin del else
 	
-
-	
-}
+		
+	}
 	
 	
 	
