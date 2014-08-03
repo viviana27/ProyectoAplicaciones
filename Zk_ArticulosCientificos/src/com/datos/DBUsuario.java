@@ -167,6 +167,7 @@ public class DBUsuario {
 	}
 
 	public List<Usuarios> buscarUsuarios(String criterio) {
+		System.out.println("buscarUsuarios(String criterio)");
 		List<Usuarios> lista = new ArrayList<Usuarios>();
 		// objeto sentencia
 		Statement sentencia = null;
@@ -186,6 +187,82 @@ public class DBUsuario {
 			sql = "SELECT * FROM tb_usuario as u, tb_persona as p, tb_rol as r "
 					+ "WHERE u.usu_estado=1 and p.per_estado=1 and r.rol_estado=1 and u.persona_id=p.per_id"
 					+ " and u.rol_id_usuario=r.rol_id and (u.usu_nombre like '%"
+					+ criterio
+					+ "%' or p.per_apellido like '%"
+					+ criterio
+					+ "%') group by p.per_id order by p.per_apellido";
+		}
+		try {
+			sentencia = con.createStatement();
+			resultados = sentencia.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		}
+		// recorrer el resultset
+		try {
+			Usuarios usuario = null;
+			while (resultados.next()) {
+				usuario = new Usuarios();
+				usuario.setId(resultados.getInt("usu_id"));
+				usuario.setUsuario(resultados.getString("usu_nombre"));
+				Persona persona = new Persona();
+				persona.setPer_id(resultados.getInt("per_id"));
+				persona.setPer_nombre(resultados.getString("per_nombre"));
+				persona.setPer_apellido(resultados.getString("per_apellido"));
+				persona.setPer_cedula(resultados.getString("per_cedula"));
+				persona.setPer_email(resultados.getString("per_email"));
+				persona.setPer_direccion(resultados.getString("per_direccion"));
+				persona.setPer_telefono(resultados.getString("per_telefono"));
+				persona.setPer_celular(resultados.getString("per_celular"));
+				persona.setPer_institucion_pertenece(resultados
+						.getString("per_institucion_pertenece"));
+				persona.setPer_direccion_institucion(resultados
+						.getString("per_direccion_institucion"));
+				usuario.setRol_descripcion(resultados
+						.getString("rol_descripcion"));
+				usuario.setPersona(persona);
+				// agrego usuario con datos cargados desde la base a mi lista de
+				// usuarios
+				lista.add(usuario);
+			}
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al recorrer resultset");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return lista;
+	}
+	public List<Usuarios> buscarUsuariosAutores(String criterio) {
+		List<Usuarios> lista = new ArrayList<Usuarios>();
+		// objeto sentencia
+		Statement sentencia = null;
+		// objeto para resultados
+		ResultSet resultados = null;
+		// obtener la conexion a la base
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+
+		String sql = "";
+		if (criterio.equals("")) {
+			sql = "SELECT * FROM tb_usuario as u, tb_persona as p, tb_rol as r"
+					+ " WHERE u.usu_estado=1 and p.per_estado=1 and r.rol_estado=1 and u.persona_id=p.per_id"
+					+ " and u.rol_id_usuario=r.rol_id and r.rol_id=2 group by p.per_id order by p.per_apellido";
+			System.out.println("ddff" + sql);
+		} else {
+			sql = "SELECT * FROM tb_usuario as u, tb_persona as p, tb_rol as r "
+					+ "WHERE u.usu_estado=1 and p.per_estado=1 and r.rol_estado=1 and u.persona_id=p.per_id"
+					+ " and u.rol_id_usuario=r.rol_id and r.rol_id=2 and(u.usu_nombre like '%"
 					+ criterio
 					+ "%' or p.per_apellido like '%"
 					+ criterio

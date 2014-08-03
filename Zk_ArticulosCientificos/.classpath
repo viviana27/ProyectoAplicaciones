@@ -9,6 +9,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/hp fg/Documents/mail.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Apache Software Foundation/Tomcat 7.0/lib/mail.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Apache Software Foundation/Tomcat 7.0/lib/jdom-1.1.2.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://www.jdom.org/docs/apidocs/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

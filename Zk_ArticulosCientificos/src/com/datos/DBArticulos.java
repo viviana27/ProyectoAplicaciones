@@ -1239,19 +1239,54 @@ public class DBArticulos {
 		String sql = "";
 		try {
 			sentencia = con.createStatement();
-			sql = "SELECT ea.fecha, e.estado_descripcion, CONCAT( p.per_nombre,' ', p.per_apellido) as persona, u.usu_id, r.rol_id   FROM tb_estado_articulo as ea, tb_estados as e, tb_persona as p,  tb_articulo as a, tb_usuario as u, tb_rol as r  WHERE u.persona_id=p.per_id and r.rol_id=u.rol_id_usuario and a.art_id = ea.id_Articulo and  ea.id_persona=p.per_id and e.id_estado=ea.id_estado and ea.id_articulo="
+			sql = "SELECT DATE_FORMAT(ea.fecha, '%M %d %Y') AS fecha, e.id_estado, e.estado_descripcion, p.per_id, CONCAT( p.per_nombre,' ', p.per_apellido) as persona, u.usu_id, r.rol_id, @idp:=p.per_id,"
+					+ "case"
+					+ " when e.id_estado = 1"
+					+ " then 'El articulo fue subido por el autor principal y receptado por el administrador del sistema' "
+					+ " when e.id_estado = 2 "
+					+ " then (SELECT CONCAT('LOS EVALUADORES PARA ESTE ARTICULO SON: ',GROUP_CONCAT(' ',CONCAT( p.per_nombre,' ', p.per_apellido))) as evaluadores from tb_pares as pa, tb_persona as p where p.per_id=pa.personas_id and pa.articulos_id="
+					+ idArt
+					+ ") "
+					+ " when e.id_estado = 3"
+					+ " then (select CONCAT('LA CALIFICACION DE ESTA EVALUACION FUE DE : ',sum(tpa.param_art_valor), '  PUNTOS') as calificacion from (tb_parametros_articulo as tpa inner join tb_persona as tp on tpa.person_id=tp.per_id) where tpa.articul_id="
+					+ idArt
+					+ " and tpa.person_id=@idp) "
+					+ " when e.id_estado = 4 "
+					+ " then (select CONCAT('EL ARTICULO FUE ACEPTADO CON UNA CALIFICACION DE : ', sum(eval_promedio)/2 , ' PUNTOS') as promedio from tb_articulos_evaluados where ar_id="
+					+ idArt
+					+ ")"
+					+ " when e.id_estado = 5 "
+					+ " then (select CONCAT('EL ARTICULO FUE RECHAZADO POR OBTENER ', sum(eval_promedio)/2, ' PUNTOS') as promedio  from tb_articulos_evaluados where ar_id="
+					+ idArt
+					+ ") "
+					+ " when e.id_estado = 6 "
+					+ " then (select CONCAT('LAS OBSERVACIONES DE ESTE EVALUADOR FUERON: ', eval_observacion) as observaciones from tb_articulos_evaluados where ar_id="
+					+ idArt
+					+ " and eval_persona=@idp) "
+					+ " when e.id_estado = 7 "
+					+ " then '' "
+					+ " else 'NO HAY DETALLES' "
+					+ " END AS Info_adicional "
+					+ " FROM tb_estado_articulo as ea,tb_estados as e,tb_persona as p,tb_articulo as a,tb_usuario as u,tb_rol as r "
+					+ " WHERE u.persona_id=p.per_id and r.rol_id=u.rol_id_usuario and a.art_id = ea.id_Articulo and  "
+					+ " ea.id_persona=p.per_id and e.id_estado=ea.id_estado and ea.id_articulo="
 					+ idArt + ";";
 			resultado = sentencia.executeQuery(sql);
 			while (resultado.next()) {
 
 				art = new EstadoArticulo();
-				art.setFecha(resultado.getDate("fecha"));
+				art.setFecha(resultado.getString("fecha"));
+
+				art.setInfo_adicional(resultado.getString("Info_adicional"));
 				Estados e = new Estados();
 				e.setEstado_descripcion(resultado
 						.getString("estado_descripcion"));
 				art.setEstados(e);
 				Persona p = new Persona();
 				if (usua.getId_rol() == 2 || usua.getId_rol() == 3) {
+					if (Integer.parseInt(resultado.getString("id_estado")) == 2) {
+						art.setInfo_adicional("El Administrador asignó un par de evaluadores");
+					}
 					if (Integer.parseInt(resultado.getString("rol_id")) == 1) {
 						p.setPer_nombre("administrador");
 					} else {
@@ -1263,6 +1298,7 @@ public class DBArticulos {
 					}
 				} else {
 					p.setPer_nombre(resultado.getString("persona"));
+					art.setInfo_adicional(resultado.getString("Info_adicional"));
 				}
 
 				art.setPersona(p);
@@ -1299,7 +1335,7 @@ public class DBArticulos {
 			if (usua.getId_rol() == 1) {
 				sql = "SELECT a.art_id, a.art_titulo FROM tb_persona AS p2"
 						+ " INNER JOIN tb_persona_articulo AS pa ON p2.per_id = pa.per_id_registra"
-						+ " INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id"
+						+ " INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id and a.id_padre is NULL "
 						+ " INNER JOIN tb_persona AS p ON pa.pers_id= p.per_id"
 						+ " WHERE  a.art_estado =1 AND pa.per_art_estado =1 "
 						+ " group by a.art_id order by a.art_titulo ";
@@ -1332,10 +1368,13 @@ public class DBArticulos {
 			if (usua.getId_rol() == 2 || usua.getId_rol() == 3) {
 				sql = "SELECT a.art_id, a.art_titulo FROM tb_persona AS p2 "
 						+ "INNER JOIN tb_persona_articulo AS pa ON p2.per_id = pa.per_id_registra "
-						+ "INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id "
-						+ "INNER JOIN tb_persona AS p ON pa.pers_id= p.per_id WHERE  pa.per_id_registra="
-						+ idUsuario + " or pa.pers_id=" + idUsuario
-						+ " and a.art_estado =1 AND pa.per_art_estado =1 "
+						+ "INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id and a.id_padre is NULL "
+						+ "INNER JOIN tb_persona AS p ON pa.pers_id= p.per_id "
+						+ "INNER JOIN tb_pares AS pares ON  a.art_id=pares.articulos_id "
+						+ "WHERE  pa.per_id_registra=" + idUsuario
+						+ " or pa.pers_id=" + idUsuario
+						+ " or pares.personas_id=" + idUsuario
+						+ " AND pa.per_art_estado =1 "
 						+ "group by a.art_id order by a.art_titulo ";
 			}
 		}
@@ -1367,5 +1406,76 @@ public class DBArticulos {
 		}
 
 		return lista;
+	}
+
+	public List<EstadoArticulo> historialArticulosE(int idPersona) {
+		List<EstadoArticulo> lista = new ArrayList<EstadoArticulo>();
+		Statement sentencia = null;
+		ResultSet resultado = null;
+		EstadoArticulo art = null;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+
+		String sql = "";
+		try {
+			sentencia = con.createStatement();
+			sql = "SELECT ae.eval_fecha, a.art_titulo, ae.eval_promedio, eval_observacion FROM tb_articulos_evaluados as ae, tb_articulo as a WHERE a.art_id=ae.ar_id and ae.eval_persona ="
+					+ idPersona + ";";
+			resultado = sentencia.executeQuery(sql);
+			System.out.println("sql: " + sql);
+			while (resultado.next()) {
+
+				art = new EstadoArticulo();
+				art.setFecha(resultado.getString("eval_fecha"));
+				Articulo artic = new Articulo();
+				artic.setArt_titulo(resultado.getString("art_titulo"));
+				art.setArticulo(artic);
+				art.setCalif(resultado.getDouble("eval_promedio"));
+				art.setInfo_adicional(resultado.getString("eval_observacion"));
+				lista.add(art);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return lista;
+	}
+
+	public String mostrarEvaluadores(int idArt) {
+		Statement sentencia = null;
+		ResultSet resultado = null;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		String info = null;
+		String sql = "";
+		try {
+			sentencia = con.createStatement();
+			
+			sql = "SELECT GROUP_CONCAT('  ',CONCAT( p.per_nombre,' ', p.per_apellido)) as evaluadores from tb_pares as pa, tb_persona as p where p.per_id=pa.personas_id and pa.articulos_id="
+					+ idArt + ";";
+			resultado = sentencia.executeQuery(sql);
+			while (resultado.next()) {
+				info = resultado.getString("evaluadores");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al ejecutar la sentencia");
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return info;
 	}
 }

@@ -15,9 +15,8 @@
 						</template>
 					</combobox>
 			<separator></separator>
-			<label style="color:green;">
-				Para ver detalle de un artículo, seleccione con un click
-				sobre la lista
+			<label id="etiqueta" style="color:green;">
+				
 			</label>
 		</div>
 		<listbox id="listaTareas" mold="paging" pageSize="4"
