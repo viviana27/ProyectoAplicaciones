@@ -20,6 +20,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.DropEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
@@ -196,7 +197,8 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 	boolean result2=false;
 	ArticuloEvaluado arte= new ArticuloEvaluado();
 	DBArticulosEvaluados dbaev= new DBArticulosEvaluados();
-	
+	Session session = Sessions.getCurrent();
+	Usuarios usu = (Usuarios) session.getAttribute("User");
 	if(direccion!=null){
 		
 	}
@@ -241,6 +243,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			arte.setEval_estado(1); 
 			arte.setAr_id(ida);
 			arte.setEval_observacion(txtObservacion.getValue().trim());
+			arte.setEval_persona(u.getId());
 			if(acum<70 && (txtObservacion.getValue().trim().length()<1 && media==null)){
 			alert("articulo con calificacion menor a 70, por favor adjuntar o escribir observaciones");
 			}else{
@@ -252,6 +255,14 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 				ea.setId_utl_estado(1);
 				ea.setId_persona(u.getId());
 				result= dbaev.RegistrarEstadoArticulo(ea);
+				/*ea.setId_articulo(ida);
+				System.out.println("id articulo evaluacion: "+ida);
+				ea.setId_estado(4);
+				System.out.println("id estado evaluado"+ea.getId_estado());
+				ea.setId_utl_estado(1);
+				ea.setId_persona(u.getId());
+				result= dbaev.RegistrarEstadoArticulo(ea);*/
+				//(acum>70 && (txtObservacion.getValue().trim().length()<1 && media !=null))
 			}
 			
 			
@@ -282,12 +293,11 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 		else
 		{
 			String opcion=(String)WinEvaluarArticulo.getAttribute("opcion");
-			alert("No se puede evaluar, el articulo ya fue evaluado");
-			if(opcion!=null && opcion.equals("Evaluacion")){
+		/*if(opcion!=null && opcion.equals("Evaluacion")){
 				ListaArticulosAsignados lac = (ListaArticulosAsignados) WinEvaluarArticulo.getAttribute("controladorOrigen");
 				if(lac!=null) lac.actualizarLista();
 				WinEvaluarArticulo.detach();
-			}
+			}*/
 		}
 		}
 		List<EstadoArticulo> listaestado = dba.buscarestados(ida);

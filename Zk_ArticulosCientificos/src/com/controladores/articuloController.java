@@ -77,7 +77,7 @@ int idart=0,idpadre1=0, regcontar =0,reconta=0;
 	// //----------------------------------------------------------------------------
 	// codigo para subir un archivo al servidor
 	public Media media;
-	public Window winDetalleArticulo, winSubirArticulo;
+	public Window winDetalleArticulo, winSubirArticulo,	winObservacionesArticulo;
 
 	File f,f2;
 
@@ -336,7 +336,36 @@ int idart=0,idpadre1=0, regcontar =0,reconta=0;
 		result3 = dbart.RegistrarEstadoArticulo(ea);
 	}
 
-	
+	public void Colaboradores3() {
+		if (comboAutor2.getValue() != null) {
+			ObtenerIdArticuloRegistrado(direccion);
+
+			System.out.println(" id autor2 en guardar: " + idAutor2);
+			pa.setPers_id(idAutor2);
+			pa.setArti_id(idArticuloSubido);
+			pa.setPer_art_estado(1);
+			pa.setPer_id_registra(idUsuario);
+			result2 = dbart.RegistrarPersonaArticulo(pa);
+		}
+		if (comboAutor3.getValue() != null) {
+			ObtenerIdArticuloRegistrado(direccion);
+			pa.setPers_id(idAutor3);
+			pa.setArti_id(idArticuloSubido);
+			pa.setPer_art_estado(1);
+			pa.setPer_id_registra(idUsuario);
+			result2 = dbart.RegistrarPersonaArticulo(pa);
+		}
+		ObtenerIdArticuloRegistrado(direccion);
+		ea.setId_articulo(idArticuloSubido);
+		ea.setId_estado(5);
+		ea.setId_utl_estado(1);
+		ea.setId_persona(idUsuario);
+		DBArticulos dba=new DBArticulos();
+		result3 = dbart.RegistrarEstadoArticulo(ea);
+		List<EstadoArticulo> listaestado = dba.buscarestados(idArticuloSubido);
+		id = listaestado.get(0).getId();
+		result2 = dba.Actualizr_estadoar(id, idArticuloSubido);
+	}
 	public void limpiar() {
 		textbox_Titulo.setValue("");
 		textbox_Resumen.setValue("");
@@ -476,7 +505,7 @@ int idart=0,idpadre1=0, regcontar =0,reconta=0;
 			if (lista.size()>0){
 				if(lista.get(1).getDireccion().trim().length()>0){
 				//txtObservaciones2.setValue(lista.get(1).getEval_observacion());
-				lblDescargar2.setValue(lista.get(1).getNombre());	
+				nombreArticuloCorregido2.setValue(lista.get(1).getNombre());	
 				direccionArticuloCorregido2 = lista.get(1).getDireccion();}
 				else{
 					button_descarga2.setVisible(false);
@@ -528,4 +557,49 @@ public void onClick$button_descarga2() {
 		alert("descarga exitosa");
 	}
 	
+	public void onCreate$winObservacionesArticulo() {
+		art = (Articulo) winObservacionesArticulo.getAttribute("articulo");
+		if (art != null) {
+			txtObservaciones.setText(art.getObservacion());
+			if (art.getNombreArticulo().trim().length() > 0) {
+				// /alert("tiene notificaciones observaciones ");
+				System.out.println("nombre articulo max cadena: "
+						+ art.getNombreArticulo() + " "
+						+ art.getNombreArticulo().trim().length());
+				nombreArticuloCorregido.setValue(art.getNombreArticulo());
+				direccionArticuloCorregido = art.getRuta();
+	
+			} else {
+				System.out.println("no tiene observaciones adjuntas :");
+				button_descarga.setVisible(false);
+				nombreArticuloCorregido.setVisible(false);
+				lblDescargar.setVisible(false);
+			}
+			if (art.getObservacion().trim().length() > 0) {
+				System.out.println("tiene observaciones escritas");
+			} else {
+				System.out.println("no tiene observaciones escritas");
+			}
+			
+			DBArticulos dbt=new DBArticulos();
+			List<ObservacionesEvaluadores> lista=dbt.ObservacionesEvaluaciones(art.getArt_id());
+			if (lista.size()>0){
+				if(lista.get(1).getDireccion().trim().length()>0){
+				//txtObservaciones2.setValue(lista.get(1).getEval_observacion());
+				nombreArticuloCorregido2.setValue(lista.get(1).getNombre());
+				direccionArticuloCorregido2 = lista.get(1).getDireccion();}
+				else{
+					button_descarga2.setVisible(false);
+					lblDescargar2.setVisible(false);
+					nombreArticuloCorregido2.setVisible(false);
+				}
+				if(lista.get(1).getEval_observacion().trim().length()>0){
+					txtObservaciones2.setValue(lista.get(1).getEval_observacion());
+				}
+			}
+			
+			
+		}
+	}
+
 }

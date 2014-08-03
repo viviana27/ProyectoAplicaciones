@@ -139,7 +139,7 @@ public class DBArticulosEvaluados {
 		try {
 			con.setAutoCommit(false);
 			String sql = " INSERT INTO tb_articulos_evaluados (eval_promedio,eval_cantidad," +
-					" estad_id,eval_estado,ar_id,eval_observacion,nombre,direccion, eval_fecha) VAlUES (?,?,?,?,?,?,?,?,?,CURRENT_DATE)";
+					" estad_id,eval_estado,ar_id,eval_observacion,nombre,direccion,eval_persona,eval_fecha) VAlUES (?,?,?,?,?,?,?,?,?,CURRENT_DATE)";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm = con.prepareStatement(sql);
 			pstm.setDouble(1, artEval.getEval_promedio());
@@ -159,6 +159,7 @@ public class DBArticulosEvaluados {
 			pstm.setString(7, artEval.getNombre());
 			System.out.println("nombre : "+artEval.getNombre());
 			pstm.setString(8, artEval.getDireccion());
+			pstm.setInt(9, artEval.getEval_persona());
 			System.out.println("fecha:"+artEval.getEval_fecha());
 			int filas_afectadas = pstm.executeUpdate();
 			System.out.println("filas"+filas_afectadas);
@@ -197,7 +198,7 @@ public class DBArticulosEvaluados {
 	try {
 		sentencia = con.createStatement();
 		resultado = sentencia.executeQuery(sql1);
-		System.out.println("codigonuevoooooo"+resultado);
+		System.out.println("llego al codigo de contar evaluaciones por evaluador"+resultado);
 		while (resultado.next()) {
 			a=resultado.getInt("contar");
 		}

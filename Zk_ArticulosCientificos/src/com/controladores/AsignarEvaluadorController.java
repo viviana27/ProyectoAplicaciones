@@ -231,6 +231,8 @@ public class AsignarEvaluadorController extends
 				t.connect(de,clave);
 				t.sendMessage(message,message.getAllRecipients());
 				t.close();
+				alert("Se ha enviado correctamente la notificación al evaluador " +
+						"con el mensaje de que tiene un artículo asignado a evaluar");
 			} catch (AddressException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

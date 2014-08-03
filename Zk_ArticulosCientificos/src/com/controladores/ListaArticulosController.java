@@ -1,5 +1,7 @@
 package com.controladores;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Properties;
 
@@ -16,6 +18,8 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
@@ -26,6 +30,9 @@ import com.datos.DBEstadoArticulo;
 import com.datos.DBUsuario;
 import com.entidades.Articulo;
 import com.entidades.Estados;
+import com.entidades.ObservacionesEvaluadores;
+import com.entidades.Persona;
+import com.entidades.TipoArticulos;
 import com.entidades.Usuarios;
 
 import javax.mail.Address;
@@ -37,7 +44,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 public class ListaArticulosController extends GenericForwardComposer<Component> {
-	Textbox txtProyecto;
+	Textbox txtProyecto,txtObservaciones,txtObservaciones2;
 	Textbox txtautor;
 	Textbox txttipo;
 	Textbox txtarea;
@@ -45,11 +52,17 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 	Button idfiltroautor;
 	Button idtipo;
 	Button idarea;
+	Button idenviar;
 	Listbox listaTareas;
 	Combobox cmb_estados;
 	public int idEstado;
 	String email2;
-
+	Label detalle, notificaciones;
+	Button button_descarga,button_descarga1,button_descarga2;
+	Label nombreArticulo,mensaje,nombreArticuloCorregido,nombreArticuloCorregido2,lblDescargar,lblDescargar2;
+	File f,f2;
+	String direccionArticuloCorregido,direccionArticuloCorregido2;
+	private Articulo art = null;
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
@@ -73,21 +86,89 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 	public void onSelect$listaTareas() {
 		org.zkoss.zk.ui.Session sesion = Sessions.getCurrent();
 		Usuarios u = (Usuarios) sesion.getAttribute("User");
-		if(idEstado==6 && u.getId_rol()==1){
+		if(idEstado==6){
 			Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
-			//email2=art.getEmail();
-			System.out.println("email autor"+email2);
-			enviarEmail();
-		}else{
+			email2=art.getEmail();
+			System.out.println("email autor: "+email2);
+			Window win = (Window) Executions.createComponents(
+					"Articulo/Observaciones de Evaluadores.zul", null, null);
+			win.setClosable(true);
+			win.doModal();
+			win.setAttribute("articulo", art);
+		}else{ 
 		Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
 		Window win = (Window) Executions.createComponents(
 				"Articulo/VerDetalleArticulo.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
 		win.setAttribute("articulo", art);
+			
 		}
 		
 	}
+	
+	
+	public void onClick$button_descarga() {
+		Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
+		// nombreArticulo.setVisible(true);
+		nombreArticulo.setValue(art.getArt_archivo());
+		f = new File(nombreArticulo.getValue());
+		//System.out.println("nombre completo" + nombreArticulo.getValue());
+		try {
+			Filedownload.save(f, null);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		alert("descarga exitosa");
+	}
+
+		public void observaciones1(){
+			Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
+			if (art != null) {
+			if (art.getNombreArticulo().trim().length() > 0) {
+			// /alert("tiene notificaciones observaciones ");
+			System.out.println("nombre articulo max cadena: "
+					+ art.getNombreArticulo() + " "
+					+ art.getNombreArticulo().trim().length());
+			nombreArticuloCorregido.setValue(art.getNombreArticulo());
+			direccionArticuloCorregido = art.getRuta();
+		
+		} else {
+			System.out.println("no tiene observaciones adjuntas :");
+			/*button_descarga.setVisible(false);
+			nombreArticuloCorregido.setVisible(false);
+			lblDescargar.setVisible(false);*/
+		}
+		}
+		}
+		
+		
+		public void observaciones2(){
+			Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
+			if (art != null) {
+			DBArticulos dbt=new DBArticulos();
+			List<ObservacionesEvaluadores> lista=dbt.ObservacionesEvaluaciones(art.getArt_id());
+			if (lista.size()>0){
+				if(lista.get(1).getDireccion().trim().length()>0){
+				//txtObservaciones2.setValue(lista.get(1).getEval_observacion());
+				//lblDescargar2.setValue(lista.get(1).getNombre());	
+				direccionArticuloCorregido2 = lista.get(1).getDireccion();
+					}
+				else{
+					button_descarga2.setVisible(false);
+					//lblDescargar2.setVisible(false);
+					nombreArticuloCorregido2.setVisible(false);
+				}
+				if(lista.get(1).getEval_observacion().trim().length()>0){
+					//txtObservaciones2.setValue(lista.get(1).getEval_observacion());
+				}
+			}
+			}
+			
+		}
+		
 
 	public void onClick$idfiltroTitulo() {
 		actualizarLista();
@@ -182,7 +263,7 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 						String de=u.getPersona().getPer_email();
 						String clave="darwinemilio";
 						message.setFrom(new InternetAddress("haydeponcep@gmail.com"));
-						message.addRecipient(Message.RecipientType.TO, new InternetAddress("vivianasmalave@gmail.com"));
+						message.addRecipient(Message.RecipientType.TO, new InternetAddress(email2));
 						message.setSubject("Notificacion Sistema Articulos Cientificos UPSE");
 						message.setText("Tiene observaciones en su Artículo Científico");
 						Transport t = session.getTransport("smtp");
@@ -190,6 +271,8 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 						t.connect(de,clave);
 						t.sendMessage(message,message.getAllRecipients());
 						t.close();
+						alert("Se ha enviado correctamente la notificación al autor " +
+								"con el mensaje de que tiene observaciones a revisar");
 					} catch (AddressException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -218,11 +301,37 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 	}
 
 	public void onSelect$cmb_estados() {
+		org.zkoss.zk.ui.Session sesion = Sessions.getCurrent();
+		Usuarios u = (Usuarios) sesion.getAttribute("User");
 		Estados est = (Estados) cmb_estados.getSelectedItem().getValue();
 		if (est != null) {
 			idEstado = (est.getId_estado());
+			if(idEstado==6 && u.getId_rol()==1){
+				idenviar.setVisible(true);
+				detalle.setVisible(false);
+				notificaciones.setVisible(true);
+				//mensaje.setVisible(true);
+				//button_descarga1.setVisible(true);
+				//button_descarga2.setVisible(true);
+			}else{
+				idenviar.setVisible(false);
+				detalle.setVisible(true);
+				notificaciones.setVisible(false);
+			}
 		}
 		actualizarLista();
 	}
+	
+	public void onClick$idenviar() {
+		if(listaTareas.getSelectedItem()==null){
+			alert("Por favor seleccione de la lista un artículo");
+			return;
+		}else{
+		enviarEmail();
+		}
+	}
+	
+	
+	
 	
 }

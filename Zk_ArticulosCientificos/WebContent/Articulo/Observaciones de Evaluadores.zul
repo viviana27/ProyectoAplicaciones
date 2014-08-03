@@ -1,0 +1,57 @@
+<?page title="Observaciones de Evaluadores" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Observaciones de Evaluadores" border="normal"
+		id="winObservacionesArticulo" apply="com.controladores.articuloController">
+
+<grid>
+	<rows>
+        <row>
+					<div>
+                        <label value="Evaluador 1" style="font-weight: bold; font-size:14px;"/> <separator>
+                        </separator>
+						<label value="Observaciones 1" />
+
+						<textbox id="txtObservaciones" rows="5"
+							cols="40" height="50px" width="85%" disabled="true"/>
+					</div>
+					<div>
+ 						<label value="Evaluador 2" style="font-weight: bold; font-size:14px;"/> <separator>
+                        </separator>
+						<label value="Observaciones 2" />
+
+						<textbox id="txtObservaciones2" rows="5"
+							cols="40" height="50px" width="85%" disabled="true"/>
+					</div>
+				</row>
+				<row>
+					<div>
+						<label value="Descargar Correcion: "
+							id="lblDescargar" />
+						<label id="nombreArticuloCorregido"
+							value="Archivo.docx" visible="true" />
+					
+					<vbox width="100%">
+						<button label="Descargar archivo" mold="trendy"
+							id="button_descarga" onClick="@command('downloadFile')"
+							visible="true" />
+					</vbox>
+					</div>
+					<div>
+						<label value="Descargar Correcion: "
+							id="lblDescargar2" />
+						<label id="nombreArticuloCorregido2"
+							value="Archivo.docx" visible="true" />
+					
+					<vbox width="100%">
+						<button label="Descargar archivo" mold="trendy"
+							id="button_descarga2" onClick="@command('downloadFile')"
+							visible="true" />
+					</vbox>
+					</div>
+				</row>
+				
+			</rows>
+			<!-- -->
+				</grid>
+</window>
+</zk>

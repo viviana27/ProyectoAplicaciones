@@ -39,6 +39,7 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 	Label lblCantidadEvaluaciones;
 	Articulo u= new Articulo();
 	private Window winSubirArticulo;
+	private int ida=0;
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
@@ -96,11 +97,12 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 			alert("Seleccion un artículo");
 			return;
 		}
-		int contareva=0,contarco=0;
+		int contareva=0,contarco=0,actestado=0;
 		DBArticulos dbart = new DBArticulos();
 		Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
 		contareva=dbart.CantidadEvaluaciones(art.getArt_id());
 		contarco=dbart.Cantidadcorreciones(art.getPadre());
+	 
 		System.out.println("-------------------------"+contareva+" : : "+art.getArt_id() );
 		System.out.println("-------------------------"+contarco+" : : "+art.getPadre() );
 		if (contareva==2){
@@ -115,6 +117,8 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 		win.setAttribute("articulo", art);
 		}else{
 			alert("No se puede subir una nueva correccion del articulo");
+			
+			  
 		}
 		}else{
 			alert("Articulo aun no ha sido evaluado por el par completo");

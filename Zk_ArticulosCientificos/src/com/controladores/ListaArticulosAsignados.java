@@ -161,7 +161,7 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 		cantid2=dbart.contarEvaluados(idart);
 		System.out.println("cantidad evalauciones"+cantid2);
 		evaluador= dbart.existeEvaluador(idart);
-		System.out.println("id articulo"+evaluador);
+		System.out.println("id evaluador"+evaluador);
 		if(registro==100 ){
 			if(cantid2<2 && u.getId() != evaluador){
 		Window win = (Window) Executions.createComponents(

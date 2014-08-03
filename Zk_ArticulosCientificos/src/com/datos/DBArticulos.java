@@ -405,7 +405,11 @@ public class DBArticulos {
 									.getString("per_institucion2"));
 							articulo.setArt_fecha_subida(rs
 									.getDate("art_fecha_subida"));
-							// articulo.setEmail(rs.getString("per_email"));
+							articulo.setEmail(rs.getString("per_email"));
+							articulo.setObservacion(rs.getString("veval_observacion"));
+							System.out.println("observacion : " + articulo.getObservacion());
+							articulo.setNombreArticulo(rs.getString("vnombre"));
+							articulo.setRuta(rs.getString("vdireccion"));
 							lista.add(articulo);
 							System.out.println("Name : " + rs.getString(5));
 						}
@@ -449,6 +453,9 @@ public class DBArticulos {
 									.getString("per_institucion1"));
 							articulo.setPer_institucion2(rs
 									.getString("per_institucion2"));
+							articulo.setObservacion(rs.getString("veval_observacion"));
+							articulo.setNombreArticulo(rs.getString("vnombre"));
+							articulo.setRuta(rs.getString("vdireccion"));
 							lista.add(articulo);
 							System.out.println("Name : " + rs.getString(5));
 						}
@@ -472,9 +479,11 @@ public class DBArticulos {
 							proc.setInt(2, idUsuario);
 							proc.execute();
 							Articulo articulo = null;
+							ObservacionesEvaluadores observ=null;
 							ResultSet rs = proc.getResultSet();
 							while (rs.next()) {
 								articulo = new Articulo();
+								observ=new ObservacionesEvaluadores();
 								articulo.setArt_id(rs.getInt("artid"));
 								articulo.setArt_titulo(rs
 										.getString("artTitulo"));
@@ -498,6 +507,9 @@ public class DBArticulos {
 										.getString("per_institucion2"));
 								articulo.setArt_fecha_subida(rs
 										.getDate("art_fecha_subida"));
+								articulo.setObservacion(rs.getString("veval_observacion"));
+								articulo.setNombreArticulo(rs.getString("vnombre"));
+								articulo.setRuta(rs.getString("vdireccion"));
 								lista.add(articulo);
 								System.out.println("Name : " + rs.getString(3));
 							}
@@ -546,6 +558,9 @@ public class DBArticulos {
 										.getString("per_institucion1"));
 								articulo.setPer_institucion2(rs
 										.getString("per_institucion2"));
+								articulo.setObservacion(rs.getString("veval_observacion"));
+								articulo.setNombreArticulo(rs.getString("vnombre"));
+								articulo.setRuta(rs.getString("vdireccion"));
 								lista.add(articulo);
 								System.out.println("Name : " + rs.getString(5));
 							}
@@ -1052,32 +1067,7 @@ public class DBArticulos {
 
 	}
 
-	public int contarRegistrosestados(int id) {
-		int a = 0;
-		DBManager dbm = new DBManager();
-		Connection con = dbm.getConection();
-		// contar
-		Statement sentencia = null;
-		ResultSet resultado = null;
-		String sql1 = "select count(*)as contar from tb_estado_articulo "
-				+ "where id_articulo=" + id;
-		try {
-			sentencia = con.createStatement();
-			resultado = sentencia.executeQuery(sql1);
-			System.out.println("codigonuevoooooo" + resultado);
-			while (resultado.next()) {
-				a = resultado.getInt("contar");
-			}
-			// fin del contar
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(a);
-		return a;
-	}
-
+	
 	/*
 	 * public boolean Actualizr_estadoarmodificado(int estad1, int ida){
 	 * 

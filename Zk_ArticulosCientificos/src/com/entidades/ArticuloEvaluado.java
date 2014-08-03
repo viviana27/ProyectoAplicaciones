@@ -13,6 +13,7 @@ public class ArticuloEvaluado {
 	private int ar_id;
 	private String Nombre;
 	private String Direccion;
+	private int eval_persona;
 	
 	public String getNombre() {
 		return Nombre;
@@ -78,6 +79,15 @@ public class ArticuloEvaluado {
 	public void setEval_observacion(String eval_observacion) {
 		this.eval_observacion = eval_observacion;
 	}
+	
+	
+	
+	public int getEval_persona() {
+		return eval_persona;
+	}
+	public void setEval_persona(int eval_persona) {
+		this.eval_persona = eval_persona;
+	}
 	public ArticuloEvaluado() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -98,7 +108,7 @@ public class ArticuloEvaluado {
 	}*/
 	public ArticuloEvaluado(int eval_id, Date eval_fecha, double eval_promedio,
 			int eval_cantidad, int estad_id, int eval_estado,
-			int ar_id, String nombre, String direccion, String eval_observacion) {
+			int ar_id, String nombre, String direccion, String eval_observacion, int eval_persona) {
 		super();
 		this.eval_id = eval_id;
 		this.eval_fecha = eval_fecha;
@@ -110,6 +120,7 @@ public class ArticuloEvaluado {
 		Nombre = nombre;
 		Direccion = direccion;
 		this.eval_observacion = eval_observacion;
+		this.eval_persona = eval_persona;
 	}
 	
 	

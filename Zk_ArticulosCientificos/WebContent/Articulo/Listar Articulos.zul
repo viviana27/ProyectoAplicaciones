@@ -15,10 +15,17 @@
 						</template>
 					</combobox>
 			<separator></separator>
-			<label style="color:green;">
+			<label id="detalle" style="color:green;" visible="true">
 				Para ver detalle de un artículo, seleccione con un click
 				sobre la lista
 			</label>
+			<label id="notificaciones" style="color:green;" visible="false">
+				Para enviar la notificación al autor de que tiene observaciones , seleccione con un click
+				sobre la lista
+			</label>
+			<button id="idenviar"
+						image="Imagenes/notificacion.png" visible="false">
+					</button >
 		</div>
 		<listbox id="listaTareas" mold="paging" pageSize="4"
 			multiple="false" width="100%"
@@ -87,5 +94,21 @@
 				</listitem>
 			</template>
 		</listbox>
+		<label id="mensaje" visible="false" style="font-weight: bold; color:blue;"
+			value="Seleccione el artículo a descargar y clic en el botón:">
+		</label>
+		<div>
+		<button label="Descargar archivo" mold="trendy"
+			id="button_descarga" onClick="@command('downloadFile')"
+			visible="false" />
+			<button label="Descargar archivo1" mold="trendy"
+							id="button_descarga1" onClick="@command('downloadFile')"
+							visible="false" />
+							<button label="Descargar archivo2" mold="trendy"
+							id="button_descarga2" onClick="@command('downloadFile')"
+							visible="false" />
+		</div>	
+		
+					
 	</window>
 </zk>
