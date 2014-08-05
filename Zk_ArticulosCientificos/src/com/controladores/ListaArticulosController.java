@@ -19,6 +19,7 @@ import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -44,7 +45,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 public class ListaArticulosController extends GenericForwardComposer<Component> {
-	Textbox txtProyecto,txtObservaciones,txtObservaciones2;
+	Textbox txtProyecto;
 	Textbox txtautor;
 	Textbox txttipo;
 	Textbox txtarea;
@@ -58,10 +59,9 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 	public int idEstado;
 	String email2;
 	Label detalle, notificaciones;
-	Button button_descarga,button_descarga1,button_descarga2;
-	Label nombreArticulo,mensaje,nombreArticuloCorregido,nombreArticuloCorregido2,lblDescargar,lblDescargar2;
+	Button button_descarga;
+	Label nombreArticulo,mensaje,etiqueta;
 	File f,f2;
-	String direccionArticuloCorregido,direccionArticuloCorregido2;
 	private Articulo art = null;
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
@@ -86,23 +86,36 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 	public void onSelect$listaTareas() {
 		org.zkoss.zk.ui.Session sesion = Sessions.getCurrent();
 		Usuarios u = (Usuarios) sesion.getAttribute("User");
-		if(idEstado==6){
-			Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
-			email2=art.getEmail();
-			System.out.println("email autor: "+email2);
+		DBArticulos dba= new DBArticulos();
+		Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
+		if(idEstado==1){
 			Window win = (Window) Executions.createComponents(
-					"Articulo/Observaciones de Evaluadores.zul", null, null);
+					"Articulo/VerDetalleArticulo.zul", null, null);
 			win.setClosable(true);
 			win.doModal();
-			win.setAttribute("articulo", art);
-		}else{ 
-		Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
-		Window win = (Window) Executions.createComponents(
-				"Articulo/VerDetalleArticulo.zul", null, null);
-		win.setClosable(true);
-		win.doModal();
-		win.setAttribute("articulo", art);
-			
+			win.setAttribute("articulo", art);		
+		}else{
+			if (idEstado == 2 && u.getId_rol() ==1) {
+				Window win = (Window) Executions.createComponents(
+						"Articulo/VerDetalleArticulo.zul", null, null);
+				win.setClosable(true);
+				win.doModal();
+				String inf=dba.mostrarEvaluadores(art.getArt_id());
+				System.out.println("inf : "+inf);
+				win.setAttribute("evaluadores", inf);
+				win.setAttribute("idEstado",idEstado);
+			}
+			else{
+				if(idEstado==6){
+					email2=art.getEmail();
+					System.out.println("email autor: "+email2);
+					Window win = (Window) Executions.createComponents(
+							"Articulo/Observaciones de Evaluadores.zul", null, null);
+					win.setClosable(true);
+					win.doModal();
+					win.setAttribute("articulo", art);
+				}
+			}
 		}
 		
 	}
@@ -123,53 +136,7 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 		}
 		alert("descarga exitosa");
 	}
-
-		public void observaciones1(){
-			Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
-			if (art != null) {
-			if (art.getNombreArticulo().trim().length() > 0) {
-			// /alert("tiene notificaciones observaciones ");
-			System.out.println("nombre articulo max cadena: "
-					+ art.getNombreArticulo() + " "
-					+ art.getNombreArticulo().trim().length());
-			nombreArticuloCorregido.setValue(art.getNombreArticulo());
-			direccionArticuloCorregido = art.getRuta();
-		
-		} else {
-			System.out.println("no tiene observaciones adjuntas :");
-			/*button_descarga.setVisible(false);
-			nombreArticuloCorregido.setVisible(false);
-			lblDescargar.setVisible(false);*/
-		}
-		}
-		}
-		
-		
-		public void observaciones2(){
-			Articulo art = (Articulo) listaTareas.getSelectedItem().getValue();
-			if (art != null) {
-			DBArticulos dbt=new DBArticulos();
-			List<ObservacionesEvaluadores> lista=dbt.ObservacionesEvaluaciones(art.getArt_id());
-			if (lista.size()>0){
-				if(lista.get(1).getDireccion().trim().length()>0){
-				//txtObservaciones2.setValue(lista.get(1).getEval_observacion());
-				//lblDescargar2.setValue(lista.get(1).getNombre());	
-				direccionArticuloCorregido2 = lista.get(1).getDireccion();
-					}
-				else{
-					button_descarga2.setVisible(false);
-					//lblDescargar2.setVisible(false);
-					nombreArticuloCorregido2.setVisible(false);
-				}
-				if(lista.get(1).getEval_observacion().trim().length()>0){
-					//txtObservaciones2.setValue(lista.get(1).getEval_observacion());
-				}
-			}
-			}
-			
-		}
-		
-
+	
 	public void onClick$idfiltroTitulo() {
 		actualizarLista();
 	}
@@ -306,17 +273,31 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 		Estados est = (Estados) cmb_estados.getSelectedItem().getValue();
 		if (est != null) {
 			idEstado = (est.getId_estado());
-			if(idEstado==6 && u.getId_rol()==1){
-				idenviar.setVisible(true);
-				detalle.setVisible(false);
-				notificaciones.setVisible(true);
-				//mensaje.setVisible(true);
-				//button_descarga1.setVisible(true);
-				//button_descarga2.setVisible(true);
-			}else{
+			if (idEstado == 1) {
+				etiqueta.setVisible(true);
+				etiqueta.setValue("Para ver detalle de un artículo, seleccione con un click	sobre la lista");
 				idenviar.setVisible(false);
-				detalle.setVisible(true);
 				notificaciones.setVisible(false);
+				
+			}
+		  else{
+			  if (idEstado == 2) {
+				    etiqueta.setVisible(true);
+					etiqueta.setValue("Para ver quienes son los evaluadores asignados a este artículo, seleccione con un click	sobre la lista");
+					idenviar.setVisible(false);
+					notificaciones.setVisible(false);
+			  }
+			   else {
+				   if(idEstado==6 && u.getId_rol()==1){
+						idenviar.setVisible(true);
+						etiqueta.setVisible(false);
+						notificaciones.setVisible(true);
+					} else {
+						etiqueta.setValue("");
+						idenviar.setVisible(false);
+						notificaciones.setVisible(false);
+					}
+				}
 			}
 		}
 		actualizarLista();

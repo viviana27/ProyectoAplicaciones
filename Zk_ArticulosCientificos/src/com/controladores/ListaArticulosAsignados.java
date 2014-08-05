@@ -124,16 +124,22 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 				.getValue();
 		// nombreArticulo.setVisible(true);
 		nombreArticulo.setValue(art.getArt_archivo());
-		f = new File(nombreArticulo.getValue());
-		//System.out.println("nombre completo" + nombreArticulo.getValue());
-		try {
-			Filedownload.save(f, null);
+		if( art.getArt_archivo().isEmpty()){
+			alert("No hay archivo adjunto");	
+		} else{
+			f = new File(nombreArticulo.getValue());
+			//System.out.println("nombre completo" + nombreArticulo.getValue());
+			try {
+				Filedownload.save(f, null);
 
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			alert("descarga exitosa");
 		}
-		alert("descarga exitosa");
+		
+		
 	}
 
 	public void onSelect$listaArticulosporpar() {

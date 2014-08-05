@@ -15,9 +15,8 @@
 						</template>
 					</combobox>
 			<separator></separator>
-			<label id="detalle" style="color:green;" visible="true">
-				Para ver detalle de un artículo, seleccione con un click
-				sobre la lista
+			<label id="etiqueta" style="color:green;">
+				
 			</label>
 			<label id="notificaciones" style="color:green;" visible="false">
 				Para enviar la notificación al autor de que tiene observaciones , seleccione con un click

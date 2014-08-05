@@ -4,7 +4,7 @@
 		position="center,top"
 		apply="com.controladores.HistorialArticulosController">
 		<div id="estado" align="center">
-			<label style="font-weight: bold; color:blue;">
+			<label id="etiqueta" style="font-weight: bold; color:blue;">
 				Seleccione el artículo para ver historial:
 			</label>
 			<combobox id="cmb_articulos" autodrop="true" width="80%">
@@ -22,7 +22,7 @@
 				<listheader label="Fecha" sort="auto" />
 				<listheader label="Estado" sort="auto" />
 				<listheader label="Modificado por" sort="auto" />
-
+				<listheader label="Información Adicional" sort="auto" />
 			</listhead>
 			<template name="model">
 				<listitem value="${each}">
@@ -30,17 +30,38 @@
 					<listcell
 						label="${each.estados.estado_descripcion}" />
 					<listcell label="${each.persona.per_nombre} " />
-
+					<listcell label="${each.info_adicional} " />
 				</listitem>
 			</template>
 		</listbox>
-		<div>
-			<timeline id="timeline" height="300px" width="100%">
-				<bandinfo width="70%" id="bandinfoMonth"
-					intervalUnit="month" intervalPixels="200" />
-				<bandinfo width="30%" id="bandinfoYear"
-					intervalUnit="year" intervalPixels="300" syncWith="bandinfoMonth" />
-			</timeline>
+		<listbox id="listaHistorialEvaluador" mold="paging" pageSize="4"
+			multiple="false" width="100%" emptyMessage="Sin resultados" visible="false">
+
+			<listhead sizable="false" menupopup="auto">
+				<listheader label="Fecha" sort="auto" />
+				<listheader label="Artículo" sort="auto" />
+				<listheader label="Calificación" sort="auto" />
+				<listheader label="Observaciones" sort="auto" />
+			</listhead>
+			<template name="model">
+				<listitem value="${each}">
+					<listcell label="${each.fecha}" />
+					<listcell
+						label="${each.articulo.art_titulo}" />
+					<listcell label="${each.calif} " />
+					<listcell label="${each.info_adicional} " />
+				</listitem>
+			</template>
+		</listbox>
+		
+		<div id="observaciones" visible="false">
+		<label style="font-weight: bold; color:blue;"
+			value="Seleccione un artìculo de la lista para descargar observaciones y clic en el botón:">
+		</label>
+		<button label="Descargar archivo" mold="trendy"
+			id="button_descarga" onClick="@command('downloadFile')"
+			visible="false" />
+		<label id="nombreArticulo" value="Archivo.docx" visible="false" />
 		</div>
 	</window>
 </zk>

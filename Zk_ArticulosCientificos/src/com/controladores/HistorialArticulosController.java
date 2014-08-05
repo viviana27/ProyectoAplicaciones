@@ -1,61 +1,51 @@
 package com.controladores;
 
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
-//import org.w3c.dom.Document;
-//import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-import org.zkforge.timeline.Bandinfo;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Div;
+import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Listcell;
-import org.zkoss.zul.Listitem;
-
 
 import com.datos.DBArticulos;
 import com.entidades.Articulo;
 import com.entidades.EstadoArticulo;
+import com.entidades.Usuarios;
 
 public class HistorialArticulosController extends
 		GenericForwardComposer<Component> {
-	Listbox listaHistorial;
+	Listbox listaHistorial, listaHistorialEvaluador;
 	Combobox cmb_articulos;
 	public int idArticulo;
-	Date currentDate;
-	public DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-	@Wire
-	private Bandinfo bandinfoMonth, bandinfoYear;
+	Session session = Sessions.getCurrent();
+	Usuarios usua = (Usuarios) session.getAttribute("User");
+	Label etiqueta,nombreArticulo;
+	Div observaciones;
+	Button button_descarga, evaluar;
+	File f;
 
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
-		cargarArticulos();
-		actualizarLista();
-		listaHistorial.renderAll();
-		lineaTiempo();
+		if (usua.getId_rol() == 3) {
+			listaHistorial.setVisible(false);
+			listaHistorialEvaluador.setVisible(true);
+			cmb_articulos.setVisible(false);
+			etiqueta.setVisible(false);
+			actualizarListaEvaluador();
+		} else {
+			cargarArticulos();
+		}
 	}
 
 	public void cargarArticulos() throws SQLException {
@@ -74,34 +64,59 @@ public class HistorialArticulosController extends
 		if (a != null) {
 			idArticulo = (a.getArt_id());
 		}
-		actualizarLista();
+		if (usua.getId_rol() == 3) {
+			actualizarListaEvaluador();
+		} else {
+			actualizarLista();
+		}
 	}
 
 	public void actualizarLista() {
-		
-			DBArticulos dbart = new DBArticulos();
-			List<EstadoArticulo> lista = dbart.historialArticulos(idArticulo);
-			ListModelList<EstadoArticulo> listModel = new ListModelList<EstadoArticulo>(
-					lista);
-			listaHistorial.setModel(listModel);
-			listaHistorial.renderAll();
-
-			
-
+		DBArticulos dbart = new DBArticulos();
+		List<EstadoArticulo> lista = dbart.historialArticulos(idArticulo);
+		ListModelList<EstadoArticulo> listModel = new ListModelList<EstadoArticulo>(
+				lista);
+		listaHistorial.setModel(listModel);
+		listaHistorial.renderAll();
 	}
 
-	public void lineaTiempo() {
+	public void actualizarListaEvaluador() {
+		DBArticulos dbart = new DBArticulos();
+		List<EstadoArticulo> lista = dbart.historialArticulosE(usua.getId());
+		ListModelList<EstadoArticulo> listModel = new ListModelList<EstadoArticulo>(
+				lista);
+		listaHistorialEvaluador.setModel(listModel);
+		listaHistorialEvaluador.renderAll();
+	}
 
-		try {
-			currentDate = dateFormat.parse("2014-06-29");
-			bandinfoMonth.setDate(currentDate);
-			bandinfoYear.setDate(currentDate);
-			bandinfoMonth.setEventSourceUrl("Articulo/timeline_data.xml");
-			bandinfoYear.setEventSourceUrl("Articulo/timeline_data.xml");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+	public void onClick$button_descarga() {
+		EstadoArticulo art = (EstadoArticulo) listaHistorialEvaluador.getSelectedItem().getValue();
+		// nombreArticulo.setVisible(true);
+		nombreArticulo.setValue(art.getArticulo().getRuta());
+		// nombreArticulo.setVisible(true);
+				nombreArticulo.setValue(art.getArticulo().getRuta());
+				if( art.getArticulo().getRuta().isEmpty()){
+					alert("No hay archivo adjunto");	
+				} else{
+					f = new File(nombreArticulo.getValue());
+					//System.out.println("nombre completo" + nombreArticulo.getValue());
+					try {
+						Filedownload.save(f, null);
 
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					alert("descarga exitosa");
+				}
+				
+	}
+	
+	public void onSelect$listaHistorialEvaluador() {
+		EstadoArticulo art = (EstadoArticulo) listaHistorialEvaluador.getSelectedItem().getValue();
+		observaciones.setVisible(true);
+		button_descarga.setVisible(true);
+		
 	}
 
 }

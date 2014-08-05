@@ -1,6 +1,6 @@
-<?page title="Detalle del Artículo" contentType="text/html;charset=UTF-8"?>
+<?page title="Detalle" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Detalle del Artículo" border="normal"
+	<window title="Detalles" border="normal"
 		id="winDetalleArticulo" width="50%"
 		apply="com.controladores.articuloController">
 		<div id="detalle" align="center">
@@ -33,6 +33,12 @@
 				value="Fecha Recibido:">
 			</label>
 		<label id="fechaRecibido"></label> 
+		</div>
+		<div id="divEvaluadores" visible="false">
+		<label style="font-weight: bold; color:blue;"
+				value="Los evaluadores asignados a este artículo son:">
+			</label>
+		<label id="evaluadores"></label> 
 		</div>
 	</window>
 </zk>
