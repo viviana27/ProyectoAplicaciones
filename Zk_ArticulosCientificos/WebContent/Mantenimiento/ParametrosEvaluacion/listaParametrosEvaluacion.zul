@@ -1,6 +1,6 @@
 <?page title="Parametros de Evaluación" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Parametros de Evaluación" border="normal"
+	<window title="Parámetros de Evaluación" border="normal"
 		id="WinListarParametros"
 		apply="com.controladores.listaParametroController">
 		<div height="50px">
@@ -8,27 +8,27 @@
 				style="position:relative;Margin-left:30px" itemWidth="40"
 				itemHeight="40" itemMaxHeight="80" itemMaxWidth="80">
 				<fisheye image="Imagenes/nuevoO.png"
-					id="toolbarbutton_Nuevo" label="Nuevo Parametro de Evaluación" />
+					id="toolbarbutton_Nuevo" label="Nuevo Parámetro de Evaluación" />
 				<fisheye image="Imagenes/editar.png"
-					id="toolbarbutton_Editar" label="Editar Parametro de Evaluación" />
+					id="toolbarbutton_Editar" label="Editar Parámetro de Evaluación" />
 				<fisheye image="Imagenes/eliminar.png"
-					id="toolbarbutton_Eliminar" label="Eliminar Parametro de Evaluación" />
+					id="toolbarbutton_Eliminar" label="Eliminar Parámetro de Evaluación" />
 			</fisheyebar>
 		</div>
 		<groupbox closable="true">
 			<caption label="buscar" />
 			<label
-				value="Ingrese parámetro para proceder con la búsqueda" />
+				value="Ingrese el nombre del parámetro para proceder con la búsqueda" />
 			<textbox id="textbox_buscar" />
 			<space />
 			<!-- <separator/> -->
 			<button image="Imagenes/buscar.png" id="button_buscar" />
 		</groupbox>
 		<listbox mold="paging" pageSize="3" width="100%"
-			emptyMessage="No existen datos que cumplan el criterio de busqueda"
+			emptyMessage="No existen datos que cumplan con el criterio de búsqueda"
 			id="listbox_Parametros" disabled="true">
 			<listhead menupopup="auto" sizable="false">
-				<listheader label="Parametro de Evaluación" sort="auto"
+				<listheader label="Parámetro de Evaluación" sort="auto"
 					sortDirection="ascending" />
 				<listheader label="Porcentaje de Evaluación" sort="auto" />
 				<listheader label="Estado" sort="auto" />
@@ -48,7 +48,7 @@
 				<column  />
 			</columns>
 			<rows>
-				<row><label value="Suma Total de Porcentaje: " /><label id="lbSumatotal" />
+				<row><label value="Total de Porcentaje: " /><label id="lbSumatotal" />
 				</row>
 			</rows>
 		</grid>

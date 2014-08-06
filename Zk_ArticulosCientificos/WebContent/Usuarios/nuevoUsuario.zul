@@ -1,6 +1,6 @@
 <?page title="Agregar Usuarios" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Agregar Usuarios" border="normal" width="600px"
+	<window title="Registro De Usuarios" border="normal" width="600px"
 		height="a00px" id="winNuevoUsuario"
 		apply="com.controladores.UsuarioController">
 		<grid>
@@ -10,7 +10,7 @@
 			</columns>
 			<rows>
 				<row>
-					<label value="Nombre Usuario/a:"></label>
+					<label value="Nombre De Usuario/a:"></label>
 					<textbox id="textbox_Usuario"
 						constraint="no empty" >
 					</textbox>
@@ -40,7 +40,7 @@
 					</textbox>
 				</row>
 				<row>
-					<label value="Email:"></label>
+					<label value="E-mail:"></label>
 					<textbox id="textbox_Email" constraint="no empty"
 						width="200px">
 					</textbox>

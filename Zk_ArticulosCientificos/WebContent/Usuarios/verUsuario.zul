@@ -1,6 +1,6 @@
 <?page title="Perfil de Usuario" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Perfil de Usuario" border="normal" width="600px"
+	<window title="Perfil Del Usuario" border="normal" width="600px"
 		height="100px" id="winVerUsuario"
 		apply="com.controladores.UsuarioController">
 		<grid>
@@ -10,7 +10,7 @@
 			</columns>
 			<rows>
 				<row>
-					<label value="Nombre Usuario/a:"></label>
+					<label value="Nombre De Usuario/a:"></label>
 					<label id="label_Usuario"
 						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
@@ -30,7 +30,7 @@
 						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>
 				<row>
-					<label value="Email:"></label>
+					<label value="E-mail:"></label>
 					<label id="label_Email"
 						style="font-size: 20px; font-weight: bold;	color:black;" />
 				</row>

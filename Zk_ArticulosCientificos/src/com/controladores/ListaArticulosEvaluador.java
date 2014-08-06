@@ -69,7 +69,7 @@ public class ListaArticulosEvaluador  extends GenericForwardComposer<Component>{
 	public void onClick$toolbarbutton_Editar() {
 		// verificar q usuario haya seleccionado un elemento de la lista
 		if (listaArticulosporpar.getSelectedItem() == null) {
-			alert("Seleccione por favor un articulo");
+			alert("Por favor seleccione  un artículo");
 			return;
 		}
 

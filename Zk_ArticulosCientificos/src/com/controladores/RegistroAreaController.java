@@ -62,7 +62,7 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 			
 			if(registro)
 			{
-				alert("Areas registrada con exito");
+				alert("El área ha sido registrada con éxito");
 				//evaluar desde donde fue llamada esta venta				
 				String opcion=(String)WinRegistrarAreas.getAttribute("opcion");
 				System.out.println(opcion+"");
@@ -75,7 +75,7 @@ public class RegistroAreaController extends GenericForwardComposer<Component>
 		
 		}
 			else {
-				alert("No se pudo realizar el registro");
+				alert("No se pudo realizar el registro del área");
 				}
 	}
 	

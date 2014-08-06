@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Perfil de la persona" border="normal" width="600px"
+	<window title="Mi Perfil" border="normal" width="600px"
 		height="a00px" id="winNuevoUsuario"
 		apply="com.controladores.PersonaController">
 
@@ -27,7 +27,7 @@
 
 				</row>
 				<row>
-					<label value="Nombre Usuario/a :"></label>
+					<label value="Nombre De Usuario/a :"></label>
 					<textbox id="textbox_Usuario"
 						constraint="no empty">
 					</textbox>

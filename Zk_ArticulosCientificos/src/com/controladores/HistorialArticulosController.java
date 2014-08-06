@@ -107,7 +107,7 @@ public class HistorialArticulosController extends
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					alert("descarga exitosa");
+					alert("Descarga Exitosa");
 				}
 				
 	}

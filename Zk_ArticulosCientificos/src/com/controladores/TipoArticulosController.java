@@ -54,7 +54,7 @@ public class TipoArticulosController extends GenericForwardComposer<Component> {
 		}
 
 		if (result) {
-			alert("Tipo de artículo registrado con exito");
+			alert("El tipo de artículo ha sido registrado con éxito");
 			// evaluar desde donde fue llamada esta ventana
 			String opcion = (String) WinRegistrarTipoArticulos
 					.getAttribute("opcion");
@@ -67,7 +67,7 @@ public class TipoArticulosController extends GenericForwardComposer<Component> {
 
 			}
 		} else {
-			alert("No se pudo realizar el registro");
+			alert("No se pudo realizar el registro del tipo de artículo");
 		}
 
 	}

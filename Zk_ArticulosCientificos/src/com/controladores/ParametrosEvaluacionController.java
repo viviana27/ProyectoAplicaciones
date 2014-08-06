@@ -65,7 +65,7 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 			if(registro)
 			{
 			
-				alert("Parametros registrada con exito");
+				alert("El parámetro ha sido registrado con éxito");
 				//evaluar desde donde fue llamada esta venta				
 				String opcion=(String)WinRegistrarParametros.getAttribute("opcion");
 			
@@ -79,15 +79,15 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 			}
 				}
 			else {
-				alert("No se pudo realizar el registro");
+				alert("No se pudo realizar el registro del parámetro");
 				}
 	}
 	
 	public void mensaje(){
 		if(Integer.parseInt(lbSumatotal.getValue())<100)
 				{
-			alert("Por favor modificar el valor del parametro " +
-				"o agregar un nuevo parametro hasta completar el 100% ");
+			alert("Por favor modificar el valor del parámetro " +
+				"o agregar un nuevo parámetro hasta completar el 100% ");
 				}
 	}
 	
@@ -116,8 +116,8 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 		int resto=0;
 		resto=100-Integer.parseInt(lbSumatotal.getValue());
 		if (resto<Integer.parseInt(textbox_valor.getValue())){
-			alert("la suma total de parametros no debe exeder al 100% del total ");
-			alert("la suma total ya esta completa con los 100%");
+			alert("La suma total de los valores de los parámetros no debe exceder al 100% del total ");
+			alert("La suma total está completada sobre 100%");
 			textbox_valor.setValue("");
 				
 			}

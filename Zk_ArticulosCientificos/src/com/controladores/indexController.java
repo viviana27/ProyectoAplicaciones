@@ -77,16 +77,16 @@ public class indexController extends GenericForwardComposer<Component> {
 	
 	
 		
-		Menu menuA = new Menu("Articulos ....");
+		Menu menuA = new Menu("Artículos ....");
 		Menupopup menupopupA = new Menupopup();
-		Menuitem menuitemA1 = new Menuitem("Listar Articulos");
+		Menuitem menuitemA1 = new Menuitem("Listar Artículos");
 	//	Menuitem menuitemA2 = new Menuitem("Evaluar Articulo");
-		Menuitem menuitemA3 = new Menuitem("Subir Nuevo Articulo");
-		Menuitem menuitemA4 = new Menuitem("Asignar Evaluadores a un Articulo");
-		Menuitem menuitemA5 = new Menuitem("Articulos Asignados a evaluar");
-		Menuitem menuitemA6 = new Menuitem("Listar Articulos a Corregir");
-		Menuitem menuitemA7 = new Menuitem("Historial de Articulo");
-		menuitemA1.setValue("Articulo/Listar Articulos.zul");
+		Menuitem menuitemA3 = new Menuitem("Subir Nuevo Artículo");
+		Menuitem menuitemA4 = new Menuitem("Asignar Evaluadores A Un Artículo");
+		Menuitem menuitemA5 = new Menuitem("Articulos Asignados A Evaluar");
+		Menuitem menuitemA6 = new Menuitem("Listar Artículos A Corregir");
+		Menuitem menuitemA7 = new Menuitem("Historial De Los Artículos");
+		menuitemA1.setValue("Artículo/Listar Artículos.zul");
 		//menuitemA2.setValue("Articulo/Evaluacion.zul");
 		menuitemA3.setValue("Articulo/Subir Articulo.zul");
 		menuitemA4.setValue("Articulo/Revision.zul");
@@ -117,13 +117,13 @@ public class indexController extends GenericForwardComposer<Component> {
 		
 		Menu menuM = new Menu("Mantenimiento");
 		Menupopup menupopupM = new Menupopup();
-		Menuitem menuitemM1 = new Menuitem("Listar Areas ");
+		Menuitem menuitemM1 = new Menuitem("Listar Áreas ");
 		Menuitem menuitemM2 = new Menuitem("Listar Roles");
-		Menuitem menuitemM3 = new Menuitem("Listar Tipos de Artículos");
-		Menuitem menuitemM4 = new Menuitem("Listar Parámetros de Evaluación");
-		Menuitem menuitemM5 = new Menuitem("Asignar rol a un usuario");
-		Menuitem menuitemM6 = new Menuitem("Asignar área a un usuario");
-		Menuitem menuitemM7 = new Menuitem("Asignar Permisos");
+		Menuitem menuitemM3 = new Menuitem("Listar Tipos De Artículos");
+		Menuitem menuitemM4 = new Menuitem("Listar Parámetros De Evaluación");
+		Menuitem menuitemM5 = new Menuitem("Asignar Rol A Un Usuario");
+		Menuitem menuitemM6 = new Menuitem("Asignar Área A Un Usuario");
+		Menuitem menuitemM7 = new Menuitem("Asignar Permisos A Usuarios");
 		menuitemM1.setImage("");
 		menuitemM2.setImage("");
 		menuitemM3.setImage("");

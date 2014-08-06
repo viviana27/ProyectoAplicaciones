@@ -134,7 +134,7 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		alert("descarga exitosa");
+		alert("Descarga Exitosa");
 	}
 	
 	public void onClick$idfiltroTitulo() {
@@ -305,7 +305,7 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 	
 	public void onClick$idenviar() {
 		if(listaTareas.getSelectedItem()==null){
-			alert("Por favor seleccione de la lista un artículo");
+			alert("Por favor seleccione un artículo");
 			return;
 		}else{
 		enviarEmail();

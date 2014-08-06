@@ -72,15 +72,13 @@ public class indexloginController extends GenericForwardComposer<Component> {
 		menu.appendChild(menupopup);
 		menubar_opciones1.appendChild(menu);
 
-		Menu menuR1 = new Menu("Datos de sesion");
+		Menu menuR1 = new Menu("Datos de sesión");
 		Menupopup menupopupR1 = new Menupopup();
 		Menuitem menuitemR1 = new Menuitem("Registrarse");
 		Menuitem menuitemR2 = new Menuitem("Iniciar Sesión");
 		// menuitemR1.setValue("VisualizarPerfil.zul");
 		menuitemR1.setValue("Usuarios/nuevoUsuario.zul");
 		menuitemR2.setValue("login.zul");
-		menuitemR1.setImage("imagenes/listarReser.png");
-		menuitemR2.setImage("imagenes/nuevaReser.png");
 		menuitemR1.addEventListener("onClick", new MenuListener());
 		menuitemR2.addEventListener("onClick", new MenuListener());
 		menupopupR1.appendChild(menuitemR1);

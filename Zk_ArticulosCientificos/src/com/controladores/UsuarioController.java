@@ -82,7 +82,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			label_dirinstitucion.setValue(u.getPersona()
 					.getPer_direccion_institucion());
 		} else
-			alert("Error al obtener información");
+			alert("Error al obtener información del usuario");
 	}
 
 	
@@ -133,7 +133,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 		}
 
 		if (result) {
-			alert("Usuario registrado con exito");
+			alert("El usuario ha sido registrado con éxito");
 			// evaluar desde donde fue llamada esta ventana
 			String opcion = (String) winNuevoUsuario.getAttribute("opcion");
 			if (opcion != null && opcion.equals("listaUsuarios")) {
@@ -148,7 +148,7 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 				winNuevoUsuario.detach();
 			}
 		} else {
-			alert("No se pudo realizar el registro");
+			alert("No se pudo realizar el registro del usuario");
 		}
 		winNuevoUsuario.detach();
 	}
@@ -181,23 +181,24 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			result = dbusuarios.verificarClave(u.getUsuario().toString(),
 					textbox_clave_anterior.getValue());
 			if (result) {
-				alert("clave correcta");
+				alert("Clave Correcta");
 				if (textbox_clave_nueva.getValue().toString()
 						.equals(textbox_rep_clave.getValue().toString())) {
 					result = dbusuarios.modificarClave(
 							textbox_clave_nueva.getValue(), u.getId());
 					if (result) {
-						alert("Clave actualizada");
+						alert("Clave Actualizada");
 					} else {
 						alert("No se logró cambiar su clave");
 					}
 				} else {
-					alert("por favor digite bien su nueva clave, y al repetirla procure que coincida");
+					alert("Por favor digite correctamente su nueva clave, " +
+							"y al repetirla procure que coincidan");
 					textbox_clave_nueva.setValue("");
 					textbox_rep_clave.setValue("");
 				}
 			} else {
-				alert("La clave anterior es INCORRECTA");
+				alert("La clave anterior es incorrecta");
 			}
 		} else {
 			alert("Es necesario que ingrese la clave anterior");

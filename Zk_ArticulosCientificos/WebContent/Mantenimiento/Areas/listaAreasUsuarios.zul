@@ -1,6 +1,6 @@
 <?page title="Roles Usuarios" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Listado de Evaluadores por area" border="normal"
+	<window title="Listado de Evaluadores por área" border="normal"
 		id="WinListarRolUsuarios" apply="com.controladores.listaAreaUsuarioController">
 		<div height="50px">
 			<fisheyebar id="fsb"
@@ -13,7 +13,7 @@
 		<groupbox closable="true">
 			<caption label="buscar" />
 			<label
-				value="Ingrese NOMBRE o APELLIDO para proceder con la búsqueda" />
+				value="Ingrese nombre o apellido para proceder con la búsqueda" />
 			<textbox id="textbox_buscar" />
 			<space />
 			<!-- <separator/> -->

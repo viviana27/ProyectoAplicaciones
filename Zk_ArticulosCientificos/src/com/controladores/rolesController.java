@@ -59,7 +59,7 @@ public class rolesController extends GenericForwardComposer<Component> {
 		}
 
 		if (result) {
-			alert("Rol registrado con exito");
+			alert("El rol ha sido registrado con éxito");
 			// evaluar desde donde fue llamada esta ventana
 			String opcion = (String) WinRegistrarRoles.getAttribute("opcion");
 			if (opcion != null && opcion.equals("listaRoles")) {
@@ -72,7 +72,7 @@ public class rolesController extends GenericForwardComposer<Component> {
 
 			}
 		} else {
-			alert("No se pudo realizar el registro");
+			alert("No se pudo realizar el registro del área");
 		}
 		WinRegistrarRoles.detach();
 	}

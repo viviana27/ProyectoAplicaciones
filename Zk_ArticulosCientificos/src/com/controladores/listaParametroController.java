@@ -64,7 +64,7 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 	public void onClick$toolbarbutton_Editar() {
 
 		if (listbox_Parametros.getSelectedItem() == null) {
-			alert("Seleccione por favor un usuario");
+			alert("Por favor seleccione un usuario");
 			return;
 		}
 
@@ -88,11 +88,11 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 
 		boolean result = false;
 		if (listbox_Parametros.getSelectedItem() == null) {
-			alert("Seleccione el parametro que desea eliminar");
+			alert("Por favor seleccione un artículo a eliminar");
 			return;
 		}
 		// mesaagebox
-		Messagebox.show("Esta seguro de eliminar el rol?", "confirmacion",
+		Messagebox.show("Está seguro de eliminar el rol?", "confirmacion",
 				Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
 				new EventListener<Event>() {
 
@@ -112,11 +112,11 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 			DBParametrosEvaluacion pa = new DBParametrosEvaluacion();
 			result = pa.eliminarParametrosEvaluacion(rol);
 			if (result != false) {
-				alert("Parametro eliminado correctamente");
+				alert("El parámetro ha sido eliminado correctamente");
 			} 
 			
 			}else {
-			alert("Eliminacion Cancelada");
+			alert("Eliminación Cancelada");
 		}
 		actualizarLista();
 		

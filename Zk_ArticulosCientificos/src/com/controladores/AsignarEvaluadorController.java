@@ -101,7 +101,7 @@ public class AsignarEvaluadorController extends
 			
 		}
 		if (result && result1) {
-			alert("Articulo asignado a los evaluadores correctamente ");
+			alert("Artículo asignado correctamente a los evaluadores");
 			// evaluar desde donde fue llamada esta ventana
 			String opcion = (String) winNuevoEvaluador.getAttribute("opcion");
 			if (opcion != null && opcion.equals("Revision")) {
@@ -118,7 +118,7 @@ public class AsignarEvaluadorController extends
 
 			}
 		} else {
-			alert("Asignacion correcta... Asigne el siguiente evaluador");
+			alert("Asignación correcta... Asigne el siguiente evaluador");
 			String opcion = (String) winNuevoEvaluador.getAttribute("opcion");
 			if (opcion != null && opcion.equals("Revision")) {
 				// entonces la ventana ufe llamada desde lista usuarios

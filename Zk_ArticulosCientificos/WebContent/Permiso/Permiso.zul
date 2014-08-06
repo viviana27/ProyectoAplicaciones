@@ -1,6 +1,6 @@
 <?page title="Permisos" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Permisos" border="normal" id="WinPermisos"
+	<window title="Asignación De Permisos" border="normal" id="WinPermisos"
 		apply="com.seguridad.Permisos">
 		<div>
 			<grid>
@@ -10,7 +10,7 @@
 				<rows>
 					<row>
 						<div>
-							<label value="Tipo Rol: " />
+							<label value="Rol De Usuario: " />
 							<combobox id="cbTipoRol" width="110px">
 								<template name="model">
 									<comboitem
@@ -24,14 +24,14 @@
 
 
 			<listbox mold="paging" pageSize="5" width="100%"
-				emptyMessage="No existen datos que cumplan el criterio de busqueda"
+				emptyMessage="No existen datos que cumplan con el criterio de búsqueda"
 				id="listbox_Permisos" disabled="true">
 				<listhead menupopup="auto" sizable="false">
 					<listheader label="idPermiso" sort="auto"
 						visible="false" />
 					<listheader label="idFormulario" sort="auto"
 						visible="false" />
-					<listheader label="Nombre" sort="auto" />
+					<listheader label="Formulario" sort="auto" />
 					<listheader label="idRol" sort="auto"
 						visible="false" />
 					<listheader label="Permiso" sort="auto"

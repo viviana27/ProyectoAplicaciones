@@ -112,7 +112,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 	public void downloadFile(Media media) {
 		if (media != null)
 			Filedownload.save(media);
-		alert("descarga exitosa");
+		alert("Descarga Exitosa ");
 	}
 
 	public void doAfterCompose(Component comp) throws Exception {
@@ -170,7 +170,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 					|| textbox_PClaves.equals("") || cmb_tipo.equals(null)
 					|| cmb_area.equals(null) || comboAutor2.equals(null)
 					|| comboAutor3.equals(null)) {
-				alert("Ingrese todos los campos");
+				alert("Existen campos vacíos, ingrese todos los campos");
 			} else {
 
 				if (nombreArticulo.getValue().trim().length() > 0) {
@@ -190,9 +190,9 @@ public class articuloController extends GenericForwardComposer<Component> {
 							a.setPer_id(idUsuario);
 							result = dbart.RegistrarArticulo(a);
 							if (result) {
-								alert("Articulo registrado con exito");
+								alert("El Artículo ha sido registrado con éxito");
 							} else {
-								alert("No se pudo realizar el registro");
+								alert("No se pudo realizar el registro correcto del artículo");
 							}
 						} else {
 							Messagebox.show(Labels.getLabel("app.error"));
@@ -230,9 +230,9 @@ public class articuloController extends GenericForwardComposer<Component> {
 								result = dbart.RegistrarArticuloModificado(a,
 										idAutor2, idAutor3);
 								if (result) {
-									alert("Articulo registrado con exito");
+									alert("El artículo ha sido registrado con éxito");
 								} else {
-									alert("No se pudo realizar el registro");
+									alert("No se pudo realizar el registro correcto del artículo");
 								}
 								Colaboradores2();
 
@@ -266,16 +266,17 @@ public class articuloController extends GenericForwardComposer<Component> {
 									result = dbart.RegistrarArticuloModificado(
 											a, idAutor2, idAutor3);
 									if (result) {
-										alert("Articulo registrado con exito");
+										alert("El Artículo se ha registrado con éxito");
 									} else {
-										alert("No se pudo realizar el registro");
+										alert("No se pudo realizar el registro correcto del artículo");
 									}
 									Colaboradores2();
 
 								}
 							} else {
 								if (reconta == 2) {
-									alert("ya no puede subir una nueva correccion del articulo");
+									alert("Ud ya ha realizado dos modificaciones de su artículo," +
+											" ya no puede acceder a una nueva correción ");
 
 								}
 							}
@@ -283,12 +284,12 @@ public class articuloController extends GenericForwardComposer<Component> {
 					}
 
 				} else {
-					alert("Suba articulo+");
+					alert("Ud no ha adjuntado un archivo.");
 				}
 			}
 
 		} catch (Exception e) { // TODO: handle exception
-			alert("Ingrese Todos los Campos y Suba el Articulo");
+			alert("Ingrese todos los campos y suba el artículo");
 		}
 
 		media = null;
@@ -562,7 +563,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		alert("descarga exitosa");
+		alert("Descarga Exitosa");
 	}
 
 	public void onClick$button_descarga2() {
@@ -575,7 +576,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		alert("descarga exitosa");
+		alert("Descarga Exitosa");
 	}
 
 	public void onCreate$winObservacionesArticulo() {

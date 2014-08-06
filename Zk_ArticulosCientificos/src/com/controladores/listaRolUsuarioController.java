@@ -59,19 +59,19 @@ public class listaRolUsuarioController extends
 		boolean result = false;
 
 		if (listbox_roles_usuarios.getSelectedItem() == null) {
-			alert("Seleccione un rol");
+			alert("Por favor seleccione un rol");
 		} else {
 			Roles r = (Roles) listbox_roles_usuarios.getSelectedItem()
 					.getValue();
 			u = (Usuarios) winModificarRol.getAttribute("usuario");
 			result = dbusuarios.cambiarRol(u.getId(), r.getRol_id());
 			if (result) {
-				alert("rol asignado correctamente");
+				alert("El rol ha sido asignado correctamente");
 				actualizarLista();
 				winModificarRol.detach();
 			
 			} else {
-				alert("no se pudo completar la asignacion");
+				alert("No se pudo realizar la asignación de rol");
 				actualizarLista();
 				winModificarRol.detach();
 				

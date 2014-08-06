@@ -25,7 +25,7 @@
 				</row>
 				<row>
 					<div>
-						<label value="Descargar Correcion: "
+						<label value="Descargar Correción: "
 							id="lblDescargar" />
 						<label id="nombreArticuloCorregido"
 							value="Archivo.docx" visible="true" />
@@ -37,7 +37,7 @@
 					</vbox>
 					</div>
 					<div>
-						<label value="Descargar Correcion: "
+						<label value="Descargar Correción: "
 							id="lblDescargar2" />
 						<label id="nombreArticuloCorregido2"
 							value="Archivo.docx" visible="true" />

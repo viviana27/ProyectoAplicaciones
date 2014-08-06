@@ -1,6 +1,6 @@
 <?page title="Listado de Usuarios" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Listado de Usuarios" border="normal" id="WinListarUsuarios" 
+<window title="Listado De Usuarios" border="normal" id="WinListarUsuarios" 
 apply="com.controladores.listaUsuarioController">
 		<div height="50px">
 			<toolbar >
@@ -15,27 +15,27 @@ apply="com.controladores.listaUsuarioController">
 		<groupbox closable="true">
 			<caption label="buscar" />
 			<label
-				value="Ingrese NOMBRE o APELLIDO para proceder con la búsqueda: " />
+				value="Ingrese nombre o apellido para proceder con la búsqueda: " />
 			<textbox id="textbox_buscar" />
 			<space />
 			<!-- <separator/> -->
 			<button image="Imagenes/buscar.png" id="button_buscar" />
 		</groupbox>
 		<listbox mold="paging" pageSize="3" width="100%"
-			emptyMessage="No existen datos que cumplan el criterio de búsqueda"
+			emptyMessage="No existen datos que cumplan con el criterio de búsqueda"
 			id="listbox_Miembros" disabled="true">
 			<listhead menupopup="auto" sizable="false">
 	            <listheader label="Usuario" sort="auto(usuario)" />
 				<listheader label="Nombres" sort="auto(persona.per_nombre)"
 					sortDirection="ascending" />
 				<listheader label="Apellidos" sort="auto(persona.per_apellido)" />
-				<listheader label="Cedula/RUC" sort="auto(persona.per_cedula)" />
+				<listheader label="Cédula/RUC" sort="auto(persona.per_cedula)" />
 				<listheader label="E-mail" sort="auto(persona.per_email)" />
-				<listheader label="Direccion" sort="auto(persona.per_direccion)" />
-				<listheader label="Telefono convencional" sort="auto(persona.per_telefono)" />
+				<listheader label="Dirección" sort="auto(persona.per_direccion)" />
+				<listheader label="Teléfono convencional" sort="auto(persona.per_telefono)" />
 				<listheader label="Celular" sort="auto(persona.per_celular)" />
-				<listheader label="Institucion_pertenece" sort="auto(persona.per_institucion_pertenece)" />
-				<listheader label="Direccion_pertenece" sort="auto(persona.per_direccion_institucion)" />
+				<listheader label="Institución a la que pertenece" sort="auto(persona.per_institucion_pertenece)" />
+				<listheader label="Dirección De La Institución" sort="auto(persona.per_direccion_institucion)" />
 				<listheader label="Rol" sort="auto(rol_descripcion)" />
 			</listhead>
 			<template name="model">

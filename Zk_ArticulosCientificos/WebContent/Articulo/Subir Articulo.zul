@@ -1,6 +1,6 @@
 <?page title="Indexación" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Registro de Articulos" border="normal" id="winSubirArticulo"
+	<window title="Registro de Artículos" border="normal" id="winSubirArticulo"
 	 apply="com.controladores.articuloController"  >
 		
 		<grid>
@@ -25,7 +25,7 @@
 					<label id="idtipo" visible="false" ></label>
 				</row>
 				<row>
-					<label>Área de Artículo</label>
+					<label>Área del Artículo</label>
 					<combobox id="cmb_area" autodrop="true"
 						width="30%">
 						<template name="model">
@@ -65,8 +65,8 @@
 				</row>
 				<row>
 				<label>
-						Seleccione al o los autores que colaboraron con el artículo mediante 
-						el ingreso del nombre
+						Seleccione el o los autores que colaboraron con el artículo mediante 
+						el ingreso del nombre.
 					</label>
 					<vbox width="100%">
 						<combobox id="comboAutor2" width="50%"

@@ -56,7 +56,7 @@
 		
 		<div id="observaciones" visible="false">
 		<label style="font-weight: bold; color:blue;"
-			value="Seleccione un artìculo de la lista para descargar observaciones y clic en el botón:">
+			value="Seleccione un artículo de la lista para descargar observaciones y clic en el botón:">
 		</label>
 		<button label="Descargar archivo" mold="trendy"
 			id="button_descarga" onClick="@command('downloadFile')"

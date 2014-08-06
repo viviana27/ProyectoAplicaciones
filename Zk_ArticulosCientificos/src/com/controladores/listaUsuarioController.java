@@ -89,7 +89,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 	public void onClick$toolbarbutton_Editar() {
 		// verificar q usuario haya seleccionado un elemento de la lista
 		if (listbox_Miembros.getSelectedItem() == null) {
-			alert("Seleccione por favor un usuario");
+			alert("Por favor seleccione un usuario");
 			return;
 		}
 
@@ -110,7 +110,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 	public void onClick$toolbarbutton_EditarUR() {
 		// verificar q usuario haya seleccionado un elemento de la lista
 		if (listbox_MiembrosRoles.getSelectedItem() == null) {
-			alert("Seleccione por favor un usuario");
+			alert("Por favor seleccione un usuario");
 			return;
 		}
 		Window win = (Window) Executions.createComponents(
@@ -131,7 +131,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 
 		boolean result = false;
 		if (listbox_Miembros.getSelectedItem() == null) {
-			alert("Seleccione el usuario que desea eliminar");
+			alert("Por favor seleccione el usuario que desea eliminar");
 			return;
 		}
 		// mesaagebox
@@ -153,7 +153,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 			DBUsuario user = new DBUsuario();
 			result = user.eliminarUsuario(u);
 			if (result) {
-				alert("usuario eliminado correctamente");
+				alert("El usuario ha sido eliminado correctamente");
 			}
 		} else {
 			alert("Eliminacion Cancelada");

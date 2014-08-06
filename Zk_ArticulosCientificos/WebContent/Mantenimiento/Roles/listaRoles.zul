@@ -1,6 +1,6 @@
 <?page title="Roles" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Roles" border="normal"
+	<window title="Registro De Roles" border="normal"
 		id="WinListarRoles"
 		apply="com.controladores.listaRolController">
 		<div height="50px">
@@ -18,14 +18,14 @@
 		<groupbox closable="true">
 			<caption label="buscar" />
 			<label
-				value="Ingrese rol para proceder con la búsqueda" />
+				value="Ingrese el nombre del rol para proceder con la búsqueda" />
 			<textbox id="textbox_buscar" />
 			<space />
 			<!-- <separator/> -->
 			<button image="Imagenes/buscar.png" id="button_buscar" />
 		</groupbox>
 		<listbox mold="paging" pageSize="3" width="100%"
-			emptyMessage="No existen datos que cumplan el criterio de busqueda"
+			emptyMessage="No existen datos que cumplan el criterio de búsqueda"
 			id="listbox_Roles" disabled="true">
 			<listhead menupopup="auto" sizable="false">
 				<listheader label="Rol" sort="auto(rol_descripcion)"

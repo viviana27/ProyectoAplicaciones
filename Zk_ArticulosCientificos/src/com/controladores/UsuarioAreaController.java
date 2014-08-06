@@ -74,7 +74,7 @@ public class UsuarioAreaController extends GenericForwardComposer<Component> {
 						result = dbusuarios.crearUsuarioArea(u);
 		}
 		if (result) {
-			alert("Usuario con area registrado con exito");
+			alert("El usuario ha sido asignado correctamente al área");
 			// evaluar desde donde fue llamada esta ventana
 			String opcion = (String) winNuevoUsuarioArea.getAttribute("opcion");
 			if (opcion != null && opcion.equals("listaAreasUsuarios")) {
@@ -91,7 +91,7 @@ public class UsuarioAreaController extends GenericForwardComposer<Component> {
 
 			}
 		} else {
-			alert("No se pudo realizar el registro");
+			alert("No se pudo realizar la asignación correcta del usuario al área ");
 		}
 
 	}

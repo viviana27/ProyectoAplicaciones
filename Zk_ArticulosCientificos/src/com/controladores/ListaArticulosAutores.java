@@ -94,7 +94,7 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 	public void onSelect$listaTareas() {
 		//Articulo a=new Articulo();
 		if (listaTareas.getSelectedItem() == null) {
-			alert("Seleccion un artículo");
+			alert("Por favor seleccione un artículo");
 			return;
 		}
 		int contareva=0,contarco=0,actestado=0;
@@ -116,12 +116,14 @@ public class ListaArticulosAutores extends GenericForwardComposer<Component> {
 		
 		win.setAttribute("articulo", art);
 		}else{
-			alert("No se puede subir una nueva correccion del articulo");
+			alert("Ud ya ha realizado dos modificaciones de su artículo," +
+					" ya no puede acceder a una nueva correción ");
+
 			
 			  
 		}
 		}else{
-			alert("Articulo aun no ha sido evaluado por el par completo");
+			alert("Su artículo aún no ha sido evaluado por el par completo");
 		}
 	}
 	

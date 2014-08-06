@@ -1,6 +1,6 @@
 <?page title="Asignar Rol a Usuario" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Asignar Rol a Usuario" border="normal" width="600px"
+	<window title="Asignación De Rol Al Usuario" border="normal" width="600px"
 		id="winModificarRol" height="a00px" apply="com.controladores.listaRolUsuarioController">
 		<grid>
 			<columns>

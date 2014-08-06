@@ -10,12 +10,12 @@
 				<!-- codio es el id del articulo y con el va a entrar a detalles y poder ver sus
 				correcciones o subir nuevamente el archivo, en programacion se
 				contaria la cantidad de 2 o en su defecto seria la existencia de un padre -->
-					<label value="Codigo del articulo" />
+					<label value="Código del artículo" />
 					<textbox id="textbox_id" constraint="no empty"
 						readonly="True" />
 				</row>
 				<row>
-					<label value="Titulo: " />
+					<label value="Título: " />
 					<textbox id="textbox_usuario" constraint="no empty" />
 				</row>
 				<row>

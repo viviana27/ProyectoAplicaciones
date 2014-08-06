@@ -1,6 +1,6 @@
 <?page title="Revision" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="ASIGNAR ARTICULOS A PARES" border="normal" apply="com.controladores.ListaArticulosEvaluador">
+<window title="ASIGNAR ARTÍCULOS A PARES" border="normal" apply="com.controladores.ListaArticulosEvaluador">
 <!-- iniciar sesion como administrador y se cargan todos los articulos enviados -->
 <listbox id="listaArticulosporpar" mold="paging" pageSize="4"
 			multiple="false" width="100%"
@@ -38,7 +38,7 @@
 			
 			</auxhead>
 			<auxhead sclass="category-center" >
-				<auxheader colspan="3" label="Listado de Articulos por evaluadores "
+				<auxheader colspan="3" label="Listado de Artículos por evaluadores "
 					 />
 			</auxhead>
 

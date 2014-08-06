@@ -13,7 +13,7 @@
 						
 					</div>
 					<div>
-						<label value="Codigo Articulo: " visible="false" />
+						<label value="Código Artículo: " visible="false" />
 						<label id="lblidArticulo"  visible="false"  />
 
 					</div>
@@ -38,7 +38,7 @@
 				</row>
 				<row>
 					<div>
-						<label value="Descargar Correcion: "
+						<label value="Descargar Correción: "
 							id="lblDescargar" />
 						<label id="nombreArticuloCorregido"
 							value="Archivo.docx" visible="true" />
@@ -50,7 +50,7 @@
 					</vbox>
 					</div>
 					<div>
-						<label value="Descargar Correcion: "
+						<label value="Descargar Correción: "
 							id="lblDescargar2" />
 						<label id="nombreArticuloCorregido2"
 							value="Archivo.docx" visible="true" />
@@ -87,7 +87,7 @@
 					<label id="idtipo" visible="false"></label>
 				</row>
 				<row>
-					<label>Área de Artículo</label>
+					<label>Área del Artículo</label>
 					<combobox id="cmb_area" autodrop="true" width="30%"
 						disabled="true">
 						<template name="model">
@@ -120,8 +120,8 @@
 				</row>
 				<row>
 					<label>
-						Seleccione al o los autores que colaboraron con
-						el artículo mediante el ingreso del nombre
+						Seleccione el o los autores que colaboraron con
+						el artículo mediante el ingreso del nombre.
 					</label>
 					<vbox width="100%">
 						<combobox id="comboAutor2" width="50%"

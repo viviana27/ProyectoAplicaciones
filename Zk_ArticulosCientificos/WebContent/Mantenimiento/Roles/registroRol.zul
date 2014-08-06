@@ -1,6 +1,6 @@
 <?page title="Rol de Usuario" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Rol de Usuario" border="normal" id="WinRegistrarRoles"
+	<window title="Registro De Rol Del Usuario" border="normal" id="WinRegistrarRoles"
 		apply="com.controladores.rolesController">
 		<grid>
 			<columns>

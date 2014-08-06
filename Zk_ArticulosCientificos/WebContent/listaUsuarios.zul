@@ -1,6 +1,6 @@
 <?page title="Registros" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Registros" border="normal"
+	<window title="Listado Y Registros De Usuarios" border="normal"
 		id="WinListarUsuarios" apply="com.controladores.listaUsuarioController">
 		<div height="50px">
 			<fisheyebar id="fsb"
@@ -17,26 +17,26 @@
 		<groupbox closable="true">
 			<caption label="buscar" />
 			<label
-				value="Ingrese NOMBRE o APELLIDO para proceder con la búsqueda" />
+				value="Ingrese nombre o apellido para proceder con la búsqueda" />
 			<textbox id="textbox_buscar" />
 			<space />
 			<!-- <separator/> -->
 			<button image="imagenes/buscar.png" id="button_buscar" />
 		</groupbox>
 		<listbox mold="paging" pageSize="3" width="100%"
-			emptyMessage="No existen datos que cumplan el criterio de búsqueda"
+			emptyMessage="No existen datos que cumplan con el criterio de búsqueda"
 			id="listbox_Miembros" disabled="true">
 			<listhead menupopup="auto" sizable="false">
 				<listheader label="Nombres" sort="auto"
 					sortDirection="ascending" />
 				<listheader label="Apellidos" sort="auto" />
-				<listheader label="Cedula/RUC" sort="auto" />
+				<listheader label="Cédula/RUC" sort="auto" />
 				<listheader label="E-mail" sort="auto" />
-				<listheader label="Direccion" sort="auto" />
-				<listheader label="Telefono convencional" sort="auto" />
+				<listheader label="Dirección" sort="auto" />
+				<listheader label="Teléfono convencional" sort="auto" />
 				<listheader label="Celular" sort="auto" />
-				<listheader label="Institucion_pertenece" sort="auto" />
-				<listheader label="Direccion_pertenece" sort="auto" />
+				<listheader label="Institución a la que pertenece" sort="auto" />
+				<listheader label="Dirección de la Institución" sort="auto" />
 				<listheader label="Rol de usuario" sort="auto" />				
 			</listhead>
 			<template name="model">

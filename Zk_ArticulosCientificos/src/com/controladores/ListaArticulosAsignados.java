@@ -98,7 +98,7 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 	public void onClick$toolbarbutton_Editar() {
 		// verificar q usuario haya seleccionado un elemento de la lista
 		if (listaArticulosporpar.getSelectedItem() == null) {
-			alert("Seleccione por favor un articulo");
+			alert("Por favor seleccione un artículo");
 			return;
 		}
 		Window win = (Window) Executions.createComponents(
@@ -125,7 +125,7 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 		// nombreArticulo.setVisible(true);
 		nombreArticulo.setValue(art.getArt_archivo());
 		if( art.getArt_archivo().isEmpty()){
-			alert("No hay archivo adjunto");	
+			alert("No existen archivos a descargar");	
 		} else{
 			f = new File(nombreArticulo.getValue());
 			//System.out.println("nombre completo" + nombreArticulo.getValue());
@@ -136,7 +136,7 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			alert("descarga exitosa");
+			alert("Descarga Exitosa");
 		}
 		
 		
@@ -155,7 +155,7 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 
 	public void onClick$evaluar() {
 		if (listaArticulosporpar.getSelectedItem() == null) {
-			alert("Seleccione por favor un articulo");
+			alert("Por favor seleccione un artículo");
 			return;
 		}
 		DBParametrosEvaluacion dp= new DBParametrosEvaluacion();
@@ -180,11 +180,12 @@ public class ListaArticulosAsignados extends GenericForwardComposer<Component> {
 		win.setAttribute("articulo", arti);
 	}
 			else{
-				alert("No se puede evaluar, el articulo ya fue evaluado");
+				alert("No se puede realizar la evaluación, el artículo ya fue evaluado");
 			}
 		}
 	else{
-		alert("No está disponible los parámetros a considerar");
+		alert("No se puede realizar la evaluación porque los parámetros a considerar" +
+				" no están disponibles");
 	}
 }
 }

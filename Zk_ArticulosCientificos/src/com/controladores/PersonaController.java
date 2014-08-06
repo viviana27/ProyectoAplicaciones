@@ -93,7 +93,7 @@ public class PersonaController extends GenericForwardComposer<Component> {
 		}
 
 		if (result) {
-			alert("Usuario registrado con exito");
+			alert("El usuario ha sido registrado con éxito");
 			// evaluar desde donde fue llamada esta ventana
 			String opcion = (String) winNuevoUsuario.getAttribute("opcion");
 			if (opcion != null && opcion.equals("listaUsuarios")) {
@@ -110,7 +110,7 @@ public class PersonaController extends GenericForwardComposer<Component> {
 
 			}
 		} else {
-			alert("No se pudo realizar el registro");
+			alert("No se pudo realizar el registro del usuario");
 		}
 
 	}

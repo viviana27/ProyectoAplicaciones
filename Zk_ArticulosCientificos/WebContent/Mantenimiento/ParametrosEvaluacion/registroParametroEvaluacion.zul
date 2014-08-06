@@ -1,6 +1,6 @@
 <?page title="Parámetros de Evaluación" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Parámetros de Evaluación" border="normal"
+	<window title="Registro De Parámetros De Evaluación" border="normal"
 		id="WinRegistrarParametros"
 		apply="com.controladores.ParametrosEvaluacionController">
 		<grid>
@@ -34,7 +34,7 @@
 						onClick="WinRegistrarParametros.detach()" />
 				</row>
 				<row>
-					<label value="Suma Total de Porcentaje: " />
+					<label value="Total de Porcentaje: " />
 					<label id="lbSumatotal" />
 				</row>
 			</rows>

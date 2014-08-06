@@ -54,7 +54,7 @@ public class listaAreaUsuarioController extends GenericForwardComposer<Component
 	public void onClick$toolbarbutton_Editar() {
 		//verificar que este seleccionado un elemento de la lista
 				if(listbox_Miembros.getSelectedItem()==null){
-					alert("Selecciona un área por usuario");
+					alert("Por favor seleccione un área por usuario");
 					return;
 				}
 				Window win = (Window) Executions.createComponents(

@@ -19,7 +19,7 @@
 				
 			</label>
 			<label id="notificaciones" style="color:green;" visible="false">
-				Para enviar la notificación al autor de que tiene observaciones , seleccione con un click
+				Para enviar la notificación al autor de que tiene observaciones , seleccione con un clic
 				sobre la lista
 			</label>
 			<button id="idenviar"
@@ -100,10 +100,10 @@
 		<button label="Descargar archivo" mold="trendy"
 			id="button_descarga" onClick="@command('downloadFile')"
 			visible="false" />
-			<button label="Descargar archivo1" mold="trendy"
+			<button label="Descargar archivo 1" mold="trendy"
 							id="button_descarga1" onClick="@command('downloadFile')"
 							visible="false" />
-							<button label="Descargar archivo2" mold="trendy"
+							<button label="Descargar archivo 2" mold="trendy"
 							id="button_descarga2" onClick="@command('downloadFile')"
 							visible="false" />
 		</div>	

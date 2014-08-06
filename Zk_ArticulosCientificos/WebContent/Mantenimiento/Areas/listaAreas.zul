@@ -1,6 +1,6 @@
 <?page title="Categorias" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Áreas" border="normal"
+	<window title="Listado De Áreas" border="normal"
 		id="WinListarAreas"
 		apply="com.controladores.listaAreaController">
 		<div height="50px">
@@ -18,17 +18,17 @@
 		<groupbox closable="true">
 			<caption label="buscar" />
 			<label
-				value="Ingrese area para proceder con la búsqueda" />
+				value="Ingrese el nombre del área para proceder con la búsqueda" />
 			<textbox id="textbox_buscar" />
 			<space />
 			<!-- <separator/> -->
 			<button image="Imagenes/buscar.png" id="button_buscar" />
 		</groupbox>
 		<listbox mold="paging" pageSize="3" width="100%"
-			emptyMessage="No existen datos que cumplan el criterio de busqueda"
+			emptyMessage="No existen datos que cumplan el criterio de búsqueda"
 			id="listbox_areas" disabled="true">
 			<listhead menupopup="auto" sizable="false">
-				<listheader label="Area" sort="auto(area_nombre)"
+				<listheader label="Área" sort="auto(area_nombre)"
 					sortDirection="ascending" />
 				<listheader label="Estado" sort="auto(area_estado)" />
 			</listhead>

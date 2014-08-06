@@ -127,7 +127,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			ida = art.getArt_id();
 			System.out.println("EL NUEVO ID" + ida);
 		} else {
-			alert("No se pudo recuperar información del artículo");
+			alert("No se pudo recuperar la información del artículo");
 		}
 		actualizarLista();
 
@@ -164,7 +164,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 			Listcell valorM = (Listcell) listaceldas.get(2);
 			int valorMax = Integer.parseInt(valorM.getLabel());
 			if (valor < 0 || valor > valorMax || valor.equals("")) {
-				alert("verifique calificación");
+				alert("Verifique la calificación ingresada");
 				item.setStyle("background-color: red;");
 				cajax.setValue(null);
 			} else {
@@ -245,7 +245,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 					bandera = dbp.guardarEvaluacion(listaParam);
 					if (media != null) {
 						if (Util.uploadFileObservacion(media)) {
-							alert("se subio");
+							alert("Se ha adjuntado el archivo correctamente");
 							obtenerRutaArchivoAdjuntado();
 							arte.setNombre(nom);
 							arte.setDireccion(direccion);
@@ -284,7 +284,8 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 
 					if (acum < 70
 							&& (txtObservacion.getValue().trim().length() < 1 && media == null)) {
-						alert("articulo con calificacion menor a 70, por favor adjuntar o escribir observaciones");
+						alert("Artículo con calificación menor a 70, por favor adjuntar o " +
+								"escribir observaciones");
 					} else {
 						// para articulo con estado observado
 
@@ -304,7 +305,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 							+ reg_evaluados);
 					if (bandera && result && result1) {
 
-						alert("Evaluación registrada con exito");
+						alert("Evaluación registrada con éxito");
 
 						String opcion = (String) WinEvaluarArticulo
 								.getAttribute("opcion");
@@ -327,7 +328,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 					} else {
 						String opcion = (String) WinEvaluarArticulo
 								.getAttribute("opcion");
-						alert("No se puede evaluar, el articulo ya fue evaluado");
+						alert("No se puede realizar la evaluación, el artículo ya fue evaluado");
 						if (opcion != null && opcion.equals("Evaluacion")) {
 							ListaArticulosAsignados lac = (ListaArticulosAsignados) WinEvaluarArticulo
 									.getAttribute("controladorOrigen");
@@ -457,7 +458,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 				id = listaestado.get(1).getId();
 				result2 = dba.Actualizr_estadoar(id, ida);
 			} else {
-				alert("corrija calificaciones altas");
+				alert("Corrija calificaciones altas");
 			}
 		}
 	

@@ -71,7 +71,7 @@ public class listaTipoArticuloController extends
 
 	public void onClick$toolbarbutton_Editar() {
 		if (listbox_TipoArticulos.getSelectedItem() == null) {
-			alert("Seleccione por favor un tipo de articulo");
+			alert("Seleccione por favor un tipo de artículo");
 			return;
 		}
 		Window win = (Window) Executions.createComponents(
@@ -89,7 +89,8 @@ public class listaTipoArticuloController extends
 	public void onClick$toolbarbutton_Eliminar() {
 		boolean result = false;
 		if (listbox_TipoArticulos.getSelectedItem() == null) {
-			alert("Seleccione el rol que desea eliminar");
+			alert("Por favor seleccione el tipo de artículo" +
+					" que desea eliminar");
 			return;
 		}
 		// mesaagebox
@@ -111,7 +112,7 @@ public class listaTipoArticuloController extends
 			DBTipoArticulos tipos = new DBTipoArticulos();
 			result = tipos.eliminarTipos(tipo);
 			if (result != false) {
-				alert("tipo de articulo eliminado correctamente");
+				alert("El tipo de artículo ha sido eliminado correctamente");
 			}
 		}else {
 			alert("Eliminacion Cancelada");

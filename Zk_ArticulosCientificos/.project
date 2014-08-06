@@ -3,6 +3,7 @@
 	<name>Zk_ArticulosCientificos</name>
 	<comment></comment>
 	<projects>
+		<project>ZK_proyectoDeportistas</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
