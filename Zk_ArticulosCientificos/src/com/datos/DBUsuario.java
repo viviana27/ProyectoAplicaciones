@@ -28,8 +28,8 @@ public class DBUsuario {
 		// busqueda del usuario en la bd
 		// 1. conectarme a la bd
 		DBManager dbm = new DBManager();
+		
 		Connection con = dbm.getConection();
-
 		Statement sentencia;
 		ResultSet resultados;
 		try {
@@ -76,16 +76,16 @@ public class DBUsuario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			//
 			try {
-				// cerrar la conexion
-				con.close();
+				
+					con.close();
+				
 			} catch (SQLException e) {
-				// todo auto generated cath block
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
 
+		}
 		// ---------------------------------
 		return usuario;
 	}
@@ -106,15 +106,15 @@ public class DBUsuario {
 			PreparedStatement pstm = con.prepareStatement(sql,
 					Statement.RETURN_GENERATED_KEYS);
 			Persona per = usuario.getPersona();
-			pstm.setString(1, per.getPer_nombre());
-			pstm.setString(2, per.getPer_apellido());
+			pstm.setString(1, per.getPer_nombre().toUpperCase());
+			pstm.setString(2, per.getPer_apellido().toUpperCase());
 			pstm.setString(3, per.getPer_cedula());
 			pstm.setString(4, per.getPer_email());
-			pstm.setString(5, per.getPer_direccion());
+			pstm.setString(5, per.getPer_direccion().toUpperCase());
 			pstm.setString(6, per.getPer_telefono());
 			pstm.setString(7, per.getPer_celular());
-			pstm.setString(8, per.getPer_institucion_pertenece());
-			pstm.setString(9, per.getPer_direccion_institucion());
+			pstm.setString(8, per.getPer_institucion_pertenece().toUpperCase());
+			pstm.setString(9, per.getPer_direccion_institucion().toUpperCase());
 
 			pstm.setInt(10, 1);
 			// ejecutar el prepaaredStatement
@@ -128,7 +128,7 @@ public class DBUsuario {
 				int idPersona = rs.getInt(1);
 				sql = "INSERT INTO tb_usuario (usu_nombre, usu_clave, usu_estado, persona_id,rol_id_usuario) VALUES (?,?,?,?,?)";
 				pstm = con.prepareStatement(sql);
-				pstm.setString(1, usuario.getUsuario());
+				pstm.setString(1, usuario.getUsuario().toUpperCase());
 				clave = encrypt.hash(usuario.getClave());
 				pstm.setString(2, clave);
 				pstm.setInt(3, 1);
@@ -243,6 +243,7 @@ public class DBUsuario {
 
 		return lista;
 	}
+
 	public List<Usuarios> buscarUsuariosAutores(String criterio) {
 		List<Usuarios> lista = new ArrayList<Usuarios>();
 		// objeto sentencia
@@ -404,15 +405,15 @@ public class DBUsuario {
 					+ " where per_id=?";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			Persona per = usuario.getPersona();
-			pstm.setString(1, per.getPer_nombre());
-			pstm.setString(2, per.getPer_apellido());
+			pstm.setString(1, per.getPer_nombre().toUpperCase());
+			pstm.setString(2, per.getPer_apellido().toUpperCase());
 			pstm.setString(3, per.getPer_cedula());
 			pstm.setString(4, per.getPer_email());
-			pstm.setString(5, per.getPer_direccion());
+			pstm.setString(5, per.getPer_direccion().toUpperCase());
 			pstm.setString(6, per.getPer_telefono());
 			pstm.setString(7, per.getPer_celular());
-			pstm.setString(8, per.getPer_institucion_pertenece());
-			pstm.setString(9, per.getPer_direccion_institucion());
+			pstm.setString(8, per.getPer_institucion_pertenece().toUpperCase());
+			pstm.setString(9, per.getPer_direccion_institucion().toUpperCase());
 
 			pstm.setInt(10, per.getPer_id());
 			// ejecutar el prepaaredStatement
@@ -422,10 +423,10 @@ public class DBUsuario {
 			sql = "UPDATE tb_usuario SET usu_nombre=?, usu_clave=?"
 					+ "WHERE usu_id=?";
 			pstm = con.prepareStatement(sql);
-			pstm.setString(1, usuario.getUsuario());
+			pstm.setString(1, usuario.getUsuario().toUpperCase());
 			clave = encrypt.hash(usuario.getClave());
 			pstm.setString(2, clave);
-		//	pstm.setInt(3, usuario.getId_rol());
+			// pstm.setInt(3, usuario.getId_rol());
 			pstm.setInt(3, usuario.getId());
 			// ejecutar el Preparedsatatement
 			int num_filas_afectadas = pstm.executeUpdate();
@@ -461,13 +462,13 @@ public class DBUsuario {
 		Connection con = dbm.getConection();
 		try {
 			con.setAutoCommit(false);
-			String sql = "UPDATE TB_PERSONA SET per_estado=? WHERE per_id=?";
+			String sql = "UPDATE tb_persona SET per_estado=? WHERE per_id=?";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			Persona per = usuario.getPersona();
 			pstm.setInt(1, 0);
 			pstm.setInt(2, per.getPer_id());
 			int num = pstm.executeUpdate();
-			sql = "UPDATE TB_USUARIO SET usu_estado=? WHERE usu_id=?";
+			sql = "UPDATE tb_usuario SET usu_estado=? WHERE usu_id=?";
 			pstm = con.prepareStatement(sql);
 			pstm.setInt(1, 0);
 			pstm.setInt(2, usuario.getId());
@@ -520,6 +521,13 @@ public class DBUsuario {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return lista;
@@ -598,22 +606,21 @@ public class DBUsuario {
 		return result;
 
 	}
-	
-	public boolean cambiarRol(int idUsu, int idRol){
+
+	public boolean cambiarRol(int idUsu, int idRol) {
 		boolean result = false;
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
 		Statement sentencia;
 		try {
 			sentencia = con.createStatement();
-			sentencia.executeUpdate("UPDATE tb_usuario SET rol_id_usuario='" + idRol
-					+ "' where usu_id='" + idUsu + "'");
+			sentencia.executeUpdate("UPDATE tb_usuario SET rol_id_usuario='"
+					+ idRol + "' where usu_id='" + idUsu + "'");
 			result = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			try {
 				con.close();
 			} catch (SQLException e) {
@@ -623,9 +630,9 @@ public class DBUsuario {
 		}
 		return result;
 	}
-	
-	//cargar evaluadores
-	
+
+	// cargar evaluadores
+
 	public List<Pares> buscarEvaluador(int area) {
 		List<Pares> lista = new ArrayList<Pares>();
 		// objeto sentencia
@@ -633,86 +640,146 @@ public class DBUsuario {
 		// objeto para resultados
 		ResultSet resultados = null;
 		Pares pares = null;
-		System.out.println("id area"+ area);
+		System.out.println("id area" + area);
 		// obtener la conexion a la base
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
 		try {
-			
+
 			sentencia = con.createStatement();
-			//String sql="Select * from tb_rol where rol_estado=1";
-			String 	sql = "Select p.per_id, p.per_nombre, p.per_apellido, p.per_email from tb_persona as p, " +
-					"tb_usuario as u, tb_persona_area as pa where p.per_id=u.persona_id " +
-					"and u.rol_id_usuario=3 and pa.area_id='"+area+"' and pa.per_id=u.persona_id";
-		System.out.println("el sql con evaluador"+ sql);
-			resultados=sentencia.executeQuery(sql);		
-			while(resultados.next()){
+			// String sql="Select * from tb_rol where rol_estado=1";
+			String sql = "Select p.per_id, p.per_nombre, p.per_apellido, p.per_email from tb_persona as p, "
+					+ "tb_usuario as u, tb_persona_area as pa where p.per_id=u.persona_id "
+					+ "and u.rol_id_usuario=3 and pa.area_id='"
+					+ area
+					+ "' and pa.per_id=u.persona_id";
+			System.out.println("el sql con evaluador" + sql);
+			resultados = sentencia.executeQuery(sql);
+			while (resultados.next()) {
 				pares = new Pares();
 				pares.setPersonas_id(resultados.getInt("per_id"));
-				System.out.println("id persona"+ resultados.getInt("per_id"));
+				System.out.println("id persona" + resultados.getInt("per_id"));
 				pares.setPer_nombre(resultados.getString("per_nombre"));
 				pares.setPer_apellido(resultados.getString("per_apellido"));
 				pares.setPer_email(resultados.getString("per_email"));
-				System.out.println("email   :"+pares.getPer_email());
+				System.out.println("email   :" + pares.getPer_email());
 				// agrego usuario con datos cargados desde la base a mi lista de
 				// usuarios
 				lista.add(pares);
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
+
 		return lista;
 	}
-	public List<Pares> buscarPar(int area, int idarticulo, int idpersona){
+
+	public List<Pares> buscarPar(int area, int idarticulo, int idpersona) {
 		List<Pares> listanueva = new ArrayList<Pares>();
 		Statement sentencia = null;
 		// objeto para resultados
 		ResultSet resultados = null;
-		Pares pares=null;
-		pares = new Pares();;
-		
+		Pares pares = null;
+		pares = new Pares();
+		;
+
 		// obtener la conexion a la base
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
 		try {
-			
+
 			sentencia = con.createStatement();
-			//String sql="Select * from tb_rol where rol_estado=1";
-			String 	sql = "Select p.per_id, p.per_nombre, p.per_apellido, p.per_email from tb_persona as p, " +
-					"tb_usuario as u, tb_persona_area as pa, tb_pares as par where p.per_id=u.persona_id " +
-					"and u.rol_id_usuario=3 and pa.area_id= '"+area+"' and pa.per_id=u.persona_id and " +
-					"(par.personas_id <> p.per_id and par.articulos_id='"+idarticulo+"')";
-			
-		System.out.println("el sql con evaluador proximo a buscar "+ sql);
-			resultados=sentencia.executeQuery(sql);		
-			if(resultados.next()){
-				
+			// String sql="Select * from tb_rol where rol_estado=1";
+			String sql = "Select p.per_id, p.per_nombre, p.per_apellido, p.per_email from tb_persona as p, "
+					+ "tb_usuario as u, tb_persona_area as pa, tb_pares as par where p.per_id=u.persona_id "
+					+ "and u.rol_id_usuario=3 and pa.area_id= '"
+					+ area
+					+ "' and pa.per_id=u.persona_id and "
+					+ "(par.personas_id <> p.per_id and par.articulos_id='"
+					+ idarticulo + "')";
+
+			System.out.println("el sql con evaluador proximo a buscar " + sql);
+			resultados = sentencia.executeQuery(sql);
+			if (resultados.next()) {
+
 				pares.setPersonas_id(resultados.getInt("per_id"));
-				System.out.println("id persona"+ resultados.getInt("per_id"));
+				System.out.println("id persona" + resultados.getInt("per_id"));
 				pares.setPer_nombre(resultados.getString("per_nombre"));
 				pares.setPer_apellido(resultados.getString("per_apellido"));
 				pares.setPer_email(resultados.getString("per_email"));
-				System.out.println("email"+pares.getPer_email());
+				System.out.println("email" + pares.getPer_email());
 				// agrego usuario con datos cargados desde la base a mi lista de
 				// usuarios
 				listanueva.add(pares);
-			
-			
-			}else{
-				listanueva=null;
+
+			} else {
+				listanueva = null;
 			}
-			
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return listanueva;
-		
-	}
 
+	}
+	public boolean buscaNombreUser(String name) {
+		// objeto a retornar es una lista
+		//List<Usuarios> lista = new ArrayList<Usuarios>();
+		//Usuarios rol = null;
+		// objeto conexion
+		boolean bandera=false;
+		Connection con = null;
+		Statement sentencia = null;
+		ResultSet resultados = null;
+		DBManager dbm = new DBManager();
+		con = dbm.getConection();
+		try {
+			String nombre=" ";
+			sentencia = con.createStatement();
+			// String sql="Select * from tb_rol where rol_estado=1";
+			String sql = "Select * from tb_usuario where usu_nombre='"+name+"'";
+			resultados = sentencia.executeQuery(sql);
+			while (resultados.next()) {	
+				System.out.println("nombre user: "+resultados.getString("usu_nombre"));
+				nombre=resultados.getString("usu_nombre");
+				}
+			if (nombre.equals(name)){
+				bandera=false;
+			}
+			else{
+				bandera=true;
+			}
+		
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				con.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return bandera;
+	}
+	
 }

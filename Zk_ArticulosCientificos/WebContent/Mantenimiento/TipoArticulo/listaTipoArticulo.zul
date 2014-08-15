@@ -11,7 +11,7 @@
 					id="toolbarbutton_Nuevo" label="Nuevo Tipo de Artículo" />
 				<fisheye image="Imagenes/editar.png"
 					id="toolbarbutton_Editar" label="Editar Tipo de Artículo" />
-				<fisheye image="Imagenes/eliminar.png"
+				<fisheye image="Imagenes/delete.png"
 					id="toolbarbutton_Eliminar" label="Eliminar Tipo de Artículo" />
 			</fisheyebar>
 		</div>

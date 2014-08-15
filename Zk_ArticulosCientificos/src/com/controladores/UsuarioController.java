@@ -3,9 +3,11 @@ package com.controladores;
 import java.util.List;
 
 import com.entidades.*;
+import com.seguridad.ValidaCedula;
 import com.datos.*;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -51,7 +53,6 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 	private Window winVerUsuario;
 	private Window winNuevoUsuario;
 	private Window winCambioClave;
-	
 	private Usuarios u = null;
 	
 	DBUsuario dbusuarios = new DBUsuario();
@@ -65,6 +66,56 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 		super.doAfterCompose(comp);
 	}
 
+	public void onBlur$textbox_Cedula() {
+		boolean bandera=false;
+		ValidaCedula vC=new ValidaCedula();
+		bandera=vC.validacionCedula(textbox_Cedula.getValue().trim());
+		if (bandera){
+			//alert("correo buena");
+		}else{
+		    alert("Número de cédula incorrecta");
+		}
+	}
+	
+	
+	public void onBlur$textbox_Email() {
+		boolean bandera=false;
+		ValidaCedula vC=new ValidaCedula();
+		bandera=vC.validateEmail(textbox_Email.getValue().trim());
+		if (bandera){
+			//alert("correo buena");
+		}else{
+		    alert("Email incorrecto, por favor verificar");
+			
+		}
+	}
+	
+	public void onBlur$textbox_Telefono() {
+		boolean bandera=false;
+		ValidaCedula vC=new ValidaCedula();
+		bandera=vC.ValidarNumeros(textbox_Telefono.getValue().trim());
+		if (bandera){
+			//alert("correo buena");
+		}else{
+		   alert("Ingresar solo números");
+			
+		}
+	}
+	
+	
+	public void onBlur$textbox_celular() {
+		boolean bandera=false;
+		ValidaCedula vC=new ValidaCedula();
+		bandera=vC.ValidarNumeros(textbox_celular.getValue().trim());
+		if (bandera){
+			//alert("correo buena");
+		}else{
+		//	alert("correo mala");
+			alert("Ingresar solo números");
+		}
+	}
+	
+	
 	public void onCreate$winVerUsuario() {
 		Session session = Sessions.getCurrent();
 		Usuarios u = (Usuarios) session.getAttribute("User");
@@ -86,15 +137,75 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 	}
 
 	
-	public void onBlur$textbox_Nombres(){
-		
+	public void onBlur$textbox_Password(){
+		boolean bandera=false;
+		ValidaCedula vC=new ValidaCedula();
+		bandera=vC.ValidarContraseña(textbox_Password.getValue().trim());
+		if(bandera){
+			
+		}
+		else{
+			alert("la Contraseña debe tener por lo menos 8 caracteres , entre ellos un caracter especial, una letra Mayuscula y un numero ");
+			textbox_Password.setValue("");
+			textbox_Password.setStyle("color:red");
+		}
 		}
 	
-	
-	
+	public void onBlur$textbox_clave_nueva(){
+		boolean bandera=false;
+		ValidaCedula vC=new ValidaCedula();
+		bandera=vC.ValidarContraseña(textbox_clave_nueva.getValue().trim());
+		if(bandera){
+			
+		}
+		else{
+			alert("la Contraseña debe tener por lo menos 8 caracteres , entre ellos un caracter especial, una letra Mayuscula y un numero ");
+			textbox_clave_nueva.setValue("");
+			textbox_clave_nueva.setStyle("color:red");
+		}
+	}
+	public void onBlur$textbox_rep_clave(){
+		boolean bandera=false;
+		ValidaCedula vC=new ValidaCedula();
+		bandera=vC.ValidarContraseña(textbox_rep_clave.getValue().trim());
+		if(bandera){
+		button_cambiar_clave.setDisabled(false);	
+		}
+		else{
+			alert("la Contraseña debe tener por lo menos 8 caracteres , entre ellos un caracter especial, una letra Mayuscula y un numero ");
+			textbox_rep_clave.setValue("");
+			textbox_rep_clave.setStyle("color:red");
+		}
+	}
+	public void onBlur$textbox_Usuario(){
+		dbusuarios=new DBUsuario();
+		boolean bandera=false;
+		bandera=dbusuarios.buscaNombreUser(textbox_Usuario.getValue().trim());
+		if (bandera){
+			if(textbox_Usuario.getValue().trim().length()>4){
+				
+			}
+			else{
+				alert("Nombre de usuario debe tener 5 caracteres como minimo");
+				textbox_Usuario.setValue("");
+			}
+		}
+		else{
+			alert("nombre de usuario ya existe");
+			textbox_Usuario.setValue("");
+		}
+		
+	}
 	public void onClick$button_Registrar() throws Exception {
 		boolean result = false;
-
+		if (textbox_Usuario.equals("") || textbox_Password.equals("")
+				|| textbox_Nombres.equals("") || textbox_Apellidos.equals("")
+				|| textbox_Cedula.equals("") || textbox_Email.equals("")
+				|| textbox_Direccion.equals("") || textbox_Telefono.equals("")
+				|| textbox_celular.equals("") || textbox_institucion.equals("")
+				|| textbox_dirinstitucion.equals("")) {
+			alert("Existen campos vacíos, ingrese todos los campos");
+		} else {
 		// verificar si es nuevo usuario o usuario a editar
 		if (u != null) {
 			// existe estoy editando
@@ -131,7 +242,6 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			result = dbusuarios.crearUsuario(usuario);
 
 		}
-
 		if (result) {
 			alert("El usuario ha sido registrado con éxito");
 			// evaluar desde donde fue llamada esta ventana
@@ -151,7 +261,8 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			alert("No se pudo realizar el registro del usuario");
 		}
 		winNuevoUsuario.detach();
-	}
+	}}
+		
 
 	public void onCreate$winNuevoUsuario() {
 
@@ -181,13 +292,16 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			result = dbusuarios.verificarClave(u.getUsuario().toString(),
 					textbox_clave_anterior.getValue());
 			if (result) {
-				alert("Clave Correcta");
+			//	alert("Clave Correcta");
+				
 				if (textbox_clave_nueva.getValue().toString()
 						.equals(textbox_rep_clave.getValue().toString())) {
 					result = dbusuarios.modificarClave(
 							textbox_clave_nueva.getValue(), u.getId());
 					if (result) {
 						alert("Clave Actualizada");
+						winCambioClave.detach();
+				cerrar();
 					} else {
 						alert("No se logró cambiar su clave");
 					}
@@ -204,5 +318,10 @@ public class UsuarioController extends GenericForwardComposer<Component> {
 			alert("Es necesario que ingrese la clave anterior");
 		}
 	}
-
+public void cerrar(){
+	Session session = Sessions.getCurrent();
+	//se destruye la sesion y borra las referencias a los objetos almacenados en sesion
+	session.invalidate();
+	Executions.sendRedirect("index-login.zul");
+}
 }

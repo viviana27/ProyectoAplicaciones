@@ -159,7 +159,7 @@
 						id="button_Registrar" image="Imagenes/save.png">
 					</button>
 					<button label="Cancelar" id="button_cancelar"
-						image="Imagenes/delete.png">
+						image="Imagenes/eliminar.png">
 					</button>
 				</row>
 

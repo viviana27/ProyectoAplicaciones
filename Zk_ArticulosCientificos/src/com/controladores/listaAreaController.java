@@ -92,7 +92,7 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 	
 	public void onClick$toolbarbutton_Eliminar() {
 	
-		boolean registros = false;
+		
 		if(listbox_areas.getSelectedItem()==null){
 			alert("Por favor seleccione un área");
 			return;
@@ -101,23 +101,31 @@ public class listaAreaController extends GenericForwardComposer<Component> {
 				"confirmación",Messagebox.OK | Messagebox.CANCEL,Messagebox.QUESTION,new EventListener<Event>(){
 			@Override
 			public void onEvent(Event evento) throws Exception {
+				boolean registros = false;
 				// TODO Auto-generated method stub
 				if(evento.getName().equals("onOK")){
 					confirmacion=true;
 				}
+				else{
+					confirmacion=false;
+				}
+				if(confirmacion){
+					Areas a = listbox_areas.getSelectedItem().getValue();
+					DBAreas dba = new DBAreas ();
+					registros=dba.eliminarAreas(a);
+					if (registros) {
+						alert("El área ha sido eliminada correctamente");
+					}
+				}
+				else {
+					alert("Eliminación Cancelada");
+				}
+				actualizarAreasLista();
 			}
-			
 		});
-		if(confirmacion){
-		Areas a = listbox_areas.getSelectedItem().getValue();
-		DBAreas dba = new DBAreas ();
-		registros=dba.eliminarAreas(a);
-		if (registros != false) {
-			alert("El área ha sido eliminada correctamente");
-		}
-		actualizarAreasLista();
-		}
-	}
+
+
+}
 	
 	public void onClick$button_buscar(){
 	actualizarAreasLista();

@@ -23,9 +23,9 @@
 					<checkbox id="check_estado" />
 				</row>
 				<row>
-					<button label="Registrar" id="button_Registrar" />
-					<button label="Cancelar" id="button_Cancelar"
-						onClick="" />
+					<button label="Registrar" id="button_Registrar" image="Imagenes/save.png"  />
+					<button label="Cancelar" id="button_Cancelar" image="Imagenes/eliminar.png" 
+						onClick="WinRegistrarTipoArticulos.detach()" />
 				</row>
 			</rows>
 		</grid>

@@ -58,7 +58,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 			button_descarga2;
 	public Label nombreArticulo, titulo, nombreAutorP, nombreAutoresS, resumen,
 			palabrasClaves, fechaRecibido, institucion, direccionInstitucion,
-			idtipo, idarea, lblDescargar2;
+			idtipo, idarea, lblDescargar2,promedio;
 	public Datebox txtfecha;
 	public Date fecha;
 	private Articulo a = new Articulo();;
@@ -76,12 +76,12 @@ public class articuloController extends GenericForwardComposer<Component> {
 	String direccionArticuloCorregido, direccionArticuloCorregido2;
 	int ida = 0, id = 0;
 	int idart = 0, idpadre1 = 0, regcontar = 0, reconta = 0;
-	Div divEvaluadores,detalle;
+	Div divEvaluadores,detalle,inicio;
 
 	// //----------------------------------------------------------------------------
 	// codigo para subir un archivo al servidor
 	public Media media;
-	public Window winDetalleArticulo, winSubirArticulo,	winObservacionesArticulo;
+	public Window winDetalleArticulo, winSubirArticulo,	winObservacionesArticulo, winPromedioArticulo;
 
 	File f, f2;
 
@@ -182,8 +182,8 @@ public class articuloController extends GenericForwardComposer<Component> {
 							a.setArt_titulo(textbox_Titulo.getValue());
 							a.setArt_resumen(textbox_Resumen.getValue());
 							a.setArt_palabras_clave(textbox_PClaves.getValue());
-							fecha = txtfecha.getValue();
-							a.setArt_fecha_subida(fecha);
+							//fecha = txtfecha.getValue();
+							//a.setArt_fecha_subida(fecha);
 							a.setArt_archivo(direccion);
 							a.setArt_estado(1);
 							// a.setId_estado(1);
@@ -191,6 +191,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 							result = dbart.RegistrarArticulo(a);
 							if (result) {
 								alert("El Artículo ha sido registrado con éxito");
+								limpiar();
 							} else {
 								alert("No se pudo realizar el registro correcto del artículo");
 							}
@@ -231,6 +232,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 										idAutor2, idAutor3);
 								if (result) {
 									alert("El artículo ha sido registrado con éxito");
+									limpiar();
 								} else {
 									alert("No se pudo realizar el registro correcto del artículo");
 								}
@@ -267,6 +269,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 											a, idAutor2, idAutor3);
 									if (result) {
 										alert("El Artículo se ha registrado con éxito");
+										limpiar();
 									} else {
 										alert("No se pudo realizar el registro correcto del artículo");
 									}
@@ -289,11 +292,10 @@ public class articuloController extends GenericForwardComposer<Component> {
 			}
 
 		} catch (Exception e) { // TODO: handle exception
-			alert("Ingrese todos los campos y suba el artículo");
+			alert("Ingrese todos los campos");
 		}
 
 		media = null;
-		limpiar();
 
 	}
 
@@ -465,6 +467,21 @@ public class articuloController extends GenericForwardComposer<Component> {
 			evaluadores.setValue(inf);
 		}
 	}
+	
+	public void onCreate$winPromedioArticulo(){
+		art = (Articulo) winPromedioArticulo.getAttribute("particulo");
+		Session session = Sessions.getCurrent();
+		Usuarios u = (Usuarios) session.getAttribute("User");
+		if (art!=null){
+			inicio.setVisible(true);
+			String prome = (String) winPromedioArticulo.getAttribute("promedioArt");
+			System.out.println("en arrti control es "+prome);
+			promedio.setValue(prome);
+		}
+		else{
+			alert ("no se llega");
+		}
+	}
 
 	public void onCreate$winSubirArticulo() {
 		Combos();
@@ -542,6 +559,7 @@ public class articuloController extends GenericForwardComposer<Component> {
 		}
 	}
 
+	
 	public void buscarPromedioArticulo(int idArticulo) {
 		dbart = new DBArticulos();
 		lblCalificacion.setValue(Integer.toString(dbart

@@ -36,7 +36,7 @@
 						image="Imagenes/save.png">
 					</button>
 					<button label="Cancelar" id="button_Cancelar"
-						image="Imagenes/delete.png" onClick="">
+						image="Imagenes/eliminar.png" onClick="winModificarRol.detach()">
 					</button>
 				</row>
 			</rows>

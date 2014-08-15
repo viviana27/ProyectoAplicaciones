@@ -280,6 +280,7 @@ public class evaluacionController extends GenericForwardComposer<Component> {
 					arte.setEstad_id(3);
 					arte.setEval_estado(1);
 					arte.setAr_id(ida);
+					arte.setEval_persona(u.getId());
 					arte.setEval_observacion(txtObservacion.getValue().trim());
 
 					if (acum < 70

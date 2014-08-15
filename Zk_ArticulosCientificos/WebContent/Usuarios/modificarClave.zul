@@ -1,6 +1,7 @@
 <?page title="Modificar Clave" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Modificar Clave" border="normal" id="winCambioClave"
+	<window title="Modificar Clave" border="normal" id="winCambioClave" width="350px"
+		height="200px" position="center,center" mode="modal"
 		apply="com.controladores.UsuarioController">
 		<grid>
 			<columns>
@@ -29,10 +30,10 @@
 				</row>
 				<row>
 					<button label="Cambiar Clave"
-						id="button_cambiar_clave" image="Imagenes/save.png">
+						id="button_cambiar_clave" image="Imagenes/save.png" disabled="true">
 					</button>
 					<button label="Cancelar" id="button_Cancelar"
-						image="Imagenes/delete.png" onClick="winCambioClave.detach()">
+						image="Imagenes/eliminar.png" onClick="winCambioClave.detach()">
 					</button>
 				</row>
 			</rows>

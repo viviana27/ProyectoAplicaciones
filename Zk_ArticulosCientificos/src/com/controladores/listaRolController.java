@@ -92,7 +92,7 @@ public class listaRolController extends GenericForwardComposer<Component> {
 	}
 
 	public void onClick$toolbarbutton_Eliminar() {
-		boolean result = false;
+		
 		if (listbox_Roles.getSelectedItem() == null) {
 			alert("Por favor seleccione el rol que desea eliminar");
 			return;
@@ -103,23 +103,28 @@ public class listaRolController extends GenericForwardComposer<Component> {
 
 					@Override
 					public void onEvent(Event evento) throws Exception {
+						boolean result = false;
 						if (evento.getName().equals("onOK")) {
 							confirmacion = true;
 						}
+						else{
+							confirmacion=false;
+						}
+						if (confirmacion) {
+							Roles rol = (Roles) listbox_Roles.getSelectedItem().getValue();
+							DBRoles roles = new DBRoles();
+							result = roles.eliminarRoles(rol);
+							if (result != false) {
+								alert("El rol ha sido eliminado correctamente");
+							}
+						} else {
+							alert("Eliminación Cancelada");
+						}
+						actualizarLista();
 					}
 				});
 
-		if (confirmacion) {
-			Roles rol = (Roles) listbox_Roles.getSelectedItem().getValue();
-			DBRoles roles = new DBRoles();
-			result = roles.eliminarRoles(rol);
-			if (result != false) {
-				alert("El rol ha sido eliminado correctamente");
-			}
-		} else {
-			alert("Eliminacion Cancelada");
-		}
-		actualizarLista();
+		
 
 	}
 

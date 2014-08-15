@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Mi Perfil" border="normal" width="600px"
+	<window title="Modificar Información Del Usuario" border="normal" width="600px"
 		height="a00px" id="winNuevoUsuario"
 		apply="com.controladores.PersonaController">
 
@@ -11,7 +11,7 @@
 				<column label="Datos" />
 			</columns>
 			<rows>
-				<row>
+				<row visible="false">
 					<label value="Rol:"></label>
 					<combobox id="combo_rol" width="110px">
 						<template name="model">
@@ -35,7 +35,7 @@
 				<row>
 					<label value="Contraseña:"></label>
 					<textbox id="textbox_Password" type="password"
-						constraint="no empty">
+						>
 					</textbox>
 				</row>
 				<row>
@@ -96,7 +96,7 @@
 						image="Imagenes/save.png">
 					</button>
 					<button label="Cancelar" id="button_Cancelar"
-						image="Imagenes/delete.png" onClick="winNuevoUsuario.detach()">
+						image="Imagenes/eliminar.png" onClick="winNuevoUsuario.detach()">
 					</button>
 				</row>
 			</rows>

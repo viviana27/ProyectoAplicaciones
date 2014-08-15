@@ -48,7 +48,7 @@ public class Util {
 		String nombre=usua.getPersona().getPer_apellido();
 		complemento_nombre=Integer.toString(idUsuario);
 		
-		ruta = "C:/Uploads/Articulo"+complemento_nombre+nombre;
+		ruta = "/Uploads/Articulo"+complemento_nombre+nombre;
 		 System.out.println(" ruta: "+ruta);
 		File directorio = new File(ruta+separator);
 		directorio.mkdir();
@@ -114,7 +114,7 @@ public class Util {
 		String nombre=usua.getPersona().getPer_apellido();
 		complemento_nombre=Integer.toString(idUsuario);
 		
-		ruta = "C:/Uploads/Articulo"+complemento_nombre+"Obsercacion"+nombre;
+		ruta = "/Uploads/Articulo"+complemento_nombre+"Obsercacion"+nombre;
 		 System.out.println(" ruta: "+ruta);
 		File directorio = new File(ruta+separator);
 		directorio.mkdir();

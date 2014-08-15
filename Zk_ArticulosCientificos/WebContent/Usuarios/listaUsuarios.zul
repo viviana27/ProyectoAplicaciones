@@ -8,7 +8,7 @@ apply="com.controladores.listaUsuarioController">
 					id="toolbarbutton_Nuevo" label="Nuevo Registro" />
 				<toolbarbutton  image="Imagenes/editar.png"
 					id="toolbarbutton_Editar" label="Editar Registro" />
-				<toolbarbutton  image="Imagenes/eliminar.png"
+				<toolbarbutton  image="Imagenes/delete.png"
 					id="toolbarbutton_Eliminar" label="Eliminar Registro" />
 			</toolbar>
 		</div>
@@ -21,7 +21,7 @@ apply="com.controladores.listaUsuarioController">
 			<!-- <separator/> -->
 			<button image="Imagenes/buscar.png" id="button_buscar" />
 		</groupbox>
-		<listbox mold="paging" pageSize="3" width="100%"
+		<listbox mold="paging" pageSize="10" width="100%"
 			emptyMessage="No existen datos que cumplan con el criterio de búsqueda"
 			id="listbox_Miembros" disabled="true">
 			<listhead menupopup="auto" sizable="false">

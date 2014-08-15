@@ -40,9 +40,9 @@ public class DBArticulos {
 			con.setAutoCommit(false);
 			String sql = "INSERT INTO tb_articulo" + " (art_titulo,"
 					+ " art_archivo," + " art_resumen, "
-					+ " art_palabras_clave, " + " art_fecha_subida, "
+					+ " art_palabras_clave, "
 					+ " art_estado, " + " tipo_id, " + " area_id, "
-					+ " per_id) VAlUES (?,?,?,?,?,?,?,?,?)";
+					+ " per_id ,art_fecha_subida) VAlUES (?,?,?,?,?,?,?,?,CURRENT_DATE)";
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, art.getArt_titulo());
@@ -50,14 +50,14 @@ public class DBArticulos {
 			pstm.setString(3, art.getArt_resumen());
 			pstm.setString(4, art.getArt_palabras_clave());
 
-			java.sql.Date fecha = new java.sql.Date(art.getArt_fecha_subida()
+		  /*java.sql.Date fecha = new java.sql.Date(art.getArt_fecha_subida()
 					.getTime());
 			System.out.println("la fecha es : " + fecha);
-			pstm.setDate(5, fecha);
-			pstm.setInt(6, art.getArt_estado());
-			pstm.setInt(7, art.getTipo_id());
-			pstm.setInt(8, art.getId_area());
-			pstm.setInt(9, art.getPer_id());
+			pstm.setDate(5, fecha);*/
+			pstm.setInt(5, art.getArt_estado());
+			pstm.setInt(6, art.getTipo_id());
+			pstm.setInt(7, art.getId_area());
+			pstm.setInt(8, art.getPer_id());
 			int filas_afectadas = pstm.executeUpdate();
 			con.commit();
 			resultado = true;
@@ -362,7 +362,7 @@ public class DBArticulos {
 		// objeto sentencia
 		Statement sentencia = null;
 		// objeto para resultados
-		ResultSet resultados = null;
+		ResultSet rs = null;
 		// obtener la conexion a la base
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
@@ -373,8 +373,8 @@ public class DBArticulos {
 		String sql = "";
 		if (usua != null) {
 			if (usua.getId_rol() == 1) {
-				if (titulo.equals("") && autor.equals("") && tipoa.equals("")
-						&& area.equals("")) {
+				if (titulo.length()==0 && autor.length()==0 && tipoa.length()==0
+						&& area.length()==0) {
 					/*
 					 * Aqui se cambia el sql por el nuevo procedimiento
 					 */
@@ -385,7 +385,8 @@ public class DBArticulos {
 						proc.setInt(1, idEstado);
 						proc.execute();
 						Articulo articulo = null;
-						ResultSet rs = proc.getResultSet();
+					    rs = proc.getResultSet();
+					    if (rs!=null){
 						while (rs.next()) {
 							articulo = new Articulo();
 							articulo.setArt_id(rs.getInt("artid"));
@@ -414,7 +415,7 @@ public class DBArticulos {
 							lista.add(articulo);
 							System.out.println("Name : " + rs.getString(5));
 						}
-
+					    }
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -435,7 +436,8 @@ public class DBArticulos {
 						proc.setString(5, '%' + area + '%');
 						proc.execute();
 						Articulo articulo = null;
-						ResultSet rs = proc.getResultSet();
+						rs = proc.getResultSet();
+						if(rs!=null){
 						while (rs.next()) {
 							articulo = new Articulo();
 							articulo.setArt_id(rs.getInt("artid"));
@@ -465,7 +467,7 @@ public class DBArticulos {
 							
 							System.out.println("Name : " + rs.getString(5));
 						}
-
+						}
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -475,18 +477,18 @@ public class DBArticulos {
 
 			} else {
 				if (usua.getId_rol() == 2 || usua.getId_rol() == 3) {
-					if (titulo.equals("") && autor.equals("")
-							&& tipoa.equals("") && area.equals("")) {
+					if (titulo.length()==0 && autor.length()==0
+							&& tipoa.length()==0 && area.length()==0) {
 						try {
 							CallableStatement proc;
-							proc = con
-									.prepareCall("{call sp_segun_autor(?,?)}");
+							proc = con.prepareCall("{call sp_segun_autor(?,?)}");
 							proc.setInt(1, idEstado);
 							proc.setInt(2, idUsuario);
 							proc.execute();
 							Articulo articulo = null;
 							ObservacionesEvaluadores observ=null;
-							ResultSet rs = proc.getResultSet();
+							 rs = proc.getResultSet();
+							 if(rs!=null){
 							while (rs.next()) {
 								articulo = new Articulo();
 								observ=new ObservacionesEvaluadores();
@@ -520,7 +522,7 @@ public class DBArticulos {
 								lista.add(articulo);
 								System.out.println("Name : " + rs.getString(3));
 							}
-
+							 }
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -541,7 +543,8 @@ public class DBArticulos {
 							proc.setString(6, '%' + area + '%');
 							proc.execute();
 							Articulo articulo = null;
-							ResultSet rs = proc.getResultSet();
+						    rs = proc.getResultSet();
+						    if(rs!=null){
 							while (rs.next()) {
 								articulo = new Articulo();
 								articulo.setArt_id(rs.getInt("artid"));
@@ -574,10 +577,17 @@ public class DBArticulos {
 								lista.add(articulo);
 								System.out.println("Name : " + rs.getString(5));
 							}
-
+						    }
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+						}finally{
+							try {
+								con.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
 
@@ -586,6 +596,7 @@ public class DBArticulos {
 			}
 
 		}
+		
 		return lista;
 
 	}
@@ -1338,7 +1349,7 @@ public class DBArticulos {
 						+ "Concat(a.art_titulo, ' [ version modificada ]') "
 						+ "END AS artitulo " + "FROM tb_articulo as a "
 						+ "group by a.art_id order by a.art_titulo ";
-				try {
+			/*	try {
 					sentencia = con.createStatement();
 					resultados = sentencia.executeQuery(sql);
 				} catch (SQLException e) {
@@ -1353,7 +1364,7 @@ public class DBArticulos {
 								.getString("artitulo"));
 						lista.add(articulo);
 					}
-					con.close();
+					//con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				} finally {
@@ -1362,29 +1373,31 @@ public class DBArticulos {
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-				}
+				}*/
 			}
-			if (usua.getId_rol() == 2 || usua.getId_rol() == 3) {
-				sql = "SELECT a.art_id, "
-						+ "case "
-						+ "when a.padre is NULL "
-						+ "then a.art_titulo "
-						+ "else "
-						+ "Concat('             ',a.art_titulo, ' [ version modificada ]') "
-						+ "END AS artitulo "
-						+ "FROM tb_persona AS p2 "
-						+ "INNER JOIN tb_persona_articulo AS pa ON p2.per_id = pa.per_id_registra "
-						+ "INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id "
-						+ "INNER JOIN tb_persona AS p ON pa.pers_id= p.per_id "
-						+ "INNER JOIN tb_pares AS pares ON  a.art_id=pares.articulos_id "
-						+ "WHERE  pa.per_id_registra=" + idUsuario
-						+ " or pa.pers_id=" + idUsuario
-						+ " or pares.personas_id=" + idUsuario
-						+ " AND pa.per_art_estado =1 " + "group by a.art_id ";
-			}
+			
+		}
+		if (usua.getId_rol() == 2 || usua.getId_rol() == 3) {
+			sql = "SELECT a.art_id, "
+					+ "case "
+					+ "when a.padre is NULL "
+					+ "then a.art_titulo "
+					+ "else "
+					+ "Concat('             ',a.art_titulo, ' [ version modificada ]') "
+					+ "END AS artitulo "
+					+ "FROM tb_persona AS p2 "
+					+ "INNER JOIN tb_persona_articulo AS pa ON p2.per_id = pa.per_id_registra "
+					+ "INNER JOIN tb_articulo AS a ON pa.arti_id =a.art_id "
+					+ "INNER JOIN tb_persona AS p ON pa.pers_id= p.per_id "
+					+ "INNER JOIN tb_pares AS pares ON  a.art_id=pares.articulos_id "
+					+ "WHERE  pa.per_id_registra=" + idUsuario
+					+ " or pa.pers_id=" + idUsuario
+					+ " or pares.personas_id=" + idUsuario
+					+ " AND pa.per_art_estado =1 " + "group by a.art_id ";
 		}
 
 		try {
+			con = dbm.getConection();
 			sentencia = con.createStatement();
 			resultados = sentencia.executeQuery(sql);
 		} catch (SQLException e) {
@@ -1399,7 +1412,7 @@ public class DBArticulos {
 				articulo.setArt_titulo(resultados.getString("artitulo"));
 				lista.add(articulo);
 			}
-			con.close();
+			//con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

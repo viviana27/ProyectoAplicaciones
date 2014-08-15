@@ -43,10 +43,11 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
-		// actualizarLista();
+		//actualizarLista();
+		//actualizarListaRolesUsuarios();
 		Session session = Sessions.getCurrent();
 		Usuarios us = (Usuarios) session.getAttribute("User");
-		if (us != null) {
+		/*if (us != null) {
 			if (us.getId_rol() == 1) {
 				//actualizarLista();
 			} else {
@@ -55,7 +56,7 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 							.sendRedirect("http://localhost:8080/Zk_ArticulosCientificos/index.zul");
 				}
 			}
-		}
+		}*/
 	}
 
 	public void onClick$toolbarbutton_Nuevo() {
@@ -129,36 +130,43 @@ public class listaUsuarioController extends GenericForwardComposer<Component> {
 	public void onClick$toolbarbutton_Eliminar() {
 		// alert("Click en boton");
 
-		boolean result = false;
+		
 		if (listbox_Miembros.getSelectedItem() == null) {
 			alert("Por favor seleccione el usuario que desea eliminar");
 			return;
 		}
 		// mesaagebox
-		Messagebox.show("Esta seguro de eliminar el usluario?", "confirmacion",
+		Messagebox.show("Esta seguro de eliminar el usuario?", "confirmacion",
 				Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
 				new EventListener<Event>() {
 
 					@Override
 					public void onEvent(Event evento) throws Exception {
+						boolean result = false;
 						// TODO Auto-generated method stub
 						if (evento.getName().equals("onOK")) {
 							confirmacion = true;
 						}
+						else{
+							confirmacion=false;
+						}
+						if (confirmacion) {
+							Usuarios u = (Usuarios) listbox_Miembros.getSelectedItem()
+									.getValue();
+							DBUsuario user = new DBUsuario();
+							result = user.eliminarUsuario(u);
+							if (result) {
+								alert("El usuario ha sido eliminado correctamente");
+								
+							}
+						}
+						else {
+							alert("Eliminación Cancelada");
+						}
+						actualizarLista();
 					}
 				});
-		if (confirmacion) {
-			Usuarios u = (Usuarios) listbox_Miembros.getSelectedItem()
-					.getValue();
-			DBUsuario user = new DBUsuario();
-			result = user.eliminarUsuario(u);
-			if (result) {
-				alert("El usuario ha sido eliminado correctamente");
-			}
-		} else {
-			alert("Eliminacion Cancelada");
-		}
-		actualizarLista();
+		
 
 	}
 

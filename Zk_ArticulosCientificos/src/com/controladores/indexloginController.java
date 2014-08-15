@@ -69,8 +69,8 @@ public class indexloginController extends GenericForwardComposer<Component> {
 		// enlazar
 		menupopup.appendChild(menuitem);
 		menupopup.appendChild(menuitemU1);
-		menu.appendChild(menupopup);
-		menubar_opciones1.appendChild(menu);
+		//menu.appendChild(menupopup);
+		//menubar_opciones1.appendChild(menu);
 
 		Menu menuR1 = new Menu("Datos de sesión");
 		Menupopup menupopupR1 = new Menupopup();

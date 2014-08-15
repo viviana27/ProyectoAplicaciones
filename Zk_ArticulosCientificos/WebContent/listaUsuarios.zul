@@ -10,7 +10,7 @@
 					id="toolbarbutton_Nuevo" label="Nuevo Registro" />
 				<fisheye image="Imagenes/editar.png"
 					id="toolbarbutton_Editar" label="Editar Registro" />
-				<fisheye image="Imagenes/eliminar.png"
+				<fisheye image="Imagenes/delete.png"
 					id="toolbarbutton_Eliminar" label="Eliminar Registro" />
 			</fisheyebar>
 		</div>

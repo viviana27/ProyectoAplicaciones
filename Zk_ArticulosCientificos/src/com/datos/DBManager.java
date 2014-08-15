@@ -12,8 +12,10 @@ public class DBManager {
 	
 	//Parametros de conexion
 	final String cadenaConexion="jdbc:mysql://localhost/revista";
+	//final String cadenaConexion="jdbc:mysql://190.168.3.234/revista";
 	final String User="root";
-	final String password="";
+    //final String password="msqadmin+*0";
+    final String password="";
 
 	//constructor para la clase
 	public DBManager(){

@@ -60,10 +60,6 @@
 					</textbox>
 				</row>
 				<row>
-					<label>Fecha:</label>
-					<datebox id="txtfecha"/>
-				</row>
-				<row>
 				<label>
 						Seleccione el o los autores que colaboraron con el artículo mediante 
 						el ingreso del nombre.
@@ -101,7 +97,7 @@
 						id="button_Registrar" image="Imagenes/save.png">
 					</button>
 					<button label="Cancelar" id="button_cancelar"
-						image="Imagenes/delete.png">
+						image="Imagenes/eliminar.png">
 					</button>
 				</row>
 			</rows>

@@ -87,7 +87,7 @@ public class listaTipoArticuloController extends
 	}
 
 	public void onClick$toolbarbutton_Eliminar() {
-		boolean result = false;
+		
 		if (listbox_TipoArticulos.getSelectedItem() == null) {
 			alert("Por favor seleccione el tipo de artículo" +
 					" que desea eliminar");
@@ -100,24 +100,29 @@ public class listaTipoArticuloController extends
 
 					@Override
 					public void onEvent(Event evento) throws Exception {
+						boolean result = false;
 						// TODO Auto-generated method stub
 						if (evento.getName().equals("onOK")) {
 							confirmacion = true;
 						}
+						else{
+							confirmacion=false;
+						}
+						if (confirmacion) {
+							TipoArticulos tipo = (TipoArticulos) listbox_TipoArticulos
+									.getSelectedItem().getValue();
+							DBTipoArticulos tipos = new DBTipoArticulos();
+							result = tipos.eliminarTipos(tipo);
+							if (result != false) {
+								alert("El tipo de artículo ha sido eliminado correctamente");
+							}
+						}else {
+							alert("Eliminación Cancelada");
+						}
+						actualizarLista();
 					}
 				});
-		if (confirmacion) {
-			TipoArticulos tipo = (TipoArticulos) listbox_TipoArticulos
-					.getSelectedItem().getValue();
-			DBTipoArticulos tipos = new DBTipoArticulos();
-			result = tipos.eliminarTipos(tipo);
-			if (result != false) {
-				alert("El tipo de artículo ha sido eliminado correctamente");
-			}
-		}else {
-			alert("Eliminacion Cancelada");
-		}
-		actualizarLista();
+		
 	}
 
 }

@@ -7,12 +7,12 @@
 			<fisheyebar id="fsb"
 				style="position:relative;Margin-left:30px" itemWidth="40"
 				itemHeight="40" itemMaxHeight="80" itemMaxWidth="80">
-				<fisheye image="Imagenes/nuevoO.png"
-					id="toolbarbutton_Nuevo" label="Nuevo Rol" />
 				<fisheye image="Imagenes/editar.png"
 					id="toolbarbutton_Editar" label="Editar Rol" />
-				<fisheye image="Imagenes/eliminar.png"
+				<fisheye image="Imagenes/delete.png"
 					id="toolbarbutton_Eliminar" label="Eliminar Rol" />
+				<fisheye image="Imagenes/nuevoO.png"
+					id="toolbarbutton_Nuevo" label="Nuevo Rol" visible="false" />
 			</fisheyebar>
 		</div>
 		<groupbox closable="true">

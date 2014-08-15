@@ -23,7 +23,7 @@
 			</grid>
 
 
-			<listbox mold="paging" pageSize="5" width="100%"
+			<listbox mold="paging" pageSize="25" width="100%"
 				emptyMessage="No existen datos que cumplan con el criterio de búsqueda"
 				id="listbox_Permisos" disabled="true">
 				<listhead menupopup="auto" sizable="false">
@@ -63,9 +63,9 @@
 			</columns>
 			<rows>
 				<row>
-					<button label="Registrar" id="button_Registrar" />
-					<button label="Cancelar" id="button_Cancelar"
-						onClick="" />
+					<button label="Registrar" id="button_Registrar"  image="Imagenes/save.png"/>
+					<button label="Cancelar" id="button_Cancelar" image="Imagenes/eliminar.png"
+						onClick="WinPermisos.detach()" />
 
 				</row>
 			</rows>

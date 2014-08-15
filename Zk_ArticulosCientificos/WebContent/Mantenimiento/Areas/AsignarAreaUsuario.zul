@@ -44,7 +44,7 @@ apply="com.controladores.UsuarioAreaController">
 						image="Imagenes/save.png">
 					</button>
 					<button label="Cancelar" id="button_Cancelar"
-						image="Imagenes/delete.png" onClick="">
+						image="Imagenes/eliminar.png" onClick="winNuevoUsuarioArea.detach()">
 					</button>
 				</row>
 			</rows>

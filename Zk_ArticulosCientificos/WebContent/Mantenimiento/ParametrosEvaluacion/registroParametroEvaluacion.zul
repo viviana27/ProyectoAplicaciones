@@ -30,7 +30,7 @@
 					<button label="Registrar" id="button_Registrar"
 						image="Imagenes/save.png" />
 					<button label="Cancelar" id="button_Cancelar"
-						image="Imagenes/delete.png"
+						image="Imagenes/eliminar.png"
 						onClick="WinRegistrarParametros.detach()" />
 				</row>
 				<row>

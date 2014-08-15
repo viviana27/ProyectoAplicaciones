@@ -75,7 +75,8 @@ public class Permisos extends GenericForwardComposer<Component> {
 				.getValue()));
 		listModel = new ListModelList<Permiso>(lista);
 		listbox_Permisos.setModel(listModel);
-		//presentarLista();
+		listbox_Permisos.renderAll();
+		presentarLista();
 	}
 
 	public void onCellClicked(ForwardEvent event) {
@@ -102,28 +103,28 @@ public class Permisos extends GenericForwardComposer<Component> {
 			alert("Permisos Registrados...!");
 			WinPermisos.detach();
 		} else {
-			alert("Fallamos...!");
+			alert("No se pudo realizar el registro de permisos!");
 		}
 		listaPermisos.clear();
 	}
 
 	public void presentarLista() {
-		for (int i = 0; i <= listModel.size() - 1; i++) {
-
-			Listitem item = (Listitem) listbox_Permisos.getItems().get(i);
+		for (int i = 0; i <= listbox_Permisos.getItems().size() - 1; i++) {
+         	Listitem item = (Listitem) listbox_Permisos.getItems().get(i);
+         	System.out.println("items:"+item);
 			List<Component> listaceldas = item.getChildren();
-			// Listcell liId=(Listcell) listaceldas.get(0);
-			// Listcell liIdFormulario=(Listcell) listaceldas.get(1);
-			Listcell liEstado = (Listcell) listaceldas.get(5);
+			System.out.println("celdas de items:"+listaceldas);
+			Listcell nombreFormulario=(Listcell) listaceldas.get(2);
+			Listcell liEstado=(Listcell) listaceldas.get(5);
 			String estado = liEstado.getLabel();
-			// int idPermsio=Integer.parseInt(liId.getLabel());
-			// int idFormulario=Integer.parseInt(liIdFormulario.getLabel());
-			// int idRol=Integer.parseInt(lbIdrol.getValue());
-			// int permiso=0;
+			System.out.println("valor de String:"+estado);
+			nombreFormulario.setStyle("font-size: 14px;font-weight: bold; color:black;");
 			if (estado.equals("Activo")) {
-				liEstado.setStyle("font-weight: bold; color:green;");
+				liEstado.setStyle("font-size: 14px;font-weight: bold; color:green;");
+				System.out.println("color celdas:"+estado);
 			} else {
-				liEstado.setStyle("font-weight: bold; color:red;");
+				liEstado.setStyle("font-size: 14px;font-weight: bold; color:red;");
+				System.out.println("color celdas:"+estado);
 			}
 		}
 	}
@@ -131,8 +132,7 @@ public class Permisos extends GenericForwardComposer<Component> {
 	public void recorrerLista() {
 		// alert(listModel.size()+"");
 		Permiso per = null;
-
-		for (int i = 0; i <= listModel.size() - 1; i++) {
+		for (int i = 0; i <= listbox_Permisos.getItems().size() - 1; i++) {
 			per = new Permiso();
 			Listitem item = (Listitem) listbox_Permisos.getItems().get(i);
 			List<Component> listaceldas = item.getChildren();
@@ -141,7 +141,7 @@ public class Permisos extends GenericForwardComposer<Component> {
 			Listcell liEstado = (Listcell) listaceldas.get(5);
 			String estado = liEstado.getLabel();
 			int idPermsio = Integer.parseInt(liId.getLabel());
-			  int idFormulario = Integer.parseInt(liIdFormulario.getLabel());
+		    int idFormulario = Integer.parseInt(liIdFormulario.getLabel());
 			int idRol = Integer.parseInt(lbIdrol.getValue());
 			int permiso = 0;
 			if (estado.equals("Activo")) {

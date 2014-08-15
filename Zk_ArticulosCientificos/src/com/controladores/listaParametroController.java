@@ -86,9 +86,9 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 	public void onClick$toolbarbutton_Eliminar() {
 		// alert("Click en boton");
 
-		boolean result = false;
+		
 		if (listbox_Parametros.getSelectedItem() == null) {
-			alert("Por favor seleccione un artículo a eliminar");
+			alert("Por favor seleccione el parámetro a eliminar");
 			return;
 		}
 		// mesaagebox
@@ -98,29 +98,31 @@ public class listaParametroController extends GenericForwardComposer<Component> 
 
 					@Override
 					public void onEvent(Event evento) throws Exception {
+						boolean result = false;
 						// TODO Auto-generated method stub
 						if (evento.getName().equals("onOK")) {
 							confirmacion = true;
 						}
-						
+						else{
+							confirmacion=false;
+						}
+						if(confirmacion){
+							ParametrosEvaluacion rol = (ParametrosEvaluacion) listbox_Parametros
+									.getSelectedItem().getValue();
+							DBParametrosEvaluacion pa = new DBParametrosEvaluacion();
+							result = pa.eliminarParametrosEvaluacion(rol);
+							if (result != false) {
+								alert("El parámetro ha sido eliminado correctamente");
+							} 
+							
+							}else {
+							alert("Eliminación Cancelada");
+						}
 					}
-				});
+		});
 
-		if(confirmacion){
-			ParametrosEvaluacion rol = (ParametrosEvaluacion) listbox_Parametros
-					.getSelectedItem().getValue();
-			DBParametrosEvaluacion pa = new DBParametrosEvaluacion();
-			result = pa.eliminarParametrosEvaluacion(rol);
-			if (result != false) {
-				alert("El parámetro ha sido eliminado correctamente");
-			} 
-			
-			}else {
-			alert("Eliminación Cancelada");
-		}
-		actualizarLista();
-		
-	}
+
+}
 
 	public void onClick$button_buscar() {
 		actualizarLista();

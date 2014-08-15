@@ -53,7 +53,7 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuitemR2.addEventListener("onClick", new MenuListener());
 		if(dbp.ConsultarPermisos(idtipousuario, 15)){
 			menupopup.appendChild(menuitemR1);}
-		if(dbp.ConsultarPermisos(idtipousuario, 16)){
+		if(dbp.ConsultarPermisos(idtipousuario, 25)){
 			menupopup.appendChild(menuitemR2);}
 		menuR.appendChild(menupopup);
 		menubar_opciones.appendChild(menuR);
@@ -79,14 +79,16 @@ public class indexController extends GenericForwardComposer<Component> {
 		
 		Menu menuA = new Menu("Artículos ....");
 		Menupopup menupopupA = new Menupopup();
-		Menuitem menuitemA1 = new Menuitem("Listar Artículos");
-	//	Menuitem menuitemA2 = new Menuitem("Evaluar Articulo");
 		Menuitem menuitemA3 = new Menuitem("Subir Nuevo Artículo");
-		Menuitem menuitemA4 = new Menuitem("Asignar Evaluadores A Un Artículo");
-		Menuitem menuitemA5 = new Menuitem("Articulos Asignados A Evaluar");
+		Menuitem menuitemA1 = new Menuitem("Listar Artículos");
 		Menuitem menuitemA6 = new Menuitem("Listar Artículos A Corregir");
 		Menuitem menuitemA7 = new Menuitem("Historial De Los Artículos");
-		menuitemA1.setValue("Artículo/Listar Artículos.zul");
+	//	Menuitem menuitemA2 = new Menuitem("Evaluar Articulo");
+		Menuitem menuitemA4 = new Menuitem("Asignar Evaluadores A Un Artículo");
+		Menuitem menuitemA5 = new Menuitem("Articulos Asignados A Evaluar");
+		
+		
+		menuitemA1.setValue("Articulo/Listar Articulos.zul");
 		//menuitemA2.setValue("Articulo/Evaluacion.zul");
 		menuitemA3.setValue("Articulo/Subir Articulo.zul");
 		menuitemA4.setValue("Articulo/Revision.zul");

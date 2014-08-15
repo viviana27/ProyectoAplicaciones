@@ -1,0 +1,18 @@
+<?page title="Promedio Del Art�culo" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Promedio Del Artículo"  border="normal"
+		id="winPromedioArticulo" width="50%"
+		apply="com.controladores.articuloController">
+<div id="inicio" align="center">
+			
+			<separator></separator>
+			<separator></separator>
+				<label style="font-weight: bold; color:blue;"
+				value="El promedio del artículo es: ">
+			</label>
+			<separator></separator>
+			<label style="align:justify; font-size:30px; font-weight: bold;"  id="promedio"></label>
+		
+		</div>
+</window>
+</zk>

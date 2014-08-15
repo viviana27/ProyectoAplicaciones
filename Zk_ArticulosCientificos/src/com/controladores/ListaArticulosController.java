@@ -106,6 +106,19 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 				win.setAttribute("idEstado",idEstado);
 			}
 			else{
+				if(((idEstado==4 || idEstado==5)&& u.getId_rol()==1) || ((idEstado==4 || idEstado==5)&& u.getId_rol()==2)){
+					Window win = (Window) Executions.createComponents(
+							"Articulo/VerPromedio.zul", null, null);
+					win.setClosable(true);
+					win.doModal();
+					int prom=dba.buscarPromedioArticulo(art.getArt_id());
+					System.out.println("el promedio es: "+prom+"el art es "+art.getArt_id());
+					String promedio=Integer.toString(prom);
+					System.out.println("el promedio es: "+promedio);
+					win.setAttribute("promedioArt", promedio);
+					win.setAttribute("particulo", art);
+					win.setAttribute("idEstado",idEstado);
+				}else{
 				if(idEstado==6){
 					email2=art.getEmail();
 					System.out.println("email autor: "+email2);
@@ -114,6 +127,7 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 					win.setClosable(true);
 					win.doModal();
 					win.setAttribute("articulo", art);
+				}
 				}
 			}
 		}
@@ -255,8 +269,8 @@ public class ListaArticulosController extends GenericForwardComposer<Component> 
 		// lista de usuarios
 		DBArticulos dbart = new DBArticulos();
 		// lista con usuarios encontrados
-		List<Articulo> lista = dbart.buscarArticulo(idEstado,txtProyecto.getValue(),
-				txtautor.getValue(), txttipo.getValue(), txtarea.getValue());
+		List<Articulo> lista = dbart.buscarArticulo(idEstado,txtProyecto.getValue().trim(),
+				txtautor.getValue().trim(), txttipo.getValue().trim(), txtarea.getValue().trim());
 		
 		// establecer esta lista como modelo de dalos pasra el listbox
 		ListModelList<Articulo> listModel = new ListModelList<Articulo>(lista);
