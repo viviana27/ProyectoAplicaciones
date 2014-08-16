@@ -20,10 +20,6 @@
 			
 				</row>
 				<row>
-					<label value="Estado:" />
-					<checkbox id="check_estado" />
-				</row>
-				<row>
 					<button label="Registrar" id="button_Registrar" image="Imagenes/save.png" />
 					<button label="Cancelar" id="button_Cancelar" image="Imagenes/eliminar.png" 
 				onClick="WinRegistrarAreas.detach()"/>

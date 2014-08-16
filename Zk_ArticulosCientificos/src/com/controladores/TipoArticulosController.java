@@ -22,9 +22,8 @@ import com.entidades.Usuarios;
 
 public class TipoArticulosController extends GenericForwardComposer<Component> {
 	@Wire
-	private Checkbox check_estado;
 	private Button button_Registrar;
-	private TipoArticulos tipo=null;
+	private TipoArticulos tipo = null;
 	private Window WinRegistrarTipoArticulos;
 	private int estado = 0;
 	Textbox textbox_tipo, textbox_descripcion;
@@ -35,21 +34,13 @@ public class TipoArticulosController extends GenericForwardComposer<Component> {
 		if (tipo != null) {
 			tipo.setTipo_nombre(textbox_tipo.getValue());
 			tipo.setTipo_descripcion(textbox_descripcion.getValue());
-			if (check_estado.isChecked()) {
-				estado = 1;
-			} else {
-				estado = 0;
-			}
-			tipo.setTipo_estado(estado);
-			result=dbtipos.Actualizar_Tipos(tipo);
+
+			tipo.setTipo_estado(1);
+			result = dbtipos.Actualizar_Tipos(tipo);
 		} else {
-			if (check_estado.isChecked()) {
-				estado = 1;
-			} else {
-				estado = 0;
-			}
+
 			TipoArticulos tipo = new TipoArticulos(0, textbox_tipo.getValue(),
-					textbox_descripcion.getValue(), estado);
+					textbox_descripcion.getValue(), 1);
 			result = dbtipos.CrearTipoArticulos(tipo);
 		}
 
@@ -77,9 +68,6 @@ public class TipoArticulosController extends GenericForwardComposer<Component> {
 		if (tipo != null) {
 			textbox_tipo.setText(tipo.getTipo_nombre());
 			textbox_descripcion.setText(tipo.getTipo_descripcion());
-			if (tipo.getTipo_estado() == 1) {
-				check_estado.setChecked(true);
-			}
 
 		}
 	}

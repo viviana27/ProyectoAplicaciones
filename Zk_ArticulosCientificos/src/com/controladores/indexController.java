@@ -43,12 +43,16 @@ public class indexController extends GenericForwardComposer<Component> {
 		Usuarios u = (Usuarios) session.getAttribute("User");
 		 idtipousuario= u.getId_rol();
 			
-		Menu menuR = new Menu("Registros");
+		Menu menuR = new Menu(". Registros");
+		menuR.setStyle("font-weight: bold");
+		menuR.setImage("Imagenes/users.png");
 		Menupopup menupopup = new Menupopup();
 		Menuitem menuitemR1 = new Menuitem("Registrar Nuevo Usuario");
 		Menuitem menuitemR2 = new Menuitem("Listar Usuarios");
 		menuitemR1.setValue("Usuarios/nuevoUsuario.zul");
+		menuitemR1.setImage("Imagenes/nuevo.png");
 		menuitemR2.setValue("Usuarios/listaUsuarios.zul");
+		menuitemR2.setImage("Imagenes/listaU.png");
 		menuitemR1.addEventListener("onClick", new MenuListener());
 		menuitemR2.addEventListener("onClick", new MenuListener());
 		if(dbp.ConsultarPermisos(idtipousuario, 15)){
@@ -60,10 +64,13 @@ public class indexController extends GenericForwardComposer<Component> {
 		
 		
 		 
-		Menu menuP = new Menu("Perfil de usuario");
+		Menu menuP = new Menu(". Perfil de usuario");
+		menuP.setImage("Imagenes/user.png");
 		Menupopup menupopupP = new Menupopup();
 		Menuitem menuitemP1 = new Menuitem("Visualizar Perfil");
+		menuitemP1.setImage("Imagenes/perfil.png");
 		Menuitem menuitemP2 = new Menuitem("Cambiar Contraseña");
+		menuitemP2.setImage("Imagenes/icambio.png");
 		menuitemP1.setValue("Usuarios/verUsuario.zul");
 		menuitemP2.setValue("Usuarios/modificarClave.zul");
 		menuitemP1.addEventListener("onClick", new MenuListener());
@@ -77,15 +84,22 @@ public class indexController extends GenericForwardComposer<Component> {
 	
 	
 		
-		Menu menuA = new Menu("Artículos ....");
+		Menu menuA = new Menu(". Artículos ....");
+		menuA.setImage("Imagenes/folder.png");
 		Menupopup menupopupA = new Menupopup();
 		Menuitem menuitemA3 = new Menuitem("Subir Nuevo Artículo");
+		menuitemA3.setImage("Imagenes/subirNuevo.png");
 		Menuitem menuitemA1 = new Menuitem("Listar Artículos");
+		menuitemA1.setImage("Imagenes/listarArt.png");
 		Menuitem menuitemA6 = new Menuitem("Listar Artículos A Corregir");
+		menuitemA6.setImage("Imagenes/Correc.png");
 		Menuitem menuitemA7 = new Menuitem("Historial De Los Artículos");
+		menuitemA7.setImage("Imagenes/historial.png");
 	//	Menuitem menuitemA2 = new Menuitem("Evaluar Articulo");
 		Menuitem menuitemA4 = new Menuitem("Asignar Evaluadores A Un Artículo");
+		menuitemA4.setImage("Imagenes/eval.png");
 		Menuitem menuitemA5 = new Menuitem("Articulos Asignados A Evaluar");
+		menuitemA5.setImage("Imagenes/aEvaluar.png");
 		
 		
 		menuitemA1.setValue("Articulo/Listar Articulos.zul");
@@ -102,8 +116,7 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuitemA5.addEventListener("onClick", new MenuListener());
 		menuitemA6.addEventListener("onClick", new MenuListener());
 		menuitemA7.addEventListener("onClick", new MenuListener());
-		menupopupA.appendChild(menuitemA7);
-	
+			
 		if(dbp.ConsultarPermisos(idtipousuario, 8)){
 		menupopupA.appendChild(menuitemA1);}
 		if(dbp.ConsultarPermisos(idtipousuario, 10)){
@@ -114,22 +127,27 @@ public class indexController extends GenericForwardComposer<Component> {
 			menupopupA.appendChild(menuitemA5);}
 		if(dbp.ConsultarPermisos(idtipousuario, 24)){
 		 menupopupA.appendChild(menuitemA6);}
+		menupopupA.appendChild(menuitemA7);
 		menuA.appendChild(menupopupA);
 		menubar_opciones.appendChild(menuA);
-		
-		Menu menuM = new Menu("Mantenimiento");
+				
+		Menu menuM = new Menu(".  Mantenimiento");
+		menuM.setImage("Imagenes/mant.png");
 		Menupopup menupopupM = new Menupopup();
 		Menuitem menuitemM1 = new Menuitem("Listar Áreas ");
+		menuitemM1.setImage("Imagenes/listaArea.png");
 		Menuitem menuitemM2 = new Menuitem("Listar Roles");
+		menuitemM2.setImage("Imagenes/listaRoles.png");
 		Menuitem menuitemM3 = new Menuitem("Listar Tipos De Artículos");
+		menuitemM3.setImage("Imagenes/listaTipo.png");
 		Menuitem menuitemM4 = new Menuitem("Listar Parámetros De Evaluación");
+		menuitemM4.setImage("Imagenes/listaParametro.png");
 		Menuitem menuitemM5 = new Menuitem("Asignar Rol A Un Usuario");
+		menuitemM5.setImage("Imagenes/asignaRol.png");
 		Menuitem menuitemM6 = new Menuitem("Asignar Área A Un Usuario");
+		menuitemM6.setImage("Imagenes/listaArea.png");
 		Menuitem menuitemM7 = new Menuitem("Asignar Permisos A Usuarios");
-		menuitemM1.setImage("");
-		menuitemM2.setImage("");
-		menuitemM3.setImage("");
-		menuitemM4.setImage("");
+		menuitemM7.setImage("Imagenes/asignaPermiso.png");
 		menuitemM1.setValue("Mantenimiento/Areas/listaAreas.zul");
 		menuitemM2.setValue("Mantenimiento/Roles/listaRoles.zul");
 		menuitemM3.setValue("Mantenimiento/TipoArticulo/listaTipoArticulo.zul");
@@ -164,23 +182,6 @@ public class indexController extends GenericForwardComposer<Component> {
 		menuM.appendChild(menupopupM);
 		menubar_opciones.appendChild(menuM);
 
-	/*	Menu menuN = new Menu("Notificaciones");
-		Menupopup menupopupN = new Menupopup();
-		Menuitem menuitemN1 = new Menuitem("Enviar Notificaciones");
-		Menuitem menuitemN2 = new Menuitem("Revisar Notificaciones");
-		menuitemN1.setValue("Notificaciones/enviarNotificaciones.zul");
-		menuitemN2.setValue("Notificaciones/listaNotificaciones.zul");
-		menuitemN1.addEventListener("onClick", new MenuListener());
-		menuitemN2.addEventListener("onClick", new MenuListener());
-		if(dbp.ConsultarPermisos(idtipousuario, 13)){
-			menupopupN.appendChild(menuitemN1);}
-		if(dbp.ConsultarPermisos(idtipousuario, 14)){
-			menupopupN.appendChild(menuitemN2);}
-		menuN.appendChild(menupopupN);
-		menubar_opciones.appendChild(menuN);*/
-
-		
-		
 	}
 
 	@Wire

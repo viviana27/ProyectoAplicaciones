@@ -3,18 +3,16 @@
 	<window title="Parámetros de Evaluación" border="normal"
 		id="WinListarParametros"
 		apply="com.controladores.listaParametroController">
-		<div height="50px">
-			<fisheyebar id="fsb"
-				style="position:relative;Margin-left:30px" itemWidth="40"
-				itemHeight="40" itemMaxHeight="80" itemMaxWidth="80">
-				<fisheye image="Imagenes/nuevoO.png"
+
+		<div height="100%" align="center">
+			<toolbar align="center">
+				<toolbarbutton image="Imagenes/nuevoO.png"
 					id="toolbarbutton_Nuevo" label="Nuevo Parámetro de Evaluación" />
-				<fisheye image="Imagenes/editar.png"
+				<toolbarbutton image="Imagenes/editar.png"
 					id="toolbarbutton_Editar" label="Editar Parámetro de Evaluación" />
-				<fisheye image="Imagenes/delete.png"
-					id="toolbarbutton_Eliminar" label="Eliminar Parámetro de Evaluación" />
-			</fisheyebar>
-		</div>
+				<toolbarbutton image="Imagenes/delete.png"
+					id="toolbarbutton_Eliminar"
+					label="Eliminar Parámetro de Evaluación" />
 		<groupbox closable="true">
 			<caption label="buscar" />
 			<label
@@ -24,13 +22,17 @@
 			<!-- <separator/> -->
 			<button image="Imagenes/buscar.png" id="button_buscar" />
 		</groupbox>
-		<listbox mold="paging" pageSize="3" width="100%"
+			</toolbar>
+		</div>
+		
+		<listbox mold="paging" pageSize="10" width="100%"
 			emptyMessage="No existen datos que cumplan con el criterio de búsqueda"
 			id="listbox_Parametros" disabled="true">
 			<listhead menupopup="auto" sizable="false">
 				<listheader label="Parámetro de Evaluación" sort="auto"
 					sortDirection="ascending" />
-				<listheader label="Porcentaje de Evaluación" sort="auto" />
+				<listheader label="Porcentaje de Evaluación"
+					sort="auto" />
 				<listheader label="Estado" sort="auto" />
 			</listhead>
 			<template name="model">
@@ -38,17 +40,19 @@
 					<listcell label="${each.param_descripcion}" />
 					<listcell label="${each.param_valor}" />
 					<listcell label="${each.param_estadoString}" />
-					
+
 				</listitem>
 			</template>
 		</listbox>
 		<grid>
 			<columns>
-				<column  />
-				<column  />
+				<column />
+				<column />
 			</columns>
 			<rows>
-				<row><label value="Total de Porcentaje: " /><label id="lbSumatotal" />
+				<row>
+					<label value="Total de Porcentaje: " />
+					<label id="lbSumatotal" />
 				</row>
 			</rows>
 		</grid>

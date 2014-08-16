@@ -2,24 +2,22 @@
 <zk>
 	<window title="Listado de Evaluadores por área" border="normal"
 		id="WinListarRolUsuarios" apply="com.controladores.listaAreaUsuarioController">
-		<div height="50px">
-			<fisheyebar id="fsb"
-				style="position:relative;Margin-left:30px" itemWidth="40"
-				itemHeight="40" itemMaxHeight="80" itemMaxWidth="80">
-				<fisheye image="Imagenes/editar.png"
-					id="toolbarbutton_Editar" label="Editar área" />
-			</fisheyebar>
-		</div>
-		<groupbox closable="true">
+		<div height="100%">
+			<toolbar align="center">
+				<toolbarbutton image="Imagenes/editar.png"
+					id="toolbarbutton_Editar" label="Editar Área a Usuario" />
+					<groupbox closable="true">
 			<caption label="buscar" />
 			<label
 				value="Ingrese nombre o apellido para proceder con la búsqueda" />
 			<textbox id="textbox_buscar" />
 			<space />
 			<!-- <separator/> -->
-			<button image="Imagenes/buscar.png" id="button_buscar" />
+			<button image="Imagenes/buscar.png" id="button_buscarUR" />
 		</groupbox>
-		<listbox mold="paging" pageSize="3" width="100%"
+			</toolbar>
+		</div>
+		<listbox mold="paging" pageSize="10" width="100%"
 			emptyMessage="No existen datos que cumplan el criterio de búsqueda"
 			id="listbox_Miembros" disabled="true">
 			<listhead menupopup="auto" sizable="false">

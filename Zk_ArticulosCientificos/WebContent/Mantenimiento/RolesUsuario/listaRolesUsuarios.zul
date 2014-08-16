@@ -1,16 +1,13 @@
 <?page title="Roles Usuarios" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window title="Listado De Roles Del Usuarios" border="normal"
-		id="WinListarRolUsuarios" apply="com.controladores.listaUsuarioController">
-		<div height="50px">
-			<fisheyebar id="fsb"
-				style="position:relative;Margin-left:30px" itemWidth="40"
-				itemHeight="40" itemMaxHeight="80" itemMaxWidth="80">
-				<fisheye image="Imagenes/editar.png"
-					id="toolbarbutton_EditarUR" label="Editar Rol" />
-			</fisheyebar>
-		</div>
-		<groupbox closable="true">
+		id="WinListarRolUsuarios"
+		apply="com.controladores.listaUsuarioController">
+		<div height="100%">
+			<toolbar align="center">
+				<toolbarbutton image="Imagenes/editar.png"
+					id="toolbarbutton_Editar" label="Editar Rol a Usuario" />
+					<groupbox closable="true">
 			<caption label="buscar" />
 			<label
 				value="Ingrese nombre o apellido para proceder con la búsqueda" />
@@ -19,19 +16,23 @@
 			<!-- <separator/> -->
 			<button image="Imagenes/buscar.png" id="button_buscarUR" />
 		</groupbox>
-		<listbox mold="paging" pageSize="3" width="100%"
+			</toolbar>
+		</div>
+		
+		<listbox mold="paging" pageSize="10" width="100%"
 			emptyMessage="No existen datos que cumplan con el criterio de búsqueda"
 			id="listbox_MiembrosRoles" disabled="true">
 			<listhead menupopup="auto" sizable="false">
 				<listheader label="Nombres" sort="auto"
 					sortDirection="ascending" />
 				<listheader label="Apellidos" sort="auto" />
-				<listheader label="Rol de usuario" sort="auto" />				
+				<listheader label="Rol de usuario" sort="auto" />
 			</listhead>
 			<template name="model">
 				<listitem value="${each}">
 					<listcell label="${each.persona.per_nombre}" />
-					<listcell label="${each.persona.per_apellido}" /><listcell label="${each.rol_descripcion}" />
+					<listcell label="${each.persona.per_apellido}" />
+					<listcell label="${each.rol_descripcion}" />
 					<listcell label="${each.rol_descripcion}" />
 				</listitem>
 			</template>

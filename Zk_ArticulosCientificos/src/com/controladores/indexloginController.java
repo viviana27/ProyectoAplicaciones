@@ -75,7 +75,9 @@ public class indexloginController extends GenericForwardComposer<Component> {
 		Menu menuR1 = new Menu("Datos de sesión");
 		Menupopup menupopupR1 = new Menupopup();
 		Menuitem menuitemR1 = new Menuitem("Registrarse");
+		menuitemR1.setImage("Imagenes/nuevo.png");
 		Menuitem menuitemR2 = new Menuitem("Iniciar Sesión");
+		menuitemR2.setImage("Imagenes/login.png");
 		// menuitemR1.setValue("VisualizarPerfil.zul");
 		menuitemR1.setValue("Usuarios/nuevoUsuario.zul");
 		menuitemR2.setValue("login.zul");

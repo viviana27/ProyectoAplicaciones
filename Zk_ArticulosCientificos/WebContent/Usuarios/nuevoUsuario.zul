@@ -10,66 +10,66 @@
 			</columns>
 			<rows>
 				<row>
-					<label value="Nombre De Usuario/a:(*)"></label>
+					<label value="(*)Nombre De Usuario/a:"></label>
 					<textbox id="textbox_Usuario"
 						constraint="no empty" >
 					</textbox>
 				</row>
 				<row>
-					<label value="Contraseña:(*)"  ></label>
+					<label value="(*)Contraseña:"  ></label>
 					<textbox id="textbox_Password" type="password"
 						constraint="no empty">
 					</textbox>
 				</row>
 				<row>
-					<label value="Primer Nombre:(*)"></label>
+					<label value="(*)Primer Nombre:"></label>
 					<textbox id="textbox_Nombres"
 						constraint="no empty">
 					</textbox>
 				</row>
 				<row>
-					<label value="Apellidos:(*)"></label>
+					<label value="(*)Apellidos:"></label>
 					<textbox id="textbox_Apellidos"
 						constraint="no empty">
 					</textbox>
 				</row>
 				<row>
-					<label value="Cédula:(*)"></label>
+					<label value="(*)Cédula:"></label>
 					<textbox id="textbox_Cedula"
 						constraint="no empty">
 					</textbox>
 				</row>
 				<row>
-					<label value="E-mail:(*)"></label>
+					<label value="(*)E-mail:"></label>
 					<textbox id="textbox_Email" 
 						width="200px" constraint="no empty">
 					</textbox>
 				</row>
 				<row>
-					<label value="Dirección:(*)"></label>
+					<label value="(*)Dirección:"></label>
 					<textbox id="textbox_Direccion"
 						constraint="no empty">
 					</textbox>
 				</row>
 				<row>
-					<label value="Teléfono Convencional:(*)"></label>
+					<label value="(*)Teléfono Convencional:"></label>
 					<textbox id="textbox_Telefono"
 						 constraint="no empty">
 					</textbox>
 				</row>
 				<row>
-					<label value="Celular:(*)"></label>
+					<label value="(*)Celular:"></label>
 					<textbox id="textbox_celular"
 						constraint="no empty">
 					</textbox>
 				</row>
 				<row>
-					<label value="Institución a la que pertenece:(*)"></label>
+					<label value="(*)Institución a la que pertenece:"></label>
 					<textbox id="textbox_institucion" width="200px" constraint="no empty">
 					</textbox>
 				</row>
 				<row>
-					<label value="Dirección de la Institución:(*)"></label>
+					<label value="(*)Dirección de la Institución:"></label>
 					<textbox id="textbox_dirinstitucion"
 						width="200px" constraint="no empty">
 					</textbox>

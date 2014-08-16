@@ -1,30 +1,28 @@
 <?page title="Roles" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window title="Registro De Roles" border="normal"
-		id="WinListarRoles"
-		apply="com.controladores.listaRolController">
-		<div height="50px">
-			<fisheyebar id="fsb"
-				style="position:relative;Margin-left:30px" itemWidth="40"
-				itemHeight="40" itemMaxHeight="80" itemMaxWidth="80">
-				<fisheye image="Imagenes/editar.png"
+		id="WinListarRoles" apply="com.controladores.listaRolController">
+
+		<div height="100%" align="center">
+			<toolbar align="center">
+				<toolbarbutton image="Imagenes/editar.png"
 					id="toolbarbutton_Editar" label="Editar Rol" />
-				<fisheye image="Imagenes/delete.png"
+				<toolbarbutton image="Imagenes/delete.png"
 					id="toolbarbutton_Eliminar" label="Eliminar Rol" />
-				<fisheye image="Imagenes/nuevoO.png"
-					id="toolbarbutton_Nuevo" label="Nuevo Rol" visible="false" />
-			</fisheyebar>
+				<groupbox closable="true">
+					<caption label="buscar" />
+					<label
+						value="Ingrese el nombre del rol para proceder con la búsqueda" />
+					<textbox id="textbox_buscar" />
+					<space />
+					<!-- <separator/> -->
+					<button image="Imagenes/buscar.png"
+						id="button_buscar" />
+				</groupbox>
+			</toolbar>
 		</div>
-		<groupbox closable="true">
-			<caption label="buscar" />
-			<label
-				value="Ingrese el nombre del rol para proceder con la búsqueda" />
-			<textbox id="textbox_buscar" />
-			<space />
-			<!-- <separator/> -->
-			<button image="Imagenes/buscar.png" id="button_buscar" />
-		</groupbox>
-		<listbox mold="paging" pageSize="3" width="100%"
+
+		<listbox mold="paging" pageSize="10" width="100%"
 			emptyMessage="No existen datos que cumplan el criterio de búsqueda"
 			id="listbox_Roles" disabled="true">
 			<listhead menupopup="auto" sizable="false">

@@ -1,21 +1,17 @@
 <?page title="Categorias" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Listado De Áreas" border="normal"
-		id="WinListarAreas"
+	<window title="Listado De Áreas" border="normal" id="WinListarAreas"
 		apply="com.controladores.listaAreaController">
-		<div height="50px">
-			<fisheyebar id="fsb"
-				style="position:relative;Margin-left:30px" itemWidth="40"
-				itemHeight="40" itemMaxHeight="80" itemMaxWidth="80">
-				<fisheye image="Imagenes/nuevoO.png"
+
+		<div height="100%" align="center">
+			<toolbar align="center">
+				<toolbarbutton image="Imagenes/nuevoO.png"
 					id="toolbarbutton_Nuevo" label="Nueva Área" />
-				<fisheye image="Imagenes/editar.png"
+				<toolbarbutton image="Imagenes/editar.png"
 					id="toolbarbutton_Editar" label="Editar Área" />
-				<fisheye image="Imagenes/delete.png"
+				<toolbarbutton image="Imagenes/delete.png"
 					id="toolbarbutton_Eliminar" label="Eliminar Área" />
-			</fisheyebar>
-		</div>
-		<groupbox closable="true">
+			<groupbox closable="true">
 			<caption label="buscar" />
 			<label
 				value="Ingrese el nombre del área para proceder con la búsqueda" />
@@ -24,7 +20,10 @@
 			<!-- <separator/> -->
 			<button image="Imagenes/buscar.png" id="button_buscar" />
 		</groupbox>
-		<listbox mold="paging" pageSize="3" width="100%"
+			</toolbar>
+		</div>
+		
+		<listbox mold="paging" pageSize="10" width="100%"
 			emptyMessage="No existen datos que cumplan el criterio de búsqueda"
 			id="listbox_areas" disabled="true">
 			<listhead menupopup="auto" sizable="false">

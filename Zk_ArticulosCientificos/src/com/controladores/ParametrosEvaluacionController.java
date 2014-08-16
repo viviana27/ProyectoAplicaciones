@@ -17,7 +17,6 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 	private static final long serialVersionUID = 1L;
 	@Wire
 	private Textbox textbox_area,textbox_valor;
-	private Checkbox check_estado;
 	private Window WinRegistrarParametros;
 	private ParametrosEvaluacion param=null;
 	Label lbSumatotal;
@@ -36,28 +35,13 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 				valor=Integer.parseInt(textbox_valor.getValue());
 				System.out.println("estes "+valor);
 				param.setParam_valor(valor);
-					if(check_estado.isChecked()){
-						i=1;
-					}else
-					{
-						i=0;
-					}
-				
-				param.setParam_estado(i);		
+					param.setParam_estado(1);		
 				//llamo al metodo para actualizar los datos
 				
 				registro=dbar.Actualizr_ParametrosEvaluacion(param);
 			}else{
 				//no existe, es nuevo
-					
-				if(check_estado.isChecked()){
-					i=1;
-				}else
-				{
-					i=0;
-				}
-				
-				ParametrosEvaluacion parametros=new ParametrosEvaluacion(0, textbox_area.getValue(), Integer.parseInt(textbox_valor.getValue()), i);
+				ParametrosEvaluacion parametros=new ParametrosEvaluacion(0, textbox_area.getValue(), Integer.parseInt(textbox_valor.getValue()), 1);
 				registro=dbar.CrearParametrosEvaluacion(parametros);
 				
 			}
@@ -96,11 +80,6 @@ public class ParametrosEvaluacionController extends GenericForwardComposer<Compo
 		if (param != null) {
 			textbox_area.setText(param.getParam_descripcion());
 			textbox_valor.setText(Integer.toString( param.getParam_valor()));
-			if (param.getParam_estado() == 1) {
-				// chkvista.isChecked();
-				check_estado.setChecked(true);
-			}
-
 		}
 		
 		DBParametrosEvaluacion dbar = new DBParametrosEvaluacion();

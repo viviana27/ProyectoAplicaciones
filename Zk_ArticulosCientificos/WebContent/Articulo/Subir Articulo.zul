@@ -14,7 +14,7 @@
 					</textbox>
 				</row>
 				<row>
-					<label>Tipo de artículo</label>
+					<label>(*)Tipo de artículo </label>
 					<combobox id="cmb_tipo" autodrop="true"
 						width="30%">
 						<template name="model">
@@ -25,7 +25,7 @@
 					<label id="idtipo" visible="false" ></label>
 				</row>
 				<row>
-					<label>Área del Artículo</label>
+					<label>(*)Área del Artículo </label>
 					<combobox id="cmb_area" autodrop="true"
 						width="30%">
 						<template name="model">
@@ -36,13 +36,13 @@
 					<label id="idarea"  visible="false"></label>
 				</row>
 				<row>
-					<label>Título:</label>
+					<label>(*)Título: </label>
 					<textbox id="textbox_Titulo"
 						width="100%">
 					</textbox>
 				</row>
 				<row>
-					<label>Resumen:</label>
+					<label>(*)Resumen:</label>
 					<textbox id="textbox_Resumen" rows="5" cols="40"
 						height="200px" width="85%">
 					</textbox>
@@ -54,7 +54,7 @@
 			value="Proporcione palabras claves referente al artículo, separe los términos en coma.">
 		</label>
 		</row>
-		<row>					<label>Palabras claves:</label>
+		<row>					<label>(*)Palabras claves:</label>
 					<textbox id="textbox_PClaves" 
 						width="100%">
 					</textbox>
@@ -82,7 +82,7 @@
 					</vbox>
 				</row>
 				<row>
-					<label value="Seleccionar archivo " />
+					<label value="(*) Seleccionar archivo " />
 				<vbox width="100%">
 						<button label="Examinar" id="btnExaminar"					
 							upload="true,maxsize=8192"

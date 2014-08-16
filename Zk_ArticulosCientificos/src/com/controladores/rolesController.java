@@ -23,7 +23,6 @@ import com.entidades.Usuarios;
 public class rolesController extends GenericForwardComposer<Component> {
 	@Wire
 	private Textbox textbox_rol;
-	private Checkbox check_estado;
 	private Button button_Registrar;
 	private Window WinRegistrarRoles;
 	private Roles rol = null;
@@ -36,25 +35,14 @@ public class rolesController extends GenericForwardComposer<Component> {
 		if (rol != null) {
 			// existe estoy editando
 			rol.setRol_descripcion(textbox_rol.getValue());
-			if (check_estado.isChecked()) {
-				estado = 1;
-			} else {
-				estado = 0;
-			}
-
-			rol.setRol_estado(estado);
+			rol.setRol_estado(1);
 			// llamo al metodo para actualizar los datos
 			result = dbroles.Actualizar_Roles(rol);
 
 		} else {
-			if (check_estado.isChecked()) {
-				estado = 1;
-			} else {
-				estado = 0;
-			}
-			Roles rol = new Roles(0, textbox_rol.getValue(), estado);
-			// usuario.setClave(textbox_Password.getValue());
 
+			Roles rol = new Roles(0, textbox_rol.getValue(), 1);
+			// usuario.setClave(textbox_Password.getValue());
 			result = dbroles.CrearRoles(rol);
 		}
 
@@ -87,11 +75,6 @@ public class rolesController extends GenericForwardComposer<Component> {
 				rol = (Roles) WinRegistrarRoles.getAttribute("rol");
 				if (rol != null) {
 					textbox_rol.setText(rol.getRol_descripcion());
-					if (rol.getRol_estado() == 1) {
-						// chkvista.isChecked();
-						check_estado.setChecked(true);
-					}
-
 				}
 			} else if (u.getId_rol() == 2 || u.getId_rol() == 3) {
 				Executions
